@@ -1,25 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
+import {Route, Routes} from 'react-router-dom';
+import Main from './components/Main';
+import Catalog from './components/Catalog';
+import Army from './components/Army';
+import Units from './components/Units';
+import Warscroll from './components/Warscroll';
+
+const tg = window.Telegram.WebApp
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  useEffect(() => {
+    tg.ready()
+  }, []);
+
+  return <div>
+    <Routes>
+      <Route index element={<Main />} />
+      <Route path={'catalog'} element={<Catalog />} />
+      <Route path={'catalog/army'} element={<Army />} />
+      <Route path={'catalog/army/units'} element={<Units />} />
+      <Route path={'catalog/army/units/warscroll'} element={<Warscroll />} />
+    </Routes>
+  </div>
 }
 
 export default App;
