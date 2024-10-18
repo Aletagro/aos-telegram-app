@@ -1,8 +1,9 @@
 import React from 'react';
-import {useLocation } from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import './styles/Warscroll.css'
 
 const Warscroll = () => {
+    const navigate = useNavigate()
     const unit = useLocation().state.unit
 
     // const renderMeleeWeapon = (weapon) => <div className='meleeWeapons'>
@@ -31,6 +32,9 @@ const Warscroll = () => {
     // const renderKeywords = (keywords) => <p id='keyword'>{keywords}</p>
 
     return <>
+        <button type="button" onClick={() => {navigate(-1)}}>
+          Назад
+        </button>
         <h1 className='title'>{unit.name}</h1>
         <img src={unit.bannerImage} alt={unit.name} />
         <h5>{unit.lore}</h5>

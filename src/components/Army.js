@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLocation, Link } from 'react-router-dom'
+import {useLocation, Link, useNavigate} from 'react-router-dom'
 import './styles/Army.css'
 
 const items = [
@@ -38,11 +38,15 @@ const items = [
 ]
 
 const Army = () => {
+    const navigate = useNavigate()
     const alligance = useLocation().state.alligance
 
     const renderButton = (item) => <Link to={item.screen} state={{alligance}}>{item.title}</Link>
 
     return <>
+        <button type="button" onClick={() => {navigate(-1)}}>
+          Назад
+        </button>
         <p className='title'>{alligance.name}</p>
         <div id='column' className='Chapter'>
         {items.map(renderButton)}
