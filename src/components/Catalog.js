@@ -2,23 +2,18 @@ import React from 'react';
 import {useLocation, Link } from 'react-router-dom'
 import './styles/Catalog.css'
 
-const alligances = {
-    Chaos: ['Beasts', 'Khorne', 'Tzeentch', 'Slaanesh', 'Nurgle', 'Skaven', 'Slaves'],
-    Death: [],
-    Destruction: [],
-    Order: []
-}
+const dataBase = require('../dataBase.json')
 
 const Catalog = () => {
-    const chapter = useLocation().state.chapter
-    const alligance = alligances[chapter]
+    const grandAlliance = useLocation().state.grandAlliance
+    const allegiances = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === grandAlliance.id)
 
-    const renderButton = (alligance) => <Link to={'army'} state={{alligance}}>{alligance}</Link>
+    const renderButton = (alligance) => <Link to={'army'} state={{alligance}}>{alligance.name}</Link>
 
     return <>
-        <p className='title'>{chapter}</p>
+        <p className='title'>{grandAlliance.name}</p>
         <div id='column' className='Chapter'>
-        {alligance && alligance.map(renderButton)}
+        {allegiances && allegiances.map(renderButton)}
         </div>
     </>
 }

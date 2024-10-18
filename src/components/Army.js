@@ -40,10 +40,10 @@ const items = [
 const Army = () => {
     const alligance = useLocation().state.alligance
 
-    const renderButton = (item) => <Link to={item.screen} state={{alligance, section: item.title}}>{item.title}</Link>
+    const renderButton = (item) => <Link to={item.screen} state={{alligance}}>{item.title}</Link>
 
     return <>
-        <p className='title'>{alligance}</p>
+        <p className='title'>{alligance.name}</p>
         <div id='column' className='Chapter'>
         {items.map(renderButton)}
         </div>
