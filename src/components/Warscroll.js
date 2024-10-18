@@ -14,7 +14,7 @@ const Warscroll = () => {
     const rangeWeapons = weapons.filter(weapon => weapon.type === 'ranged')
     const abilities = dataBase.data.warscroll_ability.filter(ability => ability.warscrollId === unit.id)
     const regimentOptions = dataBase.data.warscroll_regiment_option.filter(option => option.warscrollId === unit.id)
-    console.log(unit)
+    const isManifestation = unit.referenceKeywords.includes('Manifestation')
 
     const getWeaponAbilities = (weaponId) => {
         const abilitiesIds = dataBase.data.warscroll_weapon_weapon_ability.filter(ability => ability.warscrollWeaponId === weaponId).map(ability => ability.weaponAbilityId)
@@ -78,7 +78,7 @@ const Warscroll = () => {
         const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
 
         return <div id='ability'>
-            <p>{ability.phaseDetails}</p>
+            <p>{ability.phaseDetails}{ability.cpCost ? ` - ${ability.cpCost} CP` : null}</p>
             <h4>{ability.name}</h4>
             {ability.declare ? <p>Declare: {ability.declare}</p> : null}
             <p>Effect: {ability.effect}</p>
@@ -104,10 +104,10 @@ const Warscroll = () => {
         <img src={unit.bannerImage} alt={unit.name} width='100%' />
         <div>
             <h4>Characteristics</h4>
-            <p>move: {unit.move}</p>
-            <p>health: {unit.health}</p>
-            <p>control: {unit.control}</p>
-            <p>save: {unit.save}</p>
+            <p>Move: {unit.move}</p>
+            <p>Health: {unit.health}</p>
+            <p>{isManifestation ? 'Banishment'  : 'Control'}: {unit.control}</p>
+            <p>Save: {unit.save}</p>
         </div>
         {rangeWeapons.length > 0
             ? <>
@@ -134,7 +134,7 @@ const Warscroll = () => {
             <h4>Unit Details</h4>
             <p>{unit.modelCount} model</p>
             {unit.wargearOptionsText ? <p id='wargearOptions'>{unit.wargearOptionsText}</p> : null}
-            <p>{unit.points} points</p>
+            {unit.points ? <p>{unit.points} points</p> : null}
             {regimentOptions.length > 0
                 ? <>
                     <h5>Regiment Options</h5>

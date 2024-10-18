@@ -48,6 +48,7 @@ const Army = () => {
           Назад
         </button>
         <p className='title'>{alligance.name}</p>
+        <img src={alligance.factionHeaderImage} alt={alligance.name} width='100%' />
         <div id='column' className='Chapter'>
         {items.map(renderButton)}
         </div>
