@@ -1,3 +1,62 @@
+/* rangeWeapons */
+.rangeWeapons {
+  display: grid;
+  grid-template-columns: repeat(6, 50px);
+}
+.rangeWeaponName {
+  grid-column: 1 / 6;
+  grid-row: 1;
+}
+.rangeWeaponRng {
+  grid-column: 1;
+  grid-row: 2;
+}
+.rangeWeaponRange {
+  grid-column: 1;
+  grid-row: 3;
+}
+.rangeWeaponA {
+  grid-column: 2;
+  grid-row: 2;
+}
+.rangeWeaponAttacks {
+  grid-column: 2;
+  grid-row: 3;
+}
+.rangeWeaponH {
+  grid-column: 3;
+  grid-row: 2;
+}
+.rangeWeaponHit {
+  grid-column: 3;
+  grid-row: 3;
+}
+.rangeWeaponW {
+  grid-column: 4;
+  grid-row: 2;
+}
+.rangeWeaponWound {
+  grid-column: 4;
+  grid-row: 3;
+}
+.rangeWeaponR {
+  grid-column: 5;
+  grid-row: 2;
+}
+.rangeWeaponRend {
+  grid-column: 5;
+  grid-row: 3;
+}
+.rangeWeaponD {
+  grid-column: 6;
+  grid-row: 2;
+}
+.rangeWeaponDamage {
+  grid-column: 6;
+  grid-row: 3;
+}
+
+/* meleeWeapons */
 .meleeWeapons {
   display: grid;
   grid-template-columns: repeat(5, 50px);
@@ -46,6 +105,7 @@
   grid-column: 5;
   grid-row: 3;
 }
+
 #ability {
   display: block;
   width: 400px;
@@ -56,11 +116,20 @@
 .keywordsContainer {
   display: flex;
 }
-#keyword {
-  border: 1px solid black;
+.weaponAbilitiesContainer {
+  display: flex;
+}
+#weaponAbilities {
+  border: 1px dashed black;
   padding: 4px;
-  margin-right: 8px;
+  margin-right: 4px;
+}
+#keyword {
+  margin-right: 4px;
 }
 #row {
   flex-direction: row;
+}
+#wargearOptions {
+  white-space: pre-line;
 }

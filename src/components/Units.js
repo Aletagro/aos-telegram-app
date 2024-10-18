@@ -8,9 +8,9 @@ const Units = () => {
     const navigate = useNavigate()
     const alligance = useLocation().state.alligance
     const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === alligance.id).map(item => item.warscrollId)
-    const units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId))
+    const units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead)
 
-    const renderButton = (unit) => <Link to={'warscroll'} state={{unit}}>{unit.name}</Link>
+    const renderButton = (unit) => <Link key={unit?.id} to={'warscroll'} state={{unit}}>{unit?.name}</Link>
 
     return <>
         <button type="button" onClick={() => {navigate(-1)}}>

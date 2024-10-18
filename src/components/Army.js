@@ -41,7 +41,7 @@ const Army = () => {
     const navigate = useNavigate()
     const alligance = useLocation().state.alligance
 
-    const renderButton = (item) => <Link to={item.screen} state={{alligance}}>{item.title}</Link>
+    const renderButton = (item) => <Link key={item.title} to={item.screen} state={{alligance}}>{item.title}</Link>
 
     return <>
         <button type="button" onClick={() => {navigate(-1)}}>
