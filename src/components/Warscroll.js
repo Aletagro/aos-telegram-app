@@ -1,10 +1,9 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
+import Ability from './Ability'
 import './styles/Warscroll.css'
 
 const dataBase = require('../dataBase.json')
-
-// Добавить выбор оружия
 
 const Warscroll = () => {
     const navigate = useNavigate()
@@ -12,9 +11,13 @@ const Warscroll = () => {
     const weapons = dataBase.data.warscroll_weapon.filter(weapon => weapon.warscrollId === unit.id)
     const meleeWeapons = weapons.filter(weapon => weapon.type === 'melee')
     const rangeWeapons = weapons.filter(weapon => weapon.type === 'ranged')
-    const abilities = dataBase.data.warscroll_ability.filter(ability => ability.warscrollId === unit.id)
+    let abilities = dataBase.data.warscroll_ability.filter(ability => ability.warscrollId === unit.id)
     const regimentOptions = dataBase.data.warscroll_regiment_option.filter(option => option.warscrollId === unit.id)
     const isManifestation = unit.referenceKeywords.includes('Manifestation')
+    const manifestationInfo = isManifestation ? dataBase.data.lore_ability.find(ability => ability.linkedWarscrollId === unit.id) : undefined
+    if (manifestationInfo) {
+        abilities = [...abilities, manifestationInfo]
+    }
 
     const getWeaponAbilities = (weaponId) => {
         const abilitiesIds = dataBase.data.warscroll_weapon_weapon_ability.filter(ability => ability.warscrollWeaponId === weaponId).map(ability => ability.weaponAbilityId)
@@ -71,28 +74,7 @@ const Warscroll = () => {
         </>
     }
 
-    const renderKeyword = (keyword) => <p id='keyword'>{keyword.name},</p>
-
-    const renderAbility = (ability) => {
-        const keywordsIds = dataBase.data.warscroll_ability_keyword.filter(keyword => keyword.warscrollAbilityId === ability.id).map(item => item.keywordId)
-        const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
-
-        return <div id='ability'>
-            <p>{ability.phaseDetails}{ability.cpCost ? ` - ${ability.cpCost} CP` : null}</p>
-            <h4>{ability.name}</h4>
-            {ability.declare ? <p>Declare: {ability.declare}</p> : null}
-            <p>Effect: {ability.effect}</p>
-            <p>Phase: {ability.phase}</p>
-            {keywords.length > 0
-                ? <div id='row' className='keywordsContainer'>
-                    <p id='keyword'>Keywords:</p>
-                    {keywords.map(renderKeyword)}
-                </div>
-                : null
-            }
-            {ability.lore ? <h6>Lore: {ability.lore}</h6> : null}
-        </div>
-    }
+    const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
 
     const renderRegimentOption = (option) => <p>- {option.optionText}</p>
 
@@ -106,7 +88,13 @@ const Warscroll = () => {
             <h4>Characteristics</h4>
             <p>Move: {unit.move}</p>
             <p>Health: {unit.health}</p>
-            <p>{isManifestation ? 'Banishment'  : 'Control'}: {unit.control}</p>
+            {isManifestation
+                ? <>
+                    <p>Banishment: {unit.control}</p>
+                    <p>Casting Value: {manifestationInfo.castingValue}+</p>
+                </>
+                : <p>Control: {unit.control}</p>
+            }
             <p>Save: {unit.save}</p>
         </div>
         {rangeWeapons.length > 0

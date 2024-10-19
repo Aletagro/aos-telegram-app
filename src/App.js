@@ -6,6 +6,7 @@ import Catalog from './components/Catalog';
 import Army from './components/Army';
 import Units from './components/Units';
 import Warscroll from './components/Warscroll';
+import ArmyInfo from './components/ArmyInfo';
 
 const tg = window.Telegram.WebApp
 
@@ -21,6 +22,7 @@ function App() {
       <Route path={'catalog/army'} element={<Army />} />
       <Route path={'catalog/army/units'} element={<Units />} />
       <Route path={'catalog/army/units/warscroll'} element={<Warscroll />} />
+      <Route path={'catalog/army/armyInfo'} element={<ArmyInfo />} />
     </Routes>
   </div>
 }

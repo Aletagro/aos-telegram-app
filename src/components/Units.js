@@ -34,7 +34,7 @@ const Units = () => {
           Назад
         </button>
         <p className='title'>{alligance.name}</p>
-        <img src={alligance.factionHeaderImage} alt={alligance.name} width='100%' />
+        <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />
         <div id='column' className='Chapter'>
         {heroes.length > 0
             ? <>
