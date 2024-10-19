@@ -1,11 +1,10 @@
 import React from 'react';
-import {useLocation, Link, useNavigate} from 'react-router-dom'
+import {useLocation, Link} from 'react-router-dom'
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
 
 const Units = () => {
-    const navigate = useNavigate()
     const alligance = useLocation().state.alligance
     const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === alligance.id).map(item => item.warscrollId)
     const units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends)
@@ -30,9 +29,6 @@ const Units = () => {
     const renderButton = (unit) => <Link key={unit?.id} to={'warscroll'} state={{unit}}>{unit?.name}</Link>
 
     return <>
-        <button type="button" onClick={() => {navigate(-1)}}>
-          Назад
-        </button>
         <p className='title'>{alligance.name}</p>
         <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />
         <div id='column' className='Chapter'>

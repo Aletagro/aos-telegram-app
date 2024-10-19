@@ -1,9 +1,16 @@
 .Chapter {
-    width: 200px;
-    height: 200px;
+    flex: 1;
     display: flex;
   }
   
   #column {
     flex-direction: column;
+  }
+
+  #rosterOption {
+    margin: 2px 0px;
+  }
+
+  #armyOfRenown {
+    width: 400px;
   }

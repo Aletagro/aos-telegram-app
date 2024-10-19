@@ -1,12 +1,11 @@
 import React from 'react';
-import {useLocation, useNavigate} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 import Ability from './Ability'
 import './styles/Warscroll.css'
 
 const dataBase = require('../dataBase.json')
 
 const Warscroll = () => {
-    const navigate = useNavigate()
     const unit = useLocation().state.unit
     const weapons = dataBase.data.warscroll_weapon.filter(weapon => weapon.warscrollId === unit.id)
     const meleeWeapons = weapons.filter(weapon => weapon.type === 'melee')
@@ -79,9 +78,6 @@ const Warscroll = () => {
     const renderRegimentOption = (option) => <p>- {option.optionText}</p>
 
     return <>
-        <button type="button" onClick={() => {navigate(-1)}}>
-          Назад
-        </button>
         <h1 className='title'>{unit.name}</h1>
         <img src={unit.bannerImage} alt={unit.name} width='100%' />
         <div>
