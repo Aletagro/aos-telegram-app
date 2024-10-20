@@ -33,8 +33,10 @@ const Main = () => {
         <p className='title'>Age of Sigmar</p>
         <img src='https://kartinki.pics/uploads/posts/2022-08/thumbs/1660848806_7-kartinkin-net-p-varkhammer-fentezi-malekit-oboi-krasivo-8.jpg' alt='main' width='100%' />
         <div id='column' className='Chapter'>
-        {grandAlliances.map(renderButton)}
-        <Link to={'regimentOfRenownList'}>Regiment Of Renown</Link>
+            <Link to={'coreDocuments'}>Core Documents</Link>
+            {grandAlliances.map(renderButton)}
+            <Link to={'regimentOfRenownList'}>Regiment Of Renown</Link>
+            <Link to={'manifestations'}>Manifestations</Link>
         </div>
     </>
 }

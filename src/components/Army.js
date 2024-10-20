@@ -108,7 +108,6 @@ const Army = () => {
     } else {
         armyOfRenown = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === alligance.id)
     }
-    console.log(armyOfRenown)
 
     const renderButton = (item) => <Link key={item.title} to={item.screen || 'armyInfo'} state={{alligance, info: item}}>{item.title}</Link>
 

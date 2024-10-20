@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import {Route, Routes, useNavigate} from 'react-router-dom';
+import {Route, Routes, useNavigate, useLocation} from 'react-router-dom';
 import Main from './components/Main';
 import Catalog from './components/Catalog';
 import Army from './components/Army';
@@ -9,11 +9,17 @@ import ArmyInfo from './components/ArmyInfo';
 import RegimentsOfRenownList from './components/RegimentsOfRenownList';
 import RegimentOfRenown from './components/RegimentOfRenown';
 import Search from './components/Search';
+import CoreDocuments from './components/CoreDocuments';
+import RuleSections from './components/RuleSections';
+import RuleChapters from './components/RuleChapters';
+import Rules from './components/Rules';
+import Manifestations from './components/Manifestations';
 import './App.css';
 
 const tg = window.Telegram.WebApp
 
 function App() {
+  const {pathname} = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -25,9 +31,12 @@ function App() {
       <button type="button" onClick={() => {navigate(-1)}}>
         Назад
       </button>
-      <button type="button" onClick={() => {navigate('Search')}}>
-        Поиск
-      </button>
+      {pathname !== '/search'
+        ? <button type="button" onClick={() => {navigate('search')}}>
+          Поиск
+        </button>
+        : null
+      }
     </div>
     <Routes>
       <Route index element={<Main />} />
@@ -43,6 +52,12 @@ function App() {
       <Route path={'regimentOfRenownList/regimentOfRenown/warscroll'} element={<Warscroll />} />
       <Route path={'search'} element={<Search />} />
       <Route path={'search/warscroll'} element={<Warscroll />} />
+      <Route path={'coreDocuments'} element={<CoreDocuments />} />
+      <Route path={'coreDocuments/ruleSections'} element={<RuleSections />} />
+      <Route path={'coreDocuments/ruleSections/ruleChapters'} element={<RuleChapters />} />
+      <Route path={'coreDocuments/ruleSections/ruleChapters/rules'} element={<Rules />} />
+      <Route path={'manifestations'} element={<Manifestations />} />
+      <Route path={'manifestations/warscroll'} element={<Warscroll />} />
     </Routes>
   </div>
 }

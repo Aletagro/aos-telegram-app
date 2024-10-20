@@ -3,13 +3,14 @@ import './styles/Ability.css'
 
 const dataBase = require('../dataBase.json')
 
-const Ability = ({ability}) => {
-    const abilityKeywordsName = ability.castingValue ? 'lore_ability_keyword' : 'warscroll_ability_keyword'
-    const abilityIdName = ability.castingValue ? 'loreAbilityId' : 'warscrollAbilityId'
-    const keywordsIds = dataBase.data[abilityKeywordsName].filter(keyword => keyword[abilityIdName] === ability.id).map(item => item.keywordId)
+const Ability = ({ability, abilityKeywordsName, abilityIdName}) => {
+    const _abilityKeywordsName = abilityKeywordsName || (ability.castingValue ? 'lore_ability_keyword' : 'warscroll_ability_keyword')
+    const _abilityIdName = abilityIdName || (ability.castingValue ? 'loreAbilityId' : 'warscrollAbilityId')
+    const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
     const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
+    const keywordsLength = keywords.length
 
-    const renderKeyword = (keyword) => <p key={keyword.id} id='keyword'>{keyword.name},</p>
+    const renderKeyword = (keyword, index) => <p key={keyword.id} id='keyword'>{keyword.name}{keywordsLength === index + 1 ? '' : ','}</p>
 
     return <div id='ability'>
         <p>{ability.phaseDetails}{ability.cpCost ? ` - ${ability.cpCost} CP` : null}</p>
@@ -17,7 +18,7 @@ const Ability = ({ability}) => {
         {ability.declare ? <p id='text'>Declare: {ability.declare}</p> : null}
         <p id='text'>Effect: {ability.effect}</p>
         <p>Phase: {ability.phase}</p>
-        {keywords.length > 0
+        {keywordsLength
             ? <div id='row' className='keywordsContainer'>
                 <p id='keyword'>Keywords:</p>
                 {keywords.map(renderKeyword)}
