@@ -9,7 +9,7 @@ const Ability = ({ability}) => {
     const keywordsIds = dataBase.data[abilityKeywordsName].filter(keyword => keyword[abilityIdName] === ability.id).map(item => item.keywordId)
     const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
 
-    const renderKeyword = (keyword) => <p id='keyword'>{keyword.name},</p>
+    const renderKeyword = (keyword) => <p key={keyword.id} id='keyword'>{keyword.name},</p>
 
     return <div id='ability'>
         <p>{ability.phaseDetails}{ability.cpCost ? ` - ${ability.cpCost} CP` : null}</p>

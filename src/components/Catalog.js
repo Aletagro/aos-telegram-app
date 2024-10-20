@@ -22,7 +22,7 @@ const Catalog = () => {
         <p className='title'>{grandAlliance.name}</p>
         <img src={grandAlliance.image} alt={grandAlliance.name} width='100%' />
         <div id='column' className='Chapter'>
-        {allegiances && allegiances.map(renderButton)}
+            {allegiances && allegiances.map(renderButton)}
         </div>
     </>
 }

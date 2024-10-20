@@ -31,7 +31,8 @@ const screens = [
         ruleName: 'lore_ability',
         ruleIdName: 'loreId',
         abilityGroupType: undefined,
-        includesText: 'Lore of'
+        includesText: 'Lore of',
+        secondIncludesText: 'Spell Lore'
     },
     {
         title: 'Prayes Lores',
@@ -84,7 +85,10 @@ const Army = () => {
         const abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
             item.factionId === alligance.id &&
             item.abilityGroupType === screen.abilityGroupType &&
-            (screen.includesText ? item.name.includes(screen.includesText) : true)
+            (screen.includesText
+                ? item.name.includes(screen.includesText) || item.name.includes(screen.secondIncludesText)
+                : true
+            )
         )
         const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation.id))
         const abilities = abilitiesGroup.map((formation, index) => {

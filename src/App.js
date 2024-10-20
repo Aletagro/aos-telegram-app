@@ -6,6 +6,9 @@ import Army from './components/Army';
 import Units from './components/Units';
 import Warscroll from './components/Warscroll';
 import ArmyInfo from './components/ArmyInfo';
+import RegimentsOfRenownList from './components/RegimentsOfRenownList';
+import RegimentOfRenown from './components/RegimentOfRenown';
+import Search from './components/Search';
 import './App.css';
 
 const tg = window.Telegram.WebApp
@@ -19,8 +22,11 @@ function App() {
 
   return <div>
     <div className="header" id="myHeader">
-    <button type="button" onClick={() => {navigate(-1)}}>
+      <button type="button" onClick={() => {navigate(-1)}}>
         Назад
+      </button>
+      <button type="button" onClick={() => {navigate('Search')}}>
+        Поиск
       </button>
     </div>
     <Routes>
@@ -32,6 +38,11 @@ function App() {
       <Route path={'catalog/army/armyInfo'} element={<ArmyInfo />} />
       <Route path={'catalog/army/armyOfRenown'} element={<Army />} />
       <Route path={'catalog/army/armyOfRenown/armyInfo'} element={<ArmyInfo />} />
+      <Route path={'regimentOfRenownList'} element={<RegimentsOfRenownList />} />
+      <Route path={'regimentOfRenownList/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'regimentOfRenownList/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'search'} element={<Search />} />
+      <Route path={'search/warscroll'} element={<Warscroll />} />
     </Routes>
   </div>
 }
