@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import Row from './Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -11,13 +11,18 @@ const CoreDocuments = () => {
     const documents = dataBase.data.publication.filter((publication) => publication.publicationGroupId === coreDocumentsId && !publication.spearheadName)
     documents.sort((a, b) => a.displayOrder - b.displayOrder)
 
-    const renderButton = (document) => <Link key={document.id} to={'ruleSections'} state={{document}}>{document.name}</Link>
+    const renderRow = (document) => <Row
+        key={document.id}
+        title={document.name}
+        navigateTo='ruleSections'
+        state={{document}}
+    />
 
     return <>
         <p className='title'>Core Documents</p>
         <img src={rulesImage} alt='Core Documents' width='100%' />
         <div id='column' className='Chapter'>
-            {documents && documents.map(renderButton)}
+            {documents && documents.map(renderRow)}
         </div>
     </>
 }

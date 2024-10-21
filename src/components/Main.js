@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
 import Row from './Row'
 import './styles/Main.css'
 
@@ -28,16 +27,20 @@ const grandAlliances = [
 
 const Main = () => {
 
-    const renderButton = (grandAlliance) => <Link key={grandAlliance.id} to={'catalog'} state={{grandAlliance}}>{grandAlliance.name}</Link>
+    const renderRow = (grandAlliance) => <Row
+        key={grandAlliance.id}
+        title={grandAlliance.name}
+        navigateTo='catalog'
+        state={{grandAlliance}}
+    />
 
     return <>
         <p className='title'>Age of Sigmar</p>
         <img src='https://kartinki.pics/uploads/posts/2022-08/thumbs/1660848806_7-kartinkin-net-p-varkhammer-fentezi-malekit-oboi-krasivo-8.jpg' alt='main' width='100%' />
         <div id='column' className='Chapter'>
-            <Link to={'coreDocuments'}>Core Documents</Link>
-            {grandAlliances.map(renderButton)}
-            <Link to={'regimentOfRenownList'}>Regiment Of Renown</Link>
-            {/* <Link to={'manifestations'}>Manifestations</Link> */}
+            <Row title='Core Documents' navigateTo='coreDocuments' />
+            {grandAlliances.map(renderRow)}
+            <Row title='Regiment Of Renown' navigateTo='regimentOfRenownList' />
             <Row title='Manifestations' navigateTo='manifestations' />
         </div>
     </>

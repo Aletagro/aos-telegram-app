@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import Row from './Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -10,7 +10,12 @@ const Manifestations = () => {
     let lores = dataBase.data.lore.filter((lore) => lore.publicationId === manifestationsPublicationId)
     lores.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
-    const renderUnit = (unit) => <Link key={unit?.id} to={'warscroll'} state={{unit}}>{unit?.name}</Link>
+    const renderUnit = (unit) => <Row
+        key={unit.id}
+        title={unit.name}
+        navigateTo='warscroll'
+        state={{unit}}
+    />
 
     const renderLore = (lore) => {
         const spells = dataBase.data.lore_ability.filter(ability => ability.loreId === lore.id)

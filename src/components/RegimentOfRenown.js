@@ -1,5 +1,6 @@
 import React from 'react';
-import {useLocation, Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import Row from './Row'
 import Ability from './Ability'
 import './styles/Catalog.css'
 
@@ -13,7 +14,12 @@ const RegimentOfRenown = () => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
 
-    const renderWarscroll = (unit) => <Link key={unit?.id} to={'warscroll'} state={{unit}}>{unit?.name}</Link>
+    const renderWarscroll = (unit) => <Row
+        key={unit.id}
+        title={unit.name}
+        navigateTo='warscroll'
+        state={{unit}}
+    />
 
     return <>
         <p className='title'>{regiment.name}</p>

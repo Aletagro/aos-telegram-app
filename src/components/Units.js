@@ -1,5 +1,6 @@
 import React from 'react';
-import {useLocation, Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import Row from './Row'
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
@@ -26,7 +27,12 @@ const Units = () => {
     setSort(manifestations)
     setSort(factionTerrain)
 
-    const renderButton = (unit) => <Link key={unit?.id} to={'warscroll'} state={{unit}}>{unit?.name}</Link>
+    const renderRow = (unit) => <Row
+        key={unit?.id}
+        title={unit?.name}
+        navigateTo='warscroll'
+        state={{unit}}
+    />
 
     return <>
         <p className='title'>{alligance.name}</p>
@@ -35,49 +41,49 @@ const Units = () => {
         {heroes.length > 0
             ? <>
                 <h4>Hero</h4>
-                {heroes.map(renderButton)}
+                {heroes.map(renderRow)}
             </>
             : null
         }
         {infantries.length > 0
             ? <>
                 <h4>Infantry</h4>
-                {infantries.map(renderButton)}
+                {infantries.map(renderRow)}
             </>
             : null
         }
         {cavalries.length > 0
             ? <>
                 <h4>Cavalry</h4>
-                {cavalries.map(renderButton)}
+                {cavalries.map(renderRow)}
             </>
             : null
         }
         {beasts.length > 0
             ? <>
                 <h4>Beast</h4>
-                {beasts.map(renderButton)}
+                {beasts.map(renderRow)}
             </>
             : null
         }
         {monsters.length > 0
             ? <>
                 <h4>Monster</h4>
-                {monsters.map(renderButton)}
+                {monsters.map(renderRow)}
             </>
             : null
         }
         {manifestations.length > 0
             ? <>
                 <h4>Manifestation</h4>
-                {manifestations.map(renderButton)}
+                {manifestations.map(renderRow)}
             </>
             : null
         }
         {factionTerrain.length > 0
             ? <>
                 <h4>Faction Terrain</h4>
-                {factionTerrain.map(renderButton)}
+                {factionTerrain.map(renderRow)}
             </>
             : null
         }

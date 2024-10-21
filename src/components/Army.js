@@ -1,5 +1,6 @@
 import React from 'react';
-import {useLocation, Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import Row from './Row'
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
@@ -109,9 +110,19 @@ const Army = () => {
         armyOfRenown = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === alligance.id)
     }
 
-    const renderButton = (item) => <Link key={item.title} to={item.screen || 'armyInfo'} state={{alligance, info: item}}>{item.title}</Link>
+    const renderRow = (item) => <Row
+        key={item.title}
+        title={item.title}
+        navigateTo={item.screen || 'armyInfo'}
+        state={{alligance, info: item}}
+    />
 
-    const renderArmyOfRenown = (item) => <Link id='armyOfRenown' key={item.title} to={'armyOfRenown'} state={{alligance: item, isArmyOfRenown: true}}>{item.name}</Link>
+    const renderArmyOfRenown = (item) => <Row
+        key={item.title}
+        title={item.name}
+        navigateTo='armyOfRenown'
+        state={{alligance: item, isArmyOfRenown: true}}
+    />
 
     const renderRosterOptions = (option) => <p key={option.id} id='rosterOption'>- {option.text}</p>
 
@@ -119,7 +130,7 @@ const Army = () => {
         <p className='title'>{alligance.name}</p>
         <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />
         <div id='column' className='Chapter'>
-            {items.map(renderButton)}
+            {items.map(renderRow)}
             {armyOfRenown.length > 0
                 ? <>
                     <h4>Army of Renown</h4>

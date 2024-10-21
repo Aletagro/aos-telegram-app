@@ -8,6 +8,7 @@ const Search = () => {
     const [value, setValue] = useState('')
     const [warscrolls, setWarscrolls] = useState([])
 
+    // TODO добавить дебаунс
     useEffect(() => {
         if (value) {
             const warscrolls = dataBase.data.warscroll.filter((warscroll) => !warscroll.isSpearhead && warscroll.name.toLowerCase().includes(value.toLowerCase()))

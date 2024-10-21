@@ -1,5 +1,6 @@
 import React from 'react';
-import {useLocation, Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import Row from './Row'
 import Rules from './Rules'
 import './styles/Catalog.css'
 
@@ -10,13 +11,18 @@ const RuleChapters = () => {
     const ruleChapters = dataBase.data.rule_section.filter((section) => section.parentId === chapter.id)
     ruleChapters.sort((a, b) => a.displayOrder - b.displayOrder)
 
-    const renderButton = (paragraph) => <Link key={paragraph.id} to={'rules'} state={{paragraph}}>{paragraph.name}</Link>
+    const renderRow = (paragraph) => <Row
+        key={paragraph.id}
+        title={paragraph.name}
+        navigateTo='rules'
+        state={{paragraph}}
+    />
 
     return ruleChapters.length > 0
         ? <>
             <p className='title'>{document.name}</p>
             <div id='column' className='Chapter'>
-                {ruleChapters && ruleChapters.map(renderButton)}
+                {ruleChapters && ruleChapters.map(renderRow)}
             </div>
         </>
         : <Rules info={chapter} />

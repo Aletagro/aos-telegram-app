@@ -1,5 +1,6 @@
 import React from 'react';
-import {useLocation, Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import Row from './Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -16,13 +17,18 @@ const Catalog = () => {
     }
     allegiances.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
-    const renderButton = (alligance) => <Link key={alligance.id} to={'army'} state={{alligance}}>{alligance.name}</Link>
+    const renderRow = (alligance) => <Row
+        key={alligance.id}
+        title={alligance.name}
+        navigateTo='army'
+        state={{alligance}}
+    />
 
     return <>
         <p className='title'>{grandAlliance.name}</p>
         <img src={grandAlliance.image} alt={grandAlliance.name} width='100%' />
         <div id='column' className='Chapter'>
-            {allegiances && allegiances.map(renderButton)}
+            {allegiances && allegiances.map(renderRow)}
         </div>
     </>
 }
