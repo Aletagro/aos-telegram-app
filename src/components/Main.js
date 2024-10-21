@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
+import Row from './Row'
 import './styles/Main.css'
 
 const grandAlliances = [
@@ -36,7 +37,8 @@ const Main = () => {
             <Link to={'coreDocuments'}>Core Documents</Link>
             {grandAlliances.map(renderButton)}
             <Link to={'regimentOfRenownList'}>Regiment Of Renown</Link>
-            <Link to={'manifestations'}>Manifestations</Link>
+            {/* <Link to={'manifestations'}>Manifestations</Link> */}
+            <Row title='Manifestations' navigateTo='manifestations' />
         </div>
     </>
 }
