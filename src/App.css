@@ -1,10 +1,10 @@
 body {
-    background: var(--tg-theme-bg-color);
-    color: var(--tg-theme-text-color);
+    background: rgb(240, 239, 239);
+    color: black;
 }
 .header {
     position: sticky;
     top: 0;
     padding: 10px 16px;
-    background: var(--tg-theme-header-bg-color);
+    background: darkred;
   }

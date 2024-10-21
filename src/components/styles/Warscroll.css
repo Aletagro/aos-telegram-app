@@ -1,117 +1,26 @@
-/* rangeWeapons */
+#warscroll {
+  background: white;
+  margin: 0px;
+  padding: 0px 16px;
+}
+
+.weaponName {
+  background: rgb(46, 46, 49);
+  color: white;
+  border-radius: 4px;
+  padding: 16px 16px;
+}
 .rangeWeapons {
   display: grid;
-  grid-template-columns: repeat(6, 50px);
+  grid-template-columns: repeat(6, 1fr);
+  padding: 0px 16px;
 }
-.rangeWeaponName {
-  grid-column: 1 / 6;
-  grid-row: 1;
-}
-.rangeWeaponRng {
-  grid-column: 1;
-  grid-row: 2;
-}
-.rangeWeaponRange {
-  grid-column: 1;
-  grid-row: 3;
-}
-.rangeWeaponA {
-  grid-column: 2;
-  grid-row: 2;
-}
-.rangeWeaponAttacks {
-  grid-column: 2;
-  grid-row: 3;
-}
-.rangeWeaponH {
-  grid-column: 3;
-  grid-row: 2;
-}
-.rangeWeaponHit {
-  grid-column: 3;
-  grid-row: 3;
-}
-.rangeWeaponW {
-  grid-column: 4;
-  grid-row: 2;
-}
-.rangeWeaponWound {
-  grid-column: 4;
-  grid-row: 3;
-}
-.rangeWeaponR {
-  grid-column: 5;
-  grid-row: 2;
-}
-.rangeWeaponRend {
-  grid-column: 5;
-  grid-row: 3;
-}
-.rangeWeaponD {
-  grid-column: 6;
-  grid-row: 2;
-}
-.rangeWeaponDamage {
-  grid-column: 6;
-  grid-row: 3;
-}
-
-/* meleeWeapons */
 .meleeWeapons {
   display: grid;
-  grid-template-columns: repeat(5, 50px);
-}
-.weaponName {
-  grid-column: 1 / 5;
-  grid-row: 1;
-}
-.weaponA {
-  grid-column: 1;
-  grid-row: 2;
-}
-.weaponAttacks {
-  grid-column: 1;
-  grid-row: 3;
-}
-.weaponH {
-  grid-column: 2;
-  grid-row: 2;
-}
-.weaponHit {
-  grid-column: 2;
-  grid-row: 3;
-}
-.weaponW {
-  grid-column: 3;
-  grid-row: 2;
-}
-.weaponWound {
-  grid-column: 3;
-  grid-row: 3;
-}
-.weaponR {
-  grid-column: 4;
-  grid-row: 2;
-}
-.weaponRend {
-  grid-column: 4;
-  grid-row: 3;
-}
-.weaponD {
-  grid-column: 5;
-  grid-row: 2;
-}
-.weaponDamage {
-  grid-column: 5;
-  grid-row: 3;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 0px 16px;
 }
 
-#ability {
-  display: block;
-  padding: 12px;
-  margin-bottom: 16px;
-  border: 1px solid black;
-}
 .keywordsContainer {
   display: flex;
 }
@@ -131,4 +40,15 @@
 }
 #wargearOptions {
   white-space: pre-line;
+}
+
+#textItalic {
+  white-space: pre-line;
+  font-style: italic;
+}
+
+#keywords {
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 8px 8px;
 }

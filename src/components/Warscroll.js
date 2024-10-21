@@ -29,20 +29,20 @@ const Warscroll = () => {
     const renderRangeWeapon = (weapon) => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
         return <>
+            <p className='weaponName'>{weapon.name}</p>
             <div className='rangeWeapons'>
-                <p className='rangeWeaponName'>{weapon.name}</p>
-                <p className='rangeWeaponRng'>Range</p>
-                <p className='rangeWeaponRange'>{weapon.range}</p>
-                <p className='rangeWeaponA'>A</p>
-                <p className='rangeWeaponAttacks'>{weapon.attacks}</p>
-                <p className='rangeWeaponH'>HIT</p>
-                <p className='rangeWeaponHit'>{weapon.hit}</p>
-                <p className='rangeWeaponW'>W</p>
-                <p className='rangeWeaponWound'>{weapon.wound}</p>
-                <p className='rangeWeaponR'>R</p>
-                <p className='rangeWeaponRend'>{weapon.rend}</p>
-                <p className='rangeWeaponD'>D</p>
-                <p className='rangeWeaponDamage'>{weapon.damage}</p>
+                <p>Range</p>
+                <p>A</p>
+                <p>HIT</p>
+                <p>W</p>
+                <p>R</p>
+                <p>D</p>
+                <p>{weapon.range}</p>
+                <p>{weapon.attacks}</p>
+                <p>{weapon.hit}</p>
+                <p>{weapon.wound}</p>
+                <p>{weapon.rend}</p>
+                <p>{weapon.damage}</p>
             </div>
             <div id='row' className='weaponAbilitiesContainer'>
                 {weaponAbilities.map(renderWeaponAbility)}
@@ -54,18 +54,18 @@ const Warscroll = () => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
 
         return <>
+            <p className='weaponName'>{weapon.name}</p>
             <div className='meleeWeapons'>
-                <p className='weaponName'>{weapon.name}</p>
-                <p className='weaponA'>A</p>
-                <p className='weaponAttacks'>{weapon.attacks}</p>
-                <p className='weaponH'>HIT</p>
-                <p className='weaponHit'>{weapon.hit}</p>
-                <p className='weaponW'>W</p>
-                <p className='weaponWound'>{weapon.wound}</p>
-                <p className='weaponR'>R</p>
-                <p className='weaponRend'>{weapon.rend}</p>
-                <p className='weaponD'>D</p>
-                <p className='weaponDamage'>{weapon.damage}</p>
+                <p>A</p>
+                <p>HIT</p>
+                <p>W</p>
+                <p>R</p>
+                <p>D</p>
+                <p>{weapon.attacks}</p>
+                <p>{weapon.hit}</p>
+                <p>{weapon.wound}</p>
+                <p>{weapon.rend}</p>
+                <p>{weapon.damage}</p>
             </div>
             <div id='row' className='weaponAbilitiesContainer'>
                 {weaponAbilities.map(renderWeaponAbility)}
@@ -77,11 +77,11 @@ const Warscroll = () => {
 
     const renderRegimentOption = (option) => <p>- {option.optionText}</p>
 
-    return <>
+    return <div id='warscroll'>
         <h1 className='title'>{unit.name}</h1>
         <img src={unit.bannerImage} alt={unit.name} width='100%' />
         <div>
-            <h4>Characteristics</h4>
+            <h3>Characteristics</h3>
             <p>Move: {unit.move}</p>
             <p>Health: {unit.health}</p>
             {isManifestation
@@ -95,48 +95,48 @@ const Warscroll = () => {
         </div>
         {rangeWeapons.length > 0
             ? <>
-                <h4>Range Weapons</h4>
+                <h3>Range Weapons</h3>
                 {rangeWeapons.map(renderRangeWeapon)}
             </>
             : null
         }
         {meleeWeapons.length > 0
             ? <>
-                <h4>Melee Weapons</h4>
+                <h3>Melee Weapons</h3>
                 {meleeWeapons.map(renderMeleeWeapon)}
             </>
             : null
         }
         {abilities.length > 0
             ? <>
-                <h4>Abilities</h4>
+                <h3>Abilities</h3>
                 {abilities.map(renderAbility)}
             </>
             : null
         }
         <>
-            <h4>Unit Details</h4>
+            <h3>Unit Details</h3>
             <p>{unit.modelCount} model</p>
             {unit.wargearOptionsText ? <p id='wargearOptions'>{unit.wargearOptionsText}</p> : null}
             {unit.points ? <p>{unit.points} points</p> : null}
+            <p><b>Размер базы:</b> {unit.baseSize}</p>
             {regimentOptions.length > 0
                 ? <>
-                    <h5>Regiment Options</h5>
+                    <b>Regiment Options</b>
                     {regimentOptions.map(renderRegimentOption)}
-                    {unit.notes ? <p>Notes: {unit.notes}</p> : null}
-                    <p>Размер базы: {unit.baseSize}</p>
                 </>
                 : null
             }
+            {unit.notes ? <p>Notes: {unit.notes}</p> : null}
         </>
         {unit.referenceKeywords
             ? <>
-                <h4>Keywords: {unit.referenceKeywords}</h4>
+                <p id='keywords'>Keywords: <b>{unit.referenceKeywords}</b></p>
             </>
             : null
         }
-        <h6>{unit.lore}</h6>
-    </>
+        <p id='textItalic'>{unit.lore}</p>
+    </div>
 }
 
 export default Warscroll

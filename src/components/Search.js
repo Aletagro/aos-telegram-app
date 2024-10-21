@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom'
+import Row from './Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -21,7 +21,12 @@ const Search = () => {
 
     const handleChange = (e) => setValue(e.target.value)
 
-    const renderWarscroll = (unit) => <Link key={unit?.id} to={'warscroll'} state={{unit}}>{unit?.name}</Link>
+    const renderWarscroll = (unit) => <Row
+        key={unit.id}
+        title={unit.name}
+        navigateTo='warscroll'
+        state={{unit}}
+    />
 
     return <>
         <p className='title'>Поиск</p>
