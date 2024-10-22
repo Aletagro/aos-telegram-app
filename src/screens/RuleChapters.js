@@ -1,6 +1,7 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
+import Battleplans from '../components/Battleplans'
 import Rules from './Rules'
 import './styles/Catalog.css'
 
@@ -24,7 +25,9 @@ const RuleChapters = () => {
                 {ruleChapters && ruleChapters.map(renderRow)}
             </div>
         </>
-        : <Rules info={chapter} />
+        : chapter.name === 'Battleplans'
+            ? <Battleplans id={chapter.id} />
+            : <Rules info={chapter} />
 }
 
 export default RuleChapters

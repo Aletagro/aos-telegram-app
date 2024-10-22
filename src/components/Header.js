@@ -5,7 +5,6 @@ import './styles/Header.css'
 const Header = () => {
     const navigate = useNavigate()
     const {pathname, state} = useLocation()
-    console.log(pathname)
 
     return <div className="header" id="myHeader">
         {pathname === '/'

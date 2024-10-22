@@ -76,7 +76,6 @@ const Warscroll = () => {
     return <>
         <img src={unit.bannerImage} alt={unit.name} width='100%' />
         <div id='warscroll'>
-            <h3>Characteristics</h3>
             <div id='characteristicsContainer' className='flexContainer'>
                 {characteristics.map(renderCharacteristic)}
             </div>
@@ -106,7 +105,7 @@ const Warscroll = () => {
                 <p>{unit.modelCount} model</p>
                 {unit.wargearOptionsText ? <p id='wargearOptions'>{unit.wargearOptionsText}</p> : null}
                 {unit.points ? <p>{unit.points} points</p> : null}
-                <p><b>Размер базы:</b> {unit.baseSize}</p>
+                <p><b>Base size:</b> {unit.baseSize}</p>
                 {regimentOptions.length > 0
                     ? <>
                         <b>Regiment Options</b>

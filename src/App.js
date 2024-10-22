@@ -14,6 +14,7 @@ import RuleSections from './screens/RuleSections';
 import RuleChapters from './screens/RuleChapters';
 import Manifestations from './screens/Manifestations';
 import Rules from './screens/Rules';
+import Battleplan from './screens/Battleplan';
 import Header from './components/Header'
 import './App.css';
 
@@ -44,6 +45,7 @@ function App() {
       <Route path={'coreDocuments/ruleSections'} element={<RuleSections />} />
       <Route path={'coreDocuments/ruleSections/ruleChapters'} element={<RuleChapters />} />
       <Route path={'coreDocuments/ruleSections/ruleChapters/rules'} element={<Rules />} />
+      <Route path={'coreDocuments/ruleSections/ruleChapters/battleplan'} element={<Battleplan />} />
       <Route path={'manifestations'} element={<Manifestations />} />
       <Route path={'manifestations/warscroll'} element={<Warscroll />} />
     </Routes>

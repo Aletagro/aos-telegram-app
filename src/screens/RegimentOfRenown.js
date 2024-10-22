@@ -7,6 +7,7 @@ import './styles/Catalog.css'
 const dataBase = require('../dataBase.json')
 
 const RegimentOfRenown = () => {
+    window.scrollTo(0, 0)
     const {regiment} = useLocation().state
     const regimentAbilities = dataBase.data.ability.filter((group) => group.abilityGroupId === regiment.id)
     const warscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === regiment.id)
