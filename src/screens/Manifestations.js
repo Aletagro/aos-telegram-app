@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './Row'
+import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -21,13 +21,12 @@ const Manifestations = () => {
         const spells = dataBase.data.lore_ability.filter(ability => ability.loreId === lore.id)
         const units = spells.map(spell => dataBase.data.warscroll.find(warscroll => warscroll.id === spell.linkedWarscrollId))
         return <>
-            <h4>{lore.name}</h4>
+            <h4 id='unitType'>{lore.name}</h4>
             {units.map(renderUnit)}
         </>
     }
 
     return <>
-        <p className='title'>Manifestations</p>
         <div id='column' className='Chapter'>
             {lores && lores.map(renderLore)}
         </div>

@@ -1,7 +1,7 @@
 #warscroll {
   background: white;
   margin: 0px;
-  padding: 0px 16px;
+  padding: 0px 8px;
 }
 
 .weaponName {
@@ -20,11 +20,15 @@
   grid-template-columns: repeat(5, 1fr);
   padding: 0px 16px;
 }
+#cell {
+  font-weight: bold;
+  margin-top: 0px;
+}
 
 .keywordsContainer {
   display: flex;
 }
-.weaponAbilitiesContainer {
+.flexContainer {
   display: flex;
 }
 #weaponAbilities {
@@ -51,4 +55,32 @@
   border: 1px solid grey;
   border-radius: 8px;
   padding: 8px 8px;
+}
+
+#characteristicsContainer {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#characteristicSubContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#characteristicValue {
+  background: rgb(46, 46, 49);
+  color: white;
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  padding: 4px 4px;
+  margin: 0px;
+  font-size: 18px;
+  text-align: center;
+  align-content: center;
+}
+
+#characteristicTitle {
+  text-align: center;
 }

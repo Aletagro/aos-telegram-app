@@ -1,0 +1,16 @@
+.Chapter {
+    flex: 1;
+    display: flex;
+  }
+  
+#column {
+  flex-direction: column;
+}
+
+#unitType {
+  background: rgb(46, 46, 49);
+  color: white;
+  border-radius: 4px;
+  padding: 16px 16px;
+  font-weight: bold;
+}

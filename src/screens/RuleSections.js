@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import Row from './Row'
+import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -18,7 +18,6 @@ const RuleSections = () => {
     />
 
     return <>
-        <p className='title'>{document.name}</p>
         <img src={document.backgroundImage} alt={document.name} width='100%' />
         <div id='column' className='Chapter'>
             {ruleSections && ruleSections.map(renderRow)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import Row from './Row'
+import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -25,7 +25,6 @@ const Catalog = () => {
     />
 
     return <>
-        <p className='title'>{grandAlliance.name}</p>
         <img src={grandAlliance.image} alt={grandAlliance.name} width='100%' />
         <div id='column' className='Chapter'>
             {allegiances && allegiances.map(renderRow)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import Ability from './Ability'
+import Ability from '../components/Ability'
 import './styles/Rules.css'
 
 const dataBase = require('../dataBase.json')
@@ -13,7 +13,7 @@ const Rules = ({info}) => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} abilityKeywordsName='ability_keyword' abilityIdName='abilityId' />
 
-    const renderBullet = (bullet) => <p key={bullet.id}>- {bullet.text}</p>
+    const renderBullet = (bullet) => <p key={bullet.id}>&#8226; {bullet.text}</p>
 
     const renderRuleComponent = (component) => {
         switch (component.contentType) {
@@ -31,7 +31,7 @@ const Rules = ({info}) => {
                     <p>{component.textContent}</p>
                 </div>
             case 'loreAccordion':
-                    return <h5 key={component.id}>{component.textContent}</h5>
+                    return <p id='textItalic' key={component.id}>{component.textContent}</p>
             case 'image':
                 return <img src={component.imageUrl} alt={component.altText} width='100%' />
             case 'ability':
@@ -58,12 +58,9 @@ const Rules = ({info}) => {
         </>
     }
 
-    return <>
-        <p className='title'>{_paragraph.name}</p>
-        <div id='column' className='Chapter'>
-            {rules && rules.map(renderRule)}
-        </div>
-    </>
+    return <div id='rulesContainer'>
+        {rules && rules.map(renderRule)}
+    </div>
 }
 
 export default Rules

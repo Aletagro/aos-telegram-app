@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './Row'
+import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -19,7 +19,6 @@ const CoreDocuments = () => {
     />
 
     return <>
-        <p className='title'>Core Documents</p>
         <img src={rulesImage} alt='Core Documents' width='100%' />
         <div id='column' className='Chapter'>
             {documents && documents.map(renderRow)}

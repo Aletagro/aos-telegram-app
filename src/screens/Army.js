@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import Row from './Row'
+import Row from '../components/Row'
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
@@ -32,8 +32,7 @@ const screens = [
         ruleName: 'lore_ability',
         ruleIdName: 'loreId',
         abilityGroupType: undefined,
-        includesText: 'Lore of',
-        secondIncludesText: 'Spell Lore'
+        includesTexts: ['Lore of', 'Spell Lore', 'Arcane']
     },
     {
         title: 'Prayes Lores',
@@ -41,7 +40,7 @@ const screens = [
         ruleName: 'lore_ability',
         ruleIdName: 'loreId',
         abilityGroupType: undefined,
-        includesText: 'Prayer'
+        includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
     }
 ]
 
@@ -86,8 +85,8 @@ const Army = () => {
         const abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
             item.factionId === alligance.id &&
             item.abilityGroupType === screen.abilityGroupType &&
-            (screen.includesText
-                ? item.name.includes(screen.includesText) || item.name.includes(screen.secondIncludesText)
+            (screen.includesTexts
+                ? Boolean(screen.includesTexts.find(text => item.name.includes(text)))
                 : true
             )
         )
@@ -124,18 +123,17 @@ const Army = () => {
         state={{alligance: item, isArmyOfRenown: true}}
     />
 
-    const renderRosterOptions = (option) => <p key={option.id} id='rosterOption'>- {option.text}</p>
+    const renderRosterOptions = (option) => <p key={option.id}>&#8226; {option.text}</p>
 
     return <>
-        <p className='title'>{alligance.name}</p>
         <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />
         <div id='column' className='Chapter'>
             {items.map(renderRow)}
             {armyOfRenown.length > 0
-                ? <>
-                    <h4>Army of Renown</h4>
+                ? <div>
+                    <p id='armyOfRenown'>Army of Renown</p>
                     {armyOfRenown.map(renderArmyOfRenown)}
-                </>
+                </div>
                 : null
             }
             {isArmyOfRenown

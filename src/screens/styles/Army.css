@@ -1,0 +1,25 @@
+.Chapter {
+    flex: 1;
+    display: flex;
+  }
+  
+  #column {
+    flex-direction: column;
+  }
+
+  #rosterOption {
+    padding-left: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  #armyOfRenown {
+    width: 400px;
+  }
+
+  #armyOfRenown {
+    padding-left: 8px;
+    font-weight: bold;
+    font-size: 20px;
+  }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Row from './Row'
+import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -19,7 +19,6 @@ const RegimentsOfRenownList = () => {
     />
 
     return <>
-        <p className='title'>Regiment Of Renown</p>
         <img src={image} alt='Regiment Of Renown' width='100%' />
         <div id='column' className='Chapter'>
             {regimentsOfRenown && regimentsOfRenown.map(renderRow)}

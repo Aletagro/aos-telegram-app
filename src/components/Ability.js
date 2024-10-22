@@ -38,7 +38,7 @@ const abilitiesType = {
     }
 }
 
-const Ability = ({ability, abilityKeywordsName, abilityIdName}) => {
+const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown}) => {
     const _abilityKeywordsName = abilityKeywordsName || (ability.castingValue ? 'lore_ability_keyword' : 'warscroll_ability_keyword')
     const _abilityIdName = abilityIdName || (ability.castingValue ? 'loreAbilityId' : 'warscrollAbilityId')
     const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
@@ -46,13 +46,14 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName}) => {
     const keywordsLength = keywords.length
     const borderColor = abilitiesType[ability.phase]?.background
 
-    const renderKeyword = (keyword, index) => <p key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}</p>
+    const renderKeyword = (keyword, index) => <p key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}&nbsp;</p>
 
     return <div id='ability' style={{border: `1px solid ${borderColor}`}}>
         <div id='header' style={{background: borderColor}}>
             <p className='headerText'>{ability.phaseDetails}</p>
-            {ability.cpCost ? <p className='headerText'>{`${ability.cpCost} CP`}</p> : null}
-            {ability.castingValue ? <p id='castingValue'>{ability.castingValue}</p> : null}
+            {ability.cpCost && !isRegimentOfRenown ? <p className='headerText'>{`${ability.cpCost} CP`}</p> : null}
+            {/* У абилок, которые привязаны к Regiment Of Renown сложность каста приходит в cpCost */}
+            {ability.castingValue || (isRegimentOfRenown && ability.cpCost) ? <p id='castingValue'>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p> : null}
         </div>
         <div id='container'>
             <h4>{ability.name}</h4>

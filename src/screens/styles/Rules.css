@@ -1,8 +1,13 @@
+#rulesContainer {
+  background: white;
+  padding: 8px;
+}
 #lightgreyContainer {
     background: lightgrey;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 8px;
     white-space: pre-line;
+    margin-bottom: 16px;
 }
 #text {
     white-space: pre-line;

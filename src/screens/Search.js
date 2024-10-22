@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import Row from './Row'
-import './styles/Catalog.css'
+import Row from '../components/Row'
+import './styles/Search.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -12,12 +12,13 @@ const Search = () => {
     useEffect(() => {
         if (value) {
             const warscrolls = dataBase.data.warscroll.filter((warscroll) => !warscroll.isSpearhead && warscroll.name.toLowerCase().includes(value.toLowerCase()))
-            setWarscrolls(warscrolls.splice(0, 20))
+            setWarscrolls(setSort(warscrolls.splice(0, 20)))
         } else {
             setWarscrolls([])
         }
       }, [value]);
 
+    const setSort = (items) => items.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
     const handleChange = (e) => setValue(e.target.value)
 
@@ -29,9 +30,8 @@ const Search = () => {
     />
 
     return <>
-        <p className='title'>Поиск</p>
-        <input onChange={handleChange} autoFocus placeholder='Start Typing' type='search' id='search' name='search' size={40} />
         <div id='column' className='Chapter'>
+            <input id='searchInput' onChange={handleChange} autoFocus placeholder='Start Typing' type='search' name='search' size={40} />
             {warscrolls && warscrolls.map(renderWarscroll)}
         </div>
     </>

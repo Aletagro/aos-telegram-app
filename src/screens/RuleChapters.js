@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import Row from './Row'
+import Row from '../components/Row'
 import Rules from './Rules'
 import './styles/Catalog.css'
 
@@ -20,7 +20,6 @@ const RuleChapters = () => {
 
     return ruleChapters.length > 0
         ? <>
-            <p className='title'>{document.name}</p>
             <div id='column' className='Chapter'>
                 {ruleChapters && ruleChapters.map(renderRow)}
             </div>

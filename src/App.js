@@ -1,43 +1,31 @@
 import { useEffect } from 'react';
-import {Route, Routes, useNavigate, useLocation} from 'react-router-dom';
-import Main from './components/Main';
-import Catalog from './components/Catalog';
-import Army from './components/Army';
-import Units from './components/Units';
-import Warscroll from './components/Warscroll';
-import ArmyInfo from './components/ArmyInfo';
-import RegimentsOfRenownList from './components/RegimentsOfRenownList';
-import RegimentOfRenown from './components/RegimentOfRenown';
-import Search from './components/Search';
-import CoreDocuments from './components/CoreDocuments';
-import RuleSections from './components/RuleSections';
-import RuleChapters from './components/RuleChapters';
-import Rules from './components/Rules';
-import Manifestations from './components/Manifestations';
+import {Route, Routes} from 'react-router-dom';
+import Main from './screens/Main';
+import Catalog from './screens/Catalog';
+import Army from './screens/Army';
+import Units from './screens/Units';
+import Warscroll from './screens/Warscroll';
+import ArmyInfo from './screens/ArmyInfo';
+import RegimentsOfRenownList from './screens/RegimentsOfRenownList';
+import RegimentOfRenown from './screens/RegimentOfRenown';
+import Search from './screens/Search';
+import CoreDocuments from './screens/CoreDocuments';
+import RuleSections from './screens/RuleSections';
+import RuleChapters from './screens/RuleChapters';
+import Manifestations from './screens/Manifestations';
+import Rules from './screens/Rules';
+import Header from './components/Header'
 import './App.css';
 
 const tg = window.Telegram.WebApp
 
 function App() {
-  const {pathname} = useLocation()
-  const navigate = useNavigate()
-
   useEffect(() => {
     tg.ready()
   }, []);
 
   return <div>
-    <div className="header" id="myHeader">
-      <button type="button" onClick={() => {navigate(-1)}}>
-        Назад
-      </button>
-      {pathname !== '/search'
-        ? <button type="button" onClick={() => {navigate('search')}}>
-          Поиск
-        </button>
-        : null
-      }
-    </div>
+    <Header />
     <Routes>
       <Route index element={<Main />} />
       <Route path={'catalog'} element={<Catalog />} />

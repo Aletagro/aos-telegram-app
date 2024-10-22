@@ -1,0 +1,26 @@
+.header {
+  position: sticky;
+  top: 0;
+  padding: 8px 8px;
+  background: darkred;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  height: 40px;
+}
+#headerTitle {
+  color: white;
+  margin: 0px;
+  font-weight: bold;
+  font-size: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: block;
+}
+#headerButton {
+  background: darkred;
+  color: white;
+  font-size: 14px;
+  border: 0;
+}
