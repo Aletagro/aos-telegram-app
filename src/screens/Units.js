@@ -63,10 +63,10 @@ const Units = () => {
         state={{unit}}
     />
 
-    const renderUnitsType = (type) => <>
+    const renderUnitsType = (type) => <div key={type.title}>
         <h4 id='unitType'>{type.title}</h4>
         {type.units.map(renderRow)}
-    </>
+    </div>
 
     return <>
         <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />

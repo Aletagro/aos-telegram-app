@@ -5,11 +5,15 @@ import './styles/Header.css'
 const Header = () => {
     const navigate = useNavigate()
     const {pathname, state} = useLocation()
+    console.log(pathname)
 
     return <div className="header" id="myHeader">
-        <button type='button' id='headerButton' onClick={() => {navigate(-1)}}>
-            Back
-        </button>
+        {pathname === '/'
+            ? null
+            : <button type='button' id='headerButton' onClick={() => {navigate(-1)}}>
+                Back
+            </button>
+        }
         <p id='headerTitle'>{state?.title}</p>
         {pathname !== '/search'
             ? <button type='button' id='headerButton' onClick={() => {navigate('search')}}>
