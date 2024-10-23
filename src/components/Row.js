@@ -8,7 +8,7 @@ const Row = ({title, navigateTo, state}) => {
     const handleClick = () => navigate(navigateTo, {state: {title, ...state}, preventScrollReset: false})
 
     return <div className='container'>
-        <button  className='button' onClick={handleClick}>
+        <button  className='rowButton' onClick={handleClick}>
             <p id='title'>{title}</p>
         </button>
     </div>

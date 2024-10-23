@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Row from '../components/Row'
+import useDebounce from '../utilities/useDebounce'
 import './styles/Search.css'
 
 const dataBase = require('../dataBase.json')
@@ -8,15 +9,15 @@ const Search = () => {
     const [value, setValue] = useState('')
     const [warscrolls, setWarscrolls] = useState([])
 
-    // TODO добавить дебаунс
-    useEffect(() => {
+    useDebounce(() => {
         if (value) {
             const warscrolls = dataBase.data.warscroll.filter((warscroll) => !warscroll.isSpearhead && warscroll.name.toLowerCase().includes(value.toLowerCase()))
             setWarscrolls(setSort(warscrolls.splice(0, 20)))
         } else {
             setWarscrolls([])
         }
-      }, [value]);
+      }, [value], 300
+    );
 
     const setSort = (items) => items.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
@@ -30,8 +31,10 @@ const Search = () => {
     />
 
     return <>
-        <div id='column' className='Chapter'>
+        <div id='searchContainer'>
             <input id='searchInput' onChange={handleChange} autoFocus placeholder='Start Typing' type='search' name='search' size={40} />
+        </div>
+        <div id='column' className='Chapter'>
             {warscrolls && warscrolls.map(renderWarscroll)}
         </div>
     </>
