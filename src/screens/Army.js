@@ -7,6 +7,13 @@ const dataBase = require('../dataBase.json')
 
 const screens = [
     {
+        title: 'Battle Traits',
+        groupName: 'ability_group',
+        ruleName: 'ability',
+        ruleIdName: 'abilityGroupId',
+        abilityGroupType: 'battleTraits'
+    },
+    {
         title: 'Battle Formations',
         groupName: 'battle_formation',
         ruleName: 'battle_formation_rule',
@@ -66,12 +73,6 @@ const Army = () => {
         items.push({title: 'Warscrolls', screen: 'units'})
     }
 
-    // Battle Traits
-    const battleTraitsId = dataBase.data.ability_group.find((item) => item.factionId === alligance.id && item.abilityGroupType === 'battleTraits').id
-    const battleTraits = dataBase.data.ability.filter((item) => item.abilityGroupId === battleTraitsId)
-    if (battleTraits.length > 0) {
-        items.push({title: 'Battle Traits', withoutTitle: true, abilities: battleTraits})
-    }
     // otherEnhancements
     const otherEnhancement = dataBase.data.ability_group.find((item) => item.factionId === alligance.id && item.abilityGroupType === 'otherEnhancements')
     if (otherEnhancement) {
@@ -82,7 +83,7 @@ const Army = () => {
     }
 
     const getInfo = (screen) => {
-        const abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
+        let abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
             item.factionId === alligance.id &&
             item.abilityGroupType === screen.abilityGroupType &&
             (screen.includesTexts
@@ -90,6 +91,9 @@ const Army = () => {
                 : true
             )
         )
+        if (screen.abilityGroupType === 'battleTraits') {
+            abilitiesGroup = [abilitiesGroup.find(({publicationId}) => !dataBase.data.publication.find((item) => item.id === publicationId).spearheadName)]
+        }
         const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation.id))
         const abilities = abilitiesGroup.map((formation, index) => {
             return {name: formation.name, id: formation.id, abilities: abilitiesRules[index]}
