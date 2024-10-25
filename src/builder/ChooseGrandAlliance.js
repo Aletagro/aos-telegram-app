@@ -1,15 +1,21 @@
 import React from 'react';
 import Constants from '../Constants'
-import Row from '../components/Row'
+import {roster} from './roster'
+import BuilderRow from './BuilderRow'
 import './styles/ChooseGrandAlliance.css'
 
 const ChooseGrandAlliance = () => {
 
-    const renderRow = (grandAlliance) => <Row
+    const handleClick = ({grandAlliance}) => {
+        roster.grandAlliance = grandAlliance.name
+    }
+
+    const renderRow = (grandAlliance) => <BuilderRow
         key={grandAlliance.id}
         title={grandAlliance.name}
         navigateTo='chooseFaction'
         state={{grandAlliance}}
+        onClick={handleClick}
     />
 
     return  <div id='column' className='Chapter'>

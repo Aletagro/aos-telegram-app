@@ -9,7 +9,6 @@ const Battleplan = () => {
     const {battleplan} = useLocation().state
     const info = dataBase.data.rule_container_component.filter((component) => component.ruleContainerId === battleplan.id)
     info.sort((a, b) => a.displayOrder - b.displayOrder)
-    console.log(info)
 
     const renderRule = (rule) => <Rule rule={rule} />
 

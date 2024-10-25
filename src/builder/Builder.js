@@ -1,52 +1,63 @@
-import React, {useCallback, useState} from 'react';
-import {useNavigate, useLocation} from 'react-router-dom'
-import Row from '../components/Row'
+import React, {useCallback, useReducer} from 'react';
+import {useLocation} from 'react-router-dom'
+import {roster} from './roster'
+import Regiment from './Regiment'
 import './styles/Builder.css'
 
-// const dataBase = require('../dataBase.json')
+const dataBase = require('../dataBase.json')
+
+const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
+const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
 
 const emptyRegiment = {
     units: [],
-    isGeneral: false,
-    generalId: '',
+    heroId: '',
     points: 0
 }
 
 const Builder = () => {
     const {alligance} = useLocation().state
-    const navigate = useNavigate()
-    const [regiments, setRegiments] = useState([])
+    // eslint-disable-next-line
+    const [_, forceUpdate] = useReducer((x) => x + 1, 0)
+    const lores = dataBase.data.lore.filter(lore => lore.factionId === alligance.id)
+    const spellsLores = []
+    const preyersLores = []
+    const manifestationsLores = []
+    lores.forEach(lore => {
+        if (spellsIncludesTexts.find(text => lore.name.includes(text))) {
+            spellsLores.push(lore)
+        } else if (preyersIncludesTexts.find(text => lore.name.includes(text))) {
+            preyersLores.push(lore)
+        } else {
+            manifestationsLores.push(lore)
+        }
+    })
 
     const handleAddRegiment = useCallback(() => {
-        setRegiments([...regiments, emptyRegiment])
-    }, [regiments])
+        roster.regiments = [...roster.regiments, emptyRegiment]
+        forceUpdate()
+    }, [])
 
-    const handleAddUnit = (regiment, title) => () => {
-        navigate('addUnit', {state: {
-            alliganceId: alligance.id,
-            generalId: regiment.generalId,
-            title
-        }})
-    }
-   
-    const renderUnit = (unit) => <Row
-        key={unit?.id}
-        title={unit?.name}
-        navigateTo='warscroll'
-        state={{unit}}
+    const renderRegiment = (regiment, index) => <Regiment
+        regiment={regiment}
+        alliganceId={alligance.id}
+        index={index}
+        forceUpdate={forceUpdate}
     />
 
-    const renderRegiment = (regiment) => {
-        const title = regiment.generalId ? 'Add Unit' : 'Add Hero'
-        return <>
-            {regiment.units.map(renderUnit)}
-            <button onClick={handleAddUnit(regiment, title)}>{title}</button>
-        </>
-    }
-
     return <div id='column' className='Chapter'>
-        {regiments.map(renderRegiment)}
-        <button onClick={handleAddRegiment}>Add Regiment</button>
+        <p>Grand Alliance: {roster.grandAlliance}</p>
+        <p>Allegiance: {roster.allegiance}</p>
+        <p>{roster.points} Points</p>
+        {roster.regiments.length < 5 ? <button id='addRegimentButton' onClick={handleAddRegiment}>Add Regiment</button> : null}
+        {roster.regiments.length > 0
+            ? roster.regiments.map(renderRegiment)
+            : null
+        }
+        <p>Lores</p>
+        {spellsLores.length > 0 ? <p>Spell Lore</p> : null}
+        {preyersLores.length > 0 ? <p>Prayer Lore</p> : null}
+        {manifestationsLores.length > 0 ? <p>Manifestation Lore</p> : null}
     </div>
 }
 

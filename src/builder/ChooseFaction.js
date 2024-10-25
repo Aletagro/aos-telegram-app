@@ -1,6 +1,7 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import Row from '../components/Row'
+import {roster} from './roster'
+import BuilderRow from './BuilderRow'
 import {sortByName} from '../utilities/utils'
 import './styles/ChooseFaction.css'
 
@@ -18,12 +19,17 @@ const ChooseFaction = () => {
         allegiances = allegiances.filter(alligance => alligance.name !== 'Orruk Warclans')
     }
     sortByName(allegiances)
+
+    const handleClick = ({alligance}) => {
+        roster.allegiance = alligance.name
+    }
     
-    const renderRow = (alligance) => <Row
+    const renderRow = (alligance) => <BuilderRow
         key={alligance.id}
         title={alligance.name}
         navigateTo='builder'
         state={{alligance}}
+        onClick={handleClick}
     />
 
     const renderArmyOfRenown = (army) => army.map(renderRow)

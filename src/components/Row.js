@@ -5,7 +5,7 @@ import './styles/Row.css'
 const Row = ({title, navigateTo, state}) => {
     const navigate = useNavigate()
 
-    const handleClick = () => navigate(navigateTo, {state: {title, ...state}, preventScrollReset: false})
+    const handleClick = () => navigate(navigateTo, {state: {title, ...state}})
 
     return <div className='container'>
         <button  className='rowButton' onClick={handleClick}>
