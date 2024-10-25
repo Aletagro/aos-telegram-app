@@ -1,12 +1,13 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
+import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
 
 const Catalog = () => {
-    const grandAlliance = useLocation().state.grandAlliance
+    const {grandAlliance} = useLocation().state
     let allegiances = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === grandAlliance.id)
     // нужно чтобы орков разделить на отдельные книги
     if (grandAlliance.name === 'Destruction') {
@@ -15,7 +16,7 @@ const Catalog = () => {
         allegiances = [...allegiances, ...orrukAllegiances]
         allegiances = allegiances.filter(alligance => alligance.name !== 'Orruk Warclans')
     }
-    allegiances.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+    sortByName(allegiances)
 
     const renderRow = (alligance) => <Row
         key={alligance.id}

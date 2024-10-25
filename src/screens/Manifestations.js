@@ -1,15 +1,15 @@
 import React from 'react';
+import Constants from '../Constants'
+import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
 
-const manifestationsPublicationId = '318c212e-cbcd-4b44-a44d-318f3ae180a0'
-
 const Manifestations = () => {
     window.scrollTo(0, 0)
-    let lores = dataBase.data.lore.filter((lore) => lore.publicationId === manifestationsPublicationId)
-    lores.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+    let lores = dataBase.data.lore.filter((lore) => lore.publicationId === Constants.manifestationsPublicationId)
+    sortByName(lores)
 
     const renderUnit = (unit) => <Row
         key={unit.id}

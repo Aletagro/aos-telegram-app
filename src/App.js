@@ -15,7 +15,11 @@ import RuleChapters from './screens/RuleChapters';
 import Manifestations from './screens/Manifestations';
 import Rules from './screens/Rules';
 import Battleplan from './screens/Battleplan';
-import Header from './components/Header'
+import Header from './components/Header';
+import ChooseGrandAlliance from './builder/ChooseGrandAlliance';
+import ChooseFaction from './builder/ChooseFaction';
+import Builder from './builder/Builder';
+import AddUnit from './builder/AddUnit';
 import './App.css';
 
 const tg = window.Telegram.WebApp
@@ -48,6 +52,11 @@ function App() {
       <Route path={'coreDocuments/ruleSections/ruleChapters/battleplan'} element={<Battleplan />} />
       <Route path={'manifestations'} element={<Manifestations />} />
       <Route path={'manifestations/warscroll'} element={<Warscroll />} />
+      <Route path={'chooseGrandAlliance'} element={<ChooseGrandAlliance />} />
+      <Route path={'chooseGrandAlliance/chooseFaction'} element={<ChooseFaction />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder'} element={<Builder />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll'} element={<Warscroll />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
     </Routes>
   </div>
 }

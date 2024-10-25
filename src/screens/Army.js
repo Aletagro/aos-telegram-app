@@ -1,55 +1,10 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
+import Constants from '../Constants'
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
-
-const screens = [
-    {
-        title: 'Battle Traits',
-        groupName: 'ability_group',
-        ruleName: 'ability',
-        ruleIdName: 'abilityGroupId',
-        abilityGroupType: 'battleTraits'
-    },
-    {
-        title: 'Battle Formations',
-        groupName: 'battle_formation',
-        ruleName: 'battle_formation_rule',
-        ruleIdName: 'battleFormationId'
-    },
-    {
-        title: 'Artefacts of Power',
-        groupName: 'ability_group',
-        ruleName: 'ability',
-        ruleIdName: 'abilityGroupId',
-        abilityGroupType: 'artefactsOfPower'
-    },
-    {
-        title: 'Heroic Traits',
-        groupName: 'ability_group',
-        ruleName: 'ability',
-        ruleIdName: 'abilityGroupId',
-        abilityGroupType: 'heroicTraits'
-    },
-    {
-        title: 'Spell Lores',
-        groupName: 'lore',
-        ruleName: 'lore_ability',
-        ruleIdName: 'loreId',
-        abilityGroupType: undefined,
-        includesTexts: ['Lore of', 'Spell Lore', 'Arcane']
-    },
-    {
-        title: 'Prayes Lores',
-        groupName: 'lore',
-        ruleName: 'lore_ability',
-        ruleIdName: 'loreId',
-        abilityGroupType: undefined,
-        includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
-    }
-]
 
 const Army = () => {
     const {alligance, isArmyOfRenown} = useLocation().state
@@ -103,7 +58,7 @@ const Army = () => {
         }
     }
 
-    screens.forEach(screen => getInfo(screen))
+    Constants.armyEnhancements.forEach(screen => getInfo(screen))
 
     let armyOfRenown
     // armyOfRenown свинок достаем для джовсов

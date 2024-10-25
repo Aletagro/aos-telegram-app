@@ -6,16 +6,20 @@ const Header = () => {
     const navigate = useNavigate()
     const {pathname, state} = useLocation()
 
+    const handleGoBack = () => {navigate(-1)}
+
+    const handleNavigateToSearch = () => {navigate('search')}
+
     return <div className="header" id="myHeader">
         {pathname === '/'
             ? null
-            : <button type='button' id='headerButton' onClick={() => {navigate(-1)}}>
+            : <button type='button' id='headerButton' onClick={handleGoBack}>
                 Back
             </button>
         }
         <p id='headerTitle'>{state?.title}</p>
         {pathname !== '/search'
-            ? <button type='button' id='headerButton' onClick={() => {navigate('search')}}>
+            ? <button type='button' id='headerButton' onClick={handleNavigateToSearch}>
                 Search
             </button>
             : null

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import Row from '../components/Row'
 import useDebounce from '../utilities/useDebounce'
+import {sortByName} from '../utilities/utils'
+import Row from '../components/Row'
 import './styles/Search.css'
 
 const dataBase = require('../dataBase.json')
@@ -12,14 +13,12 @@ const Search = () => {
     useDebounce(() => {
         if (value) {
             const warscrolls = dataBase.data.warscroll.filter((warscroll) => !warscroll.isSpearhead && warscroll.name.toLowerCase().includes(value.toLowerCase()))
-            setWarscrolls(setSort(warscrolls.splice(0, 20)))
+            setWarscrolls(sortByName(warscrolls.splice(0, 20)))
         } else {
             setWarscrolls([])
         }
       }, [value], 300
     );
-
-    const setSort = (items) => items.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
     const handleChange = (e) => setValue(e.target.value)
 

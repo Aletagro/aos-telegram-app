@@ -1,15 +1,15 @@
 import React from 'react';
+import Constants from '../Constants'
+import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
 
-const image = 'https://dhss9aar8ocw.cloudfront.net/39478fae-cf03-40ee-a130-6fef03492c44'
-
 const RegimentsOfRenownList = () => {
     const regimentsOfRenown = dataBase.data.ability_group.filter((group) => group.abilityGroupType === 'regimentOfRenown')
 
-    regimentsOfRenown.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+    sortByName(regimentsOfRenown)
 
     const renderRow = (regiment) => <Row
         key={regiment.id}
@@ -19,7 +19,7 @@ const RegimentsOfRenownList = () => {
     />
 
     return <>
-        <img src={image} alt='Regiment Of Renown' width='100%' />
+        <img src={Constants.regimentsOfRenownImage} alt='Regiment Of Renown' width='100%' />
         <div id='column' className='Chapter'>
             {regimentsOfRenown && regimentsOfRenown.map(renderRow)}
         </div>

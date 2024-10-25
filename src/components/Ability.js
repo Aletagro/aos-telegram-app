@@ -1,42 +1,8 @@
 import React from 'react';
+import Constants from '../Constants'
 import './styles/Ability.css'
 
 const dataBase = require('../dataBase.json')
-
-const abilitiesType = {
-    startOfTurn: {
-        background: 'black',
-        icon: ''
-    },
-    combatPhase: {
-        background: 'darkred',
-        icon: ''
-    },
-    heroPhase: {
-        background: 'rgb(161, 146, 61)',
-        icon: ''
-    },
-    movementPhase: {
-        background: 'grey',
-        icon: ''
-    },
-    defensive: {
-        background: 'darkgreen',
-        icon: ''
-    },
-    chargePhase: {
-        background: 'rgb(182, 92, 28)',
-        icon: ''
-    },
-    shootingPhase: {
-        background: 'rgb(26, 72, 110)',
-        icon: ''
-    },
-    endOfTurn: {
-        background: 'indigo',
-        icon: ''
-    }
-}
 
 const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown}) => {
     const _abilityKeywordsName = abilityKeywordsName || (ability.castingValue ? 'lore_ability_keyword' : 'warscroll_ability_keyword')
@@ -44,7 +10,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
     const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
     const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
     const keywordsLength = keywords.length
-    const borderColor = abilitiesType[ability.phase]?.background
+    const borderColor = Constants.abilitiesType[ability.phase]?.background
 
     const renderKeyword = (keyword, index) => <p key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}&nbsp;</p>
 
