@@ -20,6 +20,7 @@ import ChooseGrandAlliance from './builder/ChooseGrandAlliance';
 import ChooseFaction from './builder/ChooseFaction';
 import Builder from './builder/Builder';
 import AddUnit from './builder/AddUnit';
+import ChooseEnhancement from './builder/ChooseEnhancement';
 import './App.css';
 
 const tg = window.Telegram.WebApp
@@ -56,7 +57,9 @@ function App() {
       <Route path={'chooseGrandAlliance/chooseFaction'} element={<ChooseFaction />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder'} element={<Builder />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll'} element={<Warscroll />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
     </Routes>
   </div>
 }

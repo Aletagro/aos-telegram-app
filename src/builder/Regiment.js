@@ -6,8 +6,9 @@ import './styles/Regiment.css'
 
 // const dataBase = require('../dataBase.json')
 
-const Regiment = ({regiment, index, alliganceId, forceUpdate}) => {
+const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits}) => {
     const navigate = useNavigate()
+    const isHideEnhancements = regiment.units[0]?.referenceKeywords.includes('Unique')
 
     const handleDeleteRegiment = () => {
         const newRegiments = [...roster.regiments]
@@ -47,6 +48,11 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate}) => {
         roster.generalRegimentIndex = index
         forceUpdate()
     }
+    
+    const handleChooseEnhancement = (name, type) => () => {
+        const data = type === 'artefact' ? artefacts : heroicTraits
+        navigate('chooseEnhancement', {state: {title: name, data, type, index}})
+    }
    
     const renderUnit = (unit, index) => <UnitRow
         key={index}
@@ -57,13 +63,29 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate}) => {
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
-    return <div key={index}>
+    return <div id='regimentContainer' key={index}>
         <p>Regiment {index + 1}</p>
         <p>{regiment.points} Points</p>
         {regiment.heroId
-            ? roster.generalRegimentIndex === index
-                ? <p>General's Regiment</p>
-                : <button id='chooseGeneral' onClick={handleChooseGeneral}>Сhoose General</button>
+            ? <div>
+                {roster.generalRegimentIndex === index
+                    ? <p>General's Regiment</p>
+                    : <button id='chooseGeneral' onClick={handleChooseGeneral}>Сhoose General</button>
+                }
+                {isHideEnhancements
+                    ? null
+                    : <>
+                        <div>
+                            <p>{roster.regiments[index].artefact}</p>
+                            <button id='chooseGeneral' onClick={handleChooseEnhancement('Artefacts', 'artefact')}>Сhoose Artefact</button>
+                        </div>
+                        <div>
+                            <p>{roster.regiments[index].heroicTrait}</p>
+                            <button id='chooseGeneral' onClick={handleChooseEnhancement('Heroic Traits', 'heroicTrait')}>Сhoose Heroic Trait</button>
+                        </div>
+                    </>
+                }
+            </div>
             : null
         }
         {regiment.units.map(renderUnit)}

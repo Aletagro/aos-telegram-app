@@ -18,7 +18,7 @@ const UnitRow = ({unit, unitIndex, onClick, onDelete}) => {
     return <div className='unitRow'>
         <button id='addUnitButton' onClick={handleClick}>
             <p id='title'>{unit.name}</p>
-            <p id='price'>{unit.points} ponts</p>
+            <p id='price'>{unit.points || unit.regimentOfRenownPointsCost} ponts</p>
         </button>
         {onDelete ? <button id='deleteUnitButton' onClick={handleDelete}>Delete</button> : null}
     </div>
