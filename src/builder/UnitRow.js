@@ -2,7 +2,7 @@ import React from 'react'
 
 import './styles/UnitRow.css'
 
-const UnitRow = ({unit, unitIndex, onClick, onDelete, onReinforced}) => {
+const UnitRow = ({unit, unitIndex, isAddUnit, onClick, onDelete, onReinforced}) => {
     const handleClick = () => {
         if (onClick) {
             onClick(unit)
@@ -26,7 +26,7 @@ const UnitRow = ({unit, unitIndex, onClick, onDelete, onReinforced}) => {
             <p id='title'>{unit.name}</p>
             <p id='price'>{unit.points || unit.regimentOfRenownPointsCost} ponts</p>
         </button>
-        {unit.cannotBeReinforced
+        {isAddUnit || unit.cannotBeReinforced
             ? null
             : <>
                 <p>isReinforced</p>

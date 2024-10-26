@@ -94,7 +94,7 @@ const AddUnit = () => {
         roster.points = roster.points + (unit.points || unit.regimentOfRenownPointsCost)
     }
 
-    const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick}/>
+    const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit/>
 
     const renderUnitsType = (type) => <div key={type.title}>
         <h4 id='unitType'>{type.title}</h4>
