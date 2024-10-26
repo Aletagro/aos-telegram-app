@@ -19,7 +19,7 @@ const Main = () => {
             {Constants.grandAlliances.map(renderRow)}
             <Row title='Regiment Of Renown' navigateTo='regimentOfRenownList' />
             <Row title='Manifestations' navigateTo='manifestations' />
-            <Row title='Builder' navigateTo='chooseGrandAlliance' />
+            {/* <Row title='Builder' navigateTo='chooseGrandAlliance' /> */}
         </div>
     </>
 }
