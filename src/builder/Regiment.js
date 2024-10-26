@@ -44,6 +44,17 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         forceUpdate()
     }
 
+    const handleReinforced = (unit, unitIndex) => {
+        if (unit.isReinforced) {
+            roster.regiments[index].units[unitIndex] = {...roster.regiments[index].units[unitIndex], isReinforced: false}
+            roster.regiments[index].points = roster.regiments[index].points - unit.points
+        } else {
+            roster.regiments[index].units[unitIndex] = {...roster.regiments[index].units[unitIndex], isReinforced: true}
+            roster.regiments[index].points = roster.regiments[index].points + unit.points
+        }
+        forceUpdate()
+    }
+
     const handleChooseGeneral = () => {
         roster.generalRegimentIndex = index
         forceUpdate()
@@ -57,9 +68,10 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     const renderUnit = (unit, index) => <UnitRow
         key={index}
         unit={unit}
+        unitIndex={index}
         onClick={handleClickUnit}
         onDelete={handleDeleteUnit}
-        unitIndex={index}
+        onReinforced={handleReinforced}
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
