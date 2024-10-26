@@ -1,12 +1,22 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
+import {roster} from '../builder/roster'
 import './styles/Header.css'
 
 const Header = () => {
     const navigate = useNavigate()
     const {pathname, state} = useLocation()
 
-    const handleGoBack = () => {navigate(-1)}
+    const handleGoBack = () => {
+        navigate(-1)
+        if (pathname === '/chooseGrandAlliance/chooseFaction/builder') {
+            roster.regiments = []
+            roster.generalRegimentIndex = null
+            roster.battleFormation = null
+            roster.points = 0
+            roster.manifestationLore = ''
+        }
+    }
 
     const handleNavigateToSearch = () => {navigate('search')}
 

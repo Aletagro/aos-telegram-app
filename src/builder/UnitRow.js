@@ -15,12 +15,12 @@ const UnitRow = ({unit, unitIndex, onClick, onDelete}) => {
         }
     }
 
-    return <div id='unitRowContainer'>
-        <button  className='unitRow' onClick={handleClick}>
+    return <div className='unitRow'>
+        <button id='addUnitButton' onClick={handleClick}>
             <p id='title'>{unit.name}</p>
             <p id='price'>{unit.points} ponts</p>
         </button>
-        {onDelete ? <button onClick={handleDelete}>Delete</button> : null}
+        {onDelete ? <button id='deleteUnitButton' onClick={handleDelete}>Delete</button> : null}
     </div>
 }
 

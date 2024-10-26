@@ -22,7 +22,7 @@ const Builder = () => {
     const lores = dataBase.data.lore.filter(lore => lore.factionId === alligance.id)
     const spellsLores = []
     const preyersLores = []
-    const manifestationsLores = []
+    const manifestationsLores = dataBase.data.lore.filter(lore => lore.factionId === null)
     lores.forEach(lore => {
         if (spellsIncludesTexts.find(text => lore.name.includes(text))) {
             spellsLores.push(lore)
@@ -32,18 +32,51 @@ const Builder = () => {
             manifestationsLores.push(lore)
         }
     })
+    if (spellsLores.length === 1 && !roster.spellsLore) {
+        roster.spellsLore = spellsLores[0].name
+    }
+    if (preyersLores.length === 1 && !roster.prayersLore) {
+        roster.prayersLore = preyersLores[0].name
+    }
+    if (manifestationsLores.length === 1 && !roster.manifestationLore) {
+        roster.manifestationLore = manifestationsLores[0].name
+    }
 
     const handleAddRegiment = useCallback(() => {
         roster.regiments = [...roster.regiments, emptyRegiment]
         forceUpdate()
     }, [])
 
+    const handleChangeLore = (rosterLoreName) => (e) => {
+        roster[rosterLoreName] = e.target.value
+        forceUpdate()
+    }
+
     const renderRegiment = (regiment, index) => <Regiment
+        key={index}
         regiment={regiment}
         alliganceId={alligance.id}
         index={index}
         forceUpdate={forceUpdate}
     />
+
+    const renderLore = (rosterLoreName) => (lore) => <div id='chooseLoreContainer'>
+        <p>{lore.name}</p>
+        <input
+            type='radio'
+            name={rosterLoreName}
+            value={lore.name}
+            checked={lore.name === roster[rosterLoreName]}
+            onChange={handleChangeLore(rosterLoreName)}
+        />
+    </div>
+
+    const renderLores = (lores, loreType, rosterLoreName) => lores.length === 1
+        ? <p>{loreType}: <b>{lores[0].name}</b></p>
+        : <div>
+            <p>{loreType}</p>
+            {lores.map(renderLore(rosterLoreName))}
+        </div>
 
     return <div id='column' className='Chapter'>
         <p>Grand Alliance: {roster.grandAlliance}</p>
@@ -54,10 +87,10 @@ const Builder = () => {
             ? roster.regiments.map(renderRegiment)
             : null
         }
-        <p>Lores</p>
-        {spellsLores.length > 0 ? <p>Spell Lore</p> : null}
-        {preyersLores.length > 0 ? <p>Prayer Lore</p> : null}
-        {manifestationsLores.length > 0 ? <p>Manifestation Lore</p> : null}
+        <h4>Lores</h4>
+        {spellsLores.length > 0 ? renderLores(spellsLores, 'Spell Lore', 'spellsLore') : null}
+        {preyersLores.length > 0 ? renderLores(preyersLores, 'Prayer Lore', 'prayersLore') : null}
+        {manifestationsLores.length > 0 ? renderLores(manifestationsLores, 'Manifestation Lore', 'manifestationLore') : null}
     </div>
 }
 
