@@ -13,6 +13,7 @@
     overflow: hidden;
   }
 #unitName {
+  color: black;
   margin: 0px;
   display: block;
   text-overflow: ellipsis;
@@ -22,6 +23,7 @@
   max-height: 40px; 
 }
 #price {
+    color: black;
     margin: 0;
     padding-right: 12px;
     white-space: nowrap;
@@ -43,6 +45,7 @@
 }
 #chooseEnhancementButton {
   background: rgb(245, 201, 80);
+  color: black;
   margin-bottom: 16px;
   border-radius: 4px;
   border-width: 0px;

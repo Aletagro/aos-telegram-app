@@ -9,6 +9,7 @@
 
 #exportListButton {
     background: rgb(245, 201, 80);
+    color: black;
     border-radius: 20px;
     border-width: 0px;
     padding: 12px;
