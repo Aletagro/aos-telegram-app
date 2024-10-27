@@ -1,11 +1,16 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
+import Copy from '../icons/copy.svg'
+import Delete from '../icons/delete.svg'
+import Plus from '../icons/plus.svg'
+import Minus from '../icons/minus.svg'
 
 import './styles/UnitRow.css'
 
-const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onReinforced, artefacts, heroicTraits}) => {
+const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits}) => {
     const navigate = useNavigate()
-    const isShowEnhancements = unit.referenceKeywords.includes('Hero') && !unit.referenceKeywords.includes('Unique')
+    const isHero = unit.referenceKeywords?.includes('Hero') 
+    const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
 
     const handleClick = () => {
         if (onClick) {
@@ -16,6 +21,12 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     const handleDelete = () => {
         if (onDelete) {
             onDelete(unit, unitIndex)
+        }
+    }
+
+    const handleCopy = () => {
+        if (onCopy) {
+            onCopy(unit)
         }
     }
 
@@ -33,35 +44,30 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     return <div>
         <div className='unitRow'>
             <button id='addUnitButton' onClick={handleClick}>
-                <p id='title'>{unit.name}</p>
-                <p id='price'>{unit.points || unit.regimentOfRenownPointsCost} ponts</p>
+                <p id='unitName'>{unit.name}</p>
+                <p id='price'>{unit.points || unit.regimentOfRenownPointsCost || 0} ponts</p>
             </button>
-            {isAddUnit || unit.cannotBeReinforced
+            {isAddUnit || unit.cannotBeReinforced || unit.abilityGroupType === 'regimentOfRenown'
                 ? null
-                : <>
-                    <p>isReinforced</p>
-                    <input
-                        type='checkbox'
-                        name='reinforced'
-                        value='reinforced'
-                        checked={unit.isReinforced}
-                        onChange={handleReinforced}
-                    />
-                </>
+                : unit.isReinforced
+                    ? <button id='unitRowButton' onClick={handleReinforced}><img src={Minus} alt="" /></button>
+                    : <button id='unitRowButton' onClick={handleReinforced}><img src={Plus} alt="" /></button>
             }
-            {onDelete ? <button id='deleteUnitButton' onClick={handleDelete}>Delete</button> : null}
+            {isAddUnit || isHero
+                ? null
+                : <button id='unitRowButton' onClick={handleCopy}><img src={Copy} alt="" /></button>
+            }
+            {onDelete ? <button id='unitRowButton' onClick={handleDelete}><img src={Delete} alt="" /></button> : null}
         </div>
         {isShowEnhancements && !isAddUnit
-            ? <>
-                <div>
-                    <p>{unit.artefact}</p>
-                    <button id='chooseGeneral' onClick={handleChooseEnhancement('Artefacts', 'artefact')}>Сhoose Artefact</button>
-                </div>
-                <div>
-                    <p>{unit.heroicTrait}</p>
-                    <button id='chooseGeneral' onClick={handleChooseEnhancement('Heroic Traits', 'heroicTrait')}>Сhoose Heroic Trait</button>
-                </div>
-            </>
+            ? <div id='enhancementsContainer'>
+                <button id='chooseEnhancementButton' onClick={handleChooseEnhancement('Artefacts', 'artefact')}>
+                    {unit.artefact ? `Artefact: ${unit.artefact}` : 'Сhoose Artefact'}
+                </button>
+                <button id='chooseEnhancementButton' onClick={handleChooseEnhancement('Heroic Traits', 'heroicTrait')}>
+                    {unit.heroicTrait ? `Heroic Trait: ${unit.heroicTrait}` : 'Сhoose Heroic Trait'}
+                </button>
+            </div>
             : null
         }
     </div>

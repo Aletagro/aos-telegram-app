@@ -61,11 +61,6 @@ const Builder = () => {
         forceUpdate()
     }, [])
 
-    const handleChangeLore = (rosterLoreName) => (e) => {
-        roster[rosterLoreName] = e.target.value
-        forceUpdate()
-    }
-
     const handleClickAuxiliaryUnit = (unit) => {
         navigate('warscroll', {state: {title: unit.name, unit}})
     }
@@ -102,6 +97,10 @@ const Builder = () => {
         }})
     }
 
+    const handleChooseEnhancement = (name, type, data) => () => {
+        navigate('chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true}})
+    }
+
     const renderRegiment = (regiment, index) => <Regiment
         key={index}
         regiment={regiment}
@@ -111,24 +110,6 @@ const Builder = () => {
         artefacts={artefacts}
         heroicTraits={heroicTraits}
     />
-
-    const renderLore = (rosterLoreName) => (lore) => <div key={lore.name}  id='chooseLoreContainer'>
-        <p>{lore.name}</p>
-        <input
-            type='radio'
-            name={rosterLoreName}
-            value={lore.name}
-            checked={lore.name === roster[rosterLoreName]}
-            onChange={handleChangeLore(rosterLoreName)}
-        />
-    </div>
-
-    const renderRadioBlock = (lores, loreType, rosterLoreName) => lores.length === 1
-        ? <p>{loreType}: <b>{lores[0].name}</b></p>
-        : <div>
-            <b>{loreType}</b>
-            {lores.map(renderLore(rosterLoreName))}
-        </div>
 
     const renderAuxiliaryUnit = (unit, index) => <UnitRow
         key={index}
@@ -146,35 +127,57 @@ const Builder = () => {
         unitIndex={index}
     />
 
+    const renderEnhancement = (name, type, data) => data.length === 1
+        ? <p id='builderLore'>{name}: <b>{data[0].name}</b></p>
+        : <button id='builderAddButton' onClick={handleChooseEnhancement(name, type, data)}>
+            {roster[type]
+                ? `${name} : ${roster[type]}`
+                : `Choose ${name}`
+            }
+        </button>
+
     return <div id='column' className='Chapter'>
-        <p>Grand Alliance: {roster.grandAlliance}</p>
-        <p>Allegiance: {roster.allegiance}</p>
-        <p>{roster.points}/2000 Points</p>
-        {battleFormations.length > 0 ? renderRadioBlock(battleFormations, 'Battle Formation', 'battleFormation') : null}
-        {roster.regiments.length < 5 ? <button id='addRegimentButton' onClick={handleAddRegiment}>Add Regiment</button> : null}
+        <div id='mainInfoContainer'>
+            <p id='builderText'>Grand Alliance: {roster.grandAlliance}</p>
+            <p id='builderText'>Allegiance: {roster.allegiance}</p>
+            <p id='builderText'>{roster.points}/2000 Points</p>
+        </div>
+        {battleFormations.length > 0
+            ? <button id='builderAddButton' onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
+                {roster.battleFormation
+                    ? `Battle Formation : ${roster.battleFormation}`
+                    : 'Choose Battle Formation'
+                }
+            </button>
+            : null
+        }
+        {roster.regiments.length < 5 ? <button id='builderAddButton' onClick={handleAddRegiment}>Add Regiment</button> : null}
         {roster.regiments.length > 0
             ? roster.regiments.map(renderRegiment)
             : null
         }
-        <div>
+        <>
+            <button id='builderAddButton' onClick={handleAddAuxiliaryUnit}>Add Auxiliary Unit</button>
             {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
-            <button onClick={handleAddAuxiliaryUnit}>Add Auxiliary Unit</button>
-        </div>
-        <div>
+        </>
+        <>
             {roster.regimentsOfRenown.length > 0
-                ? roster.regimentsOfRenown.map(renderRegimentOfRenown)
+                ? <>
+                    <p id='builderTitle'>Regiment Of Renown</p>
+                    {roster.regimentsOfRenown.map(renderRegimentOfRenown)}
+                </>
                 : null
             }
             {roster.regimentsOfRenown.length < 1
-                ? <button onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</button>
+                ? <button id='builderAddButton' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</button>
                 : null
             }
-        </div>
-        <h4>Lores</h4>
-        {factionTerrains.length > 0 ? renderRadioBlock(factionTerrains, 'Faction Terrain', 'factionTerrain') : null}
-        {spellsLores.length > 0 ? renderRadioBlock(spellsLores, 'Spell Lore', 'spellsLore') : null}
-        {preyersLores.length > 0 ? renderRadioBlock(preyersLores, 'Prayer Lore', 'prayersLore') : null}
-        {manifestationsLores.length > 0 ? renderRadioBlock(manifestationsLores, 'Manifestation Lore', 'manifestationLore') : null}
+        </>
+        <p id='builderTitle'>Lores</p>
+        {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
+        {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}
+        {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}
+        {factionTerrains.length > 0 ? renderEnhancement('Faction Terrain', 'factionTerrain', factionTerrains) : null}
     </div>
 }
 

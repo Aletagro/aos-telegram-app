@@ -2,6 +2,7 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import UnitRow from './UnitRow'
+import Delete from '../icons/delete.svg'
 import './styles/Regiment.css'
 
 // const dataBase = require('../dataBase.json')
@@ -43,6 +44,13 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         forceUpdate()
     }
 
+    const handleCopy = (unit) => {
+        roster.regiments[index].units.push(unit)
+        roster.regiments[index].points = roster.regiments[index].points + unit.points
+        roster.points = roster.points + unit.points
+        forceUpdate()
+    }
+
     const handleReinforced = (unit, unitIndex) => {
         if (unit.isReinforced) {
             const _points = unit.points / 2
@@ -78,26 +86,33 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         onClick={handleClickUnit}
         onDelete={handleDeleteUnit}
         onReinforced={handleReinforced}
+        onCopy={handleCopy}
         artefacts={artefacts}
         heroicTraits={heroicTraits}
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
     return <div id='regimentContainer' key={index}>
-        <p>Regiment {index + 1}</p>
-        <p>{regiment.points} Points</p>
+        <div id='regimentTitle'>
+            <p id='regimentText'>Regiment {index + 1}</p>
+            <div id='regimentRightBlock'>
+                <p id='regimentText'>{regiment.points} Points</p>
+                <button id='regimentDeleteButton' onClick={handleDeleteRegiment}><img src={Delete} alt="" /></button>
+            </div>
+        </div>
         {regiment.heroId
             ? <div>
                 {roster.generalRegimentIndex === index
-                    ? <p>General's Regiment</p>
-                    : <button id='chooseGeneral' onClick={handleChooseGeneral}>Сhoose General</button>
+                    ? <p id='regimentSubTitle'>General's Regiment</p>
+                    : <button id='regimentButton' onClick={handleChooseGeneral}>Сhoose General</button>
                 }
             </div>
             : null
         }
         {regiment.units.map(renderUnit)}
-        <button onClick={handleAddUnit(regiment, title, index)}>{title}</button>
-        <button onClick={handleDeleteRegiment}>Delete</button>
+        <div id='regimentAddUnitContainer'>
+            <button id='regimentAddUnitButton' onClick={handleAddUnit(regiment, title, index)}>{title}</button>
+        </div>
     </div>
 }
 

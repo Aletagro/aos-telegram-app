@@ -4,28 +4,35 @@ import {roster} from '../utilities/appState'
 import './styles/ChooseEnhancement.css'
 
 const ChooseEnhancement = () => {
-    const {data, type, unitIndex, regimentIndex} = useLocation().state
+    const {data, type, unitIndex, regimentIndex, title, isRosterInfo} = useLocation().state
     const navigate = useNavigate()
 
-    const handleClickenhancement = (enhancementName) => () => {
-        const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancementName}
-        roster.regiments[regimentIndex].units[unitIndex] = newUnit
+    const handleClickEnhancement = (enhancementName) => () => {
+        if (isRosterInfo) {
+            roster[type] = enhancementName
+        } else {
+            const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancementName}
+            roster.regiments[regimentIndex].units[unitIndex] = newUnit
+        }
         navigate(-1)
     }
 
-    const renderEnhancement = (enhancement) => <div key={enhancement.name}  id='chooseLoreContainer'>
-        <p>{enhancement.name}</p>
-        <input
-            type='radio'
-            name={type}
-            value={enhancement.name}
-            checked={enhancement.name === roster.regiments[regimentIndex].units[unitIndex][type]}
-            onChange={handleClickenhancement(enhancement.name)}
-        />
-    </div>
+    const handleDeleteEnhancement = () => {
+        if (isRosterInfo) {
+            roster[type] = ''
+        } else {
+            const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: ''}
+            roster.regiments[regimentIndex].units[unitIndex] = newUnit
+        }
+        navigate(-1)
+    }
+
+    const renderEnhancement = (enhancement) =>
+        <button id='chooseEnhancement' onClick={handleClickEnhancement(enhancement.name)}>{enhancement.name}</button>
 
     return  <div id='column' className='Chapter'>
         {data.map(renderEnhancement)}
+        <button id='deleteEnhancement' onClick={handleDeleteEnhancement}>Delete {title}</button>
     </div>
 }
 

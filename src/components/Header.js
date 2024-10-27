@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {roster} from '../utilities/appState'
+import {roster, search} from '../utilities/appState'
 import './styles/Header.css'
 
 const Header = () => {
@@ -20,10 +20,31 @@ const Header = () => {
             roster.factionTerrain = ''
             roster.auxiliaryUnits = []
             roster.regimentsOfRenown = []
+            roster.battleFormation = ''
+        } else if (pathname === '/search') {
+            search.value = ''
+            search.warscrolls = []
         }
     }
 
     const handleNavigateToSearch = () => {navigate('search')}
+
+    const handleNavigateToExport = () => {navigate('export', {state: {title: 'Export List'}})}
+
+    const renderRightButton = () => {
+        switch (pathname) {
+            case '/search':
+                return null
+            case '/chooseGrandAlliance/chooseFaction/builder':
+                return <button type='button' id='headerButton' onClick={handleNavigateToExport}>
+                    Export
+                </button>
+            default:
+                return <button type='button' id='headerButton' onClick={handleNavigateToSearch}>
+                    Search
+                </button>
+        }
+    }
 
     return <div className="header" id="myHeader">
         {pathname === '/'
@@ -33,12 +54,7 @@ const Header = () => {
             </button>
         }
         <p id='headerTitle'>{state?.title}</p>
-        {pathname !== '/search'
-            ? <button type='button' id='headerButton' onClick={handleNavigateToSearch}>
-                Search
-            </button>
-            : null
-        }
+        {renderRightButton()}
     </div>
 }
 

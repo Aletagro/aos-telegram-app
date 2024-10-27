@@ -1,0 +1,15 @@
+#chooseEnhancement {
+    background: rgb(245, 201, 80);
+    color: black;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border-width: 0px;
+    padding: 8px;
+}
+#deleteEnhancement {
+    background: rgb(201, 200, 199);
+    color: black;
+    border-radius: 4px;
+    border-width: 0px;
+    padding: 8px;
+}

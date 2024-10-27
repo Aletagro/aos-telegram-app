@@ -49,8 +49,8 @@ const AddUnit = () => {
     } else if (heroId) {
         // определяем опция реджимента героя
         const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId}) => warscrollId === heroId)
-        const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any' || (option.childQuantity === 'zeroToOne' && !option.requiredRosterFactionKeywordId))
-        const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || (option.childQuantity === 'zeroToOne' && option.requiredRosterFactionKeywordId))
+        const regimentOptionsAny = regimentOptions.filter(option => !option.requiredWarscrollId)
+        const regimentOptionsOne = regimentOptions.filter(option => option.requiredWarscrollId)
         // находим кейворды обязательных опций
         const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
         const requiredKeywords = optionRequiredKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
@@ -72,7 +72,7 @@ const AddUnit = () => {
         }
         units = unitsSortesByType(units)
     } else {
-        units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && unit.referenceKeywords.includes('Hero'))
+        units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && unit.referenceKeywords.includes('Hero') && !unit.requiredPrimaryHeroWarscrollId)
         sortByName(units)
     }
 
