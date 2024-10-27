@@ -1,6 +1,6 @@
 import React, {useCallback, useReducer} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
-import {roster} from './roster'
+import {roster} from '../utilities/appState'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import './styles/Builder.css'
@@ -55,7 +55,6 @@ const Builder = () => {
     const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === alligance.id && group.abilityGroupType === 'heroicTraits')
     const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup.id)
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === alligance.id)
-
 
     const handleAddRegiment = useCallback(() => {
         roster.regiments = [...roster.regiments, emptyRegiment]

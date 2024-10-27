@@ -1,14 +1,15 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
-import {roster} from './roster'
+import {roster} from '../utilities/appState'
 import './styles/ChooseEnhancement.css'
 
 const ChooseEnhancement = () => {
-    const {data, type, index} = useLocation().state
+    const {data, type, unitIndex, regimentIndex} = useLocation().state
     const navigate = useNavigate()
 
     const handleClickenhancement = (enhancementName) => () => {
-        roster.regiments[index][type] = enhancementName
+        const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancementName}
+        roster.regiments[regimentIndex].units[unitIndex] = newUnit
         navigate(-1)
     }
 
@@ -18,7 +19,7 @@ const ChooseEnhancement = () => {
             type='radio'
             name={type}
             value={enhancement.name}
-            checked={enhancement.name === roster.regiments[index][type]}
+            checked={enhancement.name === roster.regiments[regimentIndex].units[unitIndex][type]}
             onChange={handleClickenhancement(enhancement.name)}
         />
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
-import {roster} from './roster'
+import {roster} from '../utilities/appState'
 import {unitsSortesByType, sortByName} from '../utilities/utils'
 import UnitRow from './UnitRow'
 import './styles/Builder.css'

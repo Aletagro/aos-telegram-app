@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {roster} from '../builder/roster'
+import {roster} from '../utilities/appState'
 import './styles/Header.css'
 
 const Header = () => {

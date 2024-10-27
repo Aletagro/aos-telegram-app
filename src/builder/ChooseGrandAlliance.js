@@ -1,6 +1,6 @@
 import React from 'react';
 import Constants from '../Constants'
-import {roster} from './roster'
+import {roster} from '../utilities/appState'
 import BuilderRow from './BuilderRow'
 import './styles/ChooseGrandAlliance.css'
 

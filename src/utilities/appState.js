@@ -21,3 +21,8 @@ export const roster = {
     factionTerrain: '',
     points: 0
 }
+
+export const search = {
+    value: '',
+    warscrolls: []
+}

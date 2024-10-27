@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom'
-import {roster} from './roster'
+import {roster} from '../utilities/appState'
 import UnitRow from './UnitRow'
 import './styles/Regiment.css'
 
@@ -8,7 +8,6 @@ import './styles/Regiment.css'
 
 const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits}) => {
     const navigate = useNavigate()
-    const isHideEnhancements = regiment.units[0]?.referenceKeywords.includes('Unique')
 
     const handleDeleteRegiment = () => {
         const newRegiments = [...roster.regiments]
@@ -46,11 +45,22 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
 
     const handleReinforced = (unit, unitIndex) => {
         if (unit.isReinforced) {
-            roster.regiments[index].units[unitIndex] = {...roster.regiments[index].units[unitIndex], isReinforced: false}
-            roster.regiments[index].points = roster.regiments[index].points - unit.points
+            const _points = unit.points / 2
+            roster.regiments[index].units[unitIndex] = {
+                ...roster.regiments[index].units[unitIndex],
+                isReinforced: false,
+                points: _points
+            }
+            roster.regiments[index].points = roster.regiments[index].points - _points
+            roster.points = roster.points - _points
         } else {
-            roster.regiments[index].units[unitIndex] = {...roster.regiments[index].units[unitIndex], isReinforced: true}
+            roster.regiments[index].units[unitIndex] = {
+                ...roster.regiments[index].units[unitIndex],
+                isReinforced: true,
+                points: unit.points * 2
+            }
             roster.regiments[index].points = roster.regiments[index].points + unit.points
+            roster.points = roster.points + unit.points
         }
         forceUpdate()
     }
@@ -59,19 +69,17 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         roster.generalRegimentIndex = index
         forceUpdate()
     }
-    
-    const handleChooseEnhancement = (name, type) => () => {
-        const data = type === 'artefact' ? artefacts : heroicTraits
-        navigate('chooseEnhancement', {state: {title: name, data, type, index}})
-    }
-   
-    const renderUnit = (unit, index) => <UnitRow
-        key={index}
+       
+    const renderUnit = (unit, _index) => <UnitRow
+        key={_index}
         unit={unit}
-        unitIndex={index}
+        unitIndex={_index}
+        regimentIndex={index}
         onClick={handleClickUnit}
         onDelete={handleDeleteUnit}
         onReinforced={handleReinforced}
+        artefacts={artefacts}
+        heroicTraits={heroicTraits}
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
@@ -83,19 +91,6 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
                 {roster.generalRegimentIndex === index
                     ? <p>General's Regiment</p>
                     : <button id='chooseGeneral' onClick={handleChooseGeneral}>Сhoose General</button>
-                }
-                {isHideEnhancements
-                    ? null
-                    : <>
-                        <div>
-                            <p>{roster.regiments[index].artefact}</p>
-                            <button id='chooseGeneral' onClick={handleChooseEnhancement('Artefacts', 'artefact')}>Сhoose Artefact</button>
-                        </div>
-                        <div>
-                            <p>{roster.regiments[index].heroicTrait}</p>
-                            <button id='chooseGeneral' onClick={handleChooseEnhancement('Heroic Traits', 'heroicTrait')}>Сhoose Heroic Trait</button>
-                        </div>
-                    </>
                 }
             </div>
             : null

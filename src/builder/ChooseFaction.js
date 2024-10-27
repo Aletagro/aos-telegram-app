@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import {roster} from './roster'
+import {roster} from '../utilities/appState'
 import BuilderRow from './BuilderRow'
 import {sortByName} from '../utilities/utils'
 import './styles/ChooseFaction.css'
