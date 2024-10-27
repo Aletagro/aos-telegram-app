@@ -20,6 +20,8 @@ const Main = () => {
             <Row title='Regiment Of Renown' navigateTo='regimentOfRenownList' />
             <Row title='Manifestations' navigateTo='manifestations' />
             <Row title='Builder' navigateTo='chooseGrandAlliance' />
+            <p id='feedbackText'>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
+            <p id='feedbackText'>For feedback - @RukosuevKrasavchik</p>
         </div>
     </>
 }

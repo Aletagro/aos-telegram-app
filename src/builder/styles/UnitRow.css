@@ -15,6 +15,7 @@
 #unitName {
   color: black;
   margin: 0px;
+  font-weight: bold;
   display: block;
   text-overflow: ellipsis;
   word-wrap: break-word;
@@ -36,9 +37,6 @@
   justify-content: space-between;
   align-items: center;
   text-align: start;
-}
-#deleteUnitButton {
-
 }
 #enhancementsContainer {
   display: flex;

@@ -5,6 +5,7 @@
     border-radius: 4px;
     border-width: 0px;
     padding: 8px;
+    font-weight: bold;
 }
 #deleteEnhancement {
     background: rgb(201, 200, 199);
@@ -12,4 +13,5 @@
     border-radius: 4px;
     border-width: 0px;
     padding: 8px;
+    font-weight: bold;
 }
