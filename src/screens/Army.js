@@ -82,7 +82,7 @@ const Army = () => {
         state={{alligance: item, isArmyOfRenown: true}}
     />
 
-    const renderRosterOptions = (option) => <p key={option.id}>&#8226; {option.text}</p>
+    const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {option.text}</p>
 
     return <>
         <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />

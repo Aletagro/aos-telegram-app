@@ -1,12 +1,15 @@
 #regimentContainer {
+  border: 1px solid rgb(46, 46, 49);
   margin-bottom: 16px;
+  padding-bottom: 16px;
   align-items: center;
+  border-radius: 8px;
 }
 
 #regimentTitle {
   background: rgb(46, 46, 49);
   color: white;
-  border-radius: 4px;
+  border-radius: 4px 4px 0px 0px;
   padding: 16px;
   margin-bottom: 8px;
   display: flex;
@@ -27,6 +30,7 @@
   background: rgb(245, 201, 80);
   color: black;
   margin-bottom: 16px;
+  margin-left: 4px;
   border-radius: 4px;
   border-width: 0px;
   padding: 8px;
@@ -63,6 +67,7 @@
   border-width: 0px;
   padding: 7px 8px;
   margin: 0px;
+  margin-left: 4px;
   margin-bottom: 16px;
   font-size: 16px;
   display: inline-block;

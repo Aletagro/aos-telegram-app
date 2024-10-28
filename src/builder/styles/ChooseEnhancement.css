@@ -4,7 +4,8 @@
     margin-bottom: 16px;
     border-radius: 4px;
     border-width: 0px;
-    padding: 8px;
+    padding: 16px;
+    font-size: 16px;
     font-weight: bold;
 }
 #deleteEnhancement {
@@ -12,6 +13,7 @@
     color: black;
     border-radius: 4px;
     border-width: 0px;
-    padding: 8px;
+    padding: 16px;
+    font-size: 16px;
     font-weight: bold;
 }

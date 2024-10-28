@@ -3,6 +3,8 @@
     color: black;
     padding: 16px 16px;
     margin-bottom: 16px;
+    margin-left: 4px;
+    margin-right: 4px;
     font-size: 16px;
     cursor: pointer;
     flex-direction: row;
@@ -40,6 +42,7 @@
 }
 #enhancementsContainer {
   display: flex;
+  margin-left: 4px;
 }
 #chooseEnhancementButton {
   background: rgb(245, 201, 80);
