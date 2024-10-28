@@ -50,6 +50,8 @@ ${roster.points}/2000 Pts
         <p>Grand Alliance: {roster.grandAlliance}</p>
         <p>Faction: {roster.allegiance}</p>
         <p>Battle Formation: {roster.battleFormation}</p>
+        <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + roster.regimentsOfRenown.length}</p>
+        {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}</p> : null}
         {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
         {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}</p> : null}

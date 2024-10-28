@@ -59,6 +59,7 @@ function App() {
       <Route path={'chooseGrandAlliance/chooseFaction/builder'} element={<Builder />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll'} element={<Warscroll />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
       <Route path={'export'} element={<Export />} />

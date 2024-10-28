@@ -100,28 +100,29 @@ const Warscroll = () => {
                 </>
                 : null
             }
-            <>
-                <h3>Unit Details</h3>
-                <p>{unit.modelCount} model</p>
-                {unit.wargearOptionsText ? <p id='wargearOptions'>{unit.wargearOptionsText}</p> : null}
-                {unit.points ? <p>{unit.points} points</p> : null}
-                <p><b>Base size:</b> {unit.baseSize}</p>
-                {regimentOptions.length > 0
-                    ? <>
-                        <b>Regiment Options</b>
-                        {regimentOptions.map(renderRegimentOption)}
-                    </>
-                    : null
-                }
-                {unit.notes ? <p>Notes: {unit.notes}</p> : null}
-            </>
+            <div id='unitDetailsContainer'>
+                <p id='unitDetailsTitle'>Unit Details</p>
+                <div id='unitDetailsSubContainer'>
+                    <p>{unit.modelCount} model</p>
+                    {unit.wargearOptionsText ? <p id='wargearOptions'>{unit.wargearOptionsText}</p> : null}
+                    {unit.points ? <p>{unit.points} points</p> : null}
+                    <p><b>Base size:</b> {unit.baseSize}</p>
+                    {regimentOptions.length > 0
+                        ? <>
+                            <b>Regiment Options</b>
+                            {regimentOptions.map(renderRegimentOption)}
+                        </>
+                        : null
+                    }
+                    {unit.notes ? <p>Notes: {unit.notes}</p> : null}
+                </div>
+            </div>
             {unit.referenceKeywords
                 ? <>
                     <p id='keywords'>Keywords: <b>{unit.referenceKeywords}</b></p>
                 </>
                 : null
             }
-            <p id='textItalic'>{unit.lore}</p>
         </div>
     </>
 }

@@ -32,7 +32,6 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
                 </div>
                 : null
             }
-            {ability.lore ? <p id='textItalic'><b>Lore:</b> {ability.lore}</p> : null}
         </div>
     </div>
 }

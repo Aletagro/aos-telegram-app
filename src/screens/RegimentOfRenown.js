@@ -34,7 +34,7 @@ const RegimentOfRenown = () => {
             <p id='text'>{regiment.subsectionRulesText}</p>
             <h4>{regiment.regimentOfRenownPointsCost} points</h4>
             {regimentAbilities && regimentAbilities.map(renderAbility)}
-            <h4>Warscrools</h4>
+            <h4>Warscrolls</h4>
             {warscrolls && warscrolls.map(renderWarscroll)}
         </div>
     </>
