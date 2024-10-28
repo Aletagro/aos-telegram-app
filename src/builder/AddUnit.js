@@ -58,7 +58,7 @@ const AddUnit = () => {
         const optionExcludedKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_excluded_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
         const excludedKeywords = optionExcludedKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
         // определяем всех юнитов фракции
-        const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && !unit?.referenceKeywords?.includes('Manifestation') && !unit?.referenceKeywords?.includes('Terrain') && !unit.referenceKeywords.includes('Unique'))
+        const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && !unit?.referenceKeywords?.includes('Manifestation') && !unit?.referenceKeywords?.includes('Terrain'))
         // определяем кейворды всех юнитов фракции
         const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
         // ищем нужных нам юнитов
