@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {roster} from '../utilities/appState'
 import './styles/Export.css'
 
 const Export = () => {
+    const [isCopy, setIsCopy] = useState(false)
 
     const getUnitForExport = (unit) => `${unit.name} (${unit.points || unit.regimentOfRenownPointsCost} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
 
@@ -27,7 +28,7 @@ ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roste
 ${roster.points}/2000 Pts
 `
         navigator.clipboard.writeText(test)
-        alert('List copied')
+        setIsCopy(true)
     }
 
     const renderUnit = (unit) => <div key={unit.id}>
@@ -44,7 +45,7 @@ ${roster.points}/2000 Pts
 
     return <div id='exportListContainer'>
         <div id='exportListButtonContainer'>
-            <button id='exportListButton' onClick={handleExportList}>Export List</button>
+            <button id='exportListButton' onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
         </div>
         <p>Grand Alliance: {roster.grandAlliance}</p>
         <p>Faction: {roster.allegiance}</p>
