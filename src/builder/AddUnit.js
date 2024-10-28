@@ -91,7 +91,7 @@ const AddUnit = () => {
             }
             roster.regiments[regimentId] = newRegiment
         }
-        roster.points = roster.points + (unit.points || unit.regimentOfRenownPointsCost)
+        roster.points = roster.points + (unit.points || unit.regimentOfRenownPointsCost || 0)
     }
 
     const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit/>
