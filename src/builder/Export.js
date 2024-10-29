@@ -5,7 +5,7 @@ import './styles/Export.css'
 const Export = () => {
     const [isCopy, setIsCopy] = useState(false)
 
-    const getUnitForExport = (unit) => `${unit.name} (${unit.points || unit.regimentOfRenownPointsCost} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
+    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
 
     const getUnitsForExport = (units) => units.map(getUnitForExport).join('\n')
 
@@ -25,17 +25,40 @@ ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}` : ''}${roster.prayersLo
 ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
+Wounds: ${getWoundsCount()}
 ${roster.points}/2000 Pts
 `
         navigator.clipboard.writeText(test)
         setIsCopy(true)
     }
 
+    const getWoundsCount = () => {
+        let woundsCount = 0
+        roster.regiments.forEach(regiment => {
+            regiment.units.forEach(unit => {
+                woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
+            })
+        })
+        if (roster.auxiliaryUnits.length > 0) {
+            roster.auxiliaryUnits.forEach(unit => {
+                woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
+            })
+        }
+        if (roster.regimentOfRenown) {
+            roster.regimentsOfRenownUnits.forEach(unit => {
+                woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
+            })
+        }
+        return woundsCount
+    }
+
     const renderUnit = (unit) => <div key={unit.id}>
-        <p><b>{unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost} points)</p>
+        <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost} points)</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
     </div>
+
+    const renderRegimentsOfRenownUnit = (unit) => <p key={unit.id}>{unit.name}</p>
 
     const renderRegiment = (regiment, index) => <div key={index}>
         <p>Regiment {index + 1}</p>
@@ -47,15 +70,16 @@ ${roster.points}/2000 Pts
         <div id='exportListButtonContainer'>
             <button id='exportListButton' onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
         </div>
-        <p>Grand Alliance: {roster.grandAlliance}</p>
-        <p>Faction: {roster.allegiance}</p>
-        <p>Battle Formation: {roster.battleFormation}</p>
-        <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
-        {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
-        {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}</p> : null}
-        {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
-        {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}</p> : null}
-        {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}</p> : null}
+        <p id='exportText'>Grand Alliance: {roster.grandAlliance}</p>
+        <p id='exportText'>Faction: {roster.allegiance}</p>
+        <p id='exportText'>Battle Formation: {roster.battleFormation}</p>
+        <p id='exportText'>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
+        {roster.auxiliaryUnits.length > 0 ? <p id='exportText'>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
+        <br/>
+        {roster.spellsLore ? <p id='exportText'>Spell Lore: {roster.spellsLore}</p> : null}
+        {roster.prayersLore ? <p id='exportText'>Prayer Lore: {roster.prayersLore}</p> : null}
+        {roster.manifestationLore ? <p id='exportText'>Manifestation Lore: {roster.manifestationLore}</p> : null}
+        {roster.factionTerrain ? <p id='exportText'>Faction Terrain: {roster.factionTerrain}</p> : null}
         <hr/>
         {roster.regiments.map(renderRegiment)}
         <hr/>
@@ -71,10 +95,13 @@ ${roster.points}/2000 Pts
             ? <div>
                 <p>Regiment Of Renown</p>
                 {renderUnit(roster.regimentOfRenown)}
+                {roster.regimentsOfRenownUnits?.map(renderRegimentsOfRenownUnit)}
                 <hr/>
             </div>
             : null
         }
+        <p>Wounds: {getWoundsCount()}</p>
+        {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id='note'>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
         <p>{roster.points}/2000 Pts</p>
     </div>
 }

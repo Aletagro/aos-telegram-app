@@ -27,7 +27,9 @@ const Constants = {
             groupName: 'ability_group',
             ruleName: 'ability',
             ruleIdName: 'abilityGroupId',
-            abilityGroupType: 'battleTraits'
+            abilityGroupType: 'battleTraits',
+            abilityKeywordsName: 'ability_keyword',
+            abilityIdName: 'abilityId'
         },
         {
             title: 'Battle Formations',
@@ -55,14 +57,18 @@ const Constants = {
             ruleName: 'lore_ability',
             ruleIdName: 'loreId',
             abilityGroupType: undefined,
+            abilityKeywordsName: 'lore_ability_keyword',
+            abilityIdName: 'loreAbilityId',
             includesTexts: ['Lore of', 'Spell Lore', 'Arcane']
         },
         {
-            title: 'Prayes Lores',
+            title: 'Prayer Lores',
             groupName: 'lore',
             ruleName: 'lore_ability',
             ruleIdName: 'loreId',
             abilityGroupType: undefined,
+            abilityKeywordsName: 'lore_ability_keyword',
+            abilityIdName: 'loreAbilityId',
             includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
         }
     ],

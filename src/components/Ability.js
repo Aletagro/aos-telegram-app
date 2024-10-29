@@ -5,8 +5,8 @@ import './styles/Ability.css'
 const dataBase = require('../dataBase.json')
 
 const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown, onClick}) => {
-    const _abilityKeywordsName = abilityKeywordsName || (ability.castingValue ? 'lore_ability_keyword' : 'warscroll_ability_keyword')
-    const _abilityIdName = abilityIdName || (ability.castingValue ? 'loreAbilityId' : 'warscrollAbilityId')
+    const _abilityKeywordsName = abilityKeywordsName || 'warscroll_ability_keyword'
+    const _abilityIdName = abilityIdName || 'warscrollAbilityId'
     const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
     const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
     const keywordsLength = keywords.length

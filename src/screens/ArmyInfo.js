@@ -1,12 +1,14 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
+import Constants from '../Constants'
 import Ability from '../components/Ability'
 import './styles/ArmyInfo.css'
 
 const Army = () => {
     const {alligance, info} = useLocation().state
+    const armyEnhancement = Constants.armyEnhancements.find(enhancement => enhancement.title === info.title)
 
-    const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
+    const renderAbility = (ability) => <Ability key={ability.id} ability={ability} abilityKeywordsName={armyEnhancement.abilityKeywordsName} abilityIdName={armyEnhancement.abilityIdName} />
 
     const renderBlock = (block) => <div key={block.id}>
         <p id='armyInfoTitle'>{block.name}</p>

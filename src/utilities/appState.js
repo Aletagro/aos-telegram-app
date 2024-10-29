@@ -13,6 +13,7 @@ export const roster = {
     generalRegimentIndex: null,
     auxiliaryUnits: [],
     regimentOfRenown: null,
+    regimentsOfRenownUnits: [],
     battleFormation: '',
     spellsLore: '',
     prayersLore: '',

@@ -30,7 +30,6 @@ const Builder = () => {
     const spellsLores = []
     const preyersLores = []
     const manifestationsLores = dataBase.data.lore.filter(lore => lore.factionId === null)
-    let regimentsOfRenownWarscrolls = null
     lores.forEach(lore => {
         if (spellsIncludesTexts.find(text => lore.name.includes(text))) {
             spellsLores.push(lore)
@@ -54,7 +53,7 @@ const Builder = () => {
     }
     if (roster.regimentOfRenown) {
         const regimentsOfRenownWarscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === roster.regimentOfRenown.id)
-        regimentsOfRenownWarscrolls = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
+        roster.regimentsOfRenownUnits = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
     }
     const artefactsGroup = dataBase.data.ability_group.find(group => group.factionId === alligance.id && group.abilityGroupType === 'artefactsOfPower')
     const artefacts = dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup.id)
@@ -83,6 +82,7 @@ const Builder = () => {
 
     const handleDeleteRegimentOfRenown = (regiment, index) => {
         roster.regimentOfRenown = null
+        roster.regimentsOfRenownUnits = []
         roster.points = roster.points - regiment.regimentOfRenownPointsCost
         forceUpdate()
     }
@@ -184,7 +184,7 @@ const Builder = () => {
                 ? <>
                     <p id='builderTitle'>Regiment Of Renown</p>
                     {renderRegimentOfRenown()}
-                    {regimentsOfRenownWarscrolls.map(renderRegimentOfRenownUnit)}
+                    {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
                 </>
                 : <button id='builderAddButton' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</button>
             }
