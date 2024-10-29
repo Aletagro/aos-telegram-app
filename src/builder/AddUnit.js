@@ -14,25 +14,14 @@ const AddUnit = () => {
     const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === alliganceId).map(item => item.warscrollId)
     let units = []
 
-    const hasKeyword = (unitKeywords, requiredKeywords , excludedKeywords) => {
+    const hasKeyword = (unitKeywords, requiredKeywordsArray , excludedKeywords) => {
         let isHas = false
-        unitKeywords.forEach((keyword, index) => {
-            // определяем есть ли у юнита нужный кейворд
-            const isFound = requiredKeywords.find((requiredKeyword, index) => {
-                if (requiredKeyword) {
-                   return requiredKeyword?.id === keyword.keywordId
-                }
-                // если requiredKeyword нет, тогда сразу проверся на запрещающие кейворды
+        requiredKeywordsArray.forEach((requiredKeywords, index) => {
+            // Проверка, что все кейворды обязательные имеются
+            const filtredKeywords = unitKeywords.filter(Keyword => requiredKeywords.find(requiredKeyword => requiredKeyword.id === Keyword.keywordId))
+            if (requiredKeywords?.length === filtredKeywords?.length) {
+                // Проверка, что нет исключающих кейвордов
                 if (!unitKeywords.find(unitKeyword => unitKeyword.keywordId === excludedKeywords[index]?.id)) {
-                    isHas = true
-                }
-                return false
-            })
-            if (isFound) {
-                // находим индекс кейворда среди requiredKeywords
-                const keywordIndex = requiredKeywords.findIndex(requiredKeyword => requiredKeyword?.id === isFound.id)
-                // проверяем найденного юнита на запрещающие кейворды
-                if (!unitKeywords.find(unitKeyword => unitKeyword.keywordId === excludedKeywords[keywordIndex]?.id)) {
                     isHas = true
                 }
             }
@@ -52,8 +41,8 @@ const AddUnit = () => {
         const regimentOptionsAny = regimentOptions.filter(option => !option.requiredWarscrollId)
         const regimentOptionsOne = regimentOptions.filter(option => option.requiredWarscrollId)
         // находим кейворды обязательных опций
-        const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
-        const requiredKeywords = optionRequiredKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
+        const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.filter(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
+        const requiredKeywords = optionRequiredKeywords.map(keywords => keywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId)))
         // находим кейворды исключающих опций
         const optionExcludedKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_excluded_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
         const excludedKeywords = optionExcludedKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
@@ -70,6 +59,7 @@ const AddUnit = () => {
             const zeroToOneUnits  = regimentOptionsOne.map(option => dataBase.data.warscroll.find(warscroll => warscroll.id === option.requiredWarscrollId))
             units = [...units, ...zeroToOneUnits]
         }
+        units = [...new Set(units)]
         units = unitsSortesByType(units)
     } else {
         units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && unit.referenceKeywords.includes('Hero') && !unit.requiredPrimaryHeroWarscrollId)
@@ -88,6 +78,11 @@ const AddUnit = () => {
             newRegiment.points = newRegiment.points + unit.points
             if (!heroId) {
                 newRegiment.heroId = unit.id
+                // Проверка есть ли у героя привязанные к нему юниты
+                const requiredHeroUnits = dataBase.data.warscroll.filter(scroll => scroll.requiredPrimaryHeroWarscrollId === unit.id && !scroll.isSpearhead && !scroll.isLegends)
+                if (requiredHeroUnits?.length > 0) {
+                    newRegiment.units = [...newRegiment.units, ...requiredHeroUnits]
+                }
             }
             roster.regiments[regimentId] = newRegiment
         }
