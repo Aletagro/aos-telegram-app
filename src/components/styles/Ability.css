@@ -2,7 +2,12 @@
   background: white;
   display: block;
   margin-bottom: 16px;
+  padding: 0px;
   border-radius: 8px;
+  text-align: start;
+  font-size: 1em;
+  font-family: 'Times New Roman', Times, serif;
+  width: 100%;
 }
 
 #header {

@@ -1,18 +1,48 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
+import Ability from '../components/Ability'
 import './styles/ChooseEnhancement.css'
+
+const dataBase = require('../dataBase.json')
 
 const ChooseEnhancement = () => {
     const {data, type, unitIndex, regimentIndex, title, isRosterInfo} = useLocation().state
     const navigate = useNavigate()
+    let _data = data
+    if (type === 'battleFormation') {
+        const formationsRules = data.map(formation => dataBase.data.battle_formation_rule.filter((item) => item.battleFormationId === formation?.id))
+        _data = data.map((formation, index) => {
+            return {name: formation?.name, id: formation?.id, abilities: formationsRules[index]}
+        })
+    }
+    if (type === 'spellsLore' || type === 'prayersLore') {
+        const loresRules = data.map(lore => dataBase.data.lore_ability.filter((item) => item.loreId === lore?.id))
+        _data = data.map((lore, index) => {
+            return {name: lore?.name, id: lore?.id, abilities: loresRules[index]}
+        })
+    }
+    if (type === 'factionTerrain') {
+        _data = data.map((terrain, index) => ({name: terrain?.name, id: terrain?.id}))
+    }
+    if (type === 'manifestationLore') {
+        const lores = data.map(lore => dataBase.data.lore_ability.filter((item) => item.loreId === lore?.id))
+        const units = lores.map(lore => lore.map(spell => dataBase.data.warscroll.find(warscroll => warscroll.id === spell.linkedWarscrollId)))
+        _data = data.map((lore, index) => {
+            return {name: lore?.name, id: lore?.id, abilities: units[index]}
+        })
+    }
 
-    const handleClickEnhancement = (enhancementName) => () => {
-        if (isRosterInfo) {
-            roster[type] = enhancementName
-        } else {
-            const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancementName}
-            roster.regiments[regimentIndex].units[unitIndex] = newUnit
+    const handleClickEnhancement = (enhancement) => {
+        const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancement.name}
+        roster.regiments[regimentIndex].units[unitIndex] = newUnit
+        navigate(-1)
+    }
+
+    const handleClickBlock = (block) => () => {
+        roster[type] = block.name
+        if (type === 'manifestationLore') {
+            roster.manifestationsList = block.abilities
         }
         navigate(-1)
     }
@@ -20,6 +50,9 @@ const ChooseEnhancement = () => {
     const handleDeleteEnhancement = () => {
         if (isRosterInfo) {
             roster[type] = ''
+            if (type === 'manifestationLore') {
+                roster.manifestationsList = []
+            }
         } else {
             const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: ''}
             roster.regiments[regimentIndex].units[unitIndex] = newUnit
@@ -27,11 +60,17 @@ const ChooseEnhancement = () => {
         navigate(-1)
     }
 
-    const renderEnhancement = (enhancement) =>
-        <button id='chooseEnhancement' onClick={handleClickEnhancement(enhancement.name)}>{enhancement.name}</button>
+    const renderEnhancement = (enhancement) => <Ability key={enhancement.id} ability={enhancement} onClick={isRosterInfo ? undefined : handleClickEnhancement} />
+
+    const renderManifestation = (manifestation) => <p key={manifestation.id} id='chooseManifestation'>{manifestation.name}</p>
+
+    const renderBlock = (block) => <button key={block.id} id='chooseBlock' onClick={handleClickBlock(block)}>
+        <p id='chooseBlockTitle'>{block.name}</p>
+        {block.abilities?.map(type === 'manifestationLore' ? renderManifestation : renderEnhancement)}
+    </button>
 
     return  <div id='column' className='Chapter'>
-        {data.map(renderEnhancement)}
+        {_data.map(isRosterInfo ? renderBlock : renderEnhancement)}
         <button id='deleteEnhancement' onClick={handleDeleteEnhancement}>Delete {title}</button>
     </div>
 }

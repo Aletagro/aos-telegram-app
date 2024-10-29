@@ -7,7 +7,7 @@ import Minus from '../icons/minus.svg'
 
 import './styles/UnitRow.css'
 
-const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits}) => {
+const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy}) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
     const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
@@ -53,7 +53,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
                     ? <button id='unitRowButton' onClick={handleReinforced}><img src={Minus} alt="" /></button>
                     : <button id='unitRowButton' onClick={handleReinforced}><img src={Plus} alt="" /></button>
             }
-            {isAddUnit || isHero
+            {isAddUnit || isHero || withoutCopy
                 ? null
                 : <button id='unitRowButton' onClick={handleCopy}><img src={Copy} alt="" /></button>
             }

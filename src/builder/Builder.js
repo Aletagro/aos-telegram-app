@@ -3,6 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
+import Row from '../components/Row'
 import './styles/Builder.css'
 
 const dataBase = require('../dataBase.json')
@@ -29,6 +30,7 @@ const Builder = () => {
     const spellsLores = []
     const preyersLores = []
     const manifestationsLores = dataBase.data.lore.filter(lore => lore.factionId === null)
+    let regimentsOfRenownWarscrolls = null
     lores.forEach(lore => {
         if (spellsIncludesTexts.find(text => lore.name.includes(text))) {
             spellsLores.push(lore)
@@ -49,6 +51,10 @@ const Builder = () => {
     }
     if (factionTerrains.length === 1 && !roster.factionTerrain) {
         roster.factionTerrain = factionTerrains[0].name
+    }
+    if (roster.regimentOfRenown) {
+        const regimentsOfRenownWarscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === roster.regimentOfRenown.id)
+        regimentsOfRenownWarscrolls = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
     }
     const artefactsGroup = dataBase.data.ability_group.find(group => group.factionId === alligance.id && group.abilityGroupType === 'artefactsOfPower')
     const artefacts = dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup.id)
@@ -76,7 +82,7 @@ const Builder = () => {
     }
 
     const handleDeleteRegimentOfRenown = (regiment, index) => {
-        roster.regimentsOfRenown.splice(index, 1)
+        roster.regimentOfRenown = null
         roster.points = roster.points - regiment.regimentOfRenownPointsCost
         forceUpdate()
     }
@@ -119,12 +125,25 @@ const Builder = () => {
         unitIndex={index}
     />
 
-    const renderRegimentOfRenown = (regiment, index) => <UnitRow
-        key={index}
-        unit={regiment}
+    const renderRegimentOfRenown = () => <UnitRow
+        unit={roster.regimentOfRenown}
         onClick={handleClickRegimentOfRenown}
         onDelete={handleDeleteRegimentOfRenown}
-        unitIndex={index}
+        withoutCopy
+    />
+
+    const renderRegimentOfRenownUnit = (unit) => <Row
+        key={unit.id}
+        title={unit.name}
+        navigateTo='warscroll'
+        state={{unit}}
+    />
+
+    const renderManifestation = (manifestation) => <Row
+        key={manifestation.id}
+        title={manifestation.name}
+        navigateTo='warscroll'
+        state={{unit: manifestation}}
     />
 
     const renderEnhancement = (name, type, data) => data.length === 1
@@ -161,22 +180,20 @@ const Builder = () => {
             {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
         </>
         <>
-            {roster.regimentsOfRenown.length > 0
+            {roster.regimentOfRenown
                 ? <>
                     <p id='builderTitle'>Regiment Of Renown</p>
-                    {roster.regimentsOfRenown.map(renderRegimentOfRenown)}
+                    {renderRegimentOfRenown()}
+                    {regimentsOfRenownWarscrolls.map(renderRegimentOfRenownUnit)}
                 </>
-                : null
-            }
-            {roster.regimentsOfRenown.length < 1
-                ? <button id='builderAddButton' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</button>
-                : null
+                : <button id='builderAddButton' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</button>
             }
         </>
         <p id='builderTitle'>Lores</p>
         {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
         {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}
         {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}
+        {roster.manifestationsList?.map(renderManifestation)}
         {factionTerrains.length > 0 ? renderEnhancement('Faction Terrain', 'factionTerrain', factionTerrains) : null}
     </div>
 }

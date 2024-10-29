@@ -19,7 +19,7 @@ const Header = () => {
             roster.manifestationLore = ''
             roster.factionTerrain = ''
             roster.auxiliaryUnits = []
-            roster.regimentsOfRenown = []
+            roster.regimentOfRenown = null
             roster.battleFormation = ''
         } else if (pathname === '/search') {
             search.value = ''

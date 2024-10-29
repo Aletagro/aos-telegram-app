@@ -18,12 +18,12 @@ const Export = () => {
 Grand Alliance: ${roster.grandAlliance}
 Faction: ${roster.allegiance}
 Battle Formation: ${roster.battleFormation}
-Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + roster.regimentsOfRenown.length}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
+Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
 
 ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}` : ''}
 -----
 ${getRegimentsForExport()}
-${roster.regimentsOfRenown.length > 0 ? `Regiment Of Renown\n${getUnitsForExport(roster.regimentsOfRenown)}\n-----` : ''}
+${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
 ${roster.points}/2000 Pts
 `
@@ -50,7 +50,7 @@ ${roster.points}/2000 Pts
         <p>Grand Alliance: {roster.grandAlliance}</p>
         <p>Faction: {roster.allegiance}</p>
         <p>Battle Formation: {roster.battleFormation}</p>
-        <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + roster.regimentsOfRenown.length}</p>
+        <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
         {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}</p> : null}
         {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
@@ -67,10 +67,10 @@ ${roster.points}/2000 Pts
             </div>
             : null
         }
-        {roster.regimentsOfRenown.length > 0
+        {roster.regimentOfRenown
             ? <div>
                 <p>Regiment Of Renown</p>
-                {roster.regimentsOfRenown.map(renderUnit)}
+                {renderUnit(roster.regimentOfRenown)}
                 <hr/>
             </div>
             : null

@@ -4,7 +4,7 @@ import './styles/Ability.css'
 
 const dataBase = require('../dataBase.json')
 
-const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown}) => {
+const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown, onClick}) => {
     const _abilityKeywordsName = abilityKeywordsName || (ability.castingValue ? 'lore_ability_keyword' : 'warscroll_ability_keyword')
     const _abilityIdName = abilityIdName || (ability.castingValue ? 'loreAbilityId' : 'warscrollAbilityId')
     const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
@@ -12,9 +12,15 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
     const keywordsLength = keywords.length
     const borderColor = Constants.abilitiesType[ability.phase]?.background
 
+    const handlleClick = () => {
+        if (onClick) {
+            onClick(ability)
+        }
+    }
+
     const renderKeyword = (keyword, index) => <p key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}&nbsp;</p>
 
-    return <div id='ability' style={{border: `1px solid ${borderColor}`}}>
+    return <button id='ability' onClick={handlleClick} style={{border: `1px solid ${borderColor}`}}>
         <div id='header' style={{background: borderColor}}>
             <p className='headerText'>{ability.phaseDetails}</p>
             {ability.cpCost && !isRegimentOfRenown ? <p className='headerText'>{`${ability.cpCost} CP`}</p> : null}
@@ -33,7 +39,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
                 : null
             }
         </div>
-    </div>
+    </button>
 }
 
 export default Ability

@@ -5,7 +5,13 @@ import UnitRow from './UnitRow'
 import Delete from '../icons/delete.svg'
 import './styles/Regiment.css'
 
-// const dataBase = require('../dataBase.json')
+const emptyRegiment = {
+    units: [],
+    heroId: '',
+    points: 0,
+    artefact: '',
+    heroicTrait: ''
+}
 
 const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits}) => {
     const navigate = useNavigate()
@@ -34,7 +40,8 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     const handleDeleteUnit = (unit, unitIndex) => {
         const newRegiment = {...regiment}
         if (unitIndex === 0) {
-            handleDeleteRegiment()
+            roster.points = roster.points - newRegiment.points
+            roster.regiments[index] = emptyRegiment
         } else {
             roster.points = roster.points - unit.points
             newRegiment.points = newRegiment.points - unit.points

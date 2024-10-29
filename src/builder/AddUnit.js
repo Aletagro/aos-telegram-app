@@ -79,7 +79,7 @@ const AddUnit = () => {
     const handleClick = (unit) => {
         navigate(-1)
         if (isRegimentsOfRenown) {
-            roster.regimentsOfRenown.push(unit)
+            roster.regimentOfRenown = unit
         } else if (isAuxiliary) {
             roster.auxiliaryUnits.push(unit)
         } else {
