@@ -24,3 +24,28 @@
 #note {
   margin: 0px;
 }
+
+#errorsContainer {
+  background-color: darkred;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+#warningsContainer {
+  background-color: yellow;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+#exportError {
+  margin: 0px;
+  color: white
+}
+
+#exportWarning {
+  margin: 0px;
+}

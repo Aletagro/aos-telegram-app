@@ -1,9 +1,16 @@
 import React, {useState} from 'react';
 import {roster} from '../utilities/appState'
+import {getErrors, getWarnings} from '../utilities/utils'
 import './styles/Export.css'
 
 const Export = () => {
     const [isCopy, setIsCopy] = useState(false)
+    const errors = getErrors(roster)
+    const warnings = getWarnings(roster)
+
+    const getErrorText = (error) => `- ${error}`
+
+    const getErrorsText = (_errors) => _errors.map(getErrorText).join('\n')
 
     const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
 
@@ -15,6 +22,8 @@ const Export = () => {
 
     const handleExportList = () => {
         const test = `
+${errors.length > 0 ? `Roster errors:\n${getErrorsText(errors)}\n` : ''}
+${warnings.length > 0 ? `Roster warnings:\n${getErrorsText(warnings)}\n` : ''}
 Grand Alliance: ${roster.grandAlliance}
 Faction: ${roster.allegiance}
 Battle Formation: ${roster.battleFormation}
@@ -52,7 +61,7 @@ ${roster.points}/2000 Pts
         return woundsCount
     }
 
-    const renderUnit = (unit) => <div key={unit.id}>
+    const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
         <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost} points)</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
@@ -66,10 +75,28 @@ ${roster.points}/2000 Pts
         {regiment.units.map(renderUnit)}
     </div>
 
+    const renderError = (error, index) => <p id='exportError'>&#8226; {error}</p>
+
+    const renderWarning = (error, index) => <p  id='exportWarning'>&#8226; {error}</p>
+
     return <div id='exportListContainer'>
         <div id='exportListButtonContainer'>
             <button id='exportListButton' onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
         </div>
+        {errors.length > 0
+            ? <div id='errorsContainer'>
+                <p id='exportError'>Roster errors:</p>
+                {errors?.map(renderError)}
+            </div>
+            : null
+        }
+        {warnings.length > 0
+            ? <div id='warningsContainer'>
+                <p id='exportWarning'>Roster warnings:</p>
+                {warnings?.map(renderWarning)}
+            </div>
+            : null
+        }
         <p id='exportText'>Grand Alliance: {roster.grandAlliance}</p>
         <p id='exportText'>Faction: {roster.allegiance}</p>
         <p id='exportText'>Battle Formation: {roster.battleFormation}</p>
