@@ -34,7 +34,7 @@
 }
 
 #warningsContainer {
-  background-color: yellow;
+  background-color: rgb(245, 201, 80);
   margin-bottom: 16px;
   margin-top: 16px;
   border-radius: 4px;
@@ -43,7 +43,7 @@
 
 #exportError {
   margin: 0px;
-  color: white
+  color: white;
 }
 
 #exportWarning {
