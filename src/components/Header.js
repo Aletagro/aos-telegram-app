@@ -13,6 +13,7 @@ const Header = () => {
             roster.regiments = [{units: [], heroId: '', points: 0}]
             roster.generalRegimentIndex = null
             roster.battleFormation = null
+            roster.withoutBattleFormation = false
             roster.points = 0
             roster.spellsLore = ''
             roster.prayersLore = ''

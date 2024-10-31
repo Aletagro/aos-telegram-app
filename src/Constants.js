@@ -140,7 +140,45 @@ const Constants = {
             background: 'indigo',
             icon: ''
         }
-    }
+    },
+    regimentOfRenownsWithWizard: [
+        {
+            id: '0d95831a-70f6-4ca0-8fcb-a438740ec203',
+            name: "Braggit's Bottle-Snatchaz"
+        },
+        {
+            id: '4eb81bd5-0209-4ea1-9780-c2ee5e6de3a6',
+            name: "Brand's Oathbound"
+        },
+        {
+            id: 'e6814e04-a5c0-40eb-9a42-a0b8573b37c0',
+            name: "Neferata's Royal Echelon"
+        },
+        {
+            id: '9aaa73cd-7282-4d6e-a33a-96df53de4866',
+            name: 'The Blacktalons'
+        },
+        {
+            id: 'af2b3337-b0d5-40f1-849a-f61bc4bafcdf',
+            name: 'The Coven of Thryx'
+        },
+        {
+            id: 'd14b3e70-d378-41fb-89e5-c108f735674a',
+            name: "The Liche's Hand"
+        },
+        {
+            id: '090e93b1-4d91-44f1-bf57-3d6282ec0e45',
+            name: 'The Sorrowmourn Choir'
+        },
+        {
+            id: 'b62bbcf9-d46e-427c-9b3b-c6ee6401705e',
+            name: 'The Sternieste Garrison'
+        },
+        {
+            id: 'dc211333-b689-4380-b0b6-eb6add5ac1f2',
+            name: "The Summerking's Entourage"
+        }
+    ]
 }
 
 export default Constants

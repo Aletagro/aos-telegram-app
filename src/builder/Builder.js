@@ -60,6 +60,9 @@ const Builder = () => {
     const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === alligance.id && group.abilityGroupType === 'heroicTraits')
     const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup.id)
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === alligance.id)
+    if (!battleFormations.length) {
+        roster.withoutBattleFormation = true
+    }
 
     const handleAddRegiment = useCallback(() => {
         roster.regiments = [...roster.regiments, emptyRegiment]
@@ -161,7 +164,7 @@ const Builder = () => {
             <p id='builderText'>Allegiance: {roster.allegiance}</p>
             <p id='builderText'>{roster.points}/2000 Points</p>
         </div>
-        {battleFormations.length > 0
+        {battleFormations.length
             ? <button id='builderAddButton' onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
                 {roster.battleFormation
                     ? `Battle Formation : ${roster.battleFormation}`

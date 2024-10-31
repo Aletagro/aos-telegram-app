@@ -24,7 +24,7 @@ export const getErrors = (roster) => {
     if (roster.points > 2000) {
         errors.push('You use more than 2000 points')
     }
-    if (!roster.battleFormation) {
+    if (!roster.battleFormation  && !roster.withoutBattleFormation) {
         errors.push('Choose Battle Formation')
     }
     if (roster.generalRegimentIndex === null) {
@@ -43,6 +43,11 @@ export const getErrors = (roster) => {
             }
         })
     })
+    roster.auxiliaryUnits.forEach(unit => {
+        if (unit.referenceKeywords.includes('Unique')) {
+            uniqueUnits.push(unit.name)
+        }
+    })
     const duplicateUniqueUnits = uniqueUnits.filter((unit, index, units) => {
         return units.indexOf(unit) !== index;
     })
@@ -58,7 +63,25 @@ export const getWarnings = (roster) => {
         return warnings
     }
     if (!roster.manifestationLore) {
-        warnings.push('Choose Manifestations Lore')
+        let hasWizard = false
+        roster.regiments.forEach((regiment, index) => {
+            regiment.units.forEach(unit => {
+                if (unit.referenceKeywords.includes('Wizard')) {
+                    hasWizard = true
+                }
+            })
+        })
+        roster.auxiliaryUnits.forEach(unit => {
+            if (unit.referenceKeywords.includes('Wizard')) {
+                hasWizard = true
+            }
+        })
+        if(Constants.regimentOfRenownsWithWizard.find(regimentOfRenown => regimentOfRenown?.id === roster.regimentOfRenown?.id)) {
+            hasWizard = true
+        }
+        if (hasWizard) {
+            warnings.push('Choose Manifestations Lore')
+        }
     }
     if (roster.allegiance === 'Ogor Mawtribes' && !roster.factionTerrain) {
         warnings.push('Choose Faction Terrain')

@@ -15,6 +15,7 @@ export const roster = {
     regimentOfRenown: null,
     regimentsOfRenownUnits: [],
     battleFormation: '',
+    withoutBattleFormation: false,
     spellsLore: '',
     prayersLore: '',
     manifestationLore: '',

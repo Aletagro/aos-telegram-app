@@ -1,5 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
+import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
 import Ability from '../components/Ability'
 import './styles/Catalog.css'
@@ -11,7 +12,7 @@ const RegimentOfRenown = () => {
     const {regiment} = useLocation().state
     const regimentAbilities = dataBase.data.ability.filter((group) => group.abilityGroupId === regiment.id)
     const warscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === regiment.id)
-    const warscrolls = warscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
+    const warscrolls = sortByName(warscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId)))
 
     const renderAbility = (ability) => <Ability
         key={ability.id}
