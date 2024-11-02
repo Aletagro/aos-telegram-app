@@ -178,6 +178,64 @@ const Constants = {
             id: 'dc211333-b689-4380-b0b6-eb6add5ac1f2',
             name: "The Summerking's Entourage"
         }
+    ],
+    calculatorAbilities: [
+        {
+            name: 'Champion',
+            type: 'champion'
+        },
+        {
+            name: 'Crit (2 Hits)',
+            type: 'doubleHit'
+        },
+        {
+            name: 'Crit (Auto-wound)',
+            type: 'autoWound'
+        },
+        {
+            name: 'Crit (Mortal)',
+            type: 'mortal'
+        }
+    ],
+    calculatorCharacteristics: [
+        {
+            name: 'To Hit',
+            type: 'toHit',
+            values: [2, 3, 4, 5, 6]
+        },
+        {
+            name: 'To Wound',
+            type: 'toWound',
+            values: [2, 3, 4, 5, 6]
+        },
+        {
+            name: 'Rend',
+            type: 'rend',
+            values: [0, 1, 2, 3, 4]
+        },
+        {
+            name: 'Damage',
+            type: 'damage',
+            values: [1, 2, 3, 4, 5],
+            hasCustom: true
+        }
+    ],
+    calculatorInputs: [
+        {
+            name: 'Models',
+            type: 'models'
+        },
+        {
+            name: 'Attacks',
+            type: 'attacks'
+        }
+    ],
+    saves: [
+        {value: 2, title: '2+'},
+        {value: 3, title: '3+'},
+        {value: 4, title: '4+'},
+        {value: 5, title: '5+'},
+        {value: 6, title: '6+'}
     ]
 }
 

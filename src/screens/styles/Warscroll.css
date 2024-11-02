@@ -3,12 +3,18 @@
   margin: 0px;
   padding: 0px 8px;
 }
-
-.weaponName {
+.weaponNameContainer {
   background: rgb(46, 46, 49);
-  color: white;
   border-radius: 4px;
   padding: 16px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.weaponName {
+  color: white;
+  margin: 0px;
 }
 .rangeWeapons {
   display: grid;

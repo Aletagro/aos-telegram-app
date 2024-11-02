@@ -12,7 +12,7 @@ const Export = () => {
 
     const getErrorsText = (_errors) => _errors.map(getErrorText).join('\n')
 
-    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
+    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
 
     const getUnitsForExport = (units) => units.map(getUnitForExport).join('\n')
 
@@ -62,7 +62,7 @@ ${roster.points}/2000 Pts
     }
 
     const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
-        <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost} points)</p>
+        <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost || 0} points)</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
     </div>

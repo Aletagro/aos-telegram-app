@@ -91,3 +91,40 @@ export const getWarnings = (roster) => {
     }
     return warnings
 }
+
+export const getAvToDice = (count) => {
+    const arr = [...Array(count+1).keys()]
+    let sum = 0
+    arr.forEach(number => sum = sum + number)
+    return sum / count
+}
+
+export const getValue = (value) => {
+    if (Number(value)) {
+        return value
+    }
+    const splitedValue = value.toLowerCase().split('d')
+    if (splitedValue.length === 2) {
+        let average
+        if (Number(splitedValue[1])) {
+            average = getAvToDice(Number(splitedValue[1]))
+        } else {
+            const valueAfterD = splitedValue[1].split('').filter(item => item.trim())
+            if (Number(valueAfterD[0])) {
+                average = getAvToDice(Number(valueAfterD[0]))
+            } else {
+                return undefined
+            }
+            if (valueAfterD[1] === '-') {
+                return average * (Number(splitedValue[0]) || 1) - Number(valueAfterD[2])
+            } else {
+                return average * (Number(splitedValue[0]) || 1) + Number(valueAfterD[2])
+            }
+        }
+        if (splitedValue[0]) {
+            return average * Number(splitedValue[0])
+        } else {
+            return average
+        }
+    }
+}
