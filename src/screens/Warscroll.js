@@ -1,5 +1,6 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
+import Constants from '../Constants'
 import {getValue} from '../utilities/utils'
 import Ability from '../components/Ability'
 import Calculator from '../icons/calculator.svg'
@@ -50,7 +51,8 @@ const Warscroll = () => {
             champion: unit.referenceKeywords.includes('Champion') && !getWeaponAbilityForCalculator(weaponsAbilities[index], 'Companion'),
             mortal: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (Mortal)'),
             autoWound: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (Auto-wound)'),
-            doubleHit: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (2 Hits)')
+            doubleHit: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (2 Hits)'),
+            critOn: Constants.critOn[2]
         }))
         navigate('calculator', {state: {weapons: weaponsForCalculator}})
     }

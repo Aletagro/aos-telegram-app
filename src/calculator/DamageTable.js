@@ -13,13 +13,13 @@ const DamageTable = ({weapons, target}) => {
 
     const getDamage = (weapon) => {
         const attacks = weapon.models * weapon.attacks + (weapon.champion ? 1 : 0)
-        const hited = attacks * ((7 - weapon.toHit + (weapon.doubleHit ? 1 : 0) - (weapon.autoWound ? 1 : 0) - (weapon.mortal ? 1 : 0)) / 6)
+        const hited = attacks * ((7 - weapon.toHit + (weapon.doubleHit ? weapon.critOn?.modificator : 0) - (weapon.autoWound ? weapon.critOn?.modificator : 0) - (weapon.mortal ? 1 : 0)) / 6)
         const autoWounded = weapon.autoWound ? (attacks / 6) : 0
         const wounded = (hited * ((7 - weapon.toWound) / 6)) + autoWounded
         const damage = wounded * weapon.damage
         const resultBeforeSave = target.ward ? damage * ((target.ward - 1) / 6) : damage
         const rend = target.isEthereal ? 0 : weapon.rend
-        const mortals = weapon.mortal ? (attacks / 6 * weapon.damage) : 0
+        const mortals = weapon.mortal ? (attacks * weapon.critOn?.modificator / 6 * weapon.damage) : 0
         const mortalsAfterWard = target.ward ?  mortals * ((target.ward - 1) / 6) : mortals
         const results = getResultsForAllSaves(resultBeforeSave, rend, mortalsAfterWard)
         return results

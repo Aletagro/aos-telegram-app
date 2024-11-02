@@ -7,6 +7,7 @@
 
 #calculatorWeaponAbilitiesContainer {
     display: flex;
+    align-items: center;
     padding-top: 12px;
 }
 
@@ -110,4 +111,9 @@
 #calculatorTargetTitle {
     text-align: center;
     font-weight: bold;
+}
+
+#calculatorWeaponCritOn {
+    margin: 0px;
+    margin-right: 8px;
 }

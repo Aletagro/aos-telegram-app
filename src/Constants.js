@@ -236,6 +236,11 @@ const Constants = {
         {value: 4, title: '4+'},
         {value: 5, title: '5+'},
         {value: 6, title: '6+'}
+    ],
+    critOn: [
+        {modificator: 3, title: '4+'},
+        {modificator: 2, title: '5+'},
+        {modificator: 1, title: '6+'}
     ]
 }
 

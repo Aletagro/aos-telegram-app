@@ -31,6 +31,10 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
         onChangeAbilitiy(type, index)
     }
 
+    const handleClickCritOn = (value) => () => {
+        onChange('critOn', value, index)
+    }
+
     const handleClickCharacteristic = (type, value) => () => {
         onChange(type, value, index)
     }
@@ -46,6 +50,15 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
         id={weapon[ability.type] ? 'calculatorWeaponCheckedAbilities' : 'calculatorWeaponAbilities'}
     >
         {ability.name}
+    </button>
+
+    const renderCritOnButton = (critOn) => <button
+        key={critOn.modificator}
+        onClick={handleClickCritOn(critOn)}
+        id={weapon.critOn?.modificator === critOn.modificator ? 'calculatorWeaponCheckedAbilities' : 'calculatorWeaponAbilities'}
+    >
+        {console.log(weapon.critOn, critOn, weapon.critOn === critOn)}
+        {critOn.title}
     </button>
 
     const renderButton = (type) => (value) => <button
@@ -90,6 +103,10 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
         {Constants.calculatorCharacteristics.map(renderCharacteristics)}
         <div id='calculatorWeaponAbilitiesContainer'>
             {Constants.calculatorAbilities.map(renderWeaponAbility)}
+        </div>
+        <div id='calculatorWeaponAbilitiesContainer'>
+            <p id='calculatorWeaponCritOn'>Crit on</p>
+            {Constants.critOn.map(renderCritOnButton)}
         </div>
     </div>
 }

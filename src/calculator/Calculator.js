@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useLocation} from 'react-router-dom'
+import Constants from '../Constants'
 import Weapon from './Weapon'
 import DamageTable from './DamageTable'
 import Target from './Target'
@@ -7,11 +8,11 @@ import './styles/Calculator.css'
 
 const Calculator = () => {
     const {weapons} = useLocation().state
-    const [_weapons, setWeapons] = useState(weapons || [{}])
+    const [_weapons, setWeapons] = useState(weapons || [{critOn: Constants.critOn[2]}])
     const [target, setTarget] = useState({})
 
     const handleAddWeapon = () => {
-        setWeapons([..._weapons, {}])
+        setWeapons([..._weapons, {critOn: Constants.critOn[2]}])
     }
 
     const handleChangeCharacteristics = (characteristic, value, index) => {
