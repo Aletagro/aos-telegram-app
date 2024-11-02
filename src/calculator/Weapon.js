@@ -57,7 +57,6 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
         onClick={handleClickCritOn(critOn)}
         id={weapon.critOn?.modificator === critOn.modificator ? 'calculatorWeaponCheckedAbilities' : 'calculatorWeaponAbilities'}
     >
-        {console.log(weapon.critOn, critOn, weapon.critOn === critOn)}
         {critOn.title}
     </button>
 
