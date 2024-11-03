@@ -18,7 +18,6 @@ const Warscroll = () => {
     let abilities = dataBase.data.warscroll_ability.filter(ability => ability.warscrollId === unit.id)
     const regimentOptions = dataBase.data.warscroll_regiment_option.filter(option => option.warscrollId === unit.id)
     const isManifestation = unit.referenceKeywords.includes('Manifestation')
-    console.log(unit)
     const manifestationInfo = isManifestation ? dataBase.data.lore_ability.find(ability => ability.linkedWarscrollId === unit.id) : undefined
     const characteristics = [
         {value: unit.move, title: 'Move'},
@@ -43,7 +42,7 @@ const Warscroll = () => {
         const weaponsAbilities = weapons.map(weapon => getWeaponAbilities(weapon.id))
         const weaponsForCalculator = weapons.map((weapon, index) => ({
             name: weapon.name,
-            attacks: Number(weapon.attacks),
+            attacks: getValue(weapon.attacks),
             damage: getValue(weapon.damage),
             toHit: Number(weapon.hit[0]),
             toWound: Number(weapon.wound[0]),
