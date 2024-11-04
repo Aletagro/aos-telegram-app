@@ -34,8 +34,8 @@ export const getErrors = (roster) => {
     roster.regiments.forEach((regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
-        } else if (regiment.units.length > 4){
-            errors.push(`In regiment ${index + 1} you have more than 3 units`)
+        } else if (index !== roster.generalRegimentIndex && regiment.units.length > 4){
+            errors.push(`In Regiment ${index + 1} you have more than 3 units`)
         }
         regiment.units.forEach(unit => {
             if (unit.referenceKeywords.includes('Unique')) {
