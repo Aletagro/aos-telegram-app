@@ -21,6 +21,8 @@ import ChooseFaction from './builder/ChooseFaction';
 import Builder from './builder/Builder';
 import AddUnit from './builder/AddUnit';
 import ChooseEnhancement from './builder/ChooseEnhancement';
+import ChooseOption from './builder/ChooseOption';
+import ChooseWeapon from './builder/ChooseWeapon';
 import Export from './builder/Export';
 import Calculator from './calculator/Calculator';
 import './App.css';
@@ -69,6 +71,8 @@ function App() {
       <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseOption'} element={<ChooseOption />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'export'} element={<Export />} />
       <Route path={'calculator'} element={<Calculator />} />
     </Routes>

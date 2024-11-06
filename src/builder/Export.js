@@ -12,19 +12,29 @@ const Export = () => {
 
     const getErrorsText = (_errors) => _errors.map(getErrorText).join('\n')
 
-    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}`
+    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
     const getUnitsForExport = (units) => units.map(getUnitForExport).join('\n')
+
+    const getWeaponForExport = ([key, value]) => value
+        ? `\n• ${value} x ${key}`
+        : ''
+
+    const getWeaponOptionForExport = ([key, value]) => {
+        return Object.entries(value).map(getWeaponForExport)
+    }
+
+    const getWeaponOptionsForExport = (unit) => {
+        const text = Object.entries(unit.weaponOptions).map(getWeaponOptionForExport)
+        return `${text}`.replace(/,/g, '')
+    }
 
     const getRegimentForExport = (regiment, index) => `Regiment ${index + 1}\n${roster.generalRegimentIndex === index ? "General's regiment\n" : ''}${regiment.units.map(getUnitForExport).join('\n')}\n----`
 
     const getRegimentsForExport = () => roster.regiments.map(getRegimentForExport).join('\n')
 
     const handleExportList = () => {
-        const test = `
-${errors.length > 0 ? `Roster errors:\n${getErrorsText(errors)}\n` : ''}
-${warnings.length > 0 ? `Roster warnings:\n${getErrorsText(warnings)}\n` : ''}
-Grand Alliance: ${roster.grandAlliance}
+        const rosterText = `${errors.length > 0 ? `Roster errors:\n${getErrorsText(errors)}\n\n` : ''}${warnings.length > 0 ? `Roster warnings:\n${getErrorsText(warnings)}\n\n` : ''}Grand Alliance: ${roster.grandAlliance}
 Faction: ${roster.allegiance}
 Battle Formation: ${roster.battleFormation}
 Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
@@ -37,7 +47,8 @@ ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roste
 Wounds: ${getWoundsCount()}
 ${roster.points}/2000 Pts
 `
-        navigator.clipboard.writeText(test)
+        navigator.clipboard.writeText(rosterText)
+        console.log(rosterText)
         setIsCopy(true)
     }
 
@@ -61,10 +72,23 @@ ${roster.points}/2000 Pts
         return woundsCount
     }
 
+    const renderWeapon = ([key, value]) => value
+        ? <p>&#8226; {value} x {key}</p>
+        : null
+
+    const renderWeaponOption = ([key, value]) => {
+        return Object.entries(value).map(renderWeapon)
+    }
+
+    const renderWeaponOptions = (weaponOptions) => Object.entries(weaponOptions).map(renderWeaponOption)
+
     const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
         <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost || 0} points)</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
+        {unit.weaponOptions ? renderWeaponOptions(unit.weaponOptions) : null}
+        {unit.marksOfChaos ? <p>&#8226; Mark Of Chaos: {unit.marksOfChaos}</p> : null}
+        {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
     </div>
 
     const renderRegimentsOfRenownUnit = (unit) => <p key={unit.id}>{unit.name}</p>

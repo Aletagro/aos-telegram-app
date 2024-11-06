@@ -1,0 +1,51 @@
+#weaponApplyButton {
+    background: rgb(245, 201, 80);
+    color: black;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border-width: 0px;
+    padding: 16px 16px;
+    margin-right: 16px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+#chooseWeaponRow {
+  background: rgb(236, 236, 236);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 8px;
+}
+
+#chooseWeaponCountContainer {
+  display: flex;
+  align-items: center;
+}
+
+#chooseWeaponText {
+  margin: 0px;
+}
+
+#chooseWeaponCount {
+  background: white;
+  border-radius: 4px;
+  margin: 0px 4px;
+  padding: 6px 10px;
+}
+
+#weaponChangeButton {
+  background: rgb(245, 201, 80);
+  border-radius: 4px;
+  border-width: 0px;
+  padding: 6px;
+}
+
+#disabledWeaponChangeButton {
+  background: rgb(201, 200, 199);
+  border-radius: 4px;
+  border-width: 0px;
+  padding: 6px;
+}

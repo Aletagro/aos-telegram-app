@@ -11,7 +11,7 @@ const Rules = ({info}) => {
     const rules = dataBase.data.rule_container.filter((group) => group.ruleSectionId === _paragraph.id)
     rules.sort((a, b) => a.displayOrder - b.displayOrder)
 
-    const renderRuleComponent = (rule) => <Rule rule={rule} />
+    const renderRuleComponent = (rule) => <Rule key={rule.id} rule={rule} />
 
     const renderRule = (rule) => {
         const components = dataBase.data.rule_container_component.filter((component) => component.ruleContainerId === rule.id)

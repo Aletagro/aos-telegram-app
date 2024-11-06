@@ -110,6 +110,26 @@ const Builder = () => {
         navigate('chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true}})
     }
 
+    const handleReinforcedAuxiliary = (unit, unitIndex) => {
+        if (unit.isReinforced) {
+            const _points = unit.points / 2
+            roster.auxiliaryUnits[unitIndex] = {
+                ...roster.auxiliaryUnits[unitIndex],
+                isReinforced: false,
+                points: _points
+            }
+            roster.points = roster.points - _points
+        } else {
+            roster.auxiliaryUnits[unitIndex] = {
+                ...roster.auxiliaryUnits[unitIndex],
+                isReinforced: true,
+                points: unit.points * 2
+            }
+            roster.points = roster.points + unit.points
+        }
+        forceUpdate()
+    }
+
     const renderRegiment = (regiment, index) => <Regiment
         key={index}
         regiment={regiment}
@@ -126,6 +146,10 @@ const Builder = () => {
         onClick={handleClickAuxiliaryUnit}
         onDelete={handleDeleteAuxiliaryUnit}
         unitIndex={index}
+        artefacts={artefacts}
+        heroicTraits={heroicTraits}
+        onReinforced={handleReinforcedAuxiliary}
+        isAuxiliary
     />
 
     const renderRegimentOfRenown = () => <UnitRow

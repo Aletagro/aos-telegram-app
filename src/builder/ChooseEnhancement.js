@@ -7,7 +7,7 @@ import './styles/ChooseEnhancement.css'
 const dataBase = require('../dataBase.json')
 
 const ChooseEnhancement = () => {
-    const {data, type, unitIndex, regimentIndex, title, isRosterInfo} = useLocation().state
+    const {data, type, unitIndex, regimentIndex, title, isRosterInfo, isAuxiliary} = useLocation().state
     const navigate = useNavigate()
     let _data = data
     if (type === 'battleFormation') {
@@ -34,8 +34,13 @@ const ChooseEnhancement = () => {
     }
 
     const handleClickEnhancement = (enhancement) => {
-        const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancement.name}
-        roster.regiments[regimentIndex].units[unitIndex] = newUnit
+        if (isAuxiliary) {
+            const newUnit = {...roster.auxiliaryUnits[unitIndex], [type]: enhancement.name}
+            roster.auxiliaryUnits[unitIndex] = newUnit
+        } else {
+            const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancement.name}
+            roster.regiments[regimentIndex].units[unitIndex] = newUnit
+        }
         navigate(-1)
     }
 
@@ -53,6 +58,9 @@ const ChooseEnhancement = () => {
             if (type === 'manifestationLore') {
                 roster.manifestationsList = []
             }
+        } else if (isAuxiliary) {
+            const newUnit = {...roster.auxiliaryUnits[unitIndex], [type]: ''}
+            roster.auxiliaryUnits[unitIndex] = newUnit
         } else {
             const newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: ''}
             roster.regiments[regimentIndex].units[unitIndex] = newUnit
@@ -70,7 +78,7 @@ const ChooseEnhancement = () => {
     </button>
 
     return  <div id='column' className='Chapter'>
-        {_data.map(isRosterInfo ? renderBlock : renderEnhancement)}
+        {_data?.map(isRosterInfo ? renderBlock : renderEnhancement)}
         <button id='deleteEnhancement' onClick={handleDeleteEnhancement}>Delete {title}</button>
     </div>
 }

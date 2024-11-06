@@ -128,3 +128,12 @@ export const getValue = (value) => {
         }
     }
 }
+
+export const capitalizeFirstLetter = (text) => {
+    return String(text).charAt(0).toUpperCase() + String(text).slice(1);
+}
+
+export const camelCaseToWords = (text) => {
+    const result = text.replace(/([A-Z])/g, ' $1');
+    return result.charAt(0).toUpperCase() + result.slice(1);
+}
