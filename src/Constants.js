@@ -89,7 +89,7 @@ const Constants = {
             withoutHero: true
         },
         {
-            name: 'Beast',
+            name: 'Beast,',
             withoutHero: true
         },
         {
