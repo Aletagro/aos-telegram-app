@@ -25,6 +25,7 @@ import ChooseOption from './builder/ChooseOption';
 import ChooseWeapon from './builder/ChooseWeapon';
 import Export from './builder/Export';
 import Calculator from './calculator/Calculator';
+import Developer from './screens/Developer';
 import './App.css';
 
 const tg = window.Telegram.WebApp
@@ -75,6 +76,7 @@ function App() {
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'export'} element={<Export />} />
       <Route path={'calculator'} element={<Calculator />} />
+      <Route path={'developer'} element={<Developer />} />
     </Routes>
   </div>
 }

@@ -1,9 +1,13 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom';
 import Row from '../components/Row'
 import Constants from '../Constants'
 import './styles/Main.css'
 
 const Main = () => {
+    const navigate = useNavigate()
+
+    const handleNavigateToTest = () => {navigate('developer')}
 
     const renderRow = (grandAlliance) => <Row
         key={grandAlliance.id}
@@ -23,6 +27,7 @@ const Main = () => {
             <Row title='Damage Calculator' navigateTo='calculator' />
             <p id='feedbackText'>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id='feedbackText'>For feedback - @RukosuevKrasavchik</p>
+            <button id='testButton' onClick={handleNavigateToTest}>test</button>
         </div>
     </>
 }
