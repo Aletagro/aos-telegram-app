@@ -1,14 +1,39 @@
+@font-face {
+    font-family: 'Minion Pro Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Minion Pro Regular'), url('fonts/MinionPro-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Minion Pro Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Minion Pro Bold'), url('fonts/MinionPro-Bold.woff') format('woff');
+}
+
 body {
     background: white;
     padding: 0px;
     margin: 0px;
+    font-family: 'Minion Pro Regular';
 }
 p {
     color: black;
 }
+h3 {
+    color: black;
+    font-family: 'Minion Pro Bold';
+}
 h4 {
     color: black;
+    font-family: 'Minion Pro Bold';
+}
+b {
+    color: black;
+    font-family: 'Minion Pro Bold';
 }
 button {
     color: black;
+    font-family: 'Minion Pro Regular';
 }

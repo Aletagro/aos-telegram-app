@@ -1,34 +1,40 @@
 #warscroll {
   background: white;
   margin: 0px;
-  padding: 0px 8px;
+  padding: 0px 16px;
 }
 .weaponNameContainer {
   background: rgb(46, 46, 49);
-  border-radius: 4px;
-  padding: 16px 16px;
+  border-radius: 8px;
+  padding: 12px 16px;
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+.weaponContainer {
+  display: flex;
+  justify-content: space-between;
+}
 .weaponName {
   color: white;
   margin: 0px;
+  font-size: 14px;
 }
-.rangeWeapons {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  padding: 0px 16px;
+#cellTitle {
+  color: #525252;
+  font-size: 16px;
+  margin-top: 0px;
+  flex: 1;
+  text-align: center;
 }
-.meleeWeapons {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 0px 16px;
-}
-#cell {
+#cellValue {
+  font-size: 24px;
   font-weight: bold;
   margin-top: 0px;
+  margin-bottom: 8px;
+  flex: 1;
+  text-align: center;
 }
 
 .keywordsContainer {
@@ -38,8 +44,11 @@
   display: flex;
 }
 #weaponAbilities {
-  border: 1px dashed black;
-  padding: 4px;
+  color: #525252;
+  font-size: 14px;
+  border: 1px solid #8B8B8B;
+  border-radius: 24px;
+  padding: 4px 8px;
   margin-right: 4px;
 }
 #keyword {
@@ -50,6 +59,7 @@
 }
 #wargearOptions {
   white-space: pre-line;
+  margin: 8px 0px;
 }
 
 #textItalic {
@@ -58,16 +68,20 @@
 }
 
 #keywords {
-  background-color: rgb(236, 236, 236);
-  border: 1px solid grey;
+  background-color: #E8E8E8;
   border-radius: 8px;
-  padding: 8px 8px;
+  padding: 8px;
 }
 
 #characteristicsContainer {
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 24px;
+  background: #E7E7E7;
+  margin-top: -6px;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding: 0px 12px;
+  padding-top: 20px;
 }
 
 #characteristicSubContainer {
@@ -79,12 +93,14 @@
 #characteristicValue {
   background: rgb(46, 46, 49);
   color: white;
+  border: 3px solid #A1923D;
   border-radius: 50px;
   width: 40px;
   height: 40px;
-  padding: 4px 4px;
+  padding: 6px;
   margin: 0px;
-  font-size: 18px;
+  font-size: 28px;
+  font-weight: bold;
   text-align: center;
   align-content: center;
 }
@@ -92,6 +108,7 @@
 #characteristicTitle {
   text-align: center;
   font-weight: bold;
+  font-size: 16px;
 }
 
 #unitDetailsContainer {
@@ -115,4 +132,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+#unitDetailsText {
+  margin: 8px 0px;
+}
+#weaponTitleContainer {
+  display: flex;
+  justify-content: space-between;
+}
+#calculator {
+  background: transparent;
+  border-width: 0px;
+}
+#warscrollChapterTitle {
+  margin: 12px 0px;
 }

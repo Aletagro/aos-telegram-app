@@ -6,7 +6,6 @@
   border-radius: 8px;
   text-align: start;
   font-size: 1em;
-  font-family: 'Times New Roman', Times, serif;
   width: 100%;
 }
 
@@ -23,6 +22,7 @@
 .headerText {
   color: white;
   font-weight: bold;
+  margin: 6px 0px;
 }
 
 #castingValue {
@@ -39,8 +39,9 @@
   padding: 0px 8px;
 }
 
-#text {
+#abilityText {
   white-space: pre-line;
+  margin: 8px 0px;
 }
 
 #textItalic {
@@ -50,4 +51,9 @@
 
 #boldText {
   font-weight: bold;
+}
+
+#abilityName {
+  margin-top: 16px;
+  margin-bottom: 8px;
 }

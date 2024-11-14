@@ -1,6 +1,8 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {roster, search} from '../utilities/appState'
+import Search from '../icons/search.svg'
+import ArrowBack from '../icons/arrowBack.svg'
 import './styles/Header.css'
 
 const Header = () => {
@@ -41,18 +43,14 @@ const Header = () => {
                     Export
                 </button>
             default:
-                return <button type='button' id='headerButton' onClick={handleNavigateToSearch}>
-                    Search
-                </button>
+                return <button id='headerButton' onClick={handleNavigateToSearch}><img src={Search} alt="" /></button>
         }
     }
 
     return <div className="header" id="myHeader">
         {pathname === '/'
             ? null
-            : <button type='button' id='headerButton' onClick={handleGoBack}>
-                Back
-            </button>
+            : <button id='headerButton' onClick={handleGoBack}><img src={ArrowBack} alt="" /></button>
         }
         <p id='headerTitle'>{state?.title}</p>
         {renderRightButton()}

@@ -28,9 +28,9 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
             {ability.castingValue || (isRegimentOfRenown && ability.cpCost) ? <p id='castingValue'>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p> : null}
         </div>
         <div id='container'>
-            <h4>{ability.name}</h4>
-            {ability.declare ? <p id='text'><b>Declare:</b> {ability.declare}</p> : null}
-            <p id='text'><b>Effect:</b> {ability.effect}</p>
+            <h4 id='abilityName'>{ability.name}</h4>
+            {ability.declare ? <p id='abilityText'><b>Declare:</b> {ability.declare}</p> : null}
+            <p id='abilityText'><b>Effect:</b> {ability.effect}</p>
             {keywordsLength
                 ? <div id='row' className='keywordsContainer'>
                     <p id='boldText'>Keywords:&nbsp;</p>

@@ -48,7 +48,6 @@ Wounds: ${getWoundsCount()}
 ${roster.points}/2000 Pts
 `
         navigator.clipboard.writeText(rosterText)
-        console.log(rosterText)
         setIsCopy(true)
     }
 

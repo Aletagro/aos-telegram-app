@@ -57,20 +57,25 @@ const Warscroll = () => {
         navigate('calculator', {state: {weapons: weaponsForCalculator}})
     }
 
-    const renderCell = (cell, index) => <p key={index} id='cell'>{cell}</p>
+    const renderCellTitle = (cell, index) => <p key={index} id='cellTitle'>{cell}</p>
+
+    const renderCellValue = (cell, index) => <p key={index} id='cellValue'>{cell}</p>
 
     const renderWeaponAbility = (ability) => <p key={ability.name} id='weaponAbilities'>{ability.name}</p>
 
     const renderRangeWeapon = (weapon) => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
-        const cells = ['Rng', 'A', 'HIT', 'W', 'R', 'D', weapon.range, weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
+        const titles = ['Rng', 'Atk', 'Hit', 'Wnd', 'Rnd', 'Dmg']
+        const values = [weapon.range, weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
         return <div key={weapon.id}>
             <div className='weaponNameContainer'>
                 <p className='weaponName'>{weapon.name}</p>
-                <button id='regimentDeleteButton' onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
             </div>
-            <div className='rangeWeapons'>
-                {cells.map(renderCell)}
+            <div className='weaponContainer'>
+                {titles.map(renderCellTitle)}
+            </div>
+            <div className='weaponContainer'>
+                {values.map(renderCellValue)}
             </div>
             <div id='row' className='flexContainer'>
                 {weaponAbilities.map(renderWeaponAbility)}
@@ -80,14 +85,17 @@ const Warscroll = () => {
 
     const renderMeleeWeapon = (weapon) => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
-        const cells = ['A', 'HIT', 'W', 'R', 'D', weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
+        const titles = ['Atk', 'Hit', 'Wnd', 'Rnd', 'Dmg']
+        const values = [weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
         return <div key={weapon.id}>
             <div className='weaponNameContainer'>
                 <p className='weaponName'>{weapon.name}</p>
-                <button id='regimentDeleteButton' onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
             </div>
-            <div className='meleeWeapons'>
-                {cells.map(renderCell)}
+            <div className='weaponContainer'>
+                {titles.map(renderCellTitle)}
+            </div>
+            <div className='weaponContainer'>
+                {values.map(renderCellValue)}
             </div>
             <div id='row' className='flexContainer'>
                 {weaponAbilities.map(renderWeaponAbility)}
@@ -97,7 +105,7 @@ const Warscroll = () => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
 
-    const renderRegimentOption = (option) => <p key={option.id}>&#8226; {option.optionText}</p>
+    const renderRegimentOption = (option) => <p id='unitDetailsText' key={option.id}>&#8226; {option.optionText}</p>
 
     const renderCharacteristic = (characteristic) => <div key={characteristic.value} id='characteristicSubContainer' style={{width: '20%'}}>
         <p id='characteristicValue'>{characteristic.value}</p>
@@ -112,21 +120,27 @@ const Warscroll = () => {
             </div>
             {rangeWeapons.length > 0
                 ? <>
-                    <h3>Range Weapons</h3>
+                    <div id='weaponTitleContainer'>
+                        <h3 id='warscrollChapterTitle'>Range Weapons</h3>
+                        <button id='calculator' onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
+                    </div>
                     {rangeWeapons.map(renderRangeWeapon)}
                 </>
                 : null
             }
             {meleeWeapons.length > 0
                 ? <>
-                    <h3>Melee Weapons</h3>
+                    <div id='weaponTitleContainer'>
+                        <h3 id='warscrollChapterTitle'>Melee Weapons</h3>
+                        <button id='calculator' onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
+                    </div>
                     {meleeWeapons.map(renderMeleeWeapon)}
                 </>
                 : null
             }
             {abilities.length > 0
                 ? <>
-                    <h3>Abilities</h3>
+                    <h3 id='warscrollChapterTitle'>Abilities</h3>
                     {abilities.map(renderAbility)}
                 </>
                 : null
@@ -134,10 +148,10 @@ const Warscroll = () => {
             <div id='unitDetailsContainer'>
                 <p id='unitDetailsTitle'>Unit Details</p>
                 <div id='unitDetailsSubContainer'>
-                    <p>{unit.modelCount} model</p>
+                    <p id='unitDetailsText'>{unit.modelCount} model</p>
                     {unit.wargearOptionsText ? <p id='wargearOptions'>{unit.wargearOptionsText}</p> : null}
-                    {unit.points ? <p>{unit.points} points</p> : null}
-                    <p><b>Base size:</b> {unit.baseSize}</p>
+                    {unit.points ? <p id='unitDetailsText'>{unit.points} points</p> : null}
+                    <p id='unitDetailsText'><b>Base size:</b> {unit.baseSize}</p>
                     {regimentOptions.length > 0
                         ? <>
                             <b>Regiment Options</b>
@@ -145,7 +159,7 @@ const Warscroll = () => {
                         </>
                         : null
                     }
-                    {unit.notes ? <p>Notes: {unit.notes}</p> : null}
+                    {unit.notes ? <p id='unitDetailsText'>Notes: {unit.notes}</p> : null}
                 </div>
             </div>
             {unit.referenceKeywords
