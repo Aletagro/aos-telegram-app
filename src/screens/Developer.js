@@ -1,4 +1,5 @@
 import React from 'react';
+import {setCloudStorageItem, getCloudStorageItem} from '@telegram-apps/sdk';
 
 const tg = window.Telegram.WebApp
 
@@ -6,6 +7,10 @@ const Developer = () => {
 
     const handleAddInStorage = () => {
         tg.CloudStorage?.setItem('key', 'value')
+    }
+
+    const handleAddInStorageSDK = () => {
+        setCloudStorageItem('sdk', 'value')
     }
 
     return <div>
@@ -16,8 +21,10 @@ const Developer = () => {
         <p>version: {tg.version}</p>
         <p>viewportHeight: {tg.viewportHeight}</p>
         <p>CloudStorageKeys: {JSON.stringify(tg.CloudStorage?.getKeys())}</p>
-        <p>CloudStorageValue: {JSON.stringify(tg.CloudStorage?.getItems())}</p>
+        <p>CloudStorageValue: {tg.CloudStorage?.getItem('key')}</p>
+        <p>CloudStorageValueSDK: {getCloudStorageItem('sdk')}</p>
         <button onClick={handleAddInStorage}>setItemInCloudStorage</button>
+        <button onClick={handleAddInStorageSDK}>setItemInCloudStorageSDK</button>
     </div>
 }
 
