@@ -25,7 +25,12 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
             <p className='headerText'>{ability.phaseDetails}</p>
             {ability.cpCost && !isRegimentOfRenown ? <p className='headerText'>{`${ability.cpCost} CP`}</p> : null}
             {/* У абилок, которые привязаны к Regiment Of Renown сложность каста приходит в cpCost */}
-            {ability.castingValue || (isRegimentOfRenown && ability.cpCost) ? <p id='castingValue'>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p> : null}
+            {ability.castingValue || (isRegimentOfRenown && ability.cpCost)
+                ? <div id='castingValueContainer'>
+                    <p id='castingValue'>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p>
+                </div>
+                : null
+            }
         </div>
         <div id='container'>
             <h4 id='abilityName'>{ability.name}</h4>
