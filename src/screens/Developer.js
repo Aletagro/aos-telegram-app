@@ -1,12 +1,14 @@
 import React from 'react';
-import {isCloudStorageSupported, initData} from '@telegram-apps/sdk';
+
+const tg = window.Telegram.WebApp
 
 const Developer = () => {
-    const user = initData.user();
     return <div>
         <p>test</p>
-        <p>isCloudStorageSupported: {isCloudStorageSupported()}</p>
-        <p>user: {user}</p>
+        <p>initData: {tg.initData}</p>
+        <p>platform: {tg.platform}</p>
+        <p>version: {tg.version}</p>
+        <p>viewportHeight: {tg.viewportHeight}</p>
     </div>
 }
 
