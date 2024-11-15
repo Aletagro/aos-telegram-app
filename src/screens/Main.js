@@ -1,13 +1,13 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+// import {useNavigate} from 'react-router-dom';
 import Row from '../components/Row'
 import Constants from '../Constants'
 import './styles/Main.css'
 
 const Main = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    const handleNavigateToTest = () => {navigate('developer')}
+    // const handleNavigateToTest = () => {navigate('developer')}
 
     const renderRow = (grandAlliance) => <Row
         key={grandAlliance.id}
