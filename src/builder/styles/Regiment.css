@@ -10,16 +10,29 @@
   background: rgb(46, 46, 49);
   color: white;
   border-radius: 4px 4px 0px 0px;
-  padding: 16px;
+  padding: 12px 16px;
   margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+#regimentTitleSubContainer {
+  display: flex;
+}
+
 #regimentText {
-  margin: 0;
   color: white;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: 'Minion Pro Bold';
+  padding-right: 16px;
+}
+
+#regimentPoints {
+  color: white;
+  font-size: 18px;
+  line-height: 24px;
 }
 
 #regimentRightBlock {
@@ -41,19 +54,21 @@
 #regimentAddUnitContainer {
   display: flex;
   justify-content: center;
+  margin: 0px 12px;
 }
 
 #regimentAddUnitButton {
+  width: 100%;
   background: rgb(245, 201, 80);
   color: black;
-  border-radius: 20px;
+  border-radius: 24px;
   border-width: 0px;
   padding: 8px 12px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #regimentDeleteButton {
-  background: rgb(201, 200, 199);
+  background: transparent;
   border-radius: 4px;
   border-width: 0px;
   padding: 4px;

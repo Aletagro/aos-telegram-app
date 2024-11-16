@@ -3,6 +3,7 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import {roster, search} from '../utilities/appState'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
+import Export from '../icons/export.svg'
 import './styles/Header.css'
 
 const Header = () => {
@@ -39,18 +40,16 @@ const Header = () => {
             case '/search':
                 return null
             case '/chooseGrandAlliance/chooseFaction/builder':
-                return <button type='button' id='headerButton' onClick={handleNavigateToExport}>
-                    Export
-                </button>
+                return <button id='headerButton' onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
             default:
-                return <button id='headerButton' onClick={handleNavigateToSearch}><img src={Search} alt="" /></button>
+                return <button id='headerButton' onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
         }
     }
 
     return <div className="header" id="myHeader">
         {pathname === '/'
             ? null
-            : <button id='headerButton' onClick={handleGoBack}><img src={ArrowBack} alt="" /></button>
+            : <button id='headerButton' onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
         }
         <p id='headerTitle'>{state?.title}</p>
         {renderRightButton()}

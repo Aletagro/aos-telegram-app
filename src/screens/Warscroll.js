@@ -54,7 +54,7 @@ const Warscroll = () => {
             doubleHit: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (2 Hits)'),
             critOn: Constants.critOn[2]
         }))
-        navigate('calculator', {state: {weapons: weaponsForCalculator}})
+        navigate('calculator', {state: {weapons: weaponsForCalculator, title: 'Damage Calculator'}})
     }
 
     const renderCellTitle = (cell, index) => <p key={index} id='cellTitle'>{cell}</p>
@@ -108,7 +108,9 @@ const Warscroll = () => {
     const renderRegimentOption = (option) => <p id='unitDetailsText' key={option.id}>&#8226; {option.optionText}</p>
 
     const renderCharacteristic = (characteristic) => <div key={characteristic.value} id='characteristicSubContainer' style={{width: '20%'}}>
-        <p id='characteristicValue'>{characteristic.value}</p>
+        <div id='characteristicValueContainer'>
+            <p id='characteristicValue'>{characteristic.value}</p>
+        </div>
         <p id='characteristicTitle'>{characteristic.title}</p>
     </div>
 

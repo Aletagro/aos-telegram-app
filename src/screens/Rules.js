@@ -17,7 +17,7 @@ const Rules = ({info}) => {
         const components = dataBase.data.rule_container_component.filter((component) => component.ruleContainerId === rule.id)
         components.sort((a, b) => a.displayOrder - b.displayOrder)
         return <>
-            <h4 key={rule.id}>{rule.title}</h4>
+            <h4 id='rulesTitle' key={rule.id}>{rule.title}</h4>
             {rule.subtitle ? <h5>{rule.subtitle}</h5> : null}
             {components.map(renderRuleComponent)}
         </>

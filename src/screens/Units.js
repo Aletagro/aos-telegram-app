@@ -18,7 +18,7 @@ const Units = () => {
         state={{unit}}
     />
 
-    const renderUnitsType = (type) => <div key={type.title}>
+    const renderUnitsType = (type) => <div id='unitTypeContainer' key={type.title}>
         <h4 id='unitType'>{type.title}</h4>
         {type.units.map(renderRow)}
     </div>

@@ -7,10 +7,15 @@
   flex-direction: column;
 }
 
+#unitTypeContainer {
+  margin-bottom: 24px;
+}
+
 #unitType {
   background: rgb(46, 46, 49);
   color: white;
   border-radius: 4px;
   padding: 16px 16px;
+  margin-bottom: 8px;
   font-weight: bold;
 }

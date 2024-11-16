@@ -1,16 +1,17 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import Copy from '../icons/copy.svg'
-import Delete from '../icons/delete.svg'
+import Close from '../icons/close.svg'
 import Plus from '../icons/plus.svg'
 import Minus from '../icons/minus.svg'
+import DarkGeneral from '../icons/darkGeneral.svg'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
 import './styles/UnitRow.css'
 
 const dataBase = require('../dataBase.json')
 
-const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary}) => {
+const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary, isGeneral}) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
     const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
@@ -75,11 +76,15 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
         Weapon Options
     </button>
 
-    return <div>
+    return <div id='unitRowContainer'>
         <div className='unitRow'>
             <button id='addUnitButton' onClick={handleClick}>
-                <p id='unitName'>{unit.name}</p>
-                <p id='price'>{unit.points || unit.regimentOfRenownPointsCost || 0} ponts</p>
+                <div id='addUnitButtonSubContainer'>
+                    {isGeneral ? <img id='generalIcon' src={DarkGeneral} alt=''/> : null}
+                    {unit.modelCount > 1 ? <p id='unitName'>{unit.modelCount * (unit.isReinforced ? 2 : 1)}&#160;</p> : null}
+                    <p id='unitName'>{unit.name}</p>
+                </div>
+                <p id='price'>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
             </button>
             {isAddUnit || unit.cannotBeReinforced || unit.abilityGroupType === 'regimentOfRenown'
                 ? null
@@ -91,7 +96,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
                 ? null
                 : <button id='unitRowButton' onClick={handleCopy}><img src={Copy} alt="" /></button>
             }
-            {onDelete ? <button id='unitRowButton' onClick={handleDelete}><img src={Delete} alt="" /></button> : null}
+            {onDelete ? <button id='unitRowButton' onClick={handleDelete}><img src={Close} alt="" /></button> : null}
         </div>
         {isShowEnhancements && !isAddUnit
             ? <div id='enhancementsContainer'>

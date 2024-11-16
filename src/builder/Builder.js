@@ -1,9 +1,11 @@
 import React, {useCallback, useReducer} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
+import {getWoundsCount} from '../utilities/utils'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import Row from '../components/Row'
+import Add from '../icons/add.svg'
 import './styles/Builder.css'
 
 const dataBase = require('../dataBase.json')
@@ -184,12 +186,13 @@ const Builder = () => {
 
     return <div id='column' className='Chapter'>
         <div id='mainInfoContainer'>
-            <p id='builderText'>Grand Alliance: {roster.grandAlliance}</p>
-            <p id='builderText'>Allegiance: {roster.allegiance}</p>
-            <p id='builderText'>{roster.points}/2000 Points</p>
+            <p id='builderText'>Grand Alliance: <b>{roster.grandAlliance}</b></p>
+            <p id='builderText'>Allegiance: <b>{roster.allegiance}</b></p>
+            <p>Wounds: {getWoundsCount(roster)}</p>
         </div>
+        <p id='builderTitle'>Army: {roster.points}/2000 Points</p>
         {battleFormations.length
-            ? <button id='builderAddButton' onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
+            ? <button id={roster.battleFormation ? 'builderSecondAddButton' : 'builderAddButton'} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
                 {roster.battleFormation
                     ? `Battle Formation : ${roster.battleFormation}`
                     : 'Choose Battle Formation'
@@ -197,13 +200,22 @@ const Builder = () => {
             </button>
             : null
         }
-        {roster.regiments.length < 5 ? <button id='builderAddButton' onClick={handleAddRegiment}>Add Regiment</button> : null}
         {roster.regiments.length > 0
             ? roster.regiments.map(renderRegiment)
             : null
         }
+        {roster.regiments.length < 5
+            ? <button id='builderAddButton' onClick={handleAddRegiment}>
+                <p>Add Regiment</p>
+                <img src={Add} alt='' />
+            </button>
+            : null
+        }
         <>
-            <button id='builderAddButton' onClick={handleAddAuxiliaryUnit}>Add Auxiliary Unit</button>
+            <button id='builderSecondAddButton' onClick={handleAddAuxiliaryUnit}>
+                <p>Add Auxiliary Unit</p>
+                <img src={Add} alt='' />
+            </button>
             {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
         </>
         <>
@@ -213,7 +225,10 @@ const Builder = () => {
                     {renderRegimentOfRenown()}
                     {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
                 </>
-                : <button id='builderAddButton' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</button>
+                : <button id='builderSecondAddButton' onClick={handleAddRegimentsOfRenown}>
+                    <p>Add Regiments Of Renown</p>
+                    <img src={Add} alt='' />
+                </button>
             }
         </>
         <p id='builderTitle'>Lores</p>

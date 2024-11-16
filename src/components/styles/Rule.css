@@ -4,15 +4,22 @@
     padding: 8px;
     white-space: pre-line;
     margin-bottom: 16px;
+    font-size: 18px;
 }
 #text {
     white-space: pre-line;
+    margin-bottom: 12px;
+    font-size: 18px;
   }
 #textBold {
     white-space: pre-line;
-    font-weight: bold;
+    font-family: 'Minion Pro Bold';
+    margin-bottom: 12px;
+    font-size: 18px;
   }
 #textItalic {
     white-space: pre-line;
     font-style: italic;
+    margin-bottom: 12px;
+    font-size: 18px;
   }

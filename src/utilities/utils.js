@@ -137,3 +137,23 @@ export const camelCaseToWords = (text) => {
     const result = text.replace(/([A-Z])/g, ' $1');
     return result.charAt(0).toUpperCase() + result.slice(1);
 }
+
+export const getWoundsCount = (roster) => {
+    let woundsCount = 0
+    roster.regiments.forEach(regiment => {
+        regiment.units.forEach(unit => {
+            woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
+        })
+    })
+    if (roster.auxiliaryUnits.length > 0) {
+        roster.auxiliaryUnits.forEach(unit => {
+            woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
+        })
+    }
+    if (roster.regimentOfRenown) {
+        roster.regimentsOfRenownUnits.forEach(unit => {
+            woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
+        })
+    }
+    return woundsCount
+}

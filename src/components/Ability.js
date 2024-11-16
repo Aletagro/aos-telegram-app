@@ -23,7 +23,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
     return <button id='ability' onClick={handlleClick} style={{border: `1px solid ${borderColor}`}}>
         <div id='header' style={{background: borderColor}}>
             <p className='headerText'>{ability.phaseDetails}</p>
-            {ability.cpCost && !isRegimentOfRenown ? <p className='headerText'>{`${ability.cpCost} CP`}</p> : null}
+            {ability.cpCost && !isRegimentOfRenown ? <p className='cpCost'>{`${ability.cpCost} CP`}</p> : null}
             {/* У абилок, которые привязаны к Regiment Of Renown сложность каста приходит в cpCost */}
             {ability.castingValue || (isRegimentOfRenown && ability.cpCost)
                 ? <div id='castingValueContainer'>
@@ -37,7 +37,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
             {ability.declare ? <p id='abilityText'><b>Declare:</b> {ability.declare}</p> : null}
             <p id='abilityText'><b>Effect:</b> {ability.effect}</p>
             {keywordsLength
-                ? <div id='row' className='keywordsContainer'>
+                ? <div id='abilityKeywordsContainer' className='keywordsContainer'>
                     <p id='boldText'>Keywords:&nbsp;</p>
                     {keywords.map(renderKeyword)}
                 </div>

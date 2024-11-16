@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Delete from '../icons/delete.svg'
+import Close from '../icons/close.svg'
 import {getValue} from '../utilities/utils'
 import Constants from '../Constants'
 import './styles/Weapon.css'
@@ -94,7 +94,7 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
         <div id='calculatorNameContainer'>
             <p id='calculatorInputTitle'>Name</p>
             <input id='calculatorNameInput' defaultValue={weapon.name}  onBlur={handleChangeName}/>
-            <button id='weaponDeleteButton' onClick={handleDelete}><img src={Delete} alt="" /></button>
+            <button id='weaponDeleteButton' onClick={handleDelete}><img src={Close} alt="" /></button>
         </div>
         <div id='calculatorInputsContainer'>
             {Constants.calculatorInputs.map(renderInput)}

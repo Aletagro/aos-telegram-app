@@ -8,9 +8,9 @@
 }
 
 #rosterOption {
-  font-weight: bold;
+  font-family: 'Minion Pro Bold';
   font-size: 20px;
-  margin-bottom: 8px;
+  margin: 12px 0px;
 }
 
 #armyOfRenown {
@@ -19,8 +19,9 @@
 
 #armyOfRenown {
   padding-left: 8px;
-  font-weight: bold;
+  font-family: 'Minion Pro Bold';
   font-size: 20px;
+  margin: 12px 0px;
 }
 
 #rosterOptionText {

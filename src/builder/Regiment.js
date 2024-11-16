@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import UnitRow from './UnitRow'
 import Delete from '../icons/delete.svg'
+import General from '../icons/general.svg'
 import './styles/Regiment.css'
 
 const emptyRegiment = {
@@ -96,26 +97,21 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         onCopy={handleCopy}
         artefacts={artefacts}
         heroicTraits={heroicTraits}
+        isGeneral={regiment.heroId && _index === 0 && roster.generalRegimentIndex === index}
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
     return <div id='regimentContainer' key={index}>
         <div id='regimentTitle'>
-            <p id='regimentText'>Regiment {index + 1}</p>
+            <div id='regimentTitleSubContainer'>
+                <p id='regimentText'>Regiment {index + 1}</p>
+                <p id='regimentPoints'>{regiment.points} Points</p>
+            </div>
             <div id='regimentRightBlock'>
-                <p id='regimentText'>{regiment.points} Points</p>
+                <button id='regimentDeleteButton' onClick={handleChooseGeneral}><img src={General} alt="" /></button>
                 <button id='regimentDeleteButton' onClick={handleDeleteRegiment}><img src={Delete} alt="" /></button>
             </div>
         </div>
-        {regiment.heroId
-            ? <div>
-                {roster.generalRegimentIndex === index
-                    ? <p id='regimentSubTitle'>General's Regiment</p>
-                    : <button id='regimentButton' onClick={handleChooseGeneral}>Сhoose General</button>
-                }
-            </div>
-            : null
-        }
         {regiment.units.map(renderUnit)}
         <div id='regimentAddUnitContainer'>
             <button id='regimentAddUnitButton' onClick={handleAddUnit(regiment, title, index)}>{title}</button>

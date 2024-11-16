@@ -21,8 +21,17 @@
 
 .headerText {
   color: white;
-  font-weight: bold;
+  font-family: 'Minion Pro Bold';
+  font-size: 18px;
   margin: 6px 0px;
+}
+
+.cpCost {
+  color: white;
+  font-family: 'Minion Pro Bold';
+  font-size: 18px;
+  margin: 6px 0px;
+  width: 38px;
 }
 
 #castingValueContainer {
@@ -38,7 +47,7 @@
   text-align: center;
   margin: 0px;
   position: relative;
-  top: 2px;
+  top: 1px;
 }
 
 #container {
@@ -48,6 +57,7 @@
 #abilityText {
   white-space: pre-line;
   margin: 8px 0px;
+  font-size: 16px;
 }
 
 #textItalic {
@@ -56,10 +66,15 @@
 }
 
 #boldText {
-  font-weight: bold;
+  font-family: 'Minion Pro Bold';
 }
 
 #abilityName {
   margin-top: 16px;
   margin-bottom: 8px;
+  font-size: 16px;
+}
+
+#abilityKeywordsContainer {
+  padding-bottom: 8px;
 }

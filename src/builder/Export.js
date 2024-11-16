@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {roster} from '../utilities/appState'
-import {getErrors, getWarnings} from '../utilities/utils'
+import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
 import './styles/Export.css'
 
 const Export = () => {
@@ -44,31 +44,11 @@ ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}` : ''}${roster.prayersLo
 ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
-Wounds: ${getWoundsCount()}
+Wounds: ${getWoundsCount(roster)}
 ${roster.points}/2000 Pts
 `
         navigator.clipboard.writeText(rosterText)
         setIsCopy(true)
-    }
-
-    const getWoundsCount = () => {
-        let woundsCount = 0
-        roster.regiments.forEach(regiment => {
-            regiment.units.forEach(unit => {
-                woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
-            })
-        })
-        if (roster.auxiliaryUnits.length > 0) {
-            roster.auxiliaryUnits.forEach(unit => {
-                woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
-            })
-        }
-        if (roster.regimentOfRenown) {
-            roster.regimentsOfRenownUnits.forEach(unit => {
-                woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
-            })
-        }
-        return woundsCount
     }
 
     const renderWeapon = ([key, value]) => value
@@ -150,7 +130,7 @@ ${roster.points}/2000 Pts
             </div>
             : null
         }
-        <p>Wounds: {getWoundsCount()}</p>
+        <p>Wounds: {getWoundsCount(roster)}</p>
         {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id='note'>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
         <p>{roster.points}/2000 Pts</p>
     </div>

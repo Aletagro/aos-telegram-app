@@ -38,7 +38,7 @@ const ChooseOption = () => {
     const renderOption = (option) => <button id='optionButton' key={option.id} onClick={handleClickOption(option.otherWarscrollOption || option.markOfChaos)}>{option.otherWarscrollOption || capitalizeFirstLetter(option.markOfChaos)}</button>
 
     return  <div id='column' className='Chapter'>
-        <p>{optionGroup.name}</p>
+        <p id='optionName'>{optionGroup.name}</p>
         {options.map(renderOption)}
         <button id='deleteEnhancement' onClick={handleDeleteOption}>Delete</button>
     </div>
