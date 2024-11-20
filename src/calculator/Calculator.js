@@ -4,6 +4,7 @@ import Constants from '../Constants'
 import Weapon from './Weapon'
 import DamageTable from './DamageTable'
 import Target from './Target'
+
 import './styles/Calculator.css'
 
 const Calculator = () => {
