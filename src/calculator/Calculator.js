@@ -11,6 +11,7 @@ const Calculator = () => {
     const {weapons} = useLocation().state
     const [_weapons, setWeapons] = useState(weapons || [{critOn: Constants.critOn[2]}])
     const [target, setTarget] = useState({})
+    const [updateCount, setUpdateCount] = useState(0)
 
     const handleAddWeapon = () => {
         setWeapons([..._weapons, {critOn: Constants.critOn[2]}])
@@ -32,6 +33,7 @@ const Calculator = () => {
         const newWeapons = [..._weapons]
         newWeapons.splice(index, 1)
         setWeapons(newWeapons)
+        setUpdateCount(updateCount + 1)
     }
 
     const handleChangeTarget = (type, value) => {
@@ -50,6 +52,7 @@ const Calculator = () => {
         onChange={handleChangeCharacteristics}
         onChangeAbilitiy={handleChangeAbilitiy}
         onDelete={handleDeleteWeapon}
+        updateCount={updateCount}
     />
 
     return  <div id='column' className='Chapter'>

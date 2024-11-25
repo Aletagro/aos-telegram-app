@@ -1,11 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Close from '../icons/close.svg'
 import {getValue} from '../utilities/utils'
 import Constants from '../Constants'
 import './styles/Weapon.css'
 
-const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
+const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete, updateCount}) => {
     const [errors, setErrors] = useState({})
+    const [weaponName, setWeaponName] = useState(weapon.name || '')
+
+    const getInputsValues = () => {
+        const values = {}
+        if (weapon) {
+            Constants.calculatorInputs.forEach(item => values[item.type] = weapon[item.type] || '')
+            Constants.calculatorCharacteristics.forEach(item => {
+                if (item.hasCustom) {
+                    values[item.type] = weapon[item.type] || ''
+                }
+            })
+        }
+        return values
+    }
+
+    const [inputsValues, setInputsValues] = useState(getInputsValues)
+
+    useEffect(() => {
+        setWeaponName(weapon.name)
+        setInputsValues(getInputsValues)
+    /* eslint-disable react-hooks/exhaustive-deps */
+    }, [updateCount])
 
     const handleDelete = () => {
         if (onDelete) {
@@ -14,10 +36,18 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
     }
 
     const handleChangeName = (e) => {
+        setWeaponName(e.target.value)
+    }
+
+    const handleBlurName = (e) => {
         onChange('name', e.target.value, index)
     }
 
     const handleChangeCharacteristic = (type) => (e) => {
+        setInputsValues({...inputsValues, [type]: e.target.value})
+    }
+
+    const handleBlurCharacteristic = (type) => (e) => {
         const value = getValue(e.target.value)
         if (value === undefined || value < 0) {
             setErrors({...errors, [type]: 'Invalide value'})
@@ -41,7 +71,7 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
 
     const renderInput = (data) => <div id='calculatorInputContainer'>
         <p id='calculatorInputTitle'>{data.name}</p>
-        <input id='calculatorInput' defaultValue={weapon[data.type]} onBlur={handleChangeCharacteristic(data.type)}/>
+        <input id='calculatorInput' value={inputsValues[data.type]} onChange={handleChangeCharacteristic(data.type)} onBlur={handleBlurCharacteristic(data.type)}/>
     </div>
 
     const renderWeaponAbility = (ability) => <button
@@ -79,8 +109,9 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
                     <p id='weaponCustomDamageTitle'>Custom</p>
                     <input
                         id='weaponCustomDamageInput'
-                        onBlur={handleChangeCharacteristic(characteristic.type)}
-                        defaultValue={weapon[characteristic.type]}
+                        onChange={handleChangeCharacteristic(characteristic.type)}
+                        onBlur={handleBlurCharacteristic(characteristic.type)}
+                        value={inputsValues[characteristic.type]}
                         placeholder='d3+3'
                     />
                 </div>
@@ -89,11 +120,10 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
             : null
         }
     </div>
-
     return  <div id='calculatorWeaponContainer'>
         <div id='calculatorNameContainer'>
             <p id='calculatorInputTitle'>Name</p>
-            <input id='calculatorNameInput' defaultValue={weapon.name}  onBlur={handleChangeName}/>
+            <input id='calculatorNameInput' value={weaponName} onChange={handleChangeName} onBlur={handleBlurName}/>
             <button id='weaponDeleteButton' onClick={handleDelete}><img src={Close} alt="" /></button>
         </div>
         <div id='calculatorInputsContainer'>

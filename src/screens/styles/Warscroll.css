@@ -43,6 +43,7 @@
 }
 .flexContainer {
   display: flex;
+  padding-bottom: 12px;
 }
 #weaponAbilities {
   color: #525252;
