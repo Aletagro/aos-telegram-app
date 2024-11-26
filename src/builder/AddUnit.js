@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
-import {roster} from '../utilities/appState'
+import {roster, builderFilters} from '../utilities/appState'
 import {unitsSortesByType, sortByName} from '../utilities/utils'
 import UnitRow from './UnitRow'
-import './styles/Builder.css'
+import './styles/AddUnit.css'
 
 const dataBase = require('../dataBase.json')
 
 const AddUnit = () => {
     window.scrollTo(0, 0)
     const navigate = useNavigate()
+    const [hidePotentialLegends, setHidePotentialLegends] = useState(builderFilters.hidePotentialLegends)
     const {alliganceId, heroId, regimentId, isAuxiliary, isRegimentsOfRenown} = useLocation().state
     const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === alliganceId).map(item => item.warscrollId)
     let units = []
+    let hasPotentialLegends = false
 
     const hasKeyword = (unitKeywords, requiredKeywordsArray , excludedKeywords) => {
         let isHas = false
@@ -27,6 +29,24 @@ const AddUnit = () => {
             }
         })
         return isHas
+    }
+
+    const setHasPonentialLegends = (units) => {
+        return units.find(unit => {
+            if (unit.notes) {
+                return unit.notes.includes('Legends on')
+            }
+            return false
+        })
+    }
+
+    const filterPonentialLegends = (units) => {
+        return units.filter(unit => {
+            if (unit.notes) {
+                return !unit.notes.includes('Legends on')
+            }
+            return true
+        })
     }
 
     if (isRegimentsOfRenown) {
@@ -60,9 +80,17 @@ const AddUnit = () => {
             units = [...units, ...zeroToOneUnits]
         }
         units = [...new Set(units)]
+        hasPotentialLegends = setHasPonentialLegends(units)
+        if (hasPotentialLegends && hidePotentialLegends) {
+            units = filterPonentialLegends(units)
+        }
         units = unitsSortesByType(units)
     } else {
         units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && unit.referenceKeywords.includes('Hero') && !unit.requiredPrimaryHeroWarscrollId)
+        hasPotentialLegends = setHasPonentialLegends(units)
+        if (hasPotentialLegends && hidePotentialLegends) {
+            units = filterPonentialLegends(units)
+        }
         sortByName(units)
     }
 
@@ -89,6 +117,11 @@ const AddUnit = () => {
         roster.points = roster.points + (unit.points || unit.regimentOfRenownPointsCost || 0)
     }
 
+    const handleChangeHidePotentialLegends = () => {
+        setHidePotentialLegends(!hidePotentialLegends)
+        builderFilters.hidePotentialLegends = !hidePotentialLegends
+    }
+
     const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit/>
 
     const renderUnitsType = (type) => <div key={type.title}>
@@ -97,6 +130,18 @@ const AddUnit = () => {
     </div>
 
     return <div id='column' className='Chapter'>
+        {hasPotentialLegends
+            ? <div id='potentialLegendsContainer' onClick={handleChangeHidePotentialLegends}>
+                <p id='potentialLegends'>Hide Potential Legends</p>
+                <input
+                    type='checkbox'
+                    id={hidePotentialLegends ? 'checkedCheckbox' : 'uncheckedCheckbox'}
+                    checked={hidePotentialLegends}
+                    onChange={handleChangeHidePotentialLegends}
+                />
+            </div>
+            : null
+        }
         {heroId || isAuxiliary
             ? units.map(renderUnitsType)
             : units.map(renderRow)

@@ -28,3 +28,7 @@ export const search = {
     value: '',
     warscrolls: []
 }
+
+export const builderFilters = {
+    hidePotentialLegends: false
+}
