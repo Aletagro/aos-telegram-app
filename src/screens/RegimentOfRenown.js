@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom'
 import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
 import Ability from '../components/Ability'
-import './styles/Catalog.css'
+import './styles/RegimentOfRenown.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -33,9 +33,9 @@ const RegimentOfRenown = () => {
         <img src={regiment.image} alt='Regiment Of Renown' width='100%' />
         <div id='column' className='Chapter'>
             <p id='text'>{regiment.subsectionRulesText}</p>
-            <h4>{regiment.regimentOfRenownPointsCost} points</h4>
+            <h4 id='regimentOfRenownTitle'>{regiment.regimentOfRenownPointsCost} points</h4>
             {regimentAbilities && regimentAbilities.map(renderAbility)}
-            <h4>Warscrolls</h4>
+            <h4 id='regimentOfRenownTitle'>Warscrolls</h4>
             {warscrolls && warscrolls.map(renderWarscroll)}
         </div>
     </>

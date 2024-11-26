@@ -16,6 +16,19 @@ export const unitsSortesByType = (units) => {
     return Constants.unitsTypes.map(getUnitsByType).filter(Boolean)
 }
 
+export const regimentSortesByGrandAlliances = (regiments) => {
+    const getRegimentByGrandAlliances = (grandAlliance) => {
+        const _regiments = regiments.filter(regiment => regiment.keywords.includes(grandAlliance.name))
+        if (_regiments.length > 0) {
+            sortByName(_regiments)
+            return {regiments: _regiments, title: grandAlliance.name}
+        } else {
+            return null
+        }
+    }
+    return Constants.grandAlliances.map(getRegimentByGrandAlliances).filter(Boolean)
+}
+
 export const getErrors = (roster) => {
     const errors = []
     if (!roster) {
