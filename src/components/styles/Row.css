@@ -1,4 +1,6 @@
 .rowButton {
+  display: flex;
+  justify-content: space-between;
   background-color: rgb(236, 236, 236);
   color: black;
   padding: 8px 8px;
@@ -13,5 +15,8 @@
 #title {
   margin: 0;
   font-family: 'Minion Pro Bold';
-  font-weight: bold;
+}
+#subtitle {
+  margin: 0;
+  color: #676767;
 }

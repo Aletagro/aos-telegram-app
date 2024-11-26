@@ -14,6 +14,7 @@ const Units = () => {
     const renderRow = (unit) => <Row
         key={unit?.id}
         title={unit?.name}
+        subtitle={`${unit?.points} pts`}
         navigateTo='warscroll'
         state={{unit}}
     />
