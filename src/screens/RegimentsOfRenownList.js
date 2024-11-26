@@ -17,7 +17,7 @@ const RegimentsOfRenownList = () => {
     const renderRow = (regiment) => <Row
         key={regiment.id}
         title={regiment.name}
-        subtitle={`${regiment?.regimentOfRenownPointsCost} pts`}
+        subtitle={regiment?.regimentOfRenownPointsCost ? `${regiment?.regimentOfRenownPointsCost} pts` : undefined}
         navigateTo='regimentOfRenown'
         state={{regiment}}
     />

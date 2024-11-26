@@ -25,7 +25,7 @@ const RegimentOfRenown = () => {
     const renderWarscroll = (unit) => <Row
         key={unit.id}
         title={unit.name}
-        subtitle={`${unit?.points} pts`}
+        subtitle={unit?.points ? `${unit?.points} pts` : undefined}
         navigateTo='warscroll'
         state={{unit}}
     />
