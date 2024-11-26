@@ -18,10 +18,16 @@ const CoreDocuments = () => {
         state={{document}}
     />
 
+    const renderRuFAQRow = () => <Row
+        title='Arrow City FAQ'
+        navigateTo='ruFAQ'
+    />
+
     return <>
         <img src={Constants.rulesImage} alt='Core Documents' width='100%' />
         <div id='column' className='Chapter'>
             {documents && documents.map(renderRow)}
+            {renderRuFAQRow()}
         </div>
     </>
 }

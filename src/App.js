@@ -10,6 +10,7 @@ import RegimentsOfRenownList from './screens/RegimentsOfRenownList';
 import RegimentOfRenown from './screens/RegimentOfRenown';
 import Search from './screens/Search';
 import CoreDocuments from './screens/CoreDocuments';
+import RuFAQ from './screens/RuFAQ';
 import RuleSections from './screens/RuleSections';
 import RuleChapters from './screens/RuleChapters';
 import Manifestations from './screens/Manifestations';
@@ -55,6 +56,7 @@ function App() {
       <Route path={'search/warscroll'} element={<Warscroll />} />
       <Route path={'search/warscroll/calculator'} element={<Calculator />} />
       <Route path={'coreDocuments'} element={<CoreDocuments />} />
+      <Route path={'coreDocuments/ruFAQ'} element={<RuFAQ />} />
       <Route path={'coreDocuments/ruleSections'} element={<RuleSections />} />
       <Route path={'coreDocuments/ruleSections/ruleChapters'} element={<RuleChapters />} />
       <Route path={'coreDocuments/ruleSections/ruleChapters/rules'} element={<Rules />} />
