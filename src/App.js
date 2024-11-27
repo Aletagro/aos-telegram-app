@@ -66,29 +66,28 @@ function App() {
       <Route path={'manifestations/warscroll'} element={<Warscroll />} />
       <Route path={'manifestations/warscroll/calculator'} element={<Calculator />} />
       <Route path={'lists'} element={<Lists />} />
-      <Route path={'lists/builder'} element={<Builder />} />
-      <Route path={'lists/builder'} element={<Builder />} />
-      <Route path={'lists/builder/warscroll'} element={<Warscroll />} />
-      <Route path={'lists/builder/warscroll/calculator'} element={<Calculator />} />
-      <Route path={'lists/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
-      <Route path={'lists/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
-      <Route path={'lists/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
-      <Route path={'lists/builder/addUnit'} element={<AddUnit />} />
-      <Route path={'lists/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
-      <Route path={'lists/builder/chooseOption'} element={<ChooseOption />} />
-      <Route path={'lists/builder/chooseWeapon'} element={<ChooseWeapon />} />
-      <Route path={'lists/chooseGrandAlliance'} element={<ChooseGrandAlliance />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction'} element={<ChooseFaction />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder'} element={<Builder />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/warscroll'} element={<Warscroll />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/warscroll/calculator'} element={<Calculator />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/chooseOption'} element={<ChooseOption />} />
-      <Route path={'lists/chooseGrandAlliance/chooseFaction/builder/chooseWeapon'} element={<ChooseWeapon />} />
+      <Route path={'builder'} element={<Builder />} />
+      <Route path={'builder/warscroll'} element={<Warscroll />} />
+      <Route path={'builder/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'builder/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'builder/addUnit'} element={<AddUnit />} />
+      <Route path={'builder/chooseEnhancement'} element={<ChooseEnhancement />} />
+      <Route path={'builder/chooseOption'} element={<ChooseOption />} />
+      <Route path={'builder/chooseWeapon'} element={<ChooseWeapon />} />
+      <Route path={'chooseGrandAlliance'} element={<ChooseGrandAlliance />} />
+      <Route path={'chooseGrandAlliance/chooseFaction'} element={<ChooseFaction />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder'} element={<Builder />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll'} element={<Warscroll />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseOption'} element={<ChooseOption />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'export'} element={<Export />} />
       <Route path={'calculator'} element={<Calculator />} />
       <Route path={'developer'} element={<Developer />} />
