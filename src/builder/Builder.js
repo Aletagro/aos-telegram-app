@@ -22,13 +22,14 @@ const emptyRegiment = {
 }
 
 const Builder = () => {
-    const {alligance} = useLocation().state
+    const {alligance, alliganceId} = useLocation().state
+    const _alliganceId = alliganceId || alligance?.id
     const navigate = useNavigate()
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
-    const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === alligance.id).map(item => item.warscrollId)
+    const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === _alliganceId).map(item => item.warscrollId)
     const factionTerrains = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && unit?.referenceKeywords?.includes('Terrain'))
-    const lores = dataBase.data.lore.filter(lore => lore.factionId === alligance.id)
+    const lores = dataBase.data.lore.filter(lore => lore.factionId === _alliganceId)
     const spellsLores = []
     const preyersLores = []
     const manifestationsLores = dataBase.data.lore.filter(lore => lore.factionId === null)
@@ -57,11 +58,11 @@ const Builder = () => {
         const regimentsOfRenownWarscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === roster.regimentOfRenown.id)
         roster.regimentsOfRenownUnits = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
     }
-    const artefactsGroup = dataBase.data.ability_group.find(group => group.factionId === alligance.id && group.abilityGroupType === 'artefactsOfPower')
-    const artefacts = dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup.id)
-    const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === alligance.id && group.abilityGroupType === 'heroicTraits')
-    const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup.id)
-    const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === alligance.id)
+    const artefactsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'artefactsOfPower')
+    const artefacts = dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup?.id)
+    const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
+    const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)
+    const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === _alliganceId)
     if (!battleFormations.length) {
         roster.withoutBattleFormation = true
     }
@@ -95,7 +96,7 @@ const Builder = () => {
     const handleAddAuxiliaryUnit = () => {
         navigate('addUnit', {state: {
             isAuxiliary: true,
-            alliganceId: alligance.id,
+            alliganceId: _alliganceId,
             title: 'Add Auxiliary Unit'
         }})
     }
@@ -103,7 +104,7 @@ const Builder = () => {
     const handleAddRegimentsOfRenown = () => {
         navigate('addUnit', {state: {
             isRegimentsOfRenown: true,
-            alliganceId: alligance.id,
+            alliganceId: _alliganceId,
             title: 'Add Regiments Of Renown'
         }})
     }
@@ -135,7 +136,7 @@ const Builder = () => {
     const renderRegiment = (regiment, index) => <Regiment
         key={index}
         regiment={regiment}
-        alliganceId={alligance.id}
+        alliganceId={_alliganceId}
         index={index}
         forceUpdate={forceUpdate}
         artefacts={artefacts}

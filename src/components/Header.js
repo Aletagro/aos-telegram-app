@@ -12,7 +12,7 @@ const Header = () => {
 
     const handleGoBack = () => {
         navigate(-1)
-        if (pathname === '/chooseGrandAlliance/chooseFaction/builder') {
+        if (pathname === '/lists/chooseGrandAlliance/chooseFaction/builder') {
             roster.regiments = [{units: [], heroId: '', points: 0}]
             roster.generalRegimentIndex = null
             roster.battleFormation = null
