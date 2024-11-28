@@ -1,7 +1,7 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
-import {getValue, deleteAsterisks} from '../utilities/utils'
+import {getValue, replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
 import Calculator from '../icons/calculator.svg'
 import './styles/Warscroll.css'
@@ -105,7 +105,7 @@ const Warscroll = () => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
 
-    const renderRegimentOption = (option) => <p id='unitDetailsText' key={option.id}>&#8226; {deleteAsterisks(option.optionText)}</p>
+    const renderRegimentOption = (option) => <p id='unitDetailsText' key={option.id}>&#8226; {replaceAsterisks(option.optionText)}</p>
 
     const renderCharacteristic = (characteristic) => <div key={characteristic.value} id='characteristicSubContainer' style={{width: '20%'}}>
         <div id='characteristicValueContainer'>
@@ -151,7 +151,7 @@ const Warscroll = () => {
                 <p id='unitDetailsTitle'>Unit Details</p>
                 <div id='unitDetailsSubContainer'>
                     <p id='unitDetailsText'>{unit.modelCount} model</p>
-                    {unit.wargearOptionsText ? <p id='wargearOptions'>{deleteAsterisks(unit.wargearOptionsText)}</p> : null}
+                    {unit.wargearOptionsText ? <p id='wargearOptions'>{replaceAsterisks(unit.wargearOptionsText)}</p> : null}
                     {unit.points ? <p id='unitDetailsText'>{unit.points} points</p> : null}
                     <p id='unitDetailsText'><b>Base size:</b> {unit.baseSize}</p>
                     {regimentOptions.length > 0
@@ -161,7 +161,7 @@ const Warscroll = () => {
                         </>
                         : null
                     }
-                    {unit.notes ? <p id='unitDetailsText'>Notes: {unit.notes}</p> : null}
+                    {unit.notes ? <p id='unitDetailsText'>Notes: {replaceAsterisks(unit.notes)}</p> : null}
                 </div>
             </div>
             {unit.referenceKeywords

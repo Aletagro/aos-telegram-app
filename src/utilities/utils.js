@@ -1,4 +1,4 @@
-// import parse from 'html-react-parser';
+import parse from 'html-react-parser';
 import Constants from '../Constants'
 
 export const sortByName = (array) => 
@@ -172,18 +172,20 @@ export const getWoundsCount = (roster) => {
     return woundsCount
 }
 
-export const deleteAsterisks = (string) => string.replaceAll('*', '')
-
-// export const replaceAsterisks = (string) => {
-//     let newString = string.replace(/\**([^**]+)\**/g, '<b>$1</b>')
-//     console.log(string, newString)
-//     // newString = newString.replaceAll('*<i>', '<b>')
-//     // newString = newString.replaceAll('</i>*', '</b>')
-//     // newString = newString.replaceAll('</b>*', '<b><i>')
-//     // newString = newString.replaceAll('***', '</i></b>')
-//     if (newString.includes('<')) {
-//         return parse(newString)
-//     } else {
-//         return string
-//     }
-// }
+export const replaceAsterisks = (string) => {
+    let newString = string.replace(/(\*\*\*(.*?)\*\*\*)|(\*\*(.*?)\*\*)|(\*(.*?)\*)/g, (match, p1, p2, p3, p4, p5, p6) => {
+        if (p1) {
+            return `<b><i>${p2}</i></b>`;
+        } else if (p3) {
+            return `<b>${p4}</b>`;
+        } else if (p5) {
+            return `<i>${p6}</i>`;
+        }
+        return match; // На случай, если ничего не подошло
+    });
+    if (newString.includes('<')) {
+        return parse(newString)
+    } else {
+        return string
+    }
+}

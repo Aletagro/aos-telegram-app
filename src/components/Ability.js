@@ -1,6 +1,6 @@
 import React from 'react';
 import Constants from '../Constants'
-import {deleteAsterisks} from '../utilities/utils'
+import {replaceAsterisks} from '../utilities/utils'
 import './styles/Ability.css'
 
 const dataBase = require('../dataBase.json')
@@ -35,8 +35,8 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
         </div>
         <div id='container'>
             <h4 id='abilityName'>{ability.name}</h4>
-            {ability.declare ? <p id='abilityText'><b>Declare:</b> {deleteAsterisks(ability.declare)}</p> : null}
-            <p id='abilityText'><b>Effect:</b> {deleteAsterisks(ability.effect)}</p>
+            {ability.declare ? <p id='abilityText'><b>Declare:</b> {replaceAsterisks(ability.declare)}</p> : null}
+            <p id='abilityText'><b>Effect:</b> {replaceAsterisks(ability.effect)}</p>
             {keywordsLength
                 ? <div id='abilityKeywordsContainer' className='keywordsContainer'>
                     <p id='boldText'>Keywords:&nbsp;</p>
