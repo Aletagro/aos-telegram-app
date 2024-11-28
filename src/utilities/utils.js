@@ -1,3 +1,4 @@
+// import parse from 'html-react-parser';
 import Constants from '../Constants'
 
 export const sortByName = (array) => 
@@ -170,3 +171,19 @@ export const getWoundsCount = (roster) => {
     }
     return woundsCount
 }
+
+export const deleteAsterisks = (string) => string.replaceAll('*', '')
+
+// export const replaceAsterisks = (string) => {
+//     let newString = string.replace(/\**([^**]+)\**/g, '<b>$1</b>')
+//     console.log(string, newString)
+//     // newString = newString.replaceAll('*<i>', '<b>')
+//     // newString = newString.replaceAll('</i>*', '</b>')
+//     // newString = newString.replaceAll('</b>*', '<b><i>')
+//     // newString = newString.replaceAll('***', '</i></b>')
+//     if (newString.includes('<')) {
+//         return parse(newString)
+//     } else {
+//         return string
+//     }
+// }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Ability from './Ability'
+import {deleteAsterisks} from '../utilities/utils'
 import './styles/Rule.css'
 
 const dataBase = require('../dataBase.json')
@@ -8,25 +9,25 @@ const Rule = ({rule}) => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} abilityKeywordsName='ability_keyword' abilityIdName='abilityId' />
 
-    const renderBullet = (bullet) => <p key={bullet.id}>&#8226; {bullet.text}</p>
+    const renderBullet = (bullet) => <p key={bullet.id}>&#8226; {deleteAsterisks(bullet.text)}</p>
 
     switch (rule.contentType) {
         case 'text':
-            return <p id='text' key={rule.id}>{rule.textContent}</p>
+            return <p id='text' key={rule.id}>{deleteAsterisks(rule.textContent)}</p>
         case 'header':
         case 'textBold':
-            return <p id='textBold' key={rule.id}>{rule.textContent}</p>
+            return <p id='textBold' key={rule.id}>{deleteAsterisks(rule.textContent)}</p>
         case 'textItalic':
-            return <p id='textItalic' key={rule.id}>{rule.textContent}</p>
+            return <p id='textItalic' key={rule.id}>{deleteAsterisks(rule.textContent)}</p>
         case 'boxedText':
-            return <p id='lightgreyContainer' key={rule.id}>{rule.textContent}</p>
+            return <p id='lightgreyContainer' key={rule.id}>{deleteAsterisks(rule.textContent)}</p>
         case 'accordion':
             return <div id='lightgreyContainer' key={rule.id}>
                 <h4>{rule.title}</h4>
-                <p>{rule.textContent}</p>
+                <p>{deleteAsterisks(rule.textContent)}</p>
             </div>
         case 'loreAccordion':
-                return <p id='textItalic' key={rule.id}>{rule.textContent}</p>
+                return <p id='textItalic' key={rule.id}>{deleteAsterisks(rule.textContent)}</p>
         case 'image':
             return <img src={rule.imageUrl} alt={rule.altText} width='100%' />
         case 'ability':
