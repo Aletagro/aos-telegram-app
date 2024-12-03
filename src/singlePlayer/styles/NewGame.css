@@ -1,0 +1,77 @@
+#newGameBattleplan {
+    background: rgb(245, 201, 80);
+    color: black;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-width: 0px;
+    text-align: start;
+    font-family: 'Minion Pro Bold';
+}
+#newGameTitle {
+    background-color: rgb(236, 236, 236);
+    border-radius: 4px;
+    font-size: 18px;
+    font-family: 'Minion Pro Bold';
+    margin-bottom: 8px;
+    padding: 6px 12px;
+    text-align: center;
+}
+#newGameAlliancesButtons {
+    display: flex;
+    margin-bottom: 4px;
+}
+#newGameAlliancesButtons {
+    margin-bottom: 12px;
+    justify-self: stretch;
+}
+#newGameButton {
+    background: rgb(245, 201, 80);
+    border-width: 0px;
+    border-radius: 4px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 0px 10px;
+    flex: 1;
+    font-size: 16px;
+    font-family: 'Minion Pro Bold';
+    height: 36px;
+}
+#newGameCheckedButton {
+    background: rgb(46, 46, 49);
+    color: white;
+    border-width: 0px;
+    border-radius: 4px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 0px 10px;
+    flex: 1;
+    font-size: 16px;
+    font-family: 'Minion Pro Bold';
+    height: 36px;
+}
+#newGameStart {
+    background: rgb(46, 46, 49);
+    color: white;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-width: 0px;
+    font-family: 'Minion Pro Bold';
+}
+#newGameDisabledStart {
+    background-color: rgb(236, 236, 236);
+    color: rgb(180, 180, 180);
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-width: 0px;
+    font-family: 'Minion Pro Bold';
+}
+#newGameUnderdog {
+    display: flex;
+    margin-bottom: 4px;
+}

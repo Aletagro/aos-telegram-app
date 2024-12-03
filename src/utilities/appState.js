@@ -1,3 +1,5 @@
+import Constants from '../Constants'
+
 export const roster = {
     grandAlliance: '',
     allegiance: '',
@@ -31,4 +33,18 @@ export const search = {
 
 export const builderFilters = {
     hidePotentialLegends: false
+}
+
+export const singlePlayer = {
+    firstPlayer: {...Constants.newPlayer},
+    secondPlayer: {...Constants.newPlayer},
+    battleplan: {
+        name: '',
+        id: ''
+    },
+    rounds: [],
+    currentRound: 1,
+    gameStarted: false,
+    gameOver: false,
+    underdog: 0
 }

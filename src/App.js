@@ -27,6 +27,9 @@ import ChooseOption from './builder/ChooseOption';
 import ChooseWeapon from './builder/ChooseWeapon';
 import Export from './builder/Export';
 import Calculator from './calculator/Calculator';
+import SinglePlayer from './singlePlayer/SinglePlayer';
+import ChooseBattleplan from './singlePlayer/ChooseBattleplan';
+import ChooseTactics from './singlePlayer/ChooseTactics';
 import Developer from './screens/Developer';
 import './App.css';
 
@@ -90,6 +93,11 @@ function App() {
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'export'} element={<Export />} />
       <Route path={'calculator'} element={<Calculator />} />
+      <Route path={'singlePlayer'} element={<SinglePlayer />} />
+      <Route path={'singlePlayer/battleplan'} element={<Battleplan />} />
+      <Route path={'singlePlayer/chooseTactics'} element={<ChooseTactics />} />
+      <Route path={'singlePlayer/chooseBattleplan'} element={<ChooseBattleplan />} />
+      <Route path={'singlePlayer/chooseBattleplan/battleplan'} element={<Battleplan />} />
       <Route path={'developer'} element={<Developer />} />
     </Routes>
   </div>

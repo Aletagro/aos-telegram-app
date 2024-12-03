@@ -1,0 +1,104 @@
+#singlePlayerBattleplan {
+    background: rgb(245, 201, 80);
+    color: black;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-width: 0px;
+    text-align: start;
+    font-family: 'Minion Pro Bold';
+}
+#singlePlayerTitle {
+    background-color: rgb(236, 236, 236);
+    border-radius: 4px;
+    font-size: 18px;
+    font-family: 'Minion Pro Bold';
+    margin-bottom: 8px;
+    padding: 6px 12px;
+    text-align: center;
+}
+#singlePlayerBottomButton {
+    background: rgb(46, 46, 49);
+    color: white;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-width: 0px;
+    font-family: 'Minion Pro Bold';
+}
+#playersNameContainer {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+#scoreContainer {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding-bottom: 16px;
+    padding-top: 12px;
+}
+#scoreTitle {
+    font-size: 18px;
+    font-family: 'Minion Pro Bold';
+    padding-bottom: 8px;
+}
+#score {
+    background: rgb(245, 201, 80);
+    border-radius: 4px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    font-family: 'Minion Pro Bold';
+    align-content: center;
+}
+#cpContainer {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 16px;
+    padding-top: 12px;
+}
+#cpSubContainer {
+    background: rgb(245, 201, 80);
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0px;
+}
+#cp {
+    font-size: 24px;
+    font-family: 'Minion Pro Bold';
+}
+#cpIcon {
+    background: transparent;
+    border-width: 0px;
+    padding: 0px 24px;
+}
+#currentRoundContainer {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0px;
+}
+#chooseTacticsButton {
+    background: rgb(245, 201, 80);
+    border-width: 0px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-family: 'Minion Pro Bold';
+}
+#currentRoundSubContainer {
+
+}
+#scoreParamContainer {
+    display: flex;
+    align-items: center;
+}
+#underdog {
+    padding-top: 8px;
+    font-size: 12px;
+    text-align: center;
+}

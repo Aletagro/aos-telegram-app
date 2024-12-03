@@ -189,3 +189,33 @@ export const replaceAsterisks = (string) => {
         return string
     }
 }
+
+export const randomFromInterval = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+export const getScoreParams = (battleplan) => {
+    console.log(battleplan)
+    return {
+        tacticsComplite: false,
+        one: false,
+        twoAndMore: false,
+        moreThan: false
+    }
+}
+
+export const getNewRound = (battleplan) => {
+    const newRound = {
+        firstPlayer: {
+            tactics: {name: '', id: ''},
+            score: getScoreParams(battleplan),
+            vp: 0
+        },
+        secondPlayer: {
+            tactics: {name: '', id: ''},
+            score: getScoreParams(battleplan),
+            vp: 0
+        }
+    }
+    return newRound
+}

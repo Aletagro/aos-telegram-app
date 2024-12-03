@@ -1,0 +1,40 @@
+#singlePlayerTitle {
+    background-color: rgb(236, 236, 236);
+    border-radius: 4px;
+    font-size: 18px;
+    margin-bottom: 8px;
+    padding: 6px 12px;
+}
+#scoreParamContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+#currentRoundContainer {
+    display: flex;
+}
+#currentRoundSubContainer {
+    flex: 1;
+    margin-right: 12px;
+}
+#chooseTacticsButton {
+    background: rgb(245, 201, 80);
+    border-width: 0px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-family: 'Minion Pro Bold';
+    width: 100%;
+}
+#chooseTacticsDisabledButton {
+    background: rgb(236, 236, 236);
+    border-width: 0px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-family: 'Minion Pro Bold';
+    width: 100%;
+}

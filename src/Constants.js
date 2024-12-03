@@ -241,7 +241,29 @@ const Constants = {
         {modificator: 3, title: '4+'},
         {modificator: 2, title: '5+'},
         {modificator: 1, title: '6+'}
-    ]
+    ],
+    battleplansRuleSectionId: '97befff2-c7fa-4ee2-aa73-1e7fe2e8d8cd',
+    tacticsIds: {
+        Universal: 'b14bc337-1f07-47ab-853c-e7484b6b6661',
+        Order: 'b2e81319-fd3c-4ee4-aae6-f3547efee8b6',
+        Death: '9a1ff3fc-662d-4e98-ae89-8fe0b08136f8',
+        Destruction: '0cc9bec3-40fe-4ed4-af4e-3e2e9e099c31',
+        Chaos: 'a25e9b34-58df-468f-8f57-d7f7cbdfaec1'
+    },
+    newPlayer: {
+        name: '',
+        alliance: {
+            name: 'Order',
+            id: '90175462-fae6-41e4-a0fe-19e41a833c9a'
+        },
+        allegiance: {
+            name: '',
+            id: ''
+        },
+        roster: '',
+        vp: 0,
+        cp: 4
+    }
 }
 
 export default Constants
