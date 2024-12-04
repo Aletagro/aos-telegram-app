@@ -4,18 +4,11 @@ import {singlePlayer} from '../utilities/appState';
 
 import './styles/Turn.css';
 
-const scoresParams = [
-    {title: 'Tactics Complite', id: 'tacticsComplite', value: 4, completed: false},
-    {title: 'One Point', id: 'one', value: 2, completed: false},
-    {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false},
-    {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
-]
-
-
 const PlayerTurn = ({player, round, onUpdate}) => {
     const navigate = useNavigate()
     const roundNumber = round - 1
     const disabledButton = round !== singlePlayer.currentRound
+    const maxForObjectives = singlePlayer.rounds[roundNumber][player].maxForObjectives
 
     const handleChooseTactics = (player) => () => {
         navigate('chooseTactics', {state: {title: 'Choose Tactics', player, alliance: singlePlayer[player].alliance.name}})
@@ -24,12 +17,25 @@ const PlayerTurn = ({player, round, onUpdate}) => {
     const handleChangeParam = (param) => () => {
         const isChecked = singlePlayer.rounds[roundNumber][player].score[param.id]
         singlePlayer.rounds[roundNumber][player].score[param.id] = !isChecked
+        let value = param.value
         if (isChecked) {
-            singlePlayer[player].vp = singlePlayer[player].vp - param.value
-            singlePlayer.rounds[roundNumber][player].vp = singlePlayer.rounds[roundNumber][player].vp - param.value
+            if (maxForObjectives && param.id !== 'tactics') {
+                singlePlayer.rounds[roundNumber][player].objectiveVp = singlePlayer.rounds[roundNumber][player].objectiveVp - value
+                if (singlePlayer.rounds[roundNumber][player].objectiveVp < maxForObjectives) {
+                    value = Math.min(0, value - (maxForObjectives - singlePlayer.rounds[roundNumber][player].objectiveVp))
+                }
+            }
+            singlePlayer[player].vp = singlePlayer[player].vp - value
+            singlePlayer.rounds[roundNumber][player].vp = singlePlayer.rounds[roundNumber][player].vp - value
         } else {
-            singlePlayer[player].vp = singlePlayer[player].vp + param.value
-            singlePlayer.rounds[roundNumber][player].vp = singlePlayer.rounds[roundNumber][player].vp + param.value
+            if (maxForObjectives && param.id !== 'tactics') {
+                singlePlayer.rounds[roundNumber][player].objectiveVp = singlePlayer.rounds[roundNumber][player].objectiveVp + value
+                if (singlePlayer.rounds[roundNumber][player].objectiveVp > maxForObjectives) {
+                    value = Math.max(0, value - (singlePlayer.rounds[roundNumber][player].objectiveVp - maxForObjectives))
+                }
+            }
+            singlePlayer[player].vp = singlePlayer[player].vp + value
+            singlePlayer.rounds[roundNumber][player].vp = singlePlayer.rounds[roundNumber][player].vp + value
         }
         onUpdate()
     }
@@ -46,9 +52,9 @@ const PlayerTurn = ({player, round, onUpdate}) => {
 
     return <div id='currentRoundSubContainer'>
         <button id={disabledButton ? 'chooseTacticsDisabledButton' : 'chooseTacticsButton'} disabled={disabledButton} onClick={handleChooseTactics(player)}>
-            {singlePlayer.rounds[roundNumber][player].tactics.name || 'Choose Tactics'}
+            {singlePlayer.rounds[roundNumber][player].tactics?.name || 'Choose Tactics'}
         </button>
-        {scoresParams.map(renderScoreParam)}
+        {singlePlayer.rounds[roundNumber][player].score.map(renderScoreParam)}
         <div id='scoreParamContainer'>
             <p>This turn VP</p>
             <p>{singlePlayer.rounds[roundNumber][player].vp} VP</p>

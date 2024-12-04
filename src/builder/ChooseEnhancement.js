@@ -32,6 +32,9 @@ const ChooseEnhancement = () => {
             return {name: lore?.name, id: lore?.id, abilities: units[index]}
         })
     }
+    if (type === 'additionalOption') {
+        _data = dataBase.data.ability.filter(ability => ability.abilityGroupId === data.id)
+    }
 
     const handleClickEnhancement = (enhancement) => {
         if (isAuxiliary) {

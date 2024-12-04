@@ -148,8 +148,11 @@ export const capitalizeFirstLetter = (text) => {
 }
 
 export const camelCaseToWords = (text) => {
-    const result = text.replace(/([A-Z])/g, ' $1');
-    return result.charAt(0).toUpperCase() + result.slice(1);
+    if (text) {
+        const result = text.replace(/([A-Z])/g, ' $1');
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    }
+    return text
 }
 
 export const getWoundsCount = (roster) => {
@@ -173,34 +176,38 @@ export const getWoundsCount = (roster) => {
 }
 
 export const replaceAsterisks = (string) => {
-    let newString = string.replace(/(\*\*\*(.*?)\*\*\*)|(\*\*(.*?)\*\*)|(\*(.*?)\*)/g, (match, p1, p2, p3, p4, p5, p6) => {
-        if (p1) {
-            return `<b><i>${p2}</i></b>`;
-        } else if (p3) {
-            return `<b>${p4}</b>`;
-        } else if (p5) {
-            return `<i>${p6}</i>`;
+    if (string) {
+        let newString = string.replace(/(\*\*\*(.*?)\*\*\*)|(\*\*(.*?)\*\*)|(\*(.*?)\*)/g, (match, p1, p2, p3, p4, p5, p6) => {
+            if (p1) {
+                return `<b><i>${p2}</i></b>`;
+            } else if (p3) {
+                return `<b>${p4}</b>`;
+            } else if (p5) {
+                return `<i>${p6}</i>`;
+            }
+            return match; // На случай, если ничего не подошло
+        });
+        if (newString.includes('<')) {
+            return parse(newString)
+        } else {
+            return string
         }
-        return match; // На случай, если ничего не подошло
-    });
-    if (newString.includes('<')) {
-        return parse(newString)
-    } else {
-        return string
     }
+    return string
 }
+
+export const replaceQuotation = (string) => string.replace('’', "'")
 
 export const randomFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
 export const getScoreParams = (battleplan) => {
-    console.log(battleplan)
-    return {
-        tacticsComplite: false,
-        one: false,
-        twoAndMore: false,
-        moreThan: false
+    const data = Constants.battleplans.find(_battleplan => _battleplan.id === battleplan.id)
+    if (data.maxForObjectives) {
+        return {score: [...data.scoreParams], maxForObjectives: data.maxForObjectives}
+    } else {
+        return {score: data.scoreParams}
     }
 }
 
@@ -208,13 +215,15 @@ export const getNewRound = (battleplan) => {
     const newRound = {
         firstPlayer: {
             tactics: {name: '', id: ''},
-            score: getScoreParams(battleplan),
-            vp: 0
+            vp: 0,
+            objectiveVp: 0,
+            ...getScoreParams(battleplan)
         },
         secondPlayer: {
-            tactics: {name: '', id: ''},
-            score: getScoreParams(battleplan),
-            vp: 0
+            actics: {name: '', id: ''},
+            vp: 0,
+            objectiveVp: 0,
+            ...getScoreParams(battleplan)
         }
     }
     return newRound

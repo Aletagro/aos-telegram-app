@@ -263,7 +263,136 @@ const Constants = {
         roster: '',
         vp: 0,
         cp: 4
-    }
+    },
+    battleplans: [
+        {
+            "id": "57ac18e5-16dd-4291-956a-c1af34154976",
+            "title": "Shifting Objectives",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'Primary Objective', id: 'primaryObjective', value: 2, completed: false},
+                {title: 'First Secondary Objective', id: 'firstSecondaryObjective', value: 1, completed: false},
+                {title: 'Second Secondary Objective', id: 'SecondSecondaryObjective', value: 1, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "97c0441a-4155-47b3-92bb-ed612265dcae",
+            "title": "Focal Points",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 1, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 1, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 1, completed: false},
+                {title: '2 or more home/flank objectives', id: 'home/flank', value: 3, completed: false}
+            ]
+        },
+        {
+            "id": "3651f2c9-b014-4200-8fa8-84c9fda8ff0f",
+            "title": "Starstrike",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One ', id: 'one', value: 3, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 3, completed: false}
+            ]
+        },
+        {
+            "id": "53d86219-6dae-4b17-97ab-e2fa8279c949",
+            "title": "Feral Foray",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 2, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "375743bf-f4c8-4eff-ba26-4fc304ce8d4f",
+            "title": "The Jaws of Gallet",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 2, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "ee208ce6-8301-4c4e-b633-37005af617e9",
+            "title": "Battle for the Pass",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'Home', id: 'home', value: 1, completed: false},
+                {title: 'First Border', id: 'firstBorder', value: 2, completed: false},
+                {title: 'Second Border', id: 'secondBorder', value: 2, completed: false},
+                {title: 'Enemy', id: 'enemy', value: 5, completed: false}
+            ],
+            "maxForObjectives": 6
+        },
+        {
+            "id": "010ccbf9-b896-4947-aedb-a6271fbe5f6a",
+            "title": "Scorched Earth",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 2, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "49c4348b-f9c3-4e6c-8ea1-9b8c50542b71",
+            "title": "The Better Part of Valour",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 2, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "aac58435-a144-4260-a633-c17558c2014f",
+            "title": "The Vice",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 2, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false, round: '3-'},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false},
+                {title: 'No Enemy Units Near', id: 'noEnemyUnitsNear', value: 2, completed: false, round: '4+'}
+            ]
+        },
+        {
+            "id": "c9352833-c2e9-4883-86b5-f54ee37f2e70",
+            "title": "Close to the Chest",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 1, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 1, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false},
+                {title: 'Primary Objective', id: 'primaryObjective', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "feb5d29e-a134-4842-ad59-9b06ff5846de",
+            "title": "Limited Resources",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'One', id: 'one', value: 2, completed: false},
+                {title: 'Two and More', id: 'twoAndMore', value: 2, completed: false},
+                {title: 'More Than Opp', id: 'moreThan', value: 2, completed: false}
+            ]
+        },
+        {
+            "id": "86dbc020-5032-4f29-8753-e9d11e41c2e3",
+            "title": "Border War",
+            "scoreParams": [
+                {title: 'Tactics Complite', id: 'tactics', value: 4, completed: false},
+                {title: 'Friendly Objective', id: 'friendlyObjective', value: 1, completed: false},
+                {title: 'First Border Objective', id: 'firstBorderObjective', value: 2, completed: false},
+                {title: 'Second Border Objective', id: 'secondBorderObjective', value: 2, completed: false},
+                {title: 'Enemy Objective', id: 'enemyObjective', value: 5, completed: false}
+            ],
+            "maxForObjectives": 6
+        }
+    ]
 }
 
 export default Constants

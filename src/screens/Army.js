@@ -2,6 +2,7 @@ import React from 'react';
 import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
 import Constants from '../Constants'
+import {replaceAsterisks, replaceQuotation} from '../utilities/utils'
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
@@ -47,11 +48,11 @@ const Army = () => {
             )
         )
         if (screen.abilityGroupType === 'battleTraits') {
-            abilitiesGroup = [abilitiesGroup.find(({publicationId}) => !dataBase.data.publication.find((item) => item.id === publicationId).spearheadName)]
+            abilitiesGroup = [abilitiesGroup.find(({name})=> replaceQuotation(name).includes(replaceQuotation(alligance.name)))]
         }
-        const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation.id))
+        const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation?.id))
         const abilities = abilitiesGroup.map((formation, index) => {
-            return {name: formation.name, id: formation.id, abilities: abilitiesRules[index]}
+            return {name: formation?.name, id: formation?.id, abilities: abilitiesRules[index]}
         })
         if (abilities.length > 0) {
             items.push({title: screen.title, abilities})
@@ -82,7 +83,7 @@ const Army = () => {
         state={{alligance: item, isArmyOfRenown: true}}
     />
 
-    const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {option.text}</p>
+    const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {replaceAsterisks(option.text)}</p>
 
     return <>
         <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />

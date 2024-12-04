@@ -18,6 +18,10 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     const optionGroups = dataBase.data.option_group.filter(group => group.warscrollId === unit.id)
     const marksOfChaos = optionGroups.find(group => group.optionGroupType === 'marksOfChaos')
     const otherWarscrollOption = optionGroups.find(group => group.optionGroupType === 'otherWarscrollOption')
+    let additionalOption = dataBase.data.ability_group_required_warscroll.find(group => group.warscrollId === unit.id)?.abilityGroupId
+    if (additionalOption) {
+        additionalOption = dataBase.data.ability_group.find(group => group.id === additionalOption)
+    }
     const weaponOptions = optionGroups.filter(group => group.optionGroupType === 'weapon')
 
     const handleClick = () => {
@@ -49,6 +53,10 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
         navigate('chooseEnhancement', {state: {title: name, data, type, unitIndex, regimentIndex, isAuxiliary}})
     }
 
+    const handleChooseAdditionalOption = (option) => () => {
+        navigate('chooseEnhancement', {state: {title: option.name, data: option, type: 'additionalOption', unitIndex, regimentIndex, isAuxiliary}})
+    }
+
     const handleChooseOption = (optionGroup) => () => {
         navigate('chooseOption', {state: {title: camelCaseToWords(capitalizeFirstLetter(optionGroup.optionGroupType)), optionGroup, unitIndex, regimentIndex, isAuxiliary}})
     }
@@ -69,6 +77,13 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
         {unit[option.optionGroupType]
             ? `${camelCaseToWords(option.optionGroupType)}: ${unit[option.optionGroupType]}`
             : `${camelCaseToWords(option.optionGroupType)}`
+        }
+    </button>
+
+    const renderAdditionalOption = (option) => <button id='chooseEnhancementButton' onClick={handleChooseAdditionalOption(option)}>
+        {unit.additionalOption
+            ? `${option.name}: ${unit.additionalOption}`
+            : `${option.name}`
         }
     </button>
 
@@ -109,10 +124,11 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
             </div>
             : null
         }
-        {optionGroups.length > 0 && !isAddUnit
+        {(optionGroups.length > 0 || additionalOption) && !isAddUnit
             ? <div id='enhancementsContainer'>
                 {weaponOptions.length > 0 ? renderChooseWeapon() : null}
                 {marksOfChaos ? renderChooseOptionButton(marksOfChaos) : null}
+                {additionalOption ? renderAdditionalOption(additionalOption) : null}
                 {otherWarscrollOption ? renderChooseOptionButton(otherWarscrollOption) : null}
             </div>
             : null
