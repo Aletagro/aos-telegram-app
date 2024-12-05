@@ -21,8 +21,8 @@ const PlayerTurn = ({player, round, onUpdate}) => {
         if (isChecked) {
             if (maxForObjectives && param.id !== 'tactics') {
                 singlePlayer.rounds[roundNumber][player].objectiveVp = singlePlayer.rounds[roundNumber][player].objectiveVp - value
-                if (singlePlayer.rounds[roundNumber][player].objectiveVp < maxForObjectives) {
-                    value = Math.min(0, value - (maxForObjectives - singlePlayer.rounds[roundNumber][player].objectiveVp))
+                if ((singlePlayer.rounds[roundNumber][player].objectiveVp + value) > maxForObjectives) {
+                    value = Math.max(0, maxForObjectives - singlePlayer.rounds[roundNumber][player].objectiveVp)
                 }
             }
             singlePlayer[player].vp = singlePlayer[player].vp - value
@@ -59,6 +59,10 @@ const PlayerTurn = ({player, round, onUpdate}) => {
             <p>This turn VP</p>
             <p>{singlePlayer.rounds[roundNumber][player].vp} VP</p>
         </div>
+        {singlePlayer.rounds[roundNumber][player].objectiveVp > maxForObjectives
+            ? <p>VP from objectives max 6</p>
+            : null
+        }
     </div>
 }
 

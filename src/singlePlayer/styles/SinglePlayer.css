@@ -102,3 +102,9 @@
     font-size: 12px;
     text-align: center;
 }
+#gameWinner {
+    text-align: center;
+    font-size: 32px;
+    font-family: 'Minion Pro Bold';
+    padding: 16px 0px;
+}

@@ -51,6 +51,7 @@ const SinglePlayer = () => {
         singlePlayer.firstPlayer = {...Constants.newPlayer}
         singlePlayer.secondPlayer = {...Constants.newPlayer}
         singlePlayer.battleplan = {name: '', id: ''}
+        singlePlayer.rounds = []
         singlePlayer.gameStarted = false
         singlePlayer.gameOver = false
         singlePlayer.underdog = 0
@@ -60,7 +61,20 @@ const SinglePlayer = () => {
 
     return singlePlayer.gameOver
         ? <div id='column' className='Chapter'>
-            <p>Игра окончена</p>
+            <p id='gameWinner'>{singlePlayer.firstPlayer.vp > singlePlayer.secondPlayer.vp
+                ? '1st Player Wins'
+                : singlePlayer.firstPlayer.vp === singlePlayer.secondPlayer.vp
+                    ? 'Draw'
+                    : '2nd Player Wins!'
+            }</p>
+            <div id='scoreContainer'>
+                <p id='score'>{singlePlayer.firstPlayer.vp}</p>
+                <p id='score'>{singlePlayer.secondPlayer.vp}</p>
+            </div>
+            <div id='playersNameContainer'>
+                <p id='scoreTitle'>1st Player</p>
+                <p id='scoreTitle'>2nd Player</p>
+            </div>
             <button id='singlePlayerBottomButton' onClick={handleClickNewGame}>Start New Game</button>
         </div>
         : singlePlayer.gameStarted
