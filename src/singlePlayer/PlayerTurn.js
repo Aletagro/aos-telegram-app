@@ -14,11 +14,12 @@ const PlayerTurn = ({player, round, onUpdate}) => {
         navigate('chooseTactics', {state: {title: 'Choose Tactics', player, alliance: singlePlayer[player].alliance.name}})
     }
 
-    const handleChangeParam = (param) => () => {
-        const isChecked = singlePlayer.rounds[roundNumber][player].score[param.id]
-        singlePlayer.rounds[roundNumber][player].score[param.id] = !isChecked
+    const handleChangeParam = (param, index) => () => {
+        const newScore = [...singlePlayer.rounds[roundNumber][player].score]
+        newScore[index] = {...newScore[index], completed: !param.completed}
+        singlePlayer.rounds[roundNumber][player].score = newScore
         let value = param.value
-        if (isChecked) {
+        if (param.completed) {
             if (maxForObjectives && param.id !== 'tactics') {
                 singlePlayer.rounds[roundNumber][player].objectiveVp = singlePlayer.rounds[roundNumber][player].objectiveVp - value
                 if ((singlePlayer.rounds[roundNumber][player].objectiveVp + value) > maxForObjectives) {
@@ -40,13 +41,13 @@ const PlayerTurn = ({player, round, onUpdate}) => {
         onUpdate()
     }
 
-    const renderScoreParam = (param) => <div key={param.id} id='scoreParamContainer'>
+    const renderScoreParam = (param, index) => <div key={param.id} id='scoreParamContainer'>
         <p>{param.title}</p>
         <input
             type='checkbox'
-            id={singlePlayer.rounds[roundNumber][player].score[param.id] ? 'checkedCheckbox' : 'uncheckedCheckbox'}
+            id={param.completed ? 'checkedCheckbox' : 'uncheckedCheckbox'}
             checked={param.completed}
-            onChange={handleChangeParam(param)}
+            onChange={handleChangeParam(param, index)}
         />
     </div>
 

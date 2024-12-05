@@ -8,15 +8,19 @@ import './styles/Army.css'
 const dataBase = require('../dataBase.json')
 
 const Army = () => {
-    const {alligance, isArmyOfRenown} = useLocation().state
+    const {allegiance, isArmyOfRenown, allegianceId} = useLocation().state
+    let _allegiance = allegiance
+    if (!allegiance) {
+        _allegiance = dataBase.data.faction_keyword.find(faction => faction.id === allegianceId)
+    }
     let items = []
     let rosterOptions
     if (isArmyOfRenown) {
         const publications = dataBase.data.publication.filter(
-            item => item.factionKeywordId === alligance.parentFactionKeywordId && item.name.includes('Army of Renown'))
+            item => item.factionKeywordId === _allegiance.parentFactionKeywordId && item.name.includes('Army of Renown'))
         let publicationId
         if (publications.length > 1) {
-            publicationId = publications.find(item => item.name.includes(alligance.name.split(" ")[0]))?.id
+            publicationId = publications.find(item => item.name.includes(_allegiance.name.split(" ")[0]))?.id
         } else {
             publicationId = publications[0]?.id
         }
@@ -26,7 +30,7 @@ const Army = () => {
         rosterOptions = dataBase.data.bullet_point.filter(item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
         // у Legion of the First Prince есть варскроллы
-        if (alligance.id === '3f9ccc30-1319-4a06-bb97-7b83373ce53f') {
+        if (_allegiance.id === '3f9ccc30-1319-4a06-bb97-7b83373ce53f') {
             items.push({title: 'Warscrolls', screen: 'units'})
         }
     } else {
@@ -34,7 +38,7 @@ const Army = () => {
     }
 
     // otherEnhancements
-    const otherEnhancement = dataBase.data.ability_group.find((item) => item.factionId === alligance.id && item.abilityGroupType === 'otherEnhancements')
+    const otherEnhancement = dataBase.data.ability_group.find((item) => item.factionId === _allegiance.id && item.abilityGroupType === 'otherEnhancements')
     if (otherEnhancement) {
         const enhancements = dataBase.data.ability.filter((item) => item.abilityGroupId === otherEnhancement.id)
         if (enhancements.length > 0) {
@@ -44,7 +48,7 @@ const Army = () => {
 
     const getInfo = (screen) => {
         let abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
-            item.factionId === alligance.id &&
+            item.factionId === _allegiance.id &&
             item.abilityGroupType === screen.abilityGroupType &&
             (screen.includesTexts
                 ? Boolean(screen.includesTexts.find(text => item.name.includes(text)))
@@ -52,7 +56,7 @@ const Army = () => {
             )
         )
         if (screen.abilityGroupType === 'battleTraits') {
-            abilitiesGroup = [abilitiesGroup.find(({name})=> replaceQuotation(name).includes(replaceQuotation(alligance.name)))]
+            abilitiesGroup = [abilitiesGroup.find(({name})=> replaceQuotation(name).includes(replaceQuotation(_allegiance.name)))]
         }
         const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation?.id))
         const abilities = abilitiesGroup.map((formation, index) => {
@@ -67,30 +71,30 @@ const Army = () => {
 
     let armyOfRenown
     // armyOfRenown свинок достаем для джовсов
-    if (alligance.id === '298391fb-3d74-4a26-b9cc-5f3ad5fe4852') {
+    if (_allegiance.id === '298391fb-3d74-4a26-b9cc-5f3ad5fe4852') {
         armyOfRenown = [dataBase.data.faction_keyword.find((faction) => faction.id === 'f0198b42-f55e-4261-8443-083bb17ec9c8')]
     } else {
-        armyOfRenown = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === alligance.id)
+        armyOfRenown = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === _allegiance.id)
     }
 
     const renderRow = (item) => <Row
         key={item.title}
         title={item.title}
         navigateTo={item.screen || 'armyInfo'}
-        state={{alligance, info: item}}
+        state={{allegiance: _allegiance, info: item}}
     />
 
     const renderArmyOfRenown = (item) => <Row
         key={item.title}
         title={item.name}
         navigateTo='armyOfRenown'
-        state={{alligance: item, isArmyOfRenown: true}}
+        state={{allegiance: item, isArmyOfRenown: true}}
     />
 
     const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {replaceAsterisks(option.text)}</p>
 
     return <>
-        <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />
+        <img src={_allegiance.rosterHeaderImage} alt={_allegiance.name} width='100%' />
         <div id='column' className='Chapter'>
             {items.map(renderRow)}
             {armyOfRenown.length > 0

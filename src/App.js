@@ -100,6 +100,15 @@ function App() {
       <Route path={'singlePlayer/chooseTactics'} element={<ChooseTactics />} />
       <Route path={'singlePlayer/chooseBattleplan'} element={<ChooseBattleplan />} />
       <Route path={'singlePlayer/chooseBattleplan/battleplan'} element={<Battleplan />} />
+      <Route path={'singlePlayer/army'} element={<Army />} />
+      <Route path={'singlePlayer/army/units'} element={<Units />} />
+      <Route path={'singlePlayer/army/units/warscroll'} element={<Warscroll />} />
+      <Route path={'singlePlayer/army/units/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'singlePlayer/army/armyInfo'} element={<ArmyInfo />} />
+      <Route path={'singlePlayer/army/armyOfRenown'} element={<Army />} />
+      <Route path={'singlePlayer/army/armyOfRenown/units'} element={<Units />} />
+      <Route path={'singlePlayer/army/armyOfRenown/units/warscroll'} element={<Warscroll />} />
+      <Route path={'singlePlayer/army/armyOfRenown/armyInfo'} element={<ArmyInfo />} />
       <Route path={'developer'} element={<Developer />} />
     </Routes>
   </div>

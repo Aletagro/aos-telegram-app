@@ -13,6 +13,7 @@ import './styles/SinglePlayer.css'
 const SinglePlayer = () => {
     const navigate = useNavigate()
     const [updateCount, setUpdateCount] = useState(0)
+    const disableNextRoundButton = !Boolean(singlePlayer.rounds[singlePlayer.currentRound - 1]?.firstPlayer.tactics.id && singlePlayer.rounds[singlePlayer.currentRound - 1]?.secondPlayer.tactics.id)
 
     const getUnderdogCP = (player) => singlePlayer.underdog === player ? 5 : 4
     
@@ -45,6 +46,10 @@ const SinglePlayer = () => {
     const handleClickPlusCP = (player) => () => {
         singlePlayer[player].cp = singlePlayer[player].cp + 1
         handleUpdate()
+    }
+
+    const handleClickAllegiance = (player) => () => {
+        navigate('army', {state: {allegianceId: singlePlayer[player].allegiance.id}})
     }
 
     const handleClickNewGame = () => {
@@ -110,9 +115,15 @@ const SinglePlayer = () => {
                         {singlePlayer.underdog === 'secondPlayer' ? <p id='underdog'>Underdog</p> : null}
                     </div>
                 </div>
+                {/* Army Info */}
+                <p id='singlePlayerTitle'>Show army info</p>
+                <div id='armyInfoContainer'>
+                    <button id='armyInfoButton' onClick={handleClickAllegiance('firstPlayer')}>{singlePlayer.firstPlayer.allegiance.name}</button>
+                    <button id='armyInfoButton' onClick={handleClickAllegiance('secondPlayer')}>{singlePlayer.secondPlayer.allegiance.name}</button>
+                </div>
                 {/* Current Turn */}
                 <Turns round={singlePlayer.currentRound} onUpdate={handleUpdate} />
-                <button id='singlePlayerBottomButton' onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
+                <button disabled={disableNextRoundButton} id={disableNextRoundButton ? 'singlePlayerDisabledBottomButton' : 'singlePlayerBottomButton'} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
             </div>
             : <NewGame onUpdate={handleUpdate} />
 }

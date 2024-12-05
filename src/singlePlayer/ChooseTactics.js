@@ -12,7 +12,7 @@ const ChooseTactics = () => {
     const navigate = useNavigate()
     const {player} = useLocation().state
     const allianceTacticsId = Constants.tacticsIds[singlePlayer[player].alliance.name]
-    const choosedTacticsIds = singlePlayer.rounds.map((round, index) => singlePlayer.currentRound === index + 1 ? '' : round[player].tactics.id)
+    const choosedTacticsIds = singlePlayer.rounds.map((round, index) => singlePlayer.currentRound === index + 1 ? '' : round[player].tactics?.id)
     const tactics = dataBase.data.rule_container_component.filter(
         (rule) => (rule.ruleContainerId === Constants.tacticsIds.Universal || rule.ruleContainerId === allianceTacticsId) && !choosedTacticsIds.includes(rule.id)
     )

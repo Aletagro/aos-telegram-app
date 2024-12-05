@@ -28,6 +28,16 @@
     border-width: 0px;
     font-family: 'Minion Pro Bold';
 }
+#singlePlayerDisabledBottomButton {
+    background-color: rgb(236, 236, 236);
+    color: rgb(180, 180, 180);
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-width: 0px;
+    font-family: 'Minion Pro Bold';
+}
 #playersNameContainer {
     display: flex;
     justify-content: space-around;
@@ -46,7 +56,7 @@
     padding-bottom: 8px;
 }
 #score {
-    background: rgb(245, 201, 80);
+    border: 1px solid black;
     border-radius: 4px;
     width: 60px;
     height: 60px;
@@ -107,4 +117,19 @@
     font-size: 32px;
     font-family: 'Minion Pro Bold';
     padding: 16px 0px;
+}
+#armyInfoContainer {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 16px;
+    padding-top: 12px;
+}
+#armyInfoButton {
+    background: rgb(245, 201, 80);
+    border-width: 0px;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'Minion Pro Bold';
+    width: 47%;
 }

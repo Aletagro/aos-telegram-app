@@ -6,7 +6,7 @@ import Ability from '../components/Ability'
 import './styles/ArmyInfo.css'
 
 const ArmyInfo = () => {
-    const {alligance, info} = useLocation().state
+    const {allegiance, info} = useLocation().state
     const armyEnhancement = Constants.armyEnhancements.find(enhancement => enhancement.title === info.title)
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} abilityKeywordsName={armyEnhancement?.abilityKeywordsName} abilityIdName={armyEnhancement?.abilityIdName} />
@@ -17,7 +17,7 @@ const ArmyInfo = () => {
     </div>
 
     return <>
-        <img src={alligance.rosterHeaderImage} alt={alligance.name} width='100%' />
+        <img src={allegiance.rosterHeaderImage} alt={allegiance.name} width='100%' />
         <div id='column' className='Chapter'>
         {info.restrictionText ? <p id='armyInfoNote'>{replaceAsterisks(info.restrictionText)}</p> : null}
         {info.abilities.map(info.withoutTitle ? renderAbility : renderBlock)}

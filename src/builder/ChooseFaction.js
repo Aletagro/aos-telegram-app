@@ -13,22 +13,22 @@ const ChooseFaction = () => {
     const armiesOfRenown = allegiances.map(({id}) => dataBase.data.faction_keyword.filter(({parentFactionKeywordId, armyOfRenown}) => parentFactionKeywordId === id && armyOfRenown))?.filter(array => array.length > 0)
     // нужно чтобы орков разделить на отдельные книги
     if (grandAlliance.name === 'Destruction') {
-        const orrukWarclansId = allegiances.find(alligance => alligance.name === 'Orruk Warclans')?.id
+        const orrukWarclansId = allegiances.find(allegiance => allegiance.name === 'Orruk Warclans')?.id
         const orrukAllegiances = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === orrukWarclansId && !faction.armyOfRenown)
         allegiances = [...allegiances, ...orrukAllegiances]
-        allegiances = allegiances.filter(alligance => alligance.name !== 'Orruk Warclans')
+        allegiances = allegiances.filter(allegiance => allegiance.name !== 'Orruk Warclans')
     }
     sortByName(allegiances)
 
-    const handleClick = ({alligance}) => {
-        roster.allegiance = alligance.name
+    const handleClick = ({allegiance}) => {
+        roster.allegiance = allegiance.name
     }
     
-    const renderRow = (alligance) => <BuilderRow
-        key={alligance.id}
-        title={alligance.name}
+    const renderRow = (allegiance) => <BuilderRow
+        key={allegiance.id}
+        title={allegiance.name}
         navigateTo='builder'
-        state={{alligance}}
+        state={{allegiance}}
         onClick={handleClick}
     />
 

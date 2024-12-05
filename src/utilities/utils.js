@@ -241,7 +241,7 @@ export const getNewRound = (battleplan) => {
             ...getScoreParams(battleplan)
         },
         secondPlayer: {
-            actics: {name: '', id: ''},
+            tactics: {name: '', id: ''},
             vp: 0,
             objectiveVp: 0,
             ...getScoreParams(battleplan)

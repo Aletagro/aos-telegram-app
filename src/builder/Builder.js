@@ -22,8 +22,8 @@ const emptyRegiment = {
 }
 
 const Builder = () => {
-    const {alligance, alliganceId} = useLocation().state
-    const _alliganceId = alliganceId || alligance?.id
+    const {allegiance, alliganceId} = useLocation().state
+    const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
