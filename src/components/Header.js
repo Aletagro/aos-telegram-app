@@ -21,6 +21,7 @@ const Header = () => {
             roster.spellsLore = ''
             roster.prayersLore = ''
             roster.manifestationLore = ''
+            roster.manifestationsList = []
             roster.factionTerrain = ''
             roster.auxiliaryUnits = []
             roster.regimentOfRenown = null

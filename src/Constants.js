@@ -253,7 +253,7 @@ const Constants = {
     newPlayer: {
         name: '',
         alliance: {
-            name: 'Order',
+            name: 'Chaos',
             id: '90175462-fae6-41e4-a0fe-19e41a833c9a'
         },
         allegiance: {

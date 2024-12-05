@@ -17,7 +17,7 @@ const Warscroll = () => {
     const rangeWeapons = weapons.filter(weapon => weapon.type === 'ranged')
     let abilities = dataBase.data.warscroll_ability.filter(ability => ability.warscrollId === unit.id)
     const regimentOptions = dataBase.data.warscroll_regiment_option.filter(option => option.warscrollId === unit.id)
-    const isManifestation = unit.referenceKeywords.includes('Manifestation')
+    const isManifestation = unit.referenceKeywords?.includes('Manifestation')
     const manifestationInfo = isManifestation ? dataBase.data.lore_ability.find(ability => ability.linkedWarscrollId === unit.id) : undefined
     const characteristics = [
         {value: unit.move, title: 'Move'},
@@ -48,7 +48,7 @@ const Warscroll = () => {
             toWound: Number(weapon.wound[0]),
             models: Number(unit.modelCount),
             rend: Number(weapon.rend) || 0,
-            champion: unit.referenceKeywords.includes('Champion') && !getWeaponAbilityForCalculator(weaponsAbilities[index], 'Companion'),
+            champion: unit.referenceKeywords?.includes('Champion') && !getWeaponAbilityForCalculator(weaponsAbilities[index], 'Companion'),
             mortal: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (Mortal)'),
             autoWound: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (Auto-wound)'),
             doubleHit: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (2 Hits)'),

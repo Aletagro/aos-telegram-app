@@ -7,7 +7,7 @@ import './styles/ChooseEnhancement.css'
 const dataBase = require('../dataBase.json')
 
 const ChooseEnhancement = () => {
-    const {data, type, unitIndex, regimentIndex, title, isRosterInfo, isAuxiliary, isAdditionalOption} = useLocation().state
+    const {data, type, unitIndex, regimentIndex, title, isInfo, isRosterInfo, isAuxiliary, isAdditionalOption} = useLocation().state
     const navigate = useNavigate()
     let _data = data
     if (type === 'battleFormation') {
@@ -71,6 +71,10 @@ const ChooseEnhancement = () => {
         navigate(-1)
     }
 
+    const handleGoBack = () => {
+        navigate(-1)
+    }
+
     const renderEnhancement = (enhancement) => <Ability key={enhancement.id} ability={enhancement} onClick={isRosterInfo ? undefined : handleClickEnhancement} />
 
     const renderManifestation = (manifestation) => <p key={manifestation.id} id='chooseManifestation'>{manifestation.name}</p>
@@ -82,7 +86,10 @@ const ChooseEnhancement = () => {
 
     return  <div id='column' className='Chapter'>
         {_data?.map(isRosterInfo ? renderBlock : renderEnhancement)}
-        <button id='deleteEnhancement' onClick={handleDeleteEnhancement}>Delete {title}</button>
+        {isInfo
+            ? <button id='deleteEnhancement' onClick={handleGoBack}>Back</button>
+            : <button id='deleteEnhancement' onClick={handleDeleteEnhancement}>Delete {title}</button>
+        }
     </div>
 }
 

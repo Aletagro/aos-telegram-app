@@ -6,6 +6,7 @@ import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import Row from '../components/Row'
 import Add from '../icons/add.svg'
+import Info from '../icons/info.svg'
 import './styles/Builder.css'
 
 const dataBase = require('../dataBase.json')
@@ -109,8 +110,12 @@ const Builder = () => {
         }})
     }
 
-    const handleChooseEnhancement = (name, type, data) => () => {
-        navigate('chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true}})
+    const handleChooseEnhancement = (name, type, data, isInfo) => () => {
+        if (type === 'factionTerrain' && isInfo) {
+            navigate('warscroll', {state: {unit: data[0]}})
+        } else {
+            navigate('chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo}})
+        }
     }
 
     const handleReinforcedAuxiliary = (unit, unitIndex) => {
@@ -177,13 +182,22 @@ const Builder = () => {
     />
 
     const renderEnhancement = (name, type, data) => data.length === 1
-        ? <p id='builderLore'>{name}: <b>{data[0].name}</b></p>
-        : <button id='builderAddButton' onClick={handleChooseEnhancement(name, type, data)}>
-            {roster[type]
-                ? `${name} : ${roster[type]}`
-                : `Choose ${name}`
+        ? <div id='builderSecondAddButton'>
+            <p>{data[0].name}</p>
+            <button id='builderInfoIcon' onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
+        </div>
+        : <div id='builderAddButton'>
+            <button id='builderAddButtonText' onClick={handleChooseEnhancement(name, type, data)}>
+                {roster[type]
+                    ? `${name} : ${roster[type]}`
+                    : `Choose ${name}`
+                }
+            </button>
+            {type === 'manifestationLore'
+                ? null
+                : <button id='builderInfoIcon' onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
             }
-        </button>
+        </div>
 
     return <div id='column' className='Chapter'>
         <div id='mainInfoContainer'>

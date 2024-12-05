@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
 import {singlePlayer} from '../utilities/appState'
-import {getNewRound} from '../utilities/utils'
 import Turns from './Turns'
 import NewGame from './NewGame'
 import Minus from '../icons/minus.svg'
@@ -13,25 +12,9 @@ import './styles/SinglePlayer.css'
 const SinglePlayer = () => {
     const navigate = useNavigate()
     const [updateCount, setUpdateCount] = useState(0)
-    const disableNextRoundButton = !Boolean(singlePlayer.rounds[singlePlayer.currentRound - 1]?.firstPlayer.tactics.id && singlePlayer.rounds[singlePlayer.currentRound - 1]?.secondPlayer.tactics.id)
-
-    const getUnderdogCP = (player) => singlePlayer.underdog === player ? 5 : 4
     
     const handleUpdate = () => {
         setUpdateCount(updateCount + 1)
-    }
-
-    const handleClickNextRound = () => {
-        if (singlePlayer.currentRound === 5) {
-            singlePlayer.gameOver = true
-        } else {
-            singlePlayer.underdog = singlePlayer.firstPlayer.vp < singlePlayer.secondPlayer.vp ? 'firstPlayer' : 'secondPlayer'
-            singlePlayer.rounds.push(getNewRound(singlePlayer.battleplan))
-            singlePlayer.currentRound = singlePlayer.currentRound + 1
-            singlePlayer.firstPlayer.cp = getUnderdogCP('firstPlayer')
-            singlePlayer.secondPlayer.cp = getUnderdogCP('secondPlayer')
-        }
-        handleUpdate()
     }
 
     const handleClickBattleplan = () => {
@@ -123,7 +106,6 @@ const SinglePlayer = () => {
                 </div>
                 {/* Current Turn */}
                 <Turns round={singlePlayer.currentRound} onUpdate={handleUpdate} />
-                <button disabled={disableNextRoundButton} id={disableNextRoundButton ? 'singlePlayerDisabledBottomButton' : 'singlePlayerBottomButton'} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
             </div>
             : <NewGame onUpdate={handleUpdate} />
 }
