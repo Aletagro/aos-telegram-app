@@ -25,6 +25,10 @@ const Army = () => {
         const ruleContainerComponentId = dataBase.data.rule_container_component.find(item => item.ruleContainerId === ruleContainerId && item.contentType === 'bullets')?.id
         rosterOptions = dataBase.data.bullet_point.filter(item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
+        // у Legion of the First Prince есть варскроллы
+        if (alligance.id === '3f9ccc30-1319-4a06-bb97-7b83373ce53f') {
+            items.push({title: 'Warscrolls', screen: 'units'})
+        }
     } else {
         items.push({title: 'Warscrolls', screen: 'units'})
     }

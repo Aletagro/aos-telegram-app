@@ -7,7 +7,7 @@ import './styles/ChooseEnhancement.css'
 const dataBase = require('../dataBase.json')
 
 const ChooseEnhancement = () => {
-    const {data, type, unitIndex, regimentIndex, title, isRosterInfo, isAuxiliary} = useLocation().state
+    const {data, type, unitIndex, regimentIndex, title, isRosterInfo, isAuxiliary, isAdditionalOption} = useLocation().state
     const navigate = useNavigate()
     let _data = data
     if (type === 'battleFormation') {
@@ -32,7 +32,7 @@ const ChooseEnhancement = () => {
             return {name: lore?.name, id: lore?.id, abilities: units[index]}
         })
     }
-    if (type === 'additionalOption') {
+    if (isAdditionalOption) {
         _data = dataBase.data.ability.filter(ability => ability.abilityGroupId === data.id)
     }
 

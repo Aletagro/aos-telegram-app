@@ -54,7 +54,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     }
 
     const handleChooseAdditionalOption = (option) => () => {
-        navigate('chooseEnhancement', {state: {title: option.name, data: option, type: 'additionalOption', unitIndex, regimentIndex, isAuxiliary}})
+        navigate('chooseEnhancement', {state: {title: option.name, data: option, type: option.name, unitIndex, regimentIndex, isAuxiliary, isAdditionalOption: true}})
     }
 
     const handleChooseOption = (optionGroup) => () => {

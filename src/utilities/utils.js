@@ -45,6 +45,9 @@ export const getErrors = (roster) => {
         errors.push('Choose General')
     }
     const uniqueUnits = []
+    let heroicTraitsCount = 0
+    let atrefactsCount = 0
+    let ensorcelledBannersCount = 0
     roster.regiments.forEach((regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
@@ -55,8 +58,26 @@ export const getErrors = (roster) => {
             if (unit.referenceKeywords.includes('Unique')) {
                 uniqueUnits.push(unit.name)
             }
+            if (unit.heroicTrait) {
+                heroicTraitsCount += 1
+            }
+            if (unit.artefact) {
+                atrefactsCount += 1
+            }
+            if (unit['Ensorcelled Banners']) {
+                ensorcelledBannersCount += 1
+            }
         })
     })
+    if (heroicTraitsCount > 1) {
+        errors.push(`You have ${heroicTraitsCount} Heroic Traits`)
+    }
+    if (atrefactsCount > 1) {
+        errors.push(`You have ${atrefactsCount} Atrefacts`)
+    }
+    if (ensorcelledBannersCount > 1) {
+        errors.push(`You have ${ensorcelledBannersCount} Ensorcelled Banners`)
+    }
     roster.auxiliaryUnits.forEach(unit => {
         if (unit.referenceKeywords.includes('Unique')) {
             uniqueUnits.push(unit.name)
