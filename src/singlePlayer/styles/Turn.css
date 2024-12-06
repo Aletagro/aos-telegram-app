@@ -16,6 +16,7 @@
     gap: 8px;
 }
 #currentRoundSubContainer {
+    flex: 1;
     border: 1px solid rgb(46, 46, 49);
     margin-bottom: 16px;
     border-radius: 8px;
@@ -60,7 +61,8 @@
 #scoreParamTitle {
     color: rgb(46, 46, 49);
     font-size: 16px;
-    font-family: 20px;
+    line-height: 20px;
+    padding-right: 4px;
 }
 #turnSeparator {
     height: 1px;
