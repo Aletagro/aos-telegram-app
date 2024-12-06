@@ -2,38 +2,55 @@
     background: rgb(245, 201, 80);
     color: black;
     border-radius: 4px;
-    padding: 12px;
-    font-size: 16px;
-    margin-bottom: 20px;
+    padding: 16px;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 16px;
     border-width: 0px;
     text-align: start;
     font-family: 'Minion Pro Bold';
 }
-#newGameTitle {
-    background-color: rgb(236, 236, 236);
-    border-radius: 4px;
-    font-size: 18px;
-    font-family: 'Minion Pro Bold';
+#newGamePlayerContainer {
+    border: 1px solid rgb(46, 46, 49);
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+#newGamePlayerTitle {
+    background: rgb(46, 46, 49);
+    border-radius: 4px 4px 0px 0px;
+    padding: 12px 16px;
     margin-bottom: 8px;
-    padding: 6px 12px;
-    text-align: center;
-}
-#newGameAlliancesButtons {
     display: flex;
-    margin-bottom: 4px;
+    justify-content: space-between;
+    align-items: center;
+}
+#newGameTitle {
+    color: white;
+    font-size: 18px;
+    line-height: 24px;
+    font-family: 'Minion Pro Bold';
+    padding-right: 12px;
+}
+#newGameAddCpContainer {
+    display: flex;
 }
 #newGameAlliancesButtons {
-    margin-bottom: 12px;
+    margin-bottom: 4px;
+    margin-top: 16px;
+    padding-left: 12px;
+}
+#newGameArmiesButtons {
+    padding-left: 12px;
     justify-self: stretch;
+    margin-bottom: 12px;
 }
 #newGameButton {
-    background: rgb(245, 201, 80);
+    background: #ECECEC;
     border-width: 0px;
-    border-radius: 4px;
+    border-radius: 24px;
     margin-right: 8px;
     margin-bottom: 8px;
-    padding: 0px 10px;
-    flex: 1;
+    padding: 8px 16px;
     font-size: 16px;
     font-family: 'Minion Pro Bold';
     height: 36px;
@@ -42,36 +59,39 @@
     background: rgb(46, 46, 49);
     color: white;
     border-width: 0px;
-    border-radius: 4px;
+    border-radius: 24px;
     margin-right: 8px;
     margin-bottom: 8px;
-    padding: 0px 10px;
-    flex: 1;
+    padding: 8px 16px;
     font-size: 16px;
     font-family: 'Minion Pro Bold';
     height: 36px;
 }
 #newGameStart {
-    background: rgb(46, 46, 49);
-    color: white;
-    border-radius: 4px;
-    padding: 12px;
-    font-size: 16px;
+    background: rgb(245, 201, 80);
+    border-radius: 24px;
+    padding: 12px 16px;
+    font-size: 18px;
+    line-height: 24px;
     margin-bottom: 20px;
     border-width: 0px;
     font-family: 'Minion Pro Bold';
 }
 #newGameDisabledStart {
-    background-color: rgb(236, 236, 236);
-    color: rgb(180, 180, 180);
-    border-radius: 4px;
-    padding: 12px;
-    font-size: 16px;
+    background-color: #ECECEC;
+    color: #B4B4B4;
+    border-radius: 24px;
+    padding: 12px 16px;
+    font-size: 18px;
+    line-height: 24px;
     margin-bottom: 20px;
     border-width: 0px;
     font-family: 'Minion Pro Bold';
 }
-#newGameUnderdog {
-    display: flex;
-    margin-bottom: 4px;
+#separator {
+    height: 1px;
+    flex: 1;
+    margin: 12px;
+    margin-top: 0px;
+    background: #ECECEC;
 }

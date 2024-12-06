@@ -4,8 +4,8 @@ import Constants from '../Constants'
 import {singlePlayer} from '../utilities/appState'
 import Turns from './Turns'
 import NewGame from './NewGame'
-import Minus from '../icons/minus.svg'
-import Plus from '../icons/plus.svg'
+import PlayerInfo from './PlayerInfo'
+import Info from '../icons/info.svg'
 
 import './styles/SinglePlayer.css'
 
@@ -21,19 +21,6 @@ const SinglePlayer = () => {
         navigate('battleplan', {state: {battleplan: singlePlayer.battleplan, title: singlePlayer.battleplan.name}})
     }
 
-    const handleClickMinusCP = (player) => () => {
-        singlePlayer[player].cp = singlePlayer[player].cp - 1
-        handleUpdate()
-    }
-
-    const handleClickPlusCP = (player) => () => {
-        singlePlayer[player].cp = singlePlayer[player].cp + 1
-        handleUpdate()
-    }
-
-    const handleClickAllegiance = (player) => () => {
-        navigate('army', {state: {allegianceId: singlePlayer[player].allegiance.id}})
-    }
 
     const handleClickNewGame = () => {
         singlePlayer.firstPlayer = {...Constants.newPlayer}
@@ -67,44 +54,14 @@ const SinglePlayer = () => {
         </div>
         : singlePlayer.gameStarted
             ? <div id='column' className='Chapter'>
-                <button id='singlePlayerBattleplan' onClick={handleClickBattleplan}>{`Battleplan: ${singlePlayer.battleplan.name}`}</button>
-                <div id='playersNameContainer'>
-                    <p id='scoreTitle'>1st Player</p>
-                    <p id='scoreTitle'>2nd Player</p>
+                <button id='singlePlayerBattleplan' onClick={handleClickBattleplan}>
+                    <p>Battleplan: <b>{singlePlayer.battleplan.name}</b></p>
+                    <img src={Info} alt="" />
+                </button>
+                <div id='singlePlayerInfoContainer'>
+                    <PlayerInfo player='firstPlayer' onUpdate={handleUpdate} />
+                    <PlayerInfo player='secondPlayer' onUpdate={handleUpdate} />
                 </div>
-                {/* Score */}
-                <p id='singlePlayerTitle'>Score</p>
-                <div id='scoreContainer'>
-                    <p id='score'>{singlePlayer.firstPlayer.vp}</p>
-                    <p id='score'>{singlePlayer.secondPlayer.vp}</p>
-                </div>
-                {/* CPs */}
-                <p id='singlePlayerTitle'>Command Points</p>
-                <div id='cpContainer'>
-                    <div>
-                        <div id='cpSubContainer'>
-                            <button id='cpIcon' onClick={handleClickMinusCP('firstPlayer')}><img src={Minus} alt="" /></button>
-                            <p id='cp'>{singlePlayer.firstPlayer.cp}</p>
-                            <button id='cpIcon' onClick={handleClickPlusCP('firstPlayer')}><img src={Plus} alt="" /></button>
-                        </div>
-                        {singlePlayer.underdog === 'firstPlayer' ? <p id='underdog'>Underdog</p> : null}
-                    </div>
-                    <div>
-                        <div id='cpSubContainer'>
-                            <button id='cpIcon' onClick={handleClickMinusCP('secondPlayer')}><img src={Minus} alt="" /></button>
-                            <p id='cp'>{singlePlayer.secondPlayer.cp}</p>
-                            <button id='cpIcon' onClick={handleClickPlusCP('secondPlayer')}><img src={Plus} alt="" /></button>
-                        </div>
-                        {singlePlayer.underdog === 'secondPlayer' ? <p id='underdog'>Underdog</p> : null}
-                    </div>
-                </div>
-                {/* Army Info */}
-                <p id='singlePlayerTitle'>Show army info</p>
-                <div id='armyInfoContainer'>
-                    <button id='armyInfoButton' onClick={handleClickAllegiance('firstPlayer')}>{singlePlayer.firstPlayer.allegiance.name}</button>
-                    <button id='armyInfoButton' onClick={handleClickAllegiance('secondPlayer')}>{singlePlayer.secondPlayer.allegiance.name}</button>
-                </div>
-                {/* Current Turn */}
                 <Turns round={singlePlayer.currentRound} onUpdate={handleUpdate} />
             </div>
             : <NewGame onUpdate={handleUpdate} />

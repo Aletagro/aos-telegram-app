@@ -12,6 +12,7 @@ const Constants = {
         },
         {
             name: 'Destruction',
+            shortName: 'Destr.',
             id: '3abb8417-72f9-47ab-a372-4d3f84c03caa',
             image: 'https://dhss9aar8ocw.cloudfront.net/bffedbb2-a415-484a-abac-97aa5e92b3b6'
         },

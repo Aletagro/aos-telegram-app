@@ -24,13 +24,13 @@ const Turn = ({round, onUpdate}) => {
     }
 
     return <div>
-        <p id='singlePlayerTitle'>Round {round}</p>
-        <div id='currentRoundContainer'>
+        <p id='turnTitle'>Round {round}</p>
+        <div id='turnRoundContainer'>
             <PlayerTurn player='firstPlayer' round={round} onUpdate={onUpdate} />
             <PlayerTurn player='secondPlayer' round={round} onUpdate={onUpdate} />
         </div>
         {singlePlayer.currentRound === round
-            ? <button disabled={disableNextRoundButton} id={disableNextRoundButton ? 'singlePlayerDisabledBottomButton' : 'singlePlayerBottomButton'} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
+            ? <button disabled={disableNextRoundButton} id={disableNextRoundButton ? 'turnDisabledBottomButton' : 'turnBottomButton'} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
             : null
         }
     </div>
