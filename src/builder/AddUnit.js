@@ -3,6 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import {roster, builderFilters} from '../utilities/appState'
 import {unitsSortesByType, sortByName} from '../utilities/utils'
 import UnitRow from './UnitRow'
+import Checkbox from '../components/Checkbox'
 import './styles/AddUnit.css'
 
 const dataBase = require('../dataBase.json')
@@ -133,12 +134,7 @@ const AddUnit = () => {
         {hasPotentialLegends
             ? <div id='potentialLegendsContainer' onClick={handleChangeHidePotentialLegends}>
                 <p id='potentialLegends'>Hide Potential Legends</p>
-                <input
-                    type='checkbox'
-                    id={hidePotentialLegends ? 'checkedCheckbox' : 'uncheckedCheckbox'}
-                    checked={hidePotentialLegends}
-                    onChange={handleChangeHidePotentialLegends}
-                />
+                <Checkbox onClick={handleChangeHidePotentialLegends} checked={hidePotentialLegends} />
             </div>
             : null
         }

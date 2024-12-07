@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import Constants from '../Constants'
 import {singlePlayer} from '../utilities/appState'
 import Turns from './Turns'
 import NewGame from './NewGame'
 import PlayerInfo from './PlayerInfo'
+import GameResult from './GameResult'
 import Info from '../icons/info.svg'
 
 import './styles/SinglePlayer.css'
@@ -21,37 +21,8 @@ const SinglePlayer = () => {
         navigate('battleplan', {state: {battleplan: singlePlayer.battleplan, title: singlePlayer.battleplan.name}})
     }
 
-
-    const handleClickNewGame = () => {
-        singlePlayer.firstPlayer = {...Constants.newPlayer}
-        singlePlayer.secondPlayer = {...Constants.newPlayer}
-        singlePlayer.battleplan = {name: '', id: ''}
-        singlePlayer.rounds = []
-        singlePlayer.gameStarted = false
-        singlePlayer.gameOver = false
-        singlePlayer.underdog = 0
-        singlePlayer.currentRound = 1
-        handleUpdate()
-    }
-
     return singlePlayer.gameOver
-        ? <div id='column' className='Chapter'>
-            <p id='gameWinner'>{singlePlayer.firstPlayer.vp > singlePlayer.secondPlayer.vp
-                ? '1st Player Wins'
-                : singlePlayer.firstPlayer.vp === singlePlayer.secondPlayer.vp
-                    ? 'Draw'
-                    : '2nd Player Wins!'
-            }</p>
-            <div id='scoreContainer'>
-                <p id='score'>{singlePlayer.firstPlayer.vp}</p>
-                <p id='score'>{singlePlayer.secondPlayer.vp}</p>
-            </div>
-            <div id='playersNameContainer'>
-                <p id='scoreTitle'>1st Player</p>
-                <p id='scoreTitle'>2nd Player</p>
-            </div>
-            <button id='singlePlayerBottomButton' onClick={handleClickNewGame}>Start New Game</button>
-        </div>
+        ? <GameResult onUpdate={handleUpdate} />
         : singlePlayer.gameStarted
             ? <div id='column' className='Chapter'>
                 <button id='singlePlayerBattleplan' onClick={handleClickBattleplan}>
