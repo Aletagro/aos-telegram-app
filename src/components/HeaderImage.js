@@ -14,12 +14,21 @@ const Styles = {
 
 const HeaderImage = ({src, alt, isWide}) => {
     const [loaded, setLoaded] = useState(false)
+    const [error, setError] = useState(false)
+    const placeholderStyles = {...isWide ? Styles.wide : Styles.big, ...error ? {} : {position: 'absolute'}}
 
     const handleImageLoaded = (e) => {
         setLoaded(true)
     }
 
-    return <img src={loaded ? src : placeholder} alt={alt} style={isWide ? Styles.wide : Styles.big} onLoad={handleImageLoaded}/>
+    const handleError = () => {
+        setError(true)
+    }
+
+    return <div>
+        {!loaded && <img src={placeholder} alt={alt} style={placeholderStyles}/>}
+        {error ? null : <img srcset={src} alt={alt} style={isWide ? Styles.wide : Styles.big} onLoad={handleImageLoaded} onError={handleError}/>}
+    </div>
 }
 
 export default HeaderImage
