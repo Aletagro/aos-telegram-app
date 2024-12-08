@@ -34,7 +34,7 @@ const ChooseBattleplan = () => {
         navigate(-1)
     }
 
-    const renderBattleplan = (battleplan) => <div id='chooseBattleplanContainer' key={battleplan.id}>
+    const renderBattleplan = (battleplan, index) => <div id='chooseBattleplanContainer' key={index}>
         <button key={battleplan.id} id='chooseBattleplan' onClick={handleChooseBattleplan(battleplan)}>{battleplan.title}</button>
         <button id='chooseBattleplanIcon' onClick={handleChooseBattleplanInfo(battleplan)}><img src={Info} alt="" /></button>
     </div>
