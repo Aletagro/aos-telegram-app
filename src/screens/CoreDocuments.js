@@ -1,5 +1,6 @@
 import React from 'react';
 import Row from '../components/Row'
+import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 import './styles/Catalog.css'
 
@@ -24,7 +25,7 @@ const CoreDocuments = () => {
     />
 
     return <>
-        <img src={Constants.rulesImage} alt='Core Documents' width='100%' />
+        <HeaderImage src={Constants.rulesImage} alt='Core Documents' />
         <div id='column' className='Chapter'>
             {documents && documents.map(renderRow)}
             {renderRuFAQRow()}

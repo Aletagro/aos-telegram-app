@@ -3,6 +3,8 @@ import {useLocation} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import BuilderRow from './BuilderRow'
 import {sortByName} from '../utilities/utils'
+import HeaderImage from '../components/HeaderImage'
+
 import './styles/ChooseFaction.css'
 
 const dataBase = require('../dataBase.json')
@@ -35,7 +37,7 @@ const ChooseFaction = () => {
     const renderArmyOfRenown = (army) => army.map(renderRow)
 
     return <>
-        <img src={grandAlliance.image} alt={grandAlliance.name} width='100%' />
+        <HeaderImage src={grandAlliance.image} alt={grandAlliance.name} isWide />
         <div id='column' className='Chapter'>
             <h4 id='unitType'>Choose your Faction</h4>
             {allegiances && allegiances.map(renderRow)}

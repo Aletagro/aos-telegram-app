@@ -3,6 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
 import {getValue, replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
+import HeaderImage from '../components/HeaderImage'
 import Calculator from '../icons/calculator.svg'
 import './styles/Warscroll.css'
 
@@ -115,7 +116,7 @@ const Warscroll = () => {
     </div>
 
     return <>
-        <img src={unit.bannerImage} alt={unit.name} width='100%' />
+        <HeaderImage src={unit.bannerImage} alt={unit.name} />
         <div id='warscroll'>
             <div id='characteristicsContainer' className='flexContainer'>
                 {characteristics.map(renderCharacteristic)}

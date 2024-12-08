@@ -2,6 +2,7 @@ import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
+import HeaderImage from '../components/HeaderImage'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -26,7 +27,7 @@ const Catalog = () => {
     />
 
     return <>
-        <img src={grandAlliance.image} alt={grandAlliance.name} width='100%' />
+        <HeaderImage src={grandAlliance.image} alt={grandAlliance.name} isWide />
         <div id='column' className='Chapter'>
             {allegiances && allegiances.map(renderRow)}
         </div>

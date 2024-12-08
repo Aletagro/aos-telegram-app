@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import {Route, Routes} from 'react-router-dom';
 import Main from './screens/Main';
+import MainRules from './screens/MainRules';
 import Catalog from './screens/Catalog';
 import Army from './screens/Army';
 import Units from './screens/Units';
@@ -44,32 +45,33 @@ function App() {
     <Header />
     <Routes>
       <Route index element={<Main />} />
-      <Route path={'catalog'} element={<Catalog />} />
-      <Route path={'catalog/army'} element={<Army />} />
-      <Route path={'catalog/army/units'} element={<Units />} />
-      <Route path={'catalog/army/units/warscroll'} element={<Warscroll />} />
-      <Route path={'catalog/army/units/warscroll/calculator'} element={<Calculator />} />
-      <Route path={'catalog/army/armyInfo'} element={<ArmyInfo />} />
-      <Route path={'catalog/army/armyOfRenown'} element={<Army />} />
-      <Route path={'catalog/army/armyOfRenown/units'} element={<Units />} />
-      <Route path={'catalog/army/armyOfRenown/units/warscroll'} element={<Warscroll />} />
-      <Route path={'catalog/army/armyOfRenown/armyInfo'} element={<ArmyInfo />} />
-      <Route path={'regimentOfRenownList'} element={<RegimentsOfRenownList />} />
-      <Route path={'regimentOfRenownList/regimentOfRenown'} element={<RegimentOfRenown />} />
-      <Route path={'regimentOfRenownList/regimentOfRenown/warscroll'} element={<Warscroll />} />
-      <Route path={'regimentOfRenownList/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules'} element={<MainRules />} />
+      <Route path={'mainRules/catalog'} element={<Catalog />} />
+      <Route path={'mainRules/catalog/army'} element={<Army />} />
+      <Route path={'mainRules/catalog/army/units'} element={<Units />} />
+      <Route path={'mainRules/catalog/army/units/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/units/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/armyInfo'} element={<ArmyInfo />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown'} element={<Army />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/units'} element={<Units />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/units/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/armyInfo'} element={<ArmyInfo />} />
+      <Route path={'mainRules/regimentOfRenownList'} element={<RegimentsOfRenownList />} />
+      <Route path={'mainRules/regimentOfRenownList/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'mainRules/regimentOfRenownList/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/regimentOfRenownList/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
       <Route path={'search'} element={<Search />} />
       <Route path={'search/warscroll'} element={<Warscroll />} />
       <Route path={'search/warscroll/calculator'} element={<Calculator />} />
-      <Route path={'coreDocuments'} element={<CoreDocuments />} />
-      <Route path={'coreDocuments/ruFAQ'} element={<RuFAQ />} />
-      <Route path={'coreDocuments/ruleSections'} element={<RuleSections />} />
-      <Route path={'coreDocuments/ruleSections/ruleChapters'} element={<RuleChapters />} />
-      <Route path={'coreDocuments/ruleSections/ruleChapters/rules'} element={<Rules />} />
-      <Route path={'coreDocuments/ruleSections/ruleChapters/battleplan'} element={<Battleplan />} />
-      <Route path={'manifestations'} element={<Manifestations />} />
-      <Route path={'manifestations/warscroll'} element={<Warscroll />} />
-      <Route path={'manifestations/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/coreDocuments'} element={<CoreDocuments />} />
+      <Route path={'mainRules/coreDocuments/ruFAQ'} element={<RuFAQ />} />
+      <Route path={'mainRules/coreDocuments/ruleSections'} element={<RuleSections />} />
+      <Route path={'mainRules/coreDocuments/ruleSections/ruleChapters'} element={<RuleChapters />} />
+      <Route path={'mainRules/coreDocuments/ruleSections/ruleChapters/rules'} element={<Rules />} />
+      <Route path={'mainRules/coreDocuments/ruleSections/ruleChapters/battleplan'} element={<Battleplan />} />
+      <Route path={'mainRules/manifestations'} element={<Manifestations />} />
+      <Route path={'mainRules/manifestations/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/manifestations/warscroll/calculator'} element={<Calculator />} />
       <Route path={'lists'} element={<Lists />} />
       <Route path={'builder'} element={<Builder />} />
       <Route path={'builder/warscroll'} element={<Warscroll />} />

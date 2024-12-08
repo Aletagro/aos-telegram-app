@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom'
 import Constants from '../Constants'
 import {replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
+import HeaderImage from '../components/HeaderImage'
 import './styles/ArmyInfo.css'
 
 const ArmyInfo = () => {
@@ -17,7 +18,7 @@ const ArmyInfo = () => {
     </div>
 
     return <>
-        <img src={allegiance.rosterHeaderImage} alt={allegiance.name} width='100%' />
+        <HeaderImage src={allegiance.rosterHeaderImage} alt={allegiance.name} isWide />
         <div id='column' className='Chapter'>
         {info.restrictionText ? <p id='armyInfoNote'>{replaceAsterisks(info.restrictionText)}</p> : null}
         {info.abilities.map(info.withoutTitle ? renderAbility : renderBlock)}

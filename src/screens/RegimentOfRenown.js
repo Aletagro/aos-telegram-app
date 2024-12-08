@@ -2,6 +2,7 @@ import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {sortByName, replaceAsterisks} from '../utilities/utils'
 import Row from '../components/Row'
+import HeaderImage from '../components/HeaderImage'
 import Ability from '../components/Ability'
 import './styles/RegimentOfRenown.css'
 
@@ -31,7 +32,7 @@ const RegimentOfRenown = () => {
     />
 
     return <>
-        <img src={regiment.image} alt='Regiment Of Renown' width='100%' />
+        <HeaderImage src={regiment.image} alt='Regiment Of Renown' />
         <div id='column' className='Chapter'>
             <p id='text'>{replaceAsterisks(regiment.subsectionRulesText)}</p>
             <h4 id='regimentOfRenownTitle'>{regiment.regimentOfRenownPointsCost} points</h4>

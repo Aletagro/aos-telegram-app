@@ -21,7 +21,9 @@ const PlayerInfo = ({player, onUpdate}) => {
     }
 
     const handleClickAllegiance = () => {
-        navigate('army', {state: {allegianceId: singlePlayer[player].allegiance.id}})
+        if (singlePlayer[player].allegiance.id) {
+            navigate('army', {state: {allegianceId: singlePlayer[player].allegiance.id}})
+        }
     }
 
     return <div id='playerInfo'>

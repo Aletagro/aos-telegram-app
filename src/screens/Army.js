@@ -1,8 +1,10 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
+import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 import {replaceAsterisks, replaceQuotation} from '../utilities/utils'
+
 import './styles/Army.css'
 
 const dataBase = require('../dataBase.json')
@@ -94,7 +96,7 @@ const Army = () => {
     const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {replaceAsterisks(option.text)}</p>
 
     return <>
-        <img src={_allegiance.rosterHeaderImage} alt={_allegiance.name} width='100%' />
+        <HeaderImage src={_allegiance.rosterHeaderImage} alt={_allegiance.name} isWide />
         <div id='column' className='Chapter'>
             {items.map(renderRow)}
             {armyOfRenown.length > 0

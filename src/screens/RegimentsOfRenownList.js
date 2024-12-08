@@ -2,6 +2,7 @@ import React from 'react';
 import Constants from '../Constants'
 import {sortByName, regimentSortesByGrandAlliances} from '../utilities/utils'
 import Row from '../components/Row'
+import HeaderImage from '../components/HeaderImage'
 import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
@@ -28,7 +29,7 @@ const RegimentsOfRenownList = () => {
     </div>
 
     return <>
-        <img src={Constants.regimentsOfRenownImage} alt='Regiment Of Renown' width='100%' />
+        <HeaderImage src={Constants.regimentsOfRenownImage} alt='Regiment Of Renown' />
         <div id='column' className='Chapter'>
             {sortedRegimentsOfRenown && sortedRegimentsOfRenown.map(renderRegimentAlliance)}
         </div>

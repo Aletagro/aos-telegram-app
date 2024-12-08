@@ -2,6 +2,7 @@ import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {unitsSortesByType} from '../utilities/utils'
 import Row from '../components/Row'
+import HeaderImage from '../components/HeaderImage'
 import './styles/Units.css'
 
 const dataBase = require('../dataBase.json')
@@ -25,7 +26,7 @@ const Units = () => {
     </div>
 
     return <>
-        <img src={allegiance.rosterHeaderImage} alt={allegiance.name} width='100%' />
+        <HeaderImage src={allegiance.rosterHeaderImage} alt={allegiance.name} isWide />
         <div id='column' className='Chapter'>
             {units.map(renderUnitsType)}
         </div>
