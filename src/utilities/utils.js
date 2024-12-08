@@ -249,3 +249,12 @@ export const getNewRound = (battleplan) => {
     }
     return newRound
 }
+
+export const setTacticColor = (tactic) => {
+    const match = tactic.match(/Keywords:\s*(\S+)/)
+    if (match) {
+        const keyword = match[1].replaceAll('*', '')
+        return Constants.tacticsTypes[keyword] || Constants.tacticsTypes.UNIVERSAL
+    }
+    return Constants.tacticsTypes.UNIVERSAL
+}

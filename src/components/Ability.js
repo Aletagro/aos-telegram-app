@@ -11,7 +11,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
     const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
     const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
     const keywordsLength = keywords.length
-    const borderColor = Constants.abilitiesType[ability.phase]?.background
+    const borderColor = Constants.abilitiesTypes[ability.phase]
 
     const handlleClick = () => {
         if (onClick) {

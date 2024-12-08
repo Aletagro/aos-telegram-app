@@ -14,8 +14,8 @@ const Main = () => {
         <div id='column' className='Chapter'>
             <Row title='Rules' navigateTo='mainRules' />
             <Row title='Builder' navigateTo='chooseGrandAlliance' />
-            <Row title='Damage Calculator' navigateTo='calculator' />
             <Row title='Battle Dashboard (Beta Testing)' navigateTo='singlePlayer' />
+            <Row title='Damage Calculator' navigateTo='calculator' />
             <p id='feedbackText'>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id='feedbackText'>For feedback - @RukosuevKrasavchik</p>
             {/* <button id='testButton' onClick={handleNavigateToTest}>test</button> */}

@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import Constants from '../Constants'
 import {singlePlayer} from '../utilities/appState';
-import {replaceAsterisks} from '../utilities/utils'
+import {replaceAsterisks, setTacticColor} from '../utilities/utils'
 
 import './styles/ChooseTactics.css';
 
@@ -22,11 +22,13 @@ const ChooseTactics = () => {
         navigate(-1)
     }
 
-    const renderTactic = (tactic) =>
-        <button key={tactic.id} id='chooseTactics' onClick={handleChooseTactics(tactic)}>
-            <b>{tactic.title}</b>
-            <p>{replaceAsterisks(tactic.textContent)}</p>
+    const renderTactic = (tactic) => {
+        const color = setTacticColor(tactic.textContent)
+        return <button key={tactic.id} id='chooseTactics' style={{border: `1px solid ${color}`}} onClick={handleChooseTactics(tactic)}>
+            <b id='chooseTacticsTitle' style={{background: color}}>{tactic.title}</b>
+            <p id='chooseTacticsText'>{replaceAsterisks(tactic.textContent)}</p>
         </button>
+    }
     
     return <div id='column' className='Chapter'>
         {tactics && tactics.map(renderTactic)}

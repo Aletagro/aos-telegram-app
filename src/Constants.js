@@ -108,39 +108,22 @@ const Constants = {
             name: 'Faction Terrain'
         }
     ],
-    abilitiesType: {
-        startOfTurn: {
-            background: 'black',
-            icon: ''
-        },
-        combatPhase: {
-            background: 'darkred',
-            icon: ''
-        },
-        heroPhase: {
-            background: 'rgb(161, 146, 61)',
-            icon: ''
-        },
-        movementPhase: {
-            background: 'grey',
-            icon: ''
-        },
-        defensive: {
-            background: 'darkgreen',
-            icon: ''
-        },
-        chargePhase: {
-            background: 'rgb(182, 92, 28)',
-            icon: ''
-        },
-        shootingPhase: {
-            background: 'rgb(26, 72, 110)',
-            icon: ''
-        },
-        endOfTurn: {
-            background: 'indigo',
-            icon: ''
-        }
+    abilitiesTypes: {
+        startOfTurn: 'black',
+        combatPhase: 'darkred',
+        heroPhase: 'rgb(161, 146, 61)',
+        movementPhase: 'grey',
+        defensive: 'darkgreen',
+        chargePhase: 'rgb(182, 92, 28)',
+        shootingPhase: 'rgb(26, 72, 110)',
+        endOfTurn: 'indigo'
+    },
+    tacticsTypes: {
+        UNIVERSAL: 'black',
+        CHAOS: 'darkred',
+        DESTRUCTION: 'darkgreen',
+        ORDER: 'rgb(26, 72, 110)',
+        DEATH: 'indigo'
     },
     regimentOfRenownsWithWizard: [
         {
