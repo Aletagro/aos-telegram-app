@@ -5,6 +5,7 @@ import Close from '../icons/close.svg'
 import Plus from '../icons/plus.svg'
 import Minus from '../icons/minus.svg'
 import DarkGeneral from '../icons/darkGeneral.svg'
+import Info from '../icons/info.svg'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
 import './styles/UnitRow.css'
@@ -73,6 +74,10 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
         }})
     }
 
+    const handleClickInfo = () => {
+        navigate('warscroll', {state: {title: unit.name, unit}})
+    }
+
     const renderChooseOptionButton = (option) => <button id='chooseEnhancementButton' onClick={handleChooseOption(option)}>
         {unit[option.optionGroupType]
             ? `${camelCaseToWords(option.optionGroupType)}: ${unit[option.optionGroupType]}`
@@ -112,6 +117,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
                 : <button id='unitRowButton' onClick={handleCopy}><img src={Copy} alt="" /></button>
             }
             {onDelete ? <button id='unitRowButton' onClick={handleDelete}><img src={Close} alt="" /></button> : null}
+            {isAddUnit ? <button id='unitRowInfoButton' onClick={handleClickInfo}><img src={Info} alt="" /></button> : null}
         </div>
         {isShowEnhancements && !isAddUnit
             ? <div id='enhancementsContainer'>
