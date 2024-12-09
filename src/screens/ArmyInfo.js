@@ -18,7 +18,7 @@ const ArmyInfo = () => {
     </div>
 
     return <>
-        <HeaderImage src={allegiance.rosterHeaderImage} alt={allegiance.name} isWide />
+        {allegiance.rosterHeaderImage ? <HeaderImage src={allegiance.rosterHeaderImage} alt={allegiance.name} isWide /> : null}
         <div id='column' className='Chapter'>
         {info.restrictionText ? <p id='armyInfoNote'>{replaceAsterisks(info.restrictionText)}</p> : null}
         {info.abilities.map(info.withoutTitle ? renderAbility : renderBlock)}

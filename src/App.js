@@ -99,6 +99,7 @@ function App() {
       <Route path={'mainRules/manifestations/warscroll/calculator'} element={<Calculator />} />
       <Route path={'lists'} element={<Lists />} />
       <Route path={'builder'} element={<Builder />} />
+      <Route path={'builder/armyInfo'} element={<ArmyInfo />} />
       <Route path={'builder/warscroll'} element={<Warscroll />} />
       <Route path={'builder/warscroll/calculator'} element={<Calculator />} />
       <Route path={'builder/regimentOfRenown'} element={<RegimentOfRenown />} />
@@ -111,6 +112,7 @@ function App() {
       <Route path={'chooseGrandAlliance'} element={<ChooseGrandAlliance />} />
       <Route path={'chooseGrandAlliance/chooseFaction'} element={<ChooseFaction />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder'} element={<Builder />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/armyInfo'} element={<ArmyInfo />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll'} element={<Warscroll />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/warscroll/calculator'} element={<Calculator />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/regimentOfRenown'} element={<RegimentOfRenown />} />

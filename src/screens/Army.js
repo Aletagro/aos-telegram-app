@@ -4,7 +4,7 @@ import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
-import {replaceAsterisks, replaceQuotation} from '../utilities/utils'
+import {replaceAsterisks, getInfo} from '../utilities/utils'
 
 import './styles/Army.css'
 
@@ -50,28 +50,12 @@ const Army = () => {
         }
     }
 
-    const getInfo = (screen) => {
-        let abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
-            item.factionId === _allegiance.id &&
-            item.abilityGroupType === screen.abilityGroupType &&
-            (screen.includesTexts
-                ? Boolean(screen.includesTexts.find(text => item.name.includes(text)))
-                : true
-            )
-        )
-        if (screen.abilityGroupType === 'battleTraits') {
-            abilitiesGroup = [abilitiesGroup.find(({name})=> replaceQuotation(name).includes(replaceQuotation(_allegiance.name)))]
+    Constants.armyEnhancements.forEach(screen => {
+        const info = getInfo(screen, _allegiance)
+        if (info) {
+            items.push(info)
         }
-        const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation?.id))
-        const abilities = abilitiesGroup.map((formation, index) => {
-            return {name: formation?.name, id: formation?.id, abilities: abilitiesRules[index]}
-        })
-        if (abilities.length > 0) {
-            items.push({title: screen.title, abilities})
-        }
-    }
-
-    Constants.armyEnhancements.forEach(screen => getInfo(screen))
+    })
 
     let armyOfRenown
     // armyOfRenown свинок достаем для джовсов

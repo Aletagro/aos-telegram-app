@@ -1,12 +1,14 @@
 import React, {useCallback, useReducer} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
+import Constants from '../Constants'
 import {roster} from '../utilities/appState'
-import {getWoundsCount} from '../utilities/utils'
+import {getWoundsCount, getInfo} from '../utilities/utils'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import Row from '../components/Row'
 import Add from '../icons/add.svg'
 import Info from '../icons/info.svg'
+
 import './styles/Builder.css'
 
 const dataBase = require('../dataBase.json')
@@ -138,6 +140,11 @@ const Builder = () => {
         forceUpdate()
     }
 
+    const handleClickAllegiance = () => {
+        const info = getInfo(Constants.armyEnhancements[0], {id: _alliganceId, name: roster.allegiance})
+        navigate('armyInfo', {state: {title: Constants.armyEnhancements[0].title, info, allegiance: {name: roster.allegiance}}})
+    }
+
     const renderRegiment = (regiment, index) => <Regiment
         key={index}
         regiment={regiment}
@@ -201,11 +208,14 @@ const Builder = () => {
         </div>
 
     return <div id='column' className='Chapter'>
-        <div id='mainInfoContainer'>
-            <p id='builderText'>Grand Alliance: <b>{roster.grandAlliance}</b></p>
+        <button id='mainInfoContainer' onClick={handleClickAllegiance}>
+            <div id='builderAllegianceContainer'>
+                <p id='builderText'>Grand Alliance: <b>{roster.grandAlliance}</b></p>
+                <img id='builderAllegianceInfoIcon' src={Info} alt="" />
+            </div>
             <p id='builderText'>Allegiance: <b>{roster.allegiance}</b></p>
             <p>Wounds: {getWoundsCount(roster)}</p>
-        </div>
+        </button>
         <p id='builderTitle'>Army: {roster.points}/2000 Points</p>
         {battleFormations.length
             ? <button id={roster.battleFormation ? 'builderSecondAddButton' : 'builderAddButton'} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>

@@ -1,6 +1,8 @@
 import parse from 'html-react-parser';
 import Constants from '../Constants'
 
+const dataBase = require('../dataBase.json')
+
 export const sortByName = (array) => 
     array.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
@@ -257,4 +259,27 @@ export const setTacticColor = (tactic) => {
         return Constants.tacticsTypes[keyword] || Constants.tacticsTypes.UNIVERSAL
     }
     return Constants.tacticsTypes.UNIVERSAL
+}
+
+export const getInfo = (screen, allegiance) => {
+    let abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
+        item.factionId === allegiance.id &&
+        item.abilityGroupType === screen.abilityGroupType &&
+        (screen.includesTexts
+            ? Boolean(screen.includesTexts.find(text => item.name.includes(text)))
+            : true
+        )
+    )
+    if (screen.abilityGroupType === 'battleTraits') {
+        abilitiesGroup = [abilitiesGroup.find(({name})=> replaceQuotation(name).includes(replaceQuotation(allegiance.name)))]
+    }
+    const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation?.id))
+    const abilities = abilitiesGroup.map((formation, index) => {
+        return {name: formation?.name, id: formation?.id, abilities: abilitiesRules[index]}
+    })
+    if (abilities.length > 0) {
+        return {title: screen.title, abilities}
+    } else {
+        return null
+    }
 }

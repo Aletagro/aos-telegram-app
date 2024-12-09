@@ -14,7 +14,7 @@ const BuilderRow = ({title, onClick, state, navigateTo}) => {
 
     return <div className='container'>
         <button  className='builderRow' onClick={handleClick}>
-            <p id='title'>{title}</p>
+            <b id='title'>{title}</b>
         </button>
     </div>
 }
