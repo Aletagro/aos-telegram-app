@@ -19,12 +19,26 @@
   overflow: hidden;
   display: block;
 }
-#headerButton {
+#headerLeftButton {
   background: darkred;
   color: white;
   font-size: 14px;
   border: 0;
   padding: 0px;
+  padding-right: 12px;
   top: 3px;
   position: relative;
+}
+#headerRightButton {
+  background: darkred;
+  color: white;
+  font-size: 14px;
+  border: 0;
+  padding: 0px;
+  padding-left: 12px;
+  top: 3px;
+  position: relative;
+}
+#headerRightButtons {
+  display: flex;
 }

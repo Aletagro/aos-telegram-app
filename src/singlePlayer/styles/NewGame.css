@@ -10,6 +10,18 @@
     text-align: start;
     font-family: 'Minion Pro Bold';
 }
+#newGameChoosedBattleplan {
+    background: #ECECEC;
+    color: black;
+    border-radius: 4px;
+    padding: 16px;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 16px;
+    border-width: 0px;
+    text-align: start;
+    font-family: 'Minion Pro Bold';
+}
 #newGamePlayerContainer {
     border: 1px solid rgb(46, 46, 49);
     margin-bottom: 16px;

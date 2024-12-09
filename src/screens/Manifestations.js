@@ -14,6 +14,7 @@ const Manifestations = () => {
     const renderUnit = (unit) => <Row
         key={unit.id}
         title={unit.name}
+        image={unit?.rowImage}
         navigateTo='warscroll'
         state={{unit}}
     />
@@ -21,10 +22,11 @@ const Manifestations = () => {
     const renderLore = (lore) => {
         const spells = dataBase.data.lore_ability.filter(ability => ability.loreId === lore.id)
         const units = spells.map(spell => dataBase.data.warscroll.find(warscroll => warscroll.id === spell.linkedWarscrollId))
-        return <>
+
+        return <div key={lore.id}>
             <h4 id='unitType'>{lore.name}</h4>
             {units.map(renderUnit)}
-        </>
+        </div>
     }
 
     return <>

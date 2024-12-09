@@ -4,14 +4,14 @@ import {roster, search} from '../utilities/appState'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
 import Export from '../icons/export.svg'
+import Home from '../icons/home.svg'
 import './styles/Header.css'
 
 const Header = () => {
     const navigate = useNavigate()
     const {pathname, state} = useLocation()
 
-    const handleGoBack = () => {
-        navigate(-1)
+    const clearAppState = () => {
         if (pathname === '/chooseGrandAlliance/chooseFaction/builder' ||
             pathname === '/mainRules/catalog/army/builder' ||
             pathname === '/mainRules/catalog/army/armyOfRenown/builder'
@@ -35,9 +35,19 @@ const Header = () => {
         }
     }
 
+    const handleGoBack = () => {
+        navigate(-1)
+        clearAppState()
+    }
+
     const handleNavigateToSearch = () => {navigate('search')}
 
     const handleNavigateToExport = () => {navigate('export', {state: {title: 'Export List'}})}
+
+    const handleNavigateToHome = () => {
+        navigate('/')
+        clearAppState()
+    }
 
     const renderRightButton = () => {
         switch (pathname) {
@@ -46,16 +56,22 @@ const Header = () => {
             case '/chooseGrandAlliance/chooseFaction/builder':
             case '/mainRules/catalog/army/builder':
             case '/mainRules/catalog/army/armyOfRenown/builder':
-                return <button id='headerButton' onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
+                return <button id='headerRightButton' onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
             default:
-                return <button id='headerButton' onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
+                return <div id='headerRightButtons'>
+                    <button id='headerRightButton' onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
+                    {pathname === '/' || pathname.includes('builder')
+                        ? null
+                        : <button id='headerRightButton' onClick={handleNavigateToHome}><img src={Home} alt='' /></button>
+                    }
+                </div>
         }
     }
 
     return <div className="header" id="myHeader">
         {pathname === '/'
             ? null
-            : <button id='headerButton' onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
+            : <button id='headerLeftButton' onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
         }
         <p id='headerTitle'>{state?.title}</p>
         {renderRightButton()}

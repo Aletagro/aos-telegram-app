@@ -27,7 +27,7 @@ const HeaderImage = ({src, alt, isWide}) => {
 
     return <div>
         {!loaded && <img src={placeholder} alt={alt} style={placeholderStyles}/>}
-        {error ? null : <img srcset={src} alt={alt} style={isWide ? Styles.wide : Styles.big} onLoad={handleImageLoaded} onError={handleError}/>}
+        {error ? null : <img src={src} alt={alt} style={isWide ? Styles.wide : Styles.big} onLoad={handleImageLoaded} onError={handleError}/>}
     </div>
 }
 

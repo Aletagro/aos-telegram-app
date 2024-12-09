@@ -170,6 +170,7 @@ const Builder = () => {
     const renderRegimentOfRenownUnit = (unit) => <Row
         key={unit.id}
         title={unit.name}
+        image={unit?.rowImage}
         navigateTo='warscroll'
         state={{unit}}
     />

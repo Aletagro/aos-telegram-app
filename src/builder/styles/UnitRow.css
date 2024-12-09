@@ -6,7 +6,7 @@
   border-radius: 8px;
 }
 .unitRow {
-    padding: 16px;
+    padding: 8px;
     font-size: 16px;
     cursor: pointer;
     flex-direction: row;

@@ -25,7 +25,7 @@ const NewGame = ({onUpdate}) => {
     }
 
     return <div id='column' className='Chapter'>
-        <button id='newGameBattleplan' onClick={handleChooseBattleplan}>{singlePlayer.battleplan.name ? `Battleplan: ${singlePlayer.battleplan.name}` : 'Choose Battleplan'}</button>
+        <button id={singlePlayer.battleplan.name ? 'newGameChoosedBattleplan' : 'newGameBattleplan'} onClick={handleChooseBattleplan}>{singlePlayer.battleplan.name ? `Battleplan: ${singlePlayer.battleplan.name}` : 'Choose Battleplan'}</button>
         <NewGamePlayer player='firstPlayer' onUpdate={onUpdate} />
         <NewGamePlayer player='secondPlayer' onUpdate={onUpdate} />
         <button id={disabledStartButton ? 'newGameDisabledStart' : 'newGameStart'} onClick={handleClickStart} disabled={disabledStartButton}>Start Game</button>

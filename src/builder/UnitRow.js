@@ -1,5 +1,6 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
+import RowImage from '../components/RowImage'
 import Copy from '../icons/copy.svg'
 import Close from '../icons/close.svg'
 import Plus from '../icons/plus.svg'
@@ -98,6 +99,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
 
     return <div id='unitRowContainer'>
         <div className='unitRow'>
+            {unit?.rowImage ?<RowImage src={unit?.rowImage} alt={unit.name} /> : null}
             <button id='addUnitButton' onClick={handleClick}>
                 <div id='addUnitButtonSubContainer'>
                     {isGeneral ? <img id='generalIcon' src={DarkGeneral} alt=''/> : null}
