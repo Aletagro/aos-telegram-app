@@ -226,26 +226,22 @@ const Builder = () => {
             </button>
             : null
         }
-        <>
-            <button id='builderSecondAddButton' onClick={handleAddAuxiliaryUnit}>
-                <p>Add Auxiliary Unit</p>
+        <button id='builderSecondAddButton' onClick={handleAddAuxiliaryUnit}>
+            <p>Add Auxiliary Unit</p>
+            <img src={Add} alt='' />
+        </button>
+        {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
+        {roster.regimentOfRenown
+            ? <>
+                <p id='builderTitle'>Regiment Of Renown</p>
+                {renderRegimentOfRenown()}
+                {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
+            </>
+            : <button id='builderSecondAddButton' onClick={handleAddRegimentsOfRenown}>
+                <p>Add Regiments Of Renown</p>
                 <img src={Add} alt='' />
             </button>
-            {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
-        </>
-        <>
-            {roster.regimentOfRenown
-                ? <>
-                    <p id='builderTitle'>Regiment Of Renown</p>
-                    {renderRegimentOfRenown()}
-                    {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
-                </>
-                : <button id='builderSecondAddButton' onClick={handleAddRegimentsOfRenown}>
-                    <p>Add Regiments Of Renown</p>
-                    <img src={Add} alt='' />
-                </button>
-            }
-        </>
+        }
         <p id='builderTitle'>Lores</p>
         {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
         {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}

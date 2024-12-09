@@ -23,7 +23,7 @@ const Catalog = () => {
         key={allegiance.id}
         title={allegiance.name}
         navigateTo='army'
-        state={{allegiance}}
+        state={{allegiance, grandAlliance: grandAlliance.name}}
     />
 
     return <>

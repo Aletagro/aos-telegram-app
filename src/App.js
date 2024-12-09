@@ -56,6 +56,28 @@ function App() {
       <Route path={'mainRules/catalog/army/armyOfRenown/units'} element={<Units />} />
       <Route path={'mainRules/catalog/army/armyOfRenown/units/warscroll'} element={<Warscroll />} />
       <Route path={'mainRules/catalog/army/armyOfRenown/armyInfo'} element={<ArmyInfo />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder'} element={<Builder />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/addUnit'} element={<AddUnit />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/addUnit/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/chooseOption'} element={<ChooseOption />} />
+      <Route path={'mainRules/catalog/army/armyOfRenown/builder/chooseWeapon'} element={<ChooseWeapon />} />
+      <Route path={'mainRules/catalog/army/builder'} element={<Builder />} />
+      <Route path={'mainRules/catalog/army/builder/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/builder/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'mainRules/catalog/army/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/builder/addUnit'} element={<AddUnit />} />
+      <Route path={'mainRules/catalog/army/builder/addUnit/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
+      <Route path={'mainRules/catalog/army/builder/chooseOption'} element={<ChooseOption />} />
+      <Route path={'mainRules/catalog/army/builder/chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'mainRules/regimentOfRenownList'} element={<RegimentsOfRenownList />} />
       <Route path={'mainRules/regimentOfRenownList/regimentOfRenown'} element={<RegimentOfRenown />} />
       <Route path={'mainRules/regimentOfRenownList/regimentOfRenown/warscroll'} element={<Warscroll />} />

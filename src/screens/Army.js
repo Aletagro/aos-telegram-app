@@ -3,6 +3,7 @@ import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
+import {roster} from '../utilities/appState'
 import {replaceAsterisks, replaceQuotation} from '../utilities/utils'
 
 import './styles/Army.css'
@@ -10,7 +11,7 @@ import './styles/Army.css'
 const dataBase = require('../dataBase.json')
 
 const Army = () => {
-    const {allegiance, isArmyOfRenown, allegianceId} = useLocation().state
+    const {allegiance, isArmyOfRenown, allegianceId, grandAlliance} = useLocation().state
     let _allegiance = allegiance
     if (!allegiance) {
         _allegiance = dataBase.data.faction_keyword.find(faction => faction.id === allegianceId)
@@ -26,9 +27,10 @@ const Army = () => {
         } else {
             publicationId = publications[0]?.id
         }
-        const ruleSectionId = dataBase.data.rule_section.find(item => item.publicationId === publicationId)?.id
+        const ruleSectionId = dataBase.data.rule_section.find(item => item.publicationId === publicationId && item.displayOrder === 1)?.id
         const ruleContainerId = dataBase.data.rule_container.find(item => item.ruleSectionId === ruleSectionId)?.id
         const ruleContainerComponentId = dataBase.data.rule_container_component.find(item => item.ruleContainerId === ruleContainerId && item.contentType === 'bullets')?.id
+
         rosterOptions = dataBase.data.bullet_point.filter(item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
         // у Legion of the First Prince есть варскроллы
@@ -79,6 +81,11 @@ const Army = () => {
         armyOfRenown = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === _allegiance.id)
     }
 
+    const handleClickBuilder = () => {
+        roster.grandAlliance = grandAlliance
+        roster.allegiance = _allegiance.name
+    }
+
     const renderRow = (item) => <Row
         key={item.title}
         title={item.title}
@@ -86,11 +93,19 @@ const Army = () => {
         state={{allegiance: _allegiance, info: item}}
     />
 
+
+    const renderBuilderRow = () => <Row
+        title='Builder'
+        navigateTo='builder'
+        state={{alliganceId: _allegiance.id}}
+        onClick={handleClickBuilder}
+    />
+
     const renderArmyOfRenown = (item) => <Row
         key={item.title}
         title={item.name}
         navigateTo='armyOfRenown'
-        state={{allegiance: item, isArmyOfRenown: true}}
+        state={{allegiance: item, isArmyOfRenown: true, grandAlliance}}
     />
 
     const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {replaceAsterisks(option.text)}</p>
@@ -99,6 +114,7 @@ const Army = () => {
         <HeaderImage src={_allegiance.rosterHeaderImage} alt={_allegiance.name} isWide />
         <div id='column' className='Chapter'>
             {items.map(renderRow)}
+            {renderBuilderRow()}
             {armyOfRenown.length > 0
                 ? <div>
                     <p id='armyOfRenown'>Army of Renown</p>

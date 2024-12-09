@@ -2,10 +2,15 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import './styles/Row.css'
 
-const Row = ({title, subtitle, navigateTo, state}) => {
+const Row = ({title, subtitle, navigateTo, state, onClick}) => {
     const navigate = useNavigate()
 
-    const handleClick = () => navigate(navigateTo, {state: {title, ...state}})
+    const handleClick = () => {
+        navigate(navigateTo, {state: {title, ...state}})
+        if (onClick) {
+            onClick()
+        }
+    }
 
     return <div className='container'>
         <button  className='rowButton' onClick={handleClick}>
