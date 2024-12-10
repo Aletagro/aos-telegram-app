@@ -1,6 +1,5 @@
 import React from 'react';
 import Row from './Row'
-import './styles/Battleplans.css'
 
 const dataBase = require('../dataBase.json')
 

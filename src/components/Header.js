@@ -5,7 +5,8 @@ import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
 import Export from '../icons/export.svg'
 import Home from '../icons/home.svg'
-import './styles/Header.css'
+
+import Styles from './styles/Header.module.css'
 
 const Header = () => {
     const navigate = useNavigate()
@@ -56,24 +57,24 @@ const Header = () => {
             case '/chooseGrandAlliance/chooseFaction/builder':
             case '/mainRules/catalog/army/builder':
             case '/mainRules/catalog/army/armyOfRenown/builder':
-                return <button id='headerRightButton' onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
+                return <button id={Styles.rightButton} onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
             default:
-                return <div id='headerRightButtons'>
-                    <button id='headerRightButton' onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
+                return <div id={Styles.rightButtons}>
+                    <button id={Styles.rightButton} onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
                     {pathname === '/' || pathname.includes('builder')
                         ? null
-                        : <button id='headerRightButton' onClick={handleNavigateToHome}><img src={Home} alt='' /></button>
+                        : <button id={Styles.rightButton} onClick={handleNavigateToHome}><img src={Home} alt='' /></button>
                     }
                 </div>
         }
     }
 
-    return <div className="header" id="myHeader">
+    return <div id={Styles.header}>
         {pathname === '/'
             ? null
-            : <button id='headerLeftButton' onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
+            : <button id={Styles.leftButton} onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
         }
-        <p id='headerTitle'>{state?.title}</p>
+        <p id={Styles.title}>{state?.title}</p>
         {renderRightButton()}
     </div>
 }

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import GoldCheckmark from '../icons/goldCheckmark.svg'
 import Checkmark from '../icons/checkmark.svg'
 
-import Styles from './styles/Checkbox.module.css';
+import Styles from './styles/Checkbox.module.css'
 
 const Checkbox = ({onClick, checked, isGold}) => {   
     

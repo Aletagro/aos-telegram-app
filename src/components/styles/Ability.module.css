@@ -19,16 +19,14 @@
   border-radius: 6px 6px 0px 0px;
 }
 
-.headerText {
+#headerText {
   color: white;
-  font-family: 'Minion Pro Bold';
   font-size: 18px;
   margin: 6px 0px;
 }
 
-.cpCost {
+#cpCost {
   color: white;
-  font-family: 'Minion Pro Bold';
   font-size: 18px;
   margin: 6px 0px;
   width: 38px;
@@ -54,27 +52,19 @@
   padding: 0px 8px;
 }
 
-#abilityText {
+#text {
   white-space: pre-line;
   margin: 8px 0px;
   font-size: 16px;
 }
 
-#textItalic {
-  white-space: pre-line;
-  font-style: italic;
-}
-
-#boldText {
-  font-family: 'Minion Pro Bold';
-}
-
-#abilityName {
+#name {
   margin-top: 16px;
   margin-bottom: 8px;
   font-size: 16px;
 }
 
-#abilityKeywordsContainer {
+#keywordsContainer {
+  display: flex;
   padding-bottom: 8px;
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import Constants from '../Constants'
 import {replaceAsterisks} from '../utilities/utils'
-import './styles/Ability.css'
+
+import Styles from './styles/Ability.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -21,25 +22,25 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
 
     const renderKeyword = (keyword, index) => <p key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}&nbsp;</p>
 
-    return <button id='ability' onClick={handlleClick} style={{border: `1px solid ${borderColor}`}}>
-        <div id='header' style={{background: borderColor}}>
-            <p className='headerText'>{ability.phaseDetails}</p>
-            {ability.cpCost && !isRegimentOfRenown ? <p className='cpCost'>{`${ability.cpCost} CP`}</p> : null}
+    return <button id={Styles.ability} onClick={handlleClick} style={{border: `1px solid ${borderColor}`}}>
+        <div id={Styles.header} style={{background: borderColor}}>
+            <b id={Styles.headerText}>{ability.phaseDetails}</b>
+            {ability.cpCost && !isRegimentOfRenown ? <b id={Styles.cpCost}>{`${ability.cpCost} CP`}</b> : null}
             {/* У абилок, которые привязаны к Regiment Of Renown сложность каста приходит в cpCost */}
             {ability.castingValue || (isRegimentOfRenown && ability.cpCost)
-                ? <div id='castingValueContainer'>
-                    <p id='castingValue'>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p>
+                ? <div id={Styles.castingValueContainer}>
+                    <p id={Styles.castingValue}>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p>
                 </div>
                 : null
             }
         </div>
-        <div id='container'>
-            <h4 id='abilityName'>{ability.name}</h4>
-            {ability.declare ? <p id='abilityText'><b>Declare:</b> {replaceAsterisks(ability.declare)}</p> : null}
-            <p id='abilityText'><b>Effect:</b> {replaceAsterisks(ability.effect)}</p>
+        <div id={Styles.container}>
+            <h4 id={Styles.name}>{ability.name}</h4>
+            {ability.declare ? <p id={Styles.text}><b>Declare:</b> {replaceAsterisks(ability.declare)}</p> : null}
+            <p id={Styles.text}><b>Effect:</b> {replaceAsterisks(ability.effect)}</p>
             {keywordsLength
-                ? <div id='abilityKeywordsContainer' className='keywordsContainer'>
-                    <p id='boldText'>Keywords:&nbsp;</p>
+                ? <div id={Styles.keywordsContainer}>
+                    <b>Keywords:&nbsp;</b>
                     {keywords.map(renderKeyword)}
                 </div>
                 : null

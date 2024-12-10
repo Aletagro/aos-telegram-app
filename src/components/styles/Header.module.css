@@ -1,4 +1,4 @@
-.header {
+#header {
   position: sticky;
   top: 0;
   padding: 8px 8px;
@@ -9,7 +9,7 @@
   height: 40px;
   z-index: 2;
 }
-#headerTitle {
+#title {
   color: white;
   margin: 0px;
   font-family: 'Minion Pro Bold';
@@ -19,7 +19,7 @@
   overflow: hidden;
   display: block;
 }
-#headerLeftButton {
+#leftButton {
   background: darkred;
   color: white;
   font-size: 14px;
@@ -29,7 +29,7 @@
   top: 3px;
   position: relative;
 }
-#headerRightButton {
+#rightButton {
   background: darkred;
   color: white;
   font-size: 14px;
@@ -39,6 +39,6 @@
   top: 3px;
   position: relative;
 }
-#headerRightButtons {
+#rightButtons {
   display: flex;
 }
