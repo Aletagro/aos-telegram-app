@@ -99,12 +99,11 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
 
     return <div id='unitRowContainer'>
         <div className='unitRow'>
-            {unit?.rowImage ?<RowImage src={unit?.rowImage} alt={unit.name} /> : null}
             <button id='addUnitButton' onClick={handleClick}>
+                {unit?.rowImage ?<RowImage src={unit?.rowImage} alt={unit.name} /> : null}
                 <div id='addUnitButtonSubContainer'>
                     {isGeneral ? <img id='generalIcon' src={DarkGeneral} alt=''/> : null}
-                    {unit.modelCount > 1 ? <p id='unitName'>{unit.modelCount * (unit.isReinforced ? 2 : 1)}&#160;</p> : null}
-                    <p id='unitName'>{unit.name}</p>
+                    <p id='unitName'>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>
                 </div>
                 <p id='price'>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
             </button>

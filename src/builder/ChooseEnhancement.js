@@ -2,6 +2,7 @@ import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import Ability from '../components/Ability'
+import RowImage from '../components/RowImage'
 import './styles/ChooseEnhancement.css'
 
 const dataBase = require('../dataBase.json')
@@ -77,7 +78,10 @@ const ChooseEnhancement = () => {
 
     const renderEnhancement = (enhancement) => <Ability key={enhancement.id} ability={enhancement} onClick={isRosterInfo ? undefined : handleClickEnhancement} />
 
-    const renderManifestation = (manifestation) => <p key={manifestation.id} id='chooseManifestation'>{manifestation.name}</p>
+    const renderManifestation = (manifestation) => <div key={manifestation.id} id='chooseManifestation'>
+        <RowImage src={manifestation.rowImage} alt={manifestation.name} />
+        <b>{manifestation.name}</b>
+    </div>
 
     const renderBlock = (block) => <button key={block.id} id='chooseBlock' onClick={handleClickBlock(block)}>
         <p id='chooseBlockTitle'>{block.name}</p>
