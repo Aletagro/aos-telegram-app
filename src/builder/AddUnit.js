@@ -59,8 +59,8 @@ const AddUnit = () => {
     } else if (heroId) {
         // определяем опция реджимента героя
         const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId}) => warscrollId === heroId)
-        const regimentOptionsAny = regimentOptions.filter(option => !option.requiredWarscrollId)
-        const regimentOptionsOne = regimentOptions.filter(option => option.requiredWarscrollId)
+        const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any')
+        const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || option.childQuantity === 'zeroToOne')
         // находим кейворды обязательных опций
         const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.filter(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
         const requiredKeywords = optionRequiredKeywords.map(keywords => keywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId)))
@@ -78,14 +78,31 @@ const AddUnit = () => {
         // ищем юнитов из опций с обязательным юнитом
         if (regimentOptionsOne.length > 0) {
             const unitsInRegimentIds = roster.regiments[regimentId].units.map(unit => unit.id)
-            const zeroToOneUnits  = regimentOptionsOne.map(
-                option => dataBase.data.warscroll.find(
-                    warscroll => warscroll.id === option.requiredWarscrollId && !unitsInRegimentIds.find(id => id === warscroll.id)
-                )
-            ).filter(Boolean)
-            if (zeroToOneUnits.length) {
-                units = [...units, ...zeroToOneUnits]
-            }
+            const onlyOneIds = roster.regiments[regimentId].units.map(unit => unit.onlyOne).filter(Boolean)
+            regimentOptionsOne.forEach(option => {
+                if (!onlyOneIds.find(id => id === option.id)) {
+                    let warscroll = {}
+                    if (option.requiredWarscrollId) {
+                        warscroll = dataBase.data.warscroll.find(warscroll => warscroll.id === option.requiredWarscrollId && !unitsInRegimentIds.find(id => id === warscroll.id))
+                        if (warscroll) {
+                            units.push({...warscroll, onlyOne: true})
+                        }
+                    } else {
+                        const keywordId = dataBase.data.warscroll_regiment_option_required_keyword.find(keyword => keyword.warscrollRegimentOptionId === option.id)?.keywordId
+                        const warscrollIds =  dataBase.data.warscroll_keyword.filter(warscrollKeyword => warscrollKeyword.keywordId === keywordId)
+                        const warscrolls = warscrollIds.map(({warscrollId}) => {
+                            const _warscroll = dataBase.data.warscroll.find(warscroll => warscroll.id === warscrollId && !unitsInRegimentIds.find(id => id === warscroll.id))
+                            if (_warscroll) {
+                                return {..._warscroll, onlyOne: option.id}
+                            }
+                            return null
+                        }).filter(Boolean)
+                        if (warscrolls.length) {
+                            units = [...units, ...warscrolls]
+                        }
+                    }
+                }
+            })
         }
         units = [...new Set(units)]
         hasPotentialLegends = setHasPonentialLegends(units)

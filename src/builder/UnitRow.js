@@ -113,7 +113,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
                     ? <button id='unitRowButton' onClick={handleReinforced}><img src={Minus} alt="" /></button>
                     : <button id='unitRowButton' onClick={handleReinforced}><img src={Plus} alt="" /></button>
             }
-            {isAddUnit || isHero || withoutCopy || isAuxiliary
+            {isAddUnit || isHero || withoutCopy || isAuxiliary || unit.onlyOne
                 ? null
                 : <button id='unitRowButton' onClick={handleCopy}><img src={Copy} alt="" /></button>
             }
