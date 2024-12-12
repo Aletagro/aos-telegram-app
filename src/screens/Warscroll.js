@@ -68,17 +68,17 @@ const Warscroll = () => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
         const titles = ['Rng', 'Atk', 'Hit', 'Wnd', 'Rnd', 'Dmg']
         const values = [weapon.range, weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
-        return <div key={weapon.id}>
-            <div className='weaponNameContainer'>
-                <p className='weaponName'>{weapon.name}</p>
+        return <div key={weapon.id} id='weaponContainer'>
+            <div id='weaponNameContainer'>
+                <p id='weaponName'>{weapon.name}</p>
             </div>
-            <div className='weaponContainer'>
+            <div id='weaponCharacteristicsContainer'>
                 {titles.map(renderCellTitle)}
             </div>
-            <div className='weaponContainer'>
+            <div id='weaponCharacteristicsContainer'>
                 {values.map(renderCellValue)}
             </div>
-            <div id='row' className='flexContainer'>
+            <div id='weaponAbilityContainer'>
                 {weaponAbilities.map(renderWeaponAbility)}
             </div>
         </div>
@@ -88,17 +88,17 @@ const Warscroll = () => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
         const titles = ['Atk', 'Hit', 'Wnd', 'Rnd', 'Dmg']
         const values = [weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
-        return <div key={weapon.id}>
-            <div className='weaponNameContainer'>
-                <p className='weaponName'>{weapon.name}</p>
+        return <div key={weapon.id} id='weaponContainer'>
+            <div id='weaponNameContainer'>
+                <p id='weaponName'>{weapon.name}</p>
             </div>
-            <div className='weaponContainer'>
+            <div id='weaponCharacteristicsContainer'>
                 {titles.map(renderCellTitle)}
             </div>
-            <div className='weaponContainer'>
+            <div id='weaponCharacteristicsContainer'>
                 {values.map(renderCellValue)}
             </div>
-            <div id='row' className='flexContainer'>
+            <div id='weaponAbilityContainer'>
                 {weaponAbilities.map(renderWeaponAbility)}
             </div>
         </div>

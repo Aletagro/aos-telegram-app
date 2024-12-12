@@ -34,7 +34,7 @@ const AddUnit = () => {
 
     const setHasPonentialLegends = (units) => {
         return units.find(unit => {
-            if (unit.notes) {
+            if (unit?.notes) {
                 return unit.notes.includes('Legends on')
             }
             return false
@@ -43,7 +43,7 @@ const AddUnit = () => {
 
     const filterPonentialLegends = (units) => {
         return units.filter(unit => {
-            if (unit.notes) {
+            if (unit?.notes) {
                 return !unit.notes.includes('Legends on')
             }
             return true
@@ -77,8 +77,15 @@ const AddUnit = () => {
         units = legalUnitsIds.map(legalUnitsId => allUnits.find(unit => unit.id === legalUnitsId))
         // ищем юнитов из опций с обязательным юнитом
         if (regimentOptionsOne.length > 0) {
-            const zeroToOneUnits  = regimentOptionsOne.map(option => dataBase.data.warscroll.find(warscroll => warscroll.id === option.requiredWarscrollId))
-            units = [...units, ...zeroToOneUnits]
+            const unitsInRegimentIds = roster.regiments[regimentId].units.map(unit => unit.id)
+            const zeroToOneUnits  = regimentOptionsOne.map(
+                option => dataBase.data.warscroll.find(
+                    warscroll => warscroll.id === option.requiredWarscrollId && !unitsInRegimentIds.find(id => id === warscroll.id)
+                )
+            ).filter(Boolean)
+            if (zeroToOneUnits.length) {
+                units = [...units, ...zeroToOneUnits]
+            }
         }
         units = [...new Set(units)]
         hasPotentialLegends = setHasPonentialLegends(units)
