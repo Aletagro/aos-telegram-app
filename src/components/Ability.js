@@ -23,9 +23,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
             onClick(ability)
         } else {
             const abilityText = `${ability.name}
-Phase: ${ability.phase}${ability.cpCost && !isRegimentOfRenown ? `\nCP Cost: ${ability.cpCost}` : ''}${castingValue ? `\nCasting Value: ${castingValue}` : ''}\n
-Declare: ${removeAsterisks(ability.declare)}\n
-Effect: ${removeAsterisks(ability.effect)}\n
+Phase: ${ability.phase}${ability.cpCost && !isRegimentOfRenown ? `\nCP Cost: ${ability.cpCost}` : ''}${castingValue ? `\nCasting Value: ${castingValue}` : ''}\n${ability.declare ? `\nDeclare: ${removeAsterisks(ability.declare)}` : ''}${ability.effect ? `\nEffect: ${removeAsterisks(ability.effect)}` : ''}
 ${keywords.length ? `Keywords: ${keywords.map((keyword) => keyword.name).join(', ')}` : ''}
 `
             navigator.clipboard.writeText(abilityText)
