@@ -219,6 +219,8 @@ export const replaceAsterisks = (string) => {
     return string
 }
 
+export const removeAsterisks = (string) => string.replace(/\*/g, '')
+
 export const replaceQuotation = (string) => string.replace('’', "'")
 
 export const randomFromInterval = (min, max) => {

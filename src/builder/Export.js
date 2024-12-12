@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
 import './styles/Export.css'
@@ -48,6 +51,7 @@ Wounds: ${getWoundsCount(roster)}
 ${roster.points}/2000 Pts
 `
         navigator.clipboard.writeText(rosterText)
+        toast.success('List Copied', Constants.toastParams)
         setIsCopy(true)
     }
 
@@ -133,6 +137,7 @@ ${roster.points}/2000 Pts
         <p>Wounds: {getWoundsCount(roster)}</p>
         {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id='note'>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
         <p>{roster.points}/2000 Pts</p>
+        <ToastContainer />
     </div>
 }
 

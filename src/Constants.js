@@ -376,7 +376,16 @@ const Constants = {
             ],
             "maxForObjectives": 6
         }
-    ]
+    ],
+    toastParams: {
+        position: 'bottom-center',
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        draggable: true,
+        theme: 'colored',
+        pauseOnHove: false
+    }
 }
 
 export default Constants

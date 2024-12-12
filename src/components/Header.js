@@ -61,7 +61,7 @@ const Header = () => {
             default:
                 return <div id={Styles.rightButtons}>
                     <button id={Styles.rightButton} onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
-                    {pathname === '/' || pathname.includes('builder')
+                    {pathname === '/' || pathname.includes('builder') || pathname === '/export'
                         ? null
                         : <button id={Styles.rightButton} onClick={handleNavigateToHome}><img src={Home} alt='' /></button>
                     }
