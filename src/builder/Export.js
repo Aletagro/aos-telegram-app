@@ -15,7 +15,7 @@ const Export = () => {
 
     const getErrorsText = (_errors) => _errors.map(getErrorText).join('\n')
 
-    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
+    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit['Ensorcelled Banners'] ? `\n• ${unit['Ensorcelled Banners']}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
     const getUnitsForExport = (units) => units.map(getUnitForExport).join('\n')
 
@@ -71,6 +71,7 @@ ${roster.points}/2000 Pts
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
         {unit.weaponOptions ? renderWeaponOptions(unit.weaponOptions) : null}
         {unit.marksOfChaos ? <p>&#8226; Mark Of Chaos: {unit.marksOfChaos}</p> : null}
+        {unit['Ensorcelled Banners'] ? <p>&#8226; Ensorcelled Banners: {unit['Ensorcelled Banners']}</p> : null}
         {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
     </div>
 

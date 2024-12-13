@@ -1,39 +1,25 @@
 import React, {useState} from 'react'
-import {useLocation} from 'react-router-dom'
-import Constants from '../Constants'
-import Weapon from './Weapon'
+import {getCalcUnit} from '../utilities/utils'
+import {calc} from '../utilities/appState'
+import CalcUnit from './CalcUnit'
 import DamageTable from './DamageTable'
 import Target from './Target'
 
-import './styles/Calculator.css'
+import Styles from './styles/Calculator.module.css'
 
 const Calculator = () => {
-    const {weapons} = useLocation().state
-    const [_weapons, setWeapons] = useState(weapons || [{critOn: Constants.critOn[2]}])
     const [target, setTarget] = useState({})
     const [updateCount, setUpdateCount] = useState(0)
 
-    const handleAddWeapon = () => {
-        setWeapons([..._weapons, {critOn: Constants.critOn[2]}])
-    }
-
-    const handleChangeCharacteristics = (characteristic, value, index) => {
-        const newWeapons = [..._weapons]
-        newWeapons[index][characteristic] = value
-        setWeapons(newWeapons)
-    }
-
-    const handleChangeAbilitiy = (type, index) => {
-        const newWeapons = [..._weapons]
-        newWeapons[index][type] = !newWeapons[index][type]
-        setWeapons(newWeapons)
-    }
-
-    const handleDeleteWeapon = (index) => {
-        const newWeapons = [..._weapons]
-        newWeapons.splice(index, 1)
-        setWeapons(newWeapons)
+    const handleUpdate = () => {
         setUpdateCount(updateCount + 1)
+    }
+
+    const handleAddUnit = () => {
+        const newUnits = [...calc.units]
+        newUnits.push(getCalcUnit())
+        calc.units = newUnits
+        handleUpdate()
     }
 
     const handleChangeTarget = (type, value) => {
@@ -46,20 +32,26 @@ const Calculator = () => {
         setTarget(newTartget)
     }
 
-    const renderWeapon = (weapon, index) => <Weapon
+    const handleDeleteUnit = (index) => {
+        const newUnits = [...calc.units]
+        newUnits.splice(index, 1)
+        calc.units = newUnits
+        handleUpdate()
+    }
+
+    const renderUnit = (unit, index) => <CalcUnit
+        key={index}
         index={index}
-        weapon={weapon}
-        onChange={handleChangeCharacteristics}
-        onChangeAbilitiy={handleChangeAbilitiy}
-        onDelete={handleDeleteWeapon}
-        updateCount={updateCount}
+        unit={unit}
+        onDelete={handleDeleteUnit}
+        onUpdate={handleUpdate}
     />
 
     return  <div id='column' className='Chapter'>
-        <button id='calculatorAddWeapon' onClick={handleAddWeapon}>Add Weapon</button>
-        <DamageTable weapons={_weapons} target={target} />
-        {_weapons.map(renderWeapon)}
+        <DamageTable units={calc.units} target={target} />
         <Target target={target} onChange={handleChangeTarget} />
+        {calc.units.map(renderUnit)}
+        <button id={Styles.addWeapon} onClick={handleAddUnit}>Add Unit</button>
     </div>
 }
 

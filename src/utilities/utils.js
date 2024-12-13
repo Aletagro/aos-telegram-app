@@ -285,3 +285,22 @@ export const getInfo = (screen, allegiance) => {
         return null
     }
 }
+
+export const getCalcUnit = (unit) => {
+    if (unit) {
+        const weapons = unit.weapons.map(getCalcWeapon)
+        return {name: unit.name, weapons}
+    }
+    const _unit = {
+        name: '',
+        weapons:  [{critOn: {modificator: 1, title: '6+'}}]
+    }
+    return _unit
+}
+
+export const getCalcWeapon = (weapon) => {
+    if (weapon) {
+        return {...weapon}
+    }
+    return {critOn: {modificator: 1, title: '6+'}}
+}

@@ -1,4 +1,4 @@
-#calculatorAddWeapon {
+#addWeapon {
     background: rgb(46, 46, 49);
     color: white;
     border-width: 0px;
@@ -6,5 +6,6 @@
     padding: 12px;
     margin-bottom: 12px;
     font-size: 18px;
+    line-height: 24px;
     font-family: 'Minion Pro Bold';
 }

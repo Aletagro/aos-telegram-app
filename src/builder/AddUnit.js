@@ -83,15 +83,19 @@ const AddUnit = () => {
                 if (!onlyOneIds.find(id => id === option.id)) {
                     let warscroll = {}
                     if (option.requiredWarscrollId) {
-                        warscroll = dataBase.data.warscroll.find(warscroll => warscroll.id === option.requiredWarscrollId && !unitsInRegimentIds.find(id => id === warscroll.id))
+                        warscroll = allUnits.find(warscroll => warscroll.id === option.requiredWarscrollId && !unitsInRegimentIds.find(id => id === warscroll.id))
                         if (warscroll) {
                             units.push({...warscroll, onlyOne: true})
                         }
                     } else {
-                        const keywordId = dataBase.data.warscroll_regiment_option_required_keyword.find(keyword => keyword.warscrollRegimentOptionId === option.id)?.keywordId
-                        const warscrollIds =  dataBase.data.warscroll_keyword.filter(warscrollKeyword => warscrollKeyword.keywordId === keywordId)
+                        // находим кейворды обязательных опций
+                        const requiredKeywordId = dataBase.data.warscroll_regiment_option_required_keyword.find(keyword => keyword.warscrollRegimentOptionId === option.id)?.keywordId
+                        const warscrollIds =  dataBase.data.warscroll_keyword.filter(warscrollKeyword => warscrollKeyword.keywordId === requiredKeywordId)
+                        // находим кейворды исключающих опций
+                        const excludedKeywordId = dataBase.data.warscroll_regiment_option_excluded_keyword.find(keyword => keyword.warscrollRegimentOptionId === option.id)?.keywordId
+                        const excludedKeyword =  dataBase.data.keyword.find(keyword => keyword.id === excludedKeywordId)?.name
                         const warscrolls = warscrollIds.map(({warscrollId}) => {
-                            const _warscroll = dataBase.data.warscroll.find(warscroll => warscroll.id === warscrollId && !unitsInRegimentIds.find(id => id === warscroll.id))
+                            const _warscroll = allUnits.find(warscroll => warscroll.id === warscrollId && !unitsInRegimentIds.find(id => id === warscroll.id) && !warscroll.referenceKeywords.includes(excludedKeyword))
                             if (_warscroll) {
                                 return {..._warscroll, onlyOne: option.id}
                             }

@@ -1,55 +1,100 @@
-#calculatorWeaponContainer {
-    background-color: rgb(236, 236, 236);
+#container {
     margin-bottom: 12px;
-    padding: 8px;
-    border-radius: 4px;
+    padding: 0px 16px;
 }
 
-#calculatorWeaponAbilitiesContainer {
+#nameContainer {
     display: flex;
+    justify-content: space-between;
+    background: #525252;
+    padding: 12px 16px;
+    border-radius: 4px;
     align-items: center;
-    padding-top: 12px;
+    margin-bottom: 16px;
 }
 
-#calculatorCharacteristicsContainer {
-    display: flex;
+#name {
+    color: white;
+    font-size: 18px;
+    line-height: 24px;
 }
 
-#calculatorWeaponAbilities {
-    background: rgb(245, 201, 80);
+#deleteButton {
+    background: #525252;
     border-width: 0px;
-    border-radius: 4px;
-    margin-right: 8px;
-    padding: 6px;
-    flex: 1;
-    font-size: 16px;
+    position: relative;
+    top: 3px;
 }
 
-#calculatorWeaponCheckedAbilities {
+#inputsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+#abilities {
+    background: #ECECEC;
+    border-width: 0px;
+    border-radius: 24px;
+    margin-right: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    height: 32px;
+}
+
+#checkedAbilities {
     background: rgb(46, 46, 49);
     color: white;
     border-width: 0px;
-    border-radius: 4px;
+    border-radius: 24px;
     margin-right: 8px;
-    padding: 6px;
-    flex: 1;
+    padding: 8px 16px;
     font-size: 16px;
+    height: 32px;
 }
 
-#calculatorInputTitle {
-    margin: 0px;
-    margin-right: 8px;
+#characteristicsContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 16px
+}
+
+#title {
     margin-bottom: 4px;
-    margin-top: 4px;
-    flex: 1;
     font-size: 18px;
 }
 
-#calculatorInputsContainer {
-    display: flex;
-    padding: 12px 0px;
-    justify-content: space-between;
+#checkedCharacteristic {
+    background: rgb(46, 46, 49);
+    color: white;
+    border-width: 0px;
+    padding: 12px;
+    font-size: 18px;
+    line-height: 24px;
+    flex: 1;
+    border-radius: 4px;
 }
+
+#characteristic {
+    background: #ECECEC;
+    border-width: 0px;
+    padding: 12px;
+    font-size: 18px;
+    line-height: 24px;
+    flex: 1;
+    border-radius: 4px;
+}
+
+#abilitiesContainer {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    padding-bottom: 12px
+}
+
+
 
 #calculatorInputContainer {
     display: flex;
@@ -76,14 +121,6 @@
     border-width: 0px;
     border-radius: 4px;
 }
-
-#weaponDeleteButton {
-    border-width: 0px;
-    padding: 4px;
-    margin-left: 8px;
-    position: relative;
-    top: 3px;
-  }
 
 #weaponCustomDamageInput {
     height: 24px;

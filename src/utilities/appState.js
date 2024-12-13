@@ -48,3 +48,7 @@ export const singlePlayer = {
     gameOver: false,
     underdog: 0
 }
+
+export const calc = {
+    units: [{...Constants.newCalcUnit}]
+}

@@ -1,12 +1,13 @@
 import React from 'react';
-import './styles/Weapon.css'
 
-const wards = [3, 4, 5, 6, 0]
+import Styles from './styles/Target.module.css'
+
+const wards = [4, 5, 6]
 
 const Target = ({target, onChange}) => {
 
     const handleChangeSave = (value) => () => {
-        onChange('ward', value)
+        onChange('ward', target.ward === value ? '' : value)
     }
 
     const handleClickIsEthereal = () => {
@@ -16,26 +17,16 @@ const Target = ({target, onChange}) => {
     const renderButton = (value) => <button
         key={value}
         onClick={handleChangeSave(value)}
-        id={target.ward === value ? 'calculatorWeaponCheckedAbilities' : 'calculatorWeaponAbilities'}
+        id={target.ward === value ? Styles.checkedAbilities : Styles.abilities}
     >
-        {value || 'No Ward'}
+        {value}
     </button>
 
-    const renderWard = () => <div>
-        <p id='calculatorInputTitle'>Ward</p>
-        <div id='calculatorCharacteristicsContainer'>
+    return  <div id={Styles.container}>
+        <b id={Styles.title}>Target Ward</b>
+        <div id={Styles.characteristicsContainer}>
             {wards.map(renderButton)}
-        </div>
-    </div>
-
-    return  <div id='calculatorWeaponContainer'>
-        <p id='calculatorTargetTitle'>Target</p>
-        {renderWard()}
-        <div id='calculatorWeaponAbilitiesContainer'>
-            <button
-                onClick={handleClickIsEthereal}
-                id={target.isEthereal ? 'calculatorWeaponCheckedAbilities' : 'calculatorWeaponAbilities'}
-            >
+            <button onClick={handleClickIsEthereal} id={target.isEthereal ? Styles.checkedAbilities : Styles.abilities} style={{flex: 2}}>
                 is Ethereal
             </button>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
+import {calc} from '../utilities/appState'
 import {getValue, replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
 import HeaderImage from '../components/HeaderImage'
@@ -55,6 +56,7 @@ const Warscroll = () => {
             doubleHit: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (2 Hits)'),
             critOn: Constants.critOn[2]
         }))
+        calc.units = [{name: unit.name, weapons: weaponsForCalculator}]
         navigate('calculator', {state: {weapons: weaponsForCalculator, title: 'Damage Calculator'}})
     }
 

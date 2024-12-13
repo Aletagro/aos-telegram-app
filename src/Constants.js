@@ -165,10 +165,6 @@ const Constants = {
     ],
     calculatorAbilities: [
         {
-            name: 'Champion',
-            type: 'champion'
-        },
-        {
             name: 'Crit (2 Hits)',
             type: 'doubleHit'
         },
@@ -200,7 +196,7 @@ const Constants = {
         {
             name: 'Damage',
             type: 'damage',
-            values: [1, 2, 3, 4, 5],
+            values: [1, 2, 3, 4],
             hasCustom: true
         }
     ],
@@ -222,9 +218,9 @@ const Constants = {
         {value: 6, title: '6+'}
     ],
     critOn: [
-        {modificator: 3, title: '4+'},
-        {modificator: 2, title: '5+'},
-        {modificator: 1, title: '6+'}
+        {modificator: 3, title: 'Crit on 4+'},
+        {modificator: 2, title: 'Crit on 5+'},
+        {modificator: 1, title: 'Crit on 6+'}
     ],
     battleplansRuleSectionId: '97befff2-c7fa-4ee2-aa73-1e7fe2e8d8cd',
     tacticsIds: {
@@ -385,6 +381,10 @@ const Constants = {
         draggable: true,
         theme: 'colored',
         pauseOnHove: false
+    },
+    newCalcUnit: {
+        name: '',
+        weapons:  [{critOn: {modificator: 1, title: '6+'}}]
     }
 }
 

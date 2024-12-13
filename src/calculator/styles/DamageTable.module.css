@@ -1,4 +1,7 @@
-#damageTableText {
+#container {
+    padding-bottom: 12px;
+}
+#text {
     margin: 0px;
     padding: 4px 0px;
     font-size: 16px;
