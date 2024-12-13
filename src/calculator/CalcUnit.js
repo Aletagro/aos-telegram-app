@@ -23,7 +23,7 @@ const inputStyle = {
 const accordionStyle = {
     borderRadius: 'md',
     [`& .${accordionSummaryClasses.button}:hover`]: {
-        bgcolor: 'transparent'
+        bgcolor: '#2E2D32'
     }
   }
 
