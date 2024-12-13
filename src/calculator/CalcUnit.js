@@ -23,8 +23,14 @@ const inputStyle = {
 const accordionStyle = {
     borderRadius: 'md',
     [`& .${accordionSummaryClasses.button}:hover`]: {
-        bgcolor: '#2E2D32'
-    }
+        'background-color': '#2E2D32'
+    },
+    '& button:not([aria-selected="true"]):active': {
+        background: '#2E2D32',
+      },
+    '& button:not([aria-selected="true"]):hover': {
+        background: '#2E2D32',
+      },
   }
 
 const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
