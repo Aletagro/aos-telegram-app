@@ -10,6 +10,7 @@ import UnitRow from './UnitRow'
 import Row from '../components/Row'
 import Add from '../icons/add.svg'
 import Info from '../icons/info.svg'
+import WhiteInfo from '../icons/whiteInfo.svg'
 
 import './styles/Builder.css'
 
@@ -237,7 +238,10 @@ const Builder = () => {
             <p id='builderText'>Allegiance: <b>{roster.allegiance}</b></p>
             <p>Wounds: {getWoundsCount(roster)}</p>
         </button>
-        <button onClick={handleOpenModal} id='builderTitle'>Army: {roster.points}/{roster.pointsLimit} Points</button>
+        <button onClick={handleOpenModal} id='pointsContainer'>
+            <p id='pointsTitle'>Army: {roster.points}/{roster.pointsLimit} Points</p>
+            <img id='pointsTitleInfoIcon' src={WhiteInfo} alt="" />
+        </button>
         {battleFormations.length
             ? <button id={roster.battleFormation ? 'builderSecondAddButton' : 'builderAddButton'} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
                 {roster.battleFormation

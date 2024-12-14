@@ -119,3 +119,25 @@
   border-radius: 4px;
   padding: 8px 16px;
 }
+
+#pointsContainer {
+  background: rgb(46, 46, 49);
+  border-radius: 4px;
+  padding: 16px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#pointsTitle {
+  font-size: 18px;
+  line-height: 24px;
+  color: white;
+  text-align: start;
+}
+
+#pointsTitleInfoIcon {
+  background: transparent;
+  border-width: 0px;
+  padding: 0px;
+}

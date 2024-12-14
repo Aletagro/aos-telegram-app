@@ -70,7 +70,7 @@ export const getErrors = (roster) => {
                 ensorcelledBannersCount += 1
             }
             if (unit.points * 2 > roster.pointsLimit) {
-                errors.push(`${unit.name} is cost more than half the army`)
+                errors.push(`${unit.name} cost more than half the army`)
             }
         })
     })
