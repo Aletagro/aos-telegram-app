@@ -1,10 +1,17 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
+import Accordion from '@mui/joy/Accordion'
+import AccordionDetails from '@mui/joy/AccordionDetails'
+import AccordionSummary from '@mui/joy/AccordionSummary'
 import {roster, builderFilters} from '../utilities/appState'
+import Constants from '../Constants'
 import {unitsSortesByType, sortByName} from '../utilities/utils'
 import UnitRow from './UnitRow'
 import Checkbox from '../components/Checkbox'
-import './styles/AddUnit.css'
+
+import uniqBy from 'lodash/uniqBy'
+
+import Styles from './styles/AddUnit.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -57,26 +64,39 @@ const AddUnit = () => {
         units = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && !unit?.referenceKeywords?.includes('Manifestation') && !unit?.referenceKeywords?.includes('Terrain'))
         units = unitsSortesByType(units)
     } else if (heroId) {
-        // определяем опция реджимента героя
-        const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId}) => warscrollId === heroId)
-        const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any')
-        const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || option.childQuantity === 'zeroToOne')
-        // находим кейворды обязательных опций
-        const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.filter(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
-        const requiredKeywords = optionRequiredKeywords.map(keywords => keywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId)))
-        // находим кейворды исключающих опций
-        const optionExcludedKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_excluded_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
-        const excludedKeywords = optionExcludedKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
         // определяем всех юнитов фракции
         const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && !unit?.referenceKeywords?.includes('Manifestation') && !unit?.referenceKeywords?.includes('Terrain'))
         // определяем кейворды всех юнитов фракции
         const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
-        // ищем нужных нам юнитов
-        const legalUnits = allUnitsKeywordsIds.filter(unitKeywordsIds => hasKeyword(unitKeywordsIds, requiredKeywords, excludedKeywords))
-        const legalUnitsIds = legalUnits.map(unit => unit[0].warscrollId)
-        units = legalUnitsIds.map(legalUnitsId => allUnits.find(unit => unit.id === legalUnitsId))
+        // определяем опция реджимента героя
+        const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId}) => warscrollId === heroId)
+        const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any' && !option.requiredWarscrollId)
+        const regimentOptionsAnyWithRequiredWarscroll = regimentOptions.filter(option => option.childQuantity === 'any' && option.requiredWarscrollId)
+        const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || option.childQuantity === 'zeroToOne')
+        // ищем юнитов из опций с любым количеством
+        if (regimentOptionsAny.length) {
+            // находим кейворды обязательных опций
+            const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.filter(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
+            const requiredKeywords = optionRequiredKeywords.map(keywords => keywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId)))
+            // находим кейворды исключающих опций
+            const optionExcludedKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_excluded_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
+            const excludedKeywords = optionExcludedKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
+            // ищем нужных нам юнитов
+            const legalUnits = allUnitsKeywordsIds.filter(unitKeywordsIds => hasKeyword(unitKeywordsIds, requiredKeywords, excludedKeywords))
+            const legalUnitsIds = legalUnits.map(unit => unit[0].warscrollId)
+            units = legalUnitsIds.map(legalUnitsId => allUnits.find(unit => unit.id === legalUnitsId))
+        }
         // ищем юнитов из опций с обязательным юнитом
-        if (regimentOptionsOne.length > 0) {
+        if (regimentOptionsAnyWithRequiredWarscroll.length) {
+            regimentOptionsAnyWithRequiredWarscroll.forEach(option => {
+                const warscroll = allUnits.find(warscroll => warscroll.id === option.requiredWarscrollId)
+                if (warscroll) {
+                    units.push(warscroll)
+                }
+            })
+        }
+        // ищем юнитов из опций с one и zeroToOne
+        if (regimentOptionsOne.length) {
             const unitsInRegimentIds = roster.regiments[regimentId].units.map(unit => unit.id)
             const onlyOneIds = roster.regiments[regimentId].units.map(unit => unit.onlyOne).filter(Boolean)
             regimentOptionsOne.forEach(option => {
@@ -108,7 +128,8 @@ const AddUnit = () => {
                 }
             })
         }
-        units = [...new Set(units)]
+        const uniqUnits = uniqBy(units, 'id')
+        units = uniqUnits
         hasPotentialLegends = setHasPonentialLegends(units)
         if (hasPotentialLegends && hidePotentialLegends) {
             units = filterPonentialLegends(units)
@@ -153,15 +174,21 @@ const AddUnit = () => {
 
     const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit/>
 
-    const renderUnitsType = (type) => <div key={type.title}>
-        <h4 id='unitType'>{type.title}</h4>
-        {type.units.map(renderRow)}
+    const renderUnitsType = (type) => <div id={Styles.typeContainer} key={type.title}>
+        <Accordion defaultExpanded={true}>
+            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
+                <h4 id={Styles.header}>{type.title}</h4>
+            </AccordionSummary>
+            <AccordionDetails>
+                {type.units.map(renderRow)}
+            </AccordionDetails>
+        </Accordion>
     </div>
 
     return <div id='column' className='Chapter'>
         {hasPotentialLegends
-            ? <div id='potentialLegendsContainer' onClick={handleChangeHidePotentialLegends}>
-                <p id='potentialLegends'>Hide Potential Legends</p>
+            ? <div id={Styles.potentialLegendsContainer} onClick={handleChangeHidePotentialLegends}>
+                <p id={Styles.potentialLegends}>Hide Potential Legends</p>
                 <Checkbox onClick={handleChangeHidePotentialLegends} checked={hidePotentialLegends} />
             </div>
             : null

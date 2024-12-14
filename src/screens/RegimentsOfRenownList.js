@@ -1,9 +1,14 @@
-import React from 'react';
+import React from 'react'
+import Accordion from '@mui/joy/Accordion'
+import AccordionDetails from '@mui/joy/AccordionDetails'
+import AccordionSummary from '@mui/joy/AccordionSummary'
 import Constants from '../Constants'
 import {sortByName, regimentSortesByGrandAlliances} from '../utilities/utils'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import './styles/Catalog.css'
+
+import Styles from './styles/RegimentsOfRenownList.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -23,9 +28,15 @@ const RegimentsOfRenownList = () => {
         state={{regiment}}
     />
 
-    const renderRegimentAlliance = (alliance) => <div id='unitTypeContainer' key={alliance.title}>
-        <h4 id='unitType'>{alliance.title}</h4>
-        {alliance.regiments.map(renderRow)}
+    const renderRegimentAlliance = (alliance) => <div id={Styles.typeContainer} key={alliance.title}>
+        <Accordion defaultExpanded={true}>
+            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
+                <h4 id={Styles.header}>{alliance.title}</h4>
+            </AccordionSummary>
+            <AccordionDetails>
+                {alliance.regiments.map(renderRow)}
+            </AccordionDetails>
+        </Accordion>
     </div>
 
     return <>

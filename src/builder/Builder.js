@@ -1,5 +1,7 @@
-import React, {useCallback, useReducer} from 'react';
+import React, {useCallback, useReducer, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
+import Modal from '@mui/joy/Modal'
+import ModalDialog from '@mui/joy/ModalDialog'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {getWoundsCount, getInfo} from '../utilities/utils'
@@ -15,6 +17,7 @@ const dataBase = require('../dataBase.json')
 
 const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
 const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
+const pointsLimits = ['1000', '1500', '2000', '2500', '3000']
 
 const emptyRegiment = {
     units: [],
@@ -26,6 +29,7 @@ const emptyRegiment = {
 
 const Builder = () => {
     const {allegiance, alliganceId} = useLocation().state
+    const [open, setOpen] = useState(false)
     const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
     // eslint-disable-next-line
@@ -145,6 +149,15 @@ const Builder = () => {
         navigate('armyInfo', {state: {title: Constants.armyEnhancements[0].title, info, allegiance: {name: roster.allegiance}}})
     }
 
+    const handleOpenModal = () => {setOpen(true)}
+
+    const handleCloseModal = () => {setOpen(false)}
+
+    const handleClickPointsLimitButton = (limit) => () => {
+        roster.pointsLimit = limit
+        handleCloseModal()
+    }
+
     const renderRegiment = (regiment, index) => <Regiment
         key={index}
         regiment={regiment}
@@ -207,6 +220,13 @@ const Builder = () => {
                 : <button id='builderInfoIcon' onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
             }
         </div>
+        
+    const renderPointsLimitButton = (limit) => <button id='pointsLimitButton' onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
+
+    const renderModalContent = () => <>
+        <b id='pointsLimitTitle'>Points Limit</b>
+        {pointsLimits.map(renderPointsLimitButton)}
+    </>
 
     return <div id='column' className='Chapter'>
         <button id='mainInfoContainer' onClick={handleClickAllegiance}>
@@ -217,7 +237,7 @@ const Builder = () => {
             <p id='builderText'>Allegiance: <b>{roster.allegiance}</b></p>
             <p>Wounds: {getWoundsCount(roster)}</p>
         </button>
-        <p id='builderTitle'>Army: {roster.points}/2000 Points</p>
+        <button onClick={handleOpenModal} id='builderTitle'>Army: {roster.points}/{roster.pointsLimit} Points</button>
         {battleFormations.length
             ? <button id={roster.battleFormation ? 'builderSecondAddButton' : 'builderAddButton'} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
                 {roster.battleFormation
@@ -260,6 +280,11 @@ const Builder = () => {
         {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}
         {roster.manifestationsList?.map(renderManifestation)}
         {factionTerrains.length > 0 ? renderEnhancement('Faction Terrain', 'factionTerrain', factionTerrains) : null}
+        <Modal open={open} onClose={handleCloseModal}>
+            <ModalDialog layout="center">
+                {renderModalContent()}
+            </ModalDialog>
+        </Modal>
     </div>
 }
 

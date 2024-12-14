@@ -37,8 +37,8 @@ export const getErrors = (roster) => {
     if (!roster) {
         return errors
     }
-    if (roster.points > 2000) {
-        errors.push('You use more than 2000 points')
+    if (roster.points > roster.pointsLimit) {
+        errors.push(`You use more than ${roster.pointsLimit} points`)
     }
     if (!roster.battleFormation  && !roster.withoutBattleFormation) {
         errors.push('Choose Battle Formation')

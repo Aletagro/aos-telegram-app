@@ -23,6 +23,7 @@ export const roster = {
     manifestationLore: '',
     manifestationsList: [],
     factionTerrain: '',
+    pointsLimit: 2000,
     points: 0
 }
 

@@ -87,8 +87,9 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     </button>
 
     const renderAdditionalOption = (option) => <button id='chooseEnhancementButton' onClick={handleChooseAdditionalOption(option)}>
-        {unit.additionalOption
-            ? `${option.name}: ${unit.additionalOption}`
+        {console.log(option, unit)}
+        {unit[option.name]
+            ? `${option.name}: ${unit[option.name]}`
             : `${option.name}`
         }
     </button>

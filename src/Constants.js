@@ -1,3 +1,5 @@
+import {accordionSummaryClasses} from '@mui/joy/AccordionSummary'
+
 const Constants = {
     grandAlliances: [
         {
@@ -385,6 +387,18 @@ const Constants = {
     newCalcUnit: {
         name: '',
         weapons:  [{critOn: {modificator: 1, title: '6+'}}]
+    },
+    accordionStyle: {
+        borderRadius: 'md',
+        [`& .${accordionSummaryClasses.button}:hover`]: {
+            'background-color': '#2E2D32'
+        },
+        '& button:not([aria-selected="true"]):active': {
+            background: '#2E2D32',
+        },
+        '& button:not([aria-selected="true"]):hover': {
+            background: '#2E2D32',
+        }
     }
 }
 

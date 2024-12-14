@@ -6,6 +6,8 @@ import {roster} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
 import './styles/Export.css'
 
+const additionalOptions = ['Ensorcelled Banners', 'First Circle Titles']
+
 const Export = () => {
     const [isCopy, setIsCopy] = useState(false)
     const errors = getErrors(roster)
@@ -48,7 +50,7 @@ ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
 Wounds: ${getWoundsCount(roster)}
-${roster.points}/2000 Pts
+${roster.points}/${roster.pointsLimit} Pts
 `
         navigator.clipboard.writeText(rosterText)
         toast.success('List Copied', Constants.toastParams)
@@ -65,13 +67,17 @@ ${roster.points}/2000 Pts
 
     const renderWeaponOptions = (weaponOptions) => Object.entries(weaponOptions).map(renderWeaponOption)
 
+    const renderAdditionalOption = (unit) => (additionalOption) =>
+        unit[additionalOption] ? <p>&#8226; {additionalOption}: {unit[additionalOption]}</p> : null
+
     const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
+        {console.log(unit)}
         <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost || 0} points)</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
         {unit.weaponOptions ? renderWeaponOptions(unit.weaponOptions) : null}
         {unit.marksOfChaos ? <p>&#8226; Mark Of Chaos: {unit.marksOfChaos}</p> : null}
-        {unit['Ensorcelled Banners'] ? <p>&#8226; Ensorcelled Banners: {unit['Ensorcelled Banners']}</p> : null}
+        {additionalOptions.map(renderAdditionalOption(unit))}
         {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
     </div>
 
@@ -137,7 +143,7 @@ ${roster.points}/2000 Pts
         }
         <p>Wounds: {getWoundsCount(roster)}</p>
         {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id='note'>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
-        <p>{roster.points}/2000 Pts</p>
+        <p>{roster.points}/{roster.pointsLimit} Pts</p>
         <ToastContainer />
     </div>
 }

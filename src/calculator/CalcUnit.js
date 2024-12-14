@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import Delete from '../icons/delete.svg'
 import WhiteCopy from '../icons/whiteCopy.svg'
-import Accordion from '@mui/joy/Accordion';
-import AccordionDetails from '@mui/joy/AccordionDetails';
-import AccordionSummary, {accordionSummaryClasses,} from '@mui/joy/AccordionSummary';
+import Accordion from '@mui/joy/Accordion'
+import AccordionDetails from '@mui/joy/AccordionDetails'
+import AccordionSummary from '@mui/joy/AccordionSummary'
+import Constants from '../Constants'
 import {calc} from '../utilities/appState'
 import {getCalcWeapon, getCalcUnit} from '../utilities/utils'
 import Weapon from './Weapon'
@@ -19,19 +20,6 @@ const inputStyle = {
     'box-shadow': 'none',
     'font-family': 'Minion Pro Regular'
 }
-
-const accordionStyle = {
-    borderRadius: 'md',
-    [`& .${accordionSummaryClasses.button}:hover`]: {
-        'background-color': '#2E2D32'
-    },
-    '& button:not([aria-selected="true"]):active': {
-        background: '#2E2D32',
-      },
-    '& button:not([aria-selected="true"]):hover': {
-        background: '#2E2D32',
-      },
-  }
 
 const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
     const [name, setName] = useState(unit.name || '')
@@ -97,8 +85,8 @@ const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
     return  <div id={Styles.container}>
         <button id={Styles.headerCopyIcon} onClick={handleCopy}><img src={WhiteCopy} alt="" /></button>
         <button id={Styles.headerDeleteIcon} onClick={handleDelete}><img src={Delete} alt="" /></button>
-        <Accordion>
-            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (accordionStyle)}>
+        <Accordion defaultExpanded={true}>
+            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
                 <b id={Styles.header}>{unit.name || `Unit ${index + 1}`}</b>
             </AccordionSummary>
             <AccordionDetails>
