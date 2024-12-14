@@ -69,6 +69,9 @@ export const getErrors = (roster) => {
             if (unit['Ensorcelled Banners']) {
                 ensorcelledBannersCount += 1
             }
+            if (unit.points * 2 > roster.pointsLimit) {
+                errors.push(`${unit.name} is cost more than half the army`)
+            }
         })
     })
     if (heroicTraitsCount > 1) {
