@@ -13,7 +13,7 @@ import './styles/UnitRow.css'
 
 const dataBase = require('../dataBase.json')
 
-const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary, isGeneral}) => {
+const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId}) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
     const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
@@ -22,7 +22,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     const otherWarscrollOption = optionGroups.find(group => group.optionGroupType === 'otherWarscrollOption')
     let additionalOption = dataBase.data.ability_group_required_warscroll.find(group => group.warscrollId === unit.id)?.abilityGroupId
     if (additionalOption) {
-        additionalOption = dataBase.data.ability_group.find(group => group.id === additionalOption)
+        additionalOption = dataBase.data.ability_group.find(group => group.id === additionalOption && group.factionId === alliganceId)
     }
     const weaponOptions = optionGroups.filter(group => group.optionGroupType === 'weapon')
 
@@ -87,7 +87,6 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     </button>
 
     const renderAdditionalOption = (option) => <button id='chooseEnhancementButton' onClick={handleChooseAdditionalOption(option)}>
-        {console.log(option, unit)}
         {unit[option.name]
             ? `${option.name}: ${unit[option.name]}`
             : `${option.name}`

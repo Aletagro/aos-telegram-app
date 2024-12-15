@@ -179,6 +179,7 @@ const Builder = () => {
         heroicTraits={heroicTraits}
         onReinforced={handleReinforcedAuxiliary}
         isAuxiliary
+        alliganceId={_alliganceId}
     />
 
     const renderRegimentOfRenown = () => <UnitRow
@@ -186,6 +187,7 @@ const Builder = () => {
         onClick={handleClickRegimentOfRenown}
         onDelete={handleDeleteRegimentOfRenown}
         withoutCopy
+        alliganceId={_alliganceId}
     />
 
     const renderRegimentOfRenownUnit = (unit) => <Row

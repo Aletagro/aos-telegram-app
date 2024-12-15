@@ -98,6 +98,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         artefacts={artefacts}
         heroicTraits={heroicTraits}
         isGeneral={regiment.heroId && _index === 0 && roster.generalRegimentIndex === index}
+        alliganceId={alliganceId}
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
