@@ -6,7 +6,6 @@ import Constants from '../Constants'
 import {sortByName, regimentSortesByGrandAlliances} from '../utilities/utils'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
-import './styles/Catalog.css'
 
 import Styles from './styles/RegimentsOfRenownList.module.css'
 

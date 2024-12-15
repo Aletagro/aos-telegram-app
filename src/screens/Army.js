@@ -6,7 +6,7 @@ import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {replaceAsterisks, getInfo} from '../utilities/utils'
 
-import './styles/Army.css'
+import Styles from './styles/Army.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -92,7 +92,7 @@ const Army = () => {
         state={{allegiance: item, isArmyOfRenown: true, grandAlliance}}
     />
 
-    const renderRosterOptions = (option) => <p id='rosterOptionText' key={option.id}>&#8226; {replaceAsterisks(option.text)}</p>
+    const renderRosterOptions = (option) => <p id={Styles.rosterOptionText} key={option.id}>&#8226; {replaceAsterisks(option.text)}</p>
 
     return <>
         <HeaderImage src={_allegiance.rosterHeaderImage} alt={_allegiance.name} isWide />
@@ -101,14 +101,14 @@ const Army = () => {
             {renderBuilderRow()}
             {armyOfRenown.length > 0
                 ? <div>
-                    <p id='armyOfRenown'>Army of Renown</p>
+                    <p id={Styles.armyOfRenown}>Army of Renown</p>
                     {armyOfRenown.map(renderArmyOfRenown)}
                 </div>
                 : null
             }
             {isArmyOfRenown
                 ? <>
-                    <h4 id='rosterOption'>Roster Options</h4>
+                    <h4 id={Styles.rosterOption}>Roster Options</h4>
                     {rosterOptions.map(renderRosterOptions)}
                 </>
                 : null

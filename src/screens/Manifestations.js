@@ -2,7 +2,6 @@ import React from 'react';
 import Constants from '../Constants'
 import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
-import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -24,7 +23,7 @@ const Manifestations = () => {
         const units = spells.map(spell => dataBase.data.warscroll.find(warscroll => warscroll.id === spell.linkedWarscrollId))
 
         return <div key={lore.id}>
-            <h4 id='unitType'>{lore.name}</h4>
+            <h4>{lore.name}</h4>
             {units.map(renderUnit)}
         </div>
     }

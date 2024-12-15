@@ -1,9 +1,9 @@
-#rulesContainer {
+#container {
   background: white;
   padding: 8px;
 }
 
-#rulesTitle {
+#title {
   margin-bottom: 8px;
   font-size: 18px;
 }

@@ -1,4 +1,4 @@
-#armyInfoTitle {
+#title {
   background: rgb(46, 46, 49);
   color: white;
   border-radius: 4px;
@@ -6,7 +6,7 @@
   font-weight: bold;
   margin-bottom: 12px;
 }
-#armyInfoNote {
+#note {
   font-size: 18px;
   padding-bottom: 16px;
 }

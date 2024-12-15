@@ -2,7 +2,6 @@ import React from 'react';
 import Constants from '../Constants'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
-import './styles/Catalog.css'
 
 const MainRules = () => {
     const renderRow = (grandAlliance) => <Row

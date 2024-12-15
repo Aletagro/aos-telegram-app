@@ -4,7 +4,8 @@ import {sortByName, replaceAsterisks} from '../utilities/utils'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Ability from '../components/Ability'
-import './styles/RegimentOfRenown.css'
+
+import Styles from './styles/RegimentOfRenown.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -35,10 +36,10 @@ const RegimentOfRenown = () => {
     return <>
         <HeaderImage src={regiment.image} alt='Regiment Of Renown' />
         <div id='column' className='Chapter'>
-            <p id='text'>{replaceAsterisks(regiment.subsectionRulesText)}</p>
-            <h4 id='regimentOfRenownTitle'>{regiment.regimentOfRenownPointsCost} points</h4>
+            <p id={Styles.text}>{replaceAsterisks(regiment.subsectionRulesText)}</p>
+            <h4 id={Styles.title}>{regiment.regimentOfRenownPointsCost} points</h4>
             {regimentAbilities && regimentAbilities.map(renderAbility)}
-            <h4 id='regimentOfRenownTitle'>Warscrolls</h4>
+            <h4 id={Styles.title}>Warscrolls</h4>
             {warscrolls && warscrolls.map(renderWarscroll)}
         </div>
     </>

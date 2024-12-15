@@ -2,7 +2,6 @@ import React from 'react';
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
-import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
 

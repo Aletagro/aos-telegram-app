@@ -6,7 +6,8 @@ import {getValue, replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
 import HeaderImage from '../components/HeaderImage'
 import Calculator from '../icons/calculator.svg'
-import './styles/Warscroll.css'
+
+import Styles from './styles/Warscroll.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -60,27 +61,27 @@ const Warscroll = () => {
         navigate('calculator', {state: {weapons: weaponsForCalculator, title: 'Damage Calculator'}})
     }
 
-    const renderCellTitle = (cell, index) => <p key={index} id='cellTitle'>{cell}</p>
+    const renderCellTitle = (cell, index) => <p key={index} id={Styles.cellTitle}>{cell}</p>
 
-    const renderCellValue = (cell, index) => <p key={index} id='cellValue'>{cell}</p>
+    const renderCellValue = (cell, index) => <p key={index} id={Styles.cellValue}>{cell}</p>
 
-    const renderWeaponAbility = (ability) => <p key={ability.name} id='weaponAbilities'>{ability.name}</p>
+    const renderWeaponAbility = (ability) => <p key={ability.name} id={Styles.weaponAbilities}>{ability.name}</p>
 
     const renderRangeWeapon = (weapon) => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
         const titles = ['Rng', 'Atk', 'Hit', 'Wnd', 'Rnd', 'Dmg']
         const values = [weapon.range, weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
-        return <div key={weapon.id} id='weaponContainer'>
-            <div id='weaponNameContainer'>
-                <p id='weaponName'>{weapon.name}</p>
+        return <div key={weapon.id} id={Styles.weaponContainer}>
+            <div id={Styles.weaponNameContainer}>
+                <p id={Styles.weaponName}>{weapon.name}</p>
             </div>
-            <div id='weaponCharacteristicsContainer'>
+            <div id={Styles.weaponCharacteristicsContainer}>
                 {titles.map(renderCellTitle)}
             </div>
-            <div id='weaponCharacteristicsContainer'>
+            <div id={Styles.weaponCharacteristicsContainer}>
                 {values.map(renderCellValue)}
             </div>
-            <div id='weaponAbilityContainer'>
+            <div id={Styles.weaponAbilityContainer}>
                 {weaponAbilities.map(renderWeaponAbility)}
             </div>
         </div>
@@ -90,17 +91,17 @@ const Warscroll = () => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
         const titles = ['Atk', 'Hit', 'Wnd', 'Rnd', 'Dmg']
         const values = [weapon.attacks, weapon.hit, weapon.wound, weapon.rend, weapon.damage]
-        return <div key={weapon.id} id='weaponContainer'>
-            <div id='weaponNameContainer'>
-                <p id='weaponName'>{weapon.name}</p>
+        return <div key={weapon.id} id={Styles.weaponContainer}>
+            <div id={Styles.weaponNameContainer}>
+                <p id={Styles.weaponName}>{weapon.name}</p>
             </div>
-            <div id='weaponCharacteristicsContainer'>
+            <div id={Styles.weaponCharacteristicsContainer}>
                 {titles.map(renderCellTitle)}
             </div>
-            <div id='weaponCharacteristicsContainer'>
+            <div id={Styles.weaponCharacteristicsContainer}>
                 {values.map(renderCellValue)}
             </div>
-            <div id='weaponAbilityContainer'>
+            <div id={Styles.weaponAbilityContainer}>
                 {weaponAbilities.map(renderWeaponAbility)}
             </div>
         </div>
@@ -108,26 +109,26 @@ const Warscroll = () => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
 
-    const renderRegimentOption = (option) => <p id='unitDetailsText' key={option.id}>&#8226; {replaceAsterisks(option.optionText)}</p>
+    const renderRegimentOption = (option) => <p id={Styles.unitDetailsText} key={option.id}>&#8226; {replaceAsterisks(option.optionText)}</p>
 
-    const renderCharacteristic = (characteristic) => <div key={characteristic.value} id='characteristicSubContainer' style={{width: '20%'}}>
-        <div id='characteristicValueContainer'>
-            <p id='characteristicValue'>{characteristic.value}</p>
+    const renderCharacteristic = (characteristic) => <div key={characteristic.value} id={Styles.characteristicSubContainer} style={{width: '20%'}}>
+        <div id={Styles.characteristicValueContainer}>
+            <p id={Styles.characteristicValue}>{characteristic.value}</p>
         </div>
-        <p id='characteristicTitle'>{characteristic.title}</p>
+        <p id={Styles.characteristicTitle}>{characteristic.title}</p>
     </div>
 
     return <>
         <HeaderImage src={unit.bannerImage} alt={unit.name} />
-        <div id='warscroll'>
-            <div id='characteristicsContainer' className='flexContainer'>
+        <div id={Styles.container}>
+            <div id={Styles.characteristicsContainer} className={Styles.flexContainer}>
                 {characteristics.map(renderCharacteristic)}
             </div>
             {rangeWeapons.length > 0
                 ? <>
-                    <div id='weaponTitleContainer'>
-                        <h3 id='warscrollChapterTitle'>Range Weapons</h3>
-                        <button id='calculator' onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
+                    <div id={Styles.weaponTitleContainer}>
+                        <h3 id={Styles.warscrollChapterTitle}>Range Weapons</h3>
+                        <button id={Styles.calculator} onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
                     </div>
                     {rangeWeapons.map(renderRangeWeapon)}
                 </>
@@ -135,9 +136,9 @@ const Warscroll = () => {
             }
             {meleeWeapons.length > 0
                 ? <>
-                    <div id='weaponTitleContainer'>
-                        <h3 id='warscrollChapterTitle'>Melee Weapons</h3>
-                        <button id='calculator' onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
+                    <div id={Styles.weaponTitleContainer}>
+                        <h3 id={Styles.warscrollChapterTitle}>Melee Weapons</h3>
+                        <button id={Styles.calculator} onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
                     </div>
                     {meleeWeapons.map(renderMeleeWeapon)}
                 </>
@@ -145,18 +146,18 @@ const Warscroll = () => {
             }
             {abilities.length > 0
                 ? <>
-                    <h3 id='warscrollChapterTitle'>Abilities</h3>
+                    <h3 id={Styles.warscrollChapterTitle}>Abilities</h3>
                     {abilities.map(renderAbility)}
                 </>
                 : null
             }
-            <div id='unitDetailsContainer'>
-                <p id='unitDetailsTitle'>Unit Details</p>
-                <div id='unitDetailsSubContainer'>
-                    <p id='unitDetailsText'>{unit.modelCount} model</p>
-                    {unit.wargearOptionsText ? <p id='wargearOptions'>{replaceAsterisks(unit.wargearOptionsText)}</p> : null}
-                    {unit.points ? <p id='unitDetailsText'>{unit.points} points</p> : null}
-                    <p id='unitDetailsText'><b>Base size:</b> {unit.baseSize}</p>
+            <div id={Styles.unitDetailsContainer}>
+                <p id={Styles.unitDetailsTitle}>Unit Details</p>
+                <div id={Styles.unitDetailsSubContainer}>
+                    <p id={Styles.unitDetailsText}>{unit.modelCount} model</p>
+                    {unit.wargearOptionsText ? <p id={Styles.wargearOptions}>{replaceAsterisks(unit.wargearOptionsText)}</p> : null}
+                    {unit.points ? <p id={Styles.unitDetailsText}>{unit.points} points</p> : null}
+                    <p id={Styles.unitDetailsText}><b>Base size:</b> {unit.baseSize}</p>
                     {regimentOptions.length > 0
                         ? <>
                             <b>Regiment Options</b>
@@ -164,12 +165,12 @@ const Warscroll = () => {
                         </>
                         : null
                     }
-                    {unit.notes ? <p id='unitDetailsText'>Notes: {replaceAsterisks(unit.notes)}</p> : null}
+                    {unit.notes ? <p id={Styles.unitDetailsText}>Notes: {replaceAsterisks(unit.notes)}</p> : null}
                 </div>
             </div>
             {unit.referenceKeywords
                 ? <>
-                    <p id='keywords'>Keywords: <b>{unit.referenceKeywords}</b></p>
+                    <p id={Styles.keywords}>Keywords: <b>{unit.referenceKeywords}</b></p>
                 </>
                 : null
             }

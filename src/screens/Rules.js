@@ -1,7 +1,8 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import Rule from '../components/Rule'
-import './styles/Rules.css'
+
+import Styles from './styles/Rules.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -17,13 +18,13 @@ const Rules = ({info}) => {
         const components = dataBase.data.rule_container_component.filter((component) => component.ruleContainerId === rule.id)
         components.sort((a, b) => a.displayOrder - b.displayOrder)
         return <>
-            <h4 id='rulesTitle' key={rule.id}>{rule.title}</h4>
+            <h4 id={Styles.title} key={rule.id}>{rule.title}</h4>
             {rule.subtitle ? <h5>{rule.subtitle}</h5> : null}
             {components.map(renderRuleComponent)}
         </>
     }
 
-    return <div id='rulesContainer'>
+    return <div id={Styles.container}>
         {rules && rules.map(renderRule)}
     </div>
 }

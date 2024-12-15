@@ -2,7 +2,8 @@ import React from 'react';
 // import {useNavigate} from 'react-router-dom';
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
-import './styles/Main.css'
+
+import Styles from './styles/Main.module.css'
 
 const Main = () => {
     // const navigate = useNavigate()
@@ -16,9 +17,9 @@ const Main = () => {
             <Row title='Builder' navigateTo='chooseGrandAlliance' />
             <Row title='Battle Dashboard (Beta Testing)' navigateTo='singlePlayer' />
             <Row title='Damage Calculator' navigateTo='calculator' />
-            <p id='feedbackText'>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
-            <p id='feedbackText'>For feedback - @RukosuevKrasavchik</p>
-            {/* <button id='testButton' onClick={handleNavigateToTest}>test</button> */}
+            <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
+            <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
+            {/* <button id={Styles.testButton} onClick={handleNavigateToTest}>test</button> */}
         </div>
     </>
 }

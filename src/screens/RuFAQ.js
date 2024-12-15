@@ -1,13 +1,14 @@
 import React from 'react';
-import './styles/RuFAQ.css'
+
+import Styles from './styles/RuFAQ.module.css'
 
 const ruFAQ = require('../ruFAQ.json')
 
 const RuFAQ = () => {
 
-    const renderQuestion = (item) => <div id='ruFAQContainer'>
-        <p id='question'>Q: {item.question}</p>
-        <p id='answer'>A: {item.answer}</p>
+    const renderQuestion = (item) => <div id={Styles.container}>
+        <p id={Styles.question}>Q: {item.question}</p>
+        <p id={Styles.answer}>A: {item.answer}</p>
     </div>
 
     return <div id='column' className='Chapter'>

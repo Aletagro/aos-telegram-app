@@ -4,7 +4,8 @@ import Constants from '../Constants'
 import {replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
 import HeaderImage from '../components/HeaderImage'
-import './styles/ArmyInfo.css'
+
+import Styles from './styles/ArmyInfo.module.css'
 
 const ArmyInfo = () => {
     const {allegiance, info} = useLocation().state
@@ -13,14 +14,14 @@ const ArmyInfo = () => {
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} abilityKeywordsName={armyEnhancement?.abilityKeywordsName} abilityIdName={armyEnhancement?.abilityIdName} />
 
     const renderBlock = (block) => <div key={block.id}>
-        <p id='armyInfoTitle'>{block.name}</p>
+        <p id={Styles.title}>{block.name}</p>
         {block.abilities.map(renderAbility)}
     </div>
 
     return <>
         {allegiance.rosterHeaderImage ? <HeaderImage src={allegiance.rosterHeaderImage} alt={allegiance.name} isWide /> : null}
         <div id='column' className='Chapter'>
-        {info.restrictionText ? <p id='armyInfoNote'>{replaceAsterisks(info.restrictionText)}</p> : null}
+        {info.restrictionText ? <p id={Styles.note}>{replaceAsterisks(info.restrictionText)}</p> : null}
         {info.abilities.map(info.withoutTitle ? renderAbility : renderBlock)}
         </div>
     </>

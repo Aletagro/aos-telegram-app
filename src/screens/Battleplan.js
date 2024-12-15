@@ -1,7 +1,8 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {replaceAsterisks} from '../utilities/utils'
-import './styles/Battleplan.css'
+
+import Styles from './styles/Battleplan.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -16,7 +17,7 @@ const Battleplan = () => {
         <img src={imageUrl} alt='battleplan' width='100%' />
         <div id='column' className='Chapter'>
         <h3>Twist</h3>
-        <p id='battleplanText'>{replaceAsterisks(twist)}</p>
+        <p id={Styles.text}>{replaceAsterisks(twist)}</p>
         </div>
     </>
 }

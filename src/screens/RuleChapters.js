@@ -3,7 +3,6 @@ import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
 import Battleplans from '../components/Battleplans'
 import Rules from './Rules'
-import './styles/Catalog.css'
 
 const dataBase = require('../dataBase.json')
 
