@@ -1,13 +1,13 @@
-#exportListContainer {
+#container {
   padding: 8px 8px;
 }
 
-#exportListButtonContainer {
+#buttonContainer {
   display: flex;
   justify-content: center;
 }
 
-#exportListButton {
+#button {
   background: rgb(245, 201, 80);
   color: black;
   border-radius: 20px;
@@ -15,10 +15,6 @@
   padding: 12px;
   font-size: 16px;
   margin-top: 16px;
-}
-
-#exportText {
-  margin: 0px;
 }
 
 #note {
@@ -41,11 +37,11 @@
   padding: 16px;
 }
 
-#exportError {
+#error {
   margin: 0px;
   color: white;
 }
 
-#exportWarning {
+#warning {
   margin: 0px;
 }

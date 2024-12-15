@@ -12,7 +12,7 @@ import Add from '../icons/add.svg'
 import Info from '../icons/info.svg'
 import WhiteInfo from '../icons/whiteInfo.svg'
 
-import './styles/Builder.css'
+import Styles from './styles/Builder.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -207,12 +207,12 @@ const Builder = () => {
     />
 
     const renderEnhancement = (name, type, data) => data.length === 1
-        ? <div id='builderSecondAddButton'>
+        ? <div id={Styles.secondAddButton}>
             <p>{data[0].name}</p>
-            <button id='builderInfoIcon' onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
+            <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
         </div>
-        : <div id='builderAddButton'>
-            <button id='builderAddButtonText' onClick={handleChooseEnhancement(name, type, data)}>
+        : <div id={Styles.addButton}>
+            <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
                 {roster[type]
                     ? `${name} : ${roster[type]}`
                     : `Choose ${name}`
@@ -220,32 +220,32 @@ const Builder = () => {
             </button>
             {type === 'manifestationLore'
                 ? null
-                : <button id='builderInfoIcon' onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
+                : <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
             }
         </div>
         
-    const renderPointsLimitButton = (limit) => <button id='pointsLimitButton' onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
+    const renderPointsLimitButton = (limit) => <button id={Styles.pointsLimitButton} onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
 
     const renderModalContent = () => <>
-        <b id='pointsLimitTitle'>Points Limit</b>
+        <b id={Styles.pointsLimitTitle}>Points Limit</b>
         {pointsLimits.map(renderPointsLimitButton)}
     </>
 
     return <div id='column' className='Chapter'>
-        <button id='mainInfoContainer' onClick={handleClickAllegiance}>
-            <div id='builderAllegianceContainer'>
-                <p id='builderText'>Grand Alliance: <b>{roster.grandAlliance}</b></p>
-                <img id='builderAllegianceInfoIcon' src={Info} alt="" />
+        <button id={Styles.mainInfoContainer} onClick={handleClickAllegiance}>
+            <div id={Styles.allegianceContainer}>
+                <p id={Styles.text}>Grand Alliance: <b>{roster.grandAlliance}</b></p>
+                <img id={Styles.allegianceInfoIcon} src={Info} alt="" />
             </div>
-            <p id='builderText'>Allegiance: <b>{roster.allegiance}</b></p>
+            <p id={Styles.text}>Allegiance: <b>{roster.allegiance}</b></p>
             <p>Wounds: {getWoundsCount(roster)}</p>
         </button>
-        <button onClick={handleOpenModal} id='pointsContainer'>
-            <p id='pointsTitle'>Army: {roster.points}/{roster.pointsLimit} Points</p>
-            <img id='pointsTitleInfoIcon' src={WhiteInfo} alt="" />
+        <button onClick={handleOpenModal} id={Styles.pointsContainer}>
+            <p id={Styles.pointsTitle}>Army: {roster.points}/{roster.pointsLimit} Points</p>
+            <img id={Styles.pointsTitleInfoIcon} src={WhiteInfo} alt="" />
         </button>
         {battleFormations.length
-            ? <button id={roster.battleFormation ? 'builderSecondAddButton' : 'builderAddButton'} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
+            ? <button id={roster.battleFormation ? Styles.secondAddButton : Styles.addButton} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
                 {roster.battleFormation
                     ? `Battle Formation : ${roster.battleFormation}`
                     : 'Choose Battle Formation'
@@ -258,29 +258,29 @@ const Builder = () => {
             : null
         }
         {roster.regiments.length < 5
-            ? <button id='builderAddButton' onClick={handleAddRegiment}>
+            ? <button id={Styles.addButton} onClick={handleAddRegiment}>
                 <p>Add Regiment</p>
                 <img src={Add} alt='' />
             </button>
             : null
         }
-        <button id='builderSecondAddButton' onClick={handleAddAuxiliaryUnit}>
+        <button id={Styles.secondAddButton} onClick={handleAddAuxiliaryUnit}>
             <p>Add Auxiliary Unit</p>
             <img src={Add} alt='' />
         </button>
         {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
         {roster.regimentOfRenown
             ? <>
-                <p id='builderTitle'>Regiment Of Renown</p>
+                <p id={Styles.title}>Regiment Of Renown</p>
                 {renderRegimentOfRenown()}
                 {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
             </>
-            : <button id='builderSecondAddButton' onClick={handleAddRegimentsOfRenown}>
+            : <button id={Styles.secondAddButton} onClick={handleAddRegimentsOfRenown}>
                 <p>Add Regiments Of Renown</p>
                 <img src={Add} alt='' />
             </button>
         }
-        <p id='builderTitle'>Lores</p>
+        <p id={Styles.title}>Lores</p>
         {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
         {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}
         {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}

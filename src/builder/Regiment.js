@@ -4,7 +4,8 @@ import {roster} from '../utilities/appState'
 import UnitRow from './UnitRow'
 import Delete from '../icons/delete.svg'
 import General from '../icons/general.svg'
-import './styles/Regiment.css'
+
+import Styles from './styles/Regiment.module.css'
 
 const emptyRegiment = {
     units: [],
@@ -102,20 +103,20 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
-    return <div id='regimentContainer' key={index}>
-        <div id='regimentTitle'>
-            <div id='regimentTitleSubContainer'>
-                <p id='regimentText'>Regiment {index + 1}</p>
-                <p id='regimentPoints'>{regiment.points} Points</p>
+    return <div id={Styles.container} key={index}>
+        <div id={Styles.title}>
+            <div id={Styles.titleSubContainer}>
+                <p id={Styles.text}>Regiment {index + 1}</p>
+                <p id={Styles.points}>{regiment.points} Points</p>
             </div>
-            <div id='regimentRightBlock'>
-                <button id='regimentDeleteButton' onClick={handleChooseGeneral}><img src={General} alt="" /></button>
-                <button id='regimentDeleteButton' onClick={handleDeleteRegiment}><img src={Delete} alt="" /></button>
+            <div id={Styles.rightBlock}>
+                <button id={Styles.deleteButton} onClick={handleChooseGeneral}><img src={General} alt="" /></button>
+                <button id={Styles.deleteButton} onClick={handleDeleteRegiment}><img src={Delete} alt="" /></button>
             </div>
         </div>
         {regiment.units.map(renderUnit)}
-        <div id='regimentAddUnitContainer'>
-            <button id='regimentAddUnitButton' onClick={handleAddUnit(regiment, title, index)}>{title}</button>
+        <div id={Styles.addUnitContainer}>
+            <button id={Styles.addUnitButton} onClick={handleAddUnit(regiment, title, index)}>{title}</button>
         </div>
     </div>
 }

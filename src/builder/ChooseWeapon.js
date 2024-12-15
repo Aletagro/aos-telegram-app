@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
+import {replaceAsterisks} from '../utilities/utils'
 import Plus from '../icons/plus.svg'
 import Minus from '../icons/minus.svg'
 
-import './styles/ChooseWeapon.css'
+import Styles from './styles/ChooseWeapon.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -52,12 +53,12 @@ const ChooseWeapon = () => {
         const weaponCount = weaponOption[weapon.name] || 0
         const disabledMinus = weaponCount === 0
         const disabledPlus = weaponOptionCount === limit
-        return <div id='chooseWeaponRow'>
-            <p id='chooseWeaponText'>{weapon.name}</p>
-            <div id='chooseWeaponCountContainer'>
-                <button id={disabledMinus ? 'disabledWeaponChangeButton' : 'weaponChangeButton'} disabled={disabledMinus} onClick={handleClickMinus(weaponOptionId, weapon)}><img src={Minus} alt="" /></button>
-                <p id='chooseWeaponCount'>{weaponCount}</p>
-                <button id={disabledPlus ? 'disabledWeaponChangeButton' : 'weaponChangeButton'} disabled={disabledPlus} onClick={handleClickPlus(weaponOptionId, weapon)}><img src={Plus} alt="" /></button>
+        return <div id={Styles.row}>
+            <p id={Styles.text}>{weapon.name}</p>
+            <div id={Styles.countContainer}>
+                <button id={disabledMinus ? Styles.disabledButton : Styles.button} disabled={disabledMinus} onClick={handleClickMinus(weaponOptionId, weapon)}><img src={Minus} alt="" /></button>
+                <p id={Styles.count}>{weaponCount}</p>
+                <button id={disabledPlus ? Styles.disabledButton : Styles.button} disabled={disabledPlus} onClick={handleClickPlus(weaponOptionId, weapon)}><img src={Plus} alt="" /></button>
             </div>
         </div>
     }
@@ -66,14 +67,14 @@ const ChooseWeapon = () => {
         const options = dataBase.data.option.filter(option => option.optionGroupId === weaponOption.id)
         const optionWeapons = options.map(optionWeapon => dataBase.data.option_weapon.find(weapon => weapon.optionId === optionWeapon.id))
         return <div>
-            <p>{weaponOption.name}</p>
+            <p id={Styles.note}>{replaceAsterisks(weaponOption.name)}</p>
             {optionWeapons.map(renderWeapon(weaponOption.id, isReinforced ? weaponOption.reinforcedLimit : weaponOption.limit))}
         </div>
     }
 
     return  <div id='column' className='Chapter'>
         {weaponOptions.map(renderWeaponOption)}
-        <button id='weaponApplyButton' onClick={handleApply}>Apply</button>
+        <button id={Styles.applyButton} onClick={handleApply}>Apply</button>
     </div>
 }
 

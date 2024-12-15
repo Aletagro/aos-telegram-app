@@ -1,4 +1,4 @@
-#regimentContainer {
+#container {
   border: 1px solid rgb(46, 46, 49);
   margin-bottom: 16px;
   padding-bottom: 16px;
@@ -6,7 +6,7 @@
   border-radius: 8px;
 }
 
-#regimentTitle {
+#title {
   background: rgb(46, 46, 49);
   color: white;
   border-radius: 4px 4px 0px 0px;
@@ -17,11 +17,11 @@
   align-items: center;
 }
 
-#regimentTitleSubContainer {
+#titleSubContainer {
   display: flex;
 }
 
-#regimentText {
+#text {
   color: white;
   font-size: 18px;
   line-height: 24px;
@@ -29,18 +29,18 @@
   padding-right: 16px;
 }
 
-#regimentPoints {
+#points {
   color: white;
   font-size: 18px;
   line-height: 24px;
 }
 
-#regimentRightBlock {
+#rightBlock {
   display: flex;
   align-items: center;
 }
 
-#regimentButton {
+#button {
   background: rgb(245, 201, 80);
   color: black;
   margin-bottom: 16px;
@@ -51,13 +51,13 @@
   font-size: 14px;
 }
 
-#regimentAddUnitContainer {
+#addUnitContainer {
   display: flex;
   justify-content: center;
   margin: 0px 12px;
 }
 
-#regimentAddUnitButton {
+#addUnitButton {
   width: 100%;
   background: rgb(245, 201, 80);
   color: black;
@@ -67,7 +67,7 @@
   font-size: 18px;
 }
 
-#regimentDeleteButton {
+#deleteButton {
   background: transparent;
   border-radius: 4px;
   border-width: 0px;
@@ -75,7 +75,7 @@
   margin-left: 16px;
 }
 
-#regimentSubTitle {
+#subTitle {
   background: rgb(46, 46, 49);
   color: white;
   margin-bottom: 16px;

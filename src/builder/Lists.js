@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import './styles/Lists.css'
+
+import Styles from './styles/Lists.module.css'
 
 const lists = [
     {
@@ -17,7 +18,7 @@ const lists = [
     }
 ]
 
-const ChooseGrandAlliance = () => {
+const Lists = () => {
     const navigate = useNavigate()
 
     const handleClick = ({grandAlliance}) => {
@@ -28,15 +29,15 @@ const ChooseGrandAlliance = () => {
         navigate('builder', {state: {alliganceId: list.alliganceId, rosterId: list.id}})
     }
 
-    const renderList = (list) => <button id='builderListButton' onClick={handleNavigateToRoster(list)} key={list.id}>
+    const renderList = (list) => <button id={Styles.button} onClick={handleNavigateToRoster(list)} key={list.id}>
         <p>{list.name}</p>
         <p>{list.army}</p>
     </button>
 
     return  <div id='column' className='Chapter'>
-        <button id='builderListButton' onClick={handleClick}>New Roster</button>
+        <button id={Styles.button} onClick={handleClick}>New Roster</button>
         {lists.map(renderList)}
     </div>
 }
 
-export default ChooseGrandAlliance
+export default Lists

@@ -4,7 +4,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
-import './styles/Export.css'
+
+import Styles from './styles/Export.module.css'
 
 const additionalOptions = ['Ensorcelled Banners', 'First Circle Titles']
 
@@ -89,38 +90,38 @@ ${roster.points}/${roster.pointsLimit} Pts
         {regiment.units.map(renderUnit)}
     </div>
 
-    const renderError = (error, index) => <p id='exportError'>&#8226; {error}</p>
+    const renderError = (error, index) => <p id={Styles.error}>&#8226; {error}</p>
 
-    const renderWarning = (error, index) => <p  id='exportWarning'>&#8226; {error}</p>
+    const renderWarning = (error, index) => <p  id={Styles.warning}>&#8226; {error}</p>
 
-    return <div id='exportListContainer'>
-        <div id='exportListButtonContainer'>
-            <button id='exportListButton' onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
+    return <div id={Styles.container}>
+        <div id={Styles.buttonContainer}>
+            <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
         </div>
         {errors.length > 0
-            ? <div id='errorsContainer'>
-                <p id='exportError'>Roster errors:</p>
+            ? <div id={Styles.errorsContainer}>
+                <p id={Styles.error}>Roster errors:</p>
                 {errors?.map(renderError)}
             </div>
             : null
         }
         {warnings.length > 0
-            ? <div id='warningsContainer'>
-                <p id='exportWarning'>Roster warnings:</p>
+            ? <div id={Styles.warningsContainer}>
+                <p id={Styles.warning}>Roster warnings:</p>
                 {warnings?.map(renderWarning)}
             </div>
             : null
         }
-        <p id='exportText'>Grand Alliance: {roster.grandAlliance}</p>
-        <p id='exportText'>Faction: {roster.allegiance}</p>
-        <p id='exportText'>Battle Formation: {roster.battleFormation}</p>
-        <p id='exportText'>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
-        {roster.auxiliaryUnits.length > 0 ? <p id='exportText'>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
+        <p>Grand Alliance: {roster.grandAlliance}</p>
+        <p>Faction: {roster.allegiance}</p>
+        <p>Battle Formation: {roster.battleFormation}</p>
+        <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
+        {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         <br/>
-        {roster.spellsLore ? <p id='exportText'>Spell Lore: {roster.spellsLore}</p> : null}
-        {roster.prayersLore ? <p id='exportText'>Prayer Lore: {roster.prayersLore}</p> : null}
-        {roster.manifestationLore ? <p id='exportText'>Manifestation Lore: {roster.manifestationLore}</p> : null}
-        {roster.factionTerrain ? <p id='exportText'>Faction Terrain: {roster.factionTerrain}</p> : null}
+        {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}</p> : null}
+        {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
+        {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}</p> : null}
+        {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}</p> : null}
         <hr/>
         {roster.regiments.map(renderRegiment)}
         <hr/>
@@ -142,7 +143,7 @@ ${roster.points}/${roster.pointsLimit} Pts
             : null
         }
         <p>Wounds: {getWoundsCount(roster)}</p>
-        {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id='note'>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
+        {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id={Styles.note}>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
         <p>{roster.points}/{roster.pointsLimit} Pts</p>
         <ToastContainer />
     </div>

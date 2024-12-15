@@ -72,6 +72,7 @@ function App() {
       <Route path={'mainRules/catalog/army/builder'} element={<Builder />} />
       <Route path={'mainRules/catalog/army/builder/warscroll'} element={<Warscroll />} />
       <Route path={'mainRules/catalog/army/builder/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/builder/armyInfo'} element={<ArmyInfo />} />
       <Route path={'mainRules/catalog/army/builder/regimentOfRenown'} element={<RegimentOfRenown />} />
       <Route path={'mainRules/catalog/army/builder/regimentOfRenown/warscroll'} element={<Warscroll />} />
       <Route path={'mainRules/catalog/army/builder/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />

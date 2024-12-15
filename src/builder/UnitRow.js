@@ -9,7 +9,7 @@ import DarkGeneral from '../icons/darkGeneral.svg'
 import Info from '../icons/info.svg'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
-import './styles/UnitRow.css'
+import Styles from './styles/UnitRow.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -79,60 +79,60 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
         navigate('warscroll', {state: {title: unit.name, unit}})
     }
 
-    const renderChooseOptionButton = (option) => <button id='chooseEnhancementButton' onClick={handleChooseOption(option)}>
+    const renderChooseOptionButton = (option) => <button id={Styles.chooseEnhancementButton} onClick={handleChooseOption(option)}>
         {unit[option.optionGroupType]
             ? `${camelCaseToWords(option.optionGroupType)}: ${unit[option.optionGroupType]}`
             : `${camelCaseToWords(option.optionGroupType)}`
         }
     </button>
 
-    const renderAdditionalOption = (option) => <button id='chooseEnhancementButton' onClick={handleChooseAdditionalOption(option)}>
+    const renderAdditionalOption = (option) => <button id={Styles.chooseEnhancementButton} onClick={handleChooseAdditionalOption(option)}>
         {unit[option.name]
             ? `${option.name}: ${unit[option.name]}`
             : `${option.name}`
         }
     </button>
 
-    const renderChooseWeapon = () => <button id='chooseEnhancementButton' onClick={handleWeaponOption}>
+    const renderChooseWeapon = () => <button id={Styles.chooseEnhancementButton} onClick={handleWeaponOption}>
         Weapon Options
     </button>
 
-    return <div id='unitRowContainer'>
-        <div className='unitRow'>
-            <button id='addUnitButton' onClick={handleClick}>
+    return <div id={Styles.container}>
+        <div className={Styles.row}>
+            <button id={Styles.addUnitButton} onClick={handleClick}>
                 {unit?.rowImage ?<RowImage src={unit?.rowImage} alt={unit.name} /> : null}
-                <div id='addUnitButtonSubContainer'>
-                    {isGeneral ? <img id='generalIcon' src={DarkGeneral} alt=''/> : null}
-                    <p id='unitName'>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>
+                <div id={Styles.addUnitButtonSubContainer}>
+                    {isGeneral ? <img id={Styles.generalIcon} src={DarkGeneral} alt=''/> : null}
+                    <p id={Styles.name}>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>
                 </div>
-                <p id='price'>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
+                <p id={Styles.price}>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
             </button>
             {isAddUnit || unit.cannotBeReinforced || unit.abilityGroupType === 'regimentOfRenown'
                 ? null
                 : unit.isReinforced
-                    ? <button id='unitRowButton' onClick={handleReinforced}><img src={Minus} alt="" /></button>
-                    : <button id='unitRowButton' onClick={handleReinforced}><img src={Plus} alt="" /></button>
+                    ? <button id={Styles.button} onClick={handleReinforced}><img src={Minus} alt="" /></button>
+                    : <button id={Styles.button} onClick={handleReinforced}><img src={Plus} alt="" /></button>
             }
             {isAddUnit || isHero || withoutCopy || isAuxiliary || unit.onlyOne
                 ? null
-                : <button id='unitRowButton' onClick={handleCopy}><img src={Copy} alt="" /></button>
+                : <button id={Styles.button} onClick={handleCopy}><img src={Copy} alt="" /></button>
             }
-            {onDelete ? <button id='unitRowButton' onClick={handleDelete}><img src={Close} alt="" /></button> : null}
-            {isAddUnit ? <button id='unitRowInfoButton' onClick={handleClickInfo}><img src={Info} alt="" /></button> : null}
+            {onDelete ? <button id={Styles.button} onClick={handleDelete}><img src={Close} alt="" /></button> : null}
+            {isAddUnit ? <button id={Styles.infoButton} onClick={handleClickInfo}><img src={Info} alt="" /></button> : null}
         </div>
         {isShowEnhancements && !isAddUnit
-            ? <div id='enhancementsContainer'>
-                <button id='chooseEnhancementButton' onClick={handleChooseEnhancement('Artefacts', 'artefact')}>
+            ? <div id={Styles.enhancementsContainer}>
+                <button id={Styles.chooseEnhancementButton} onClick={handleChooseEnhancement('Artefacts', 'artefact')}>
                     {unit.artefact ? `Artefact: ${unit.artefact}` : 'Сhoose Artefact'}
                 </button>
-                <button id='chooseEnhancementButton' onClick={handleChooseEnhancement('Heroic Traits', 'heroicTrait')}>
+                <button id={Styles.chooseEnhancementButton} onClick={handleChooseEnhancement('Heroic Traits', 'heroicTrait')}>
                     {unit.heroicTrait ? `Heroic Trait: ${unit.heroicTrait}` : 'Сhoose Heroic Trait'}
                 </button>
             </div>
             : null
         }
         {(optionGroups.length > 0 || additionalOption) && !isAddUnit
-            ? <div id='enhancementsContainer'>
+            ? <div id={Styles.enhancementsContainer}>
                 {weaponOptions.length > 0 ? renderChooseWeapon() : null}
                 {marksOfChaos ? renderChooseOptionButton(marksOfChaos) : null}
                 {additionalOption ? renderAdditionalOption(additionalOption) : null}

@@ -2,7 +2,8 @@ import React from 'react';
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import BuilderRow from './BuilderRow'
-import './styles/ChooseGrandAlliance.css'
+
+import Styles from './styles/ChooseGrandAlliance.module.css'
 
 const ChooseGrandAlliance = () => {
 
@@ -19,7 +20,7 @@ const ChooseGrandAlliance = () => {
     />
 
     return  <div id='column' className='Chapter'>
-        <h4 id='unitType'>Choose your Grand Alliance</h4>
+        <h4 id={Styles.title}>Choose your Grand Alliance</h4>
         {Constants.grandAlliances.map(renderRow)}
     </div>
 }

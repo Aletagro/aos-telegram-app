@@ -45,3 +45,10 @@ button {
     color: black;
     font-family: 'Minion Pro Regular';
 }
+.Chapter {
+    display: flex;
+    padding: 8px 8px;
+  }
+#column {
+  flex-direction: column;
+}

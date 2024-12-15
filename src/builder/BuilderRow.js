@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import './styles/BuilderRow.css'
+
+import Styles from './styles/BuilderRow.module.css'
 
 const BuilderRow = ({title, onClick, state, navigateTo}) => {
     const navigate = useNavigate()
@@ -13,8 +14,8 @@ const BuilderRow = ({title, onClick, state, navigateTo}) => {
     }
 
     return <div className='container'>
-        <button  className='builderRow' onClick={handleClick}>
-            <b id='title'>{title}</b>
+        <button  className={Styles.row} onClick={handleClick}>
+            <b>{title}</b>
         </button>
     </div>
 }

@@ -1,14 +1,4 @@
-#chooseEnhancement {
-    background: rgb(245, 201, 80);
-    color: black;
-    margin-bottom: 16px;
-    border-radius: 4px;
-    border-width: 0px;
-    padding: 16px;
-    font-size: 16px;
-    font-weight: bold;
-}
-#deleteEnhancement {
+#delete {
     background: rgb(167, 167, 167);
     color: black;
     border-radius: 4px;
@@ -17,14 +7,14 @@
     font-size: 18px;
     font-family: 'Minion Pro Bold';
 }
-#chooseBlock {
+#block {
     background: transparent;
     padding: 0px;
     padding-bottom: 8px;
     border-radius: 4px;
     border-width: 0px;
 }
-#chooseBlockTitle {
+#title {
     background: rgb(46, 46, 49);
     color: white;
     border-radius: 4px;
@@ -36,7 +26,7 @@
     font-size: 16px;
     font-family: 'Times New Roman', Times, serif;
   }
-  #chooseManifestation {
+  #manifestation {
     display: flex;
     background-color: rgb(236, 236, 236);
     color: black;

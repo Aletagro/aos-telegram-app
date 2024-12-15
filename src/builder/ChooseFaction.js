@@ -5,7 +5,7 @@ import BuilderRow from './BuilderRow'
 import {sortByName} from '../utilities/utils'
 import HeaderImage from '../components/HeaderImage'
 
-import './styles/ChooseFaction.css'
+import Styles from './styles/ChooseFaction.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -39,11 +39,11 @@ const ChooseFaction = () => {
     return <>
         <HeaderImage src={grandAlliance.image} alt={grandAlliance.name} isWide />
         <div id='column' className='Chapter'>
-            <h4 id='unitType'>Choose your Faction</h4>
+            <h4 id={Styles.title}>Choose your Faction</h4>
             {allegiances && allegiances.map(renderRow)}
             {armiesOfRenown.length > 0
                 ? <>
-                    <h4 id='unitType'>Armies Of Renown</h4>
+                    <h4 id={Styles.title}>Armies Of Renown</h4>
                     {armiesOfRenown.map(renderArmyOfRenown)}
                 </>
                 : null

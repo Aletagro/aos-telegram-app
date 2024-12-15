@@ -3,7 +3,8 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import Ability from '../components/Ability'
 import RowImage from '../components/RowImage'
-import './styles/ChooseEnhancement.css'
+
+import Styles from './styles/ChooseEnhancement.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -78,21 +79,21 @@ const ChooseEnhancement = () => {
 
     const renderEnhancement = (enhancement) => <Ability key={enhancement.id} ability={enhancement} onClick={isRosterInfo ? undefined : handleClickEnhancement} />
 
-    const renderManifestation = (manifestation) => <div key={manifestation.id} id='chooseManifestation'>
+    const renderManifestation = (manifestation) => <div key={manifestation.id} id={Styles.manifestation}>
         <RowImage src={manifestation.rowImage} alt={manifestation.name} />
         <b>{manifestation.name}</b>
     </div>
 
-    const renderBlock = (block) => <button key={block.id} id='chooseBlock' onClick={handleClickBlock(block)}>
-        <p id='chooseBlockTitle'>{block.name}</p>
+    const renderBlock = (block) => <button key={block.id} id={Styles.block} onClick={handleClickBlock(block)}>
+        <p id={Styles.title}>{block.name}</p>
         {block.abilities?.map(type === 'manifestationLore' ? renderManifestation : renderEnhancement)}
     </button>
 
     return  <div id='column' className='Chapter'>
         {_data?.map(isRosterInfo ? renderBlock : renderEnhancement)}
         {isInfo
-            ? <button id='deleteEnhancement' onClick={handleGoBack}>Back</button>
-            : <button id='deleteEnhancement' onClick={handleDeleteEnhancement}>Delete {title}</button>
+            ? <button id={Styles.delete} onClick={handleGoBack}>Back</button>
+            : <button id={Styles.delete} onClick={handleDeleteEnhancement}>Delete {title}</button>
         }
     </div>
 }
