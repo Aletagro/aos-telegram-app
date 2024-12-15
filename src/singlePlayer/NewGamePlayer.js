@@ -4,7 +4,7 @@ import {singlePlayer} from '../utilities/appState';
 import {sortByName} from '../utilities/utils'
 import Checkbox from '../components/Checkbox'
 
-import './styles/NewGame.css';
+import Styles from './styles/NewGame.module.css'
 
 const dataBase = require('../dataBase.json');
 
@@ -53,7 +53,7 @@ const NewGamePlayer = ({onUpdate, player}) => {
     const renderGrandAlliance = (alliance) => <button
         key={alliance.id}
         onClick={handleClickGrandAlliance(alliance, player)}
-        id={singlePlayer[player].alliance.id === alliance.id ? 'newGameCheckedButton' : 'newGameButton'}
+        id={singlePlayer[player].alliance.id === alliance.id ? Styles.checkedButton : Styles.button}
     >
         {alliance.shortName || alliance.name}
     </button>
@@ -61,24 +61,24 @@ const NewGamePlayer = ({onUpdate, player}) => {
     const renderAllegiances = (allegiance) => <button
         key={allegiance.id}
         onClick={handleClickAllegiance(allegiance, player)}
-        id={singlePlayer[player].allegiance.id === allegiance.id ? 'newGameCheckedButton' : 'newGameButton'}
+        id={singlePlayer[player].allegiance.id === allegiance.id ? Styles.checkedButton : Styles.button}
     >
         {allegiance.name}
     </button>
 
-    return <div id='newGamePlayerContainer'>
-        <div id='newGamePlayerTitle'>
-            <p id='newGameTitle'>{player === 'firstPlayer' ? '1st' : '2nd'} Player's Army</p>
-        <div id='newGameAddCpContainer'>
-            <p id='newGameTitle'>+1 CP</p>
+    return <div id={Styles.playerContainer}>
+        <div id={Styles.playerTitle}>
+            <p id={Styles.title}>{player === 'firstPlayer' ? '1st' : '2nd'} Player's Army</p>
+        <div id={Styles.addCpContainer}>
+            <p id={Styles.title}>+1 CP</p>
             <Checkbox onClick={handleAddCP} checked={singlePlayer[player].cp === 5} isGold />
         </div>
         </div>
-        <div id='newGameAlliancesButtons'>
+        <div id={Styles.alliancesButtons}>
             {Constants.grandAlliances.map(renderGrandAlliance)}
         </div>
-        <div id='separator' />
-        <div id='newGameArmiesButtons'>
+        <div id={Styles.separator} />
+        <div id={Styles.armiesButtons}>
             {allegiances.map(renderAllegiances)}
         </div>
     </div>

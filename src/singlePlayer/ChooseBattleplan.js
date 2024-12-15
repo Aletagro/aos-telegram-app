@@ -1,11 +1,11 @@
-import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
-import {singlePlayer} from '../utilities/appState';
+import {singlePlayer} from '../utilities/appState'
 import {randomFromInterval} from '../utilities/utils'
 import Info from '../icons/info.svg'
 
-import './styles/ChooseBattleplan.css';
+import Styles from './styles/ChooseBattleplan.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -34,12 +34,12 @@ const ChooseBattleplan = () => {
         navigate(-1)
     }
 
-    const renderBattleplan = (battleplan, index) => <div id='chooseBattleplanContainer' key={index}>
-        <button key={battleplan.id} id='chooseBattleplan' onClick={handleChooseBattleplan(battleplan)}>{battleplan.title}</button>
-        <button id='chooseBattleplanIcon' onClick={handleChooseBattleplanInfo(battleplan)}><img src={Info} alt="" /></button>
+    const renderBattleplan = (battleplan, index) => <div id={Styles.container} key={index}>
+        <button key={battleplan.id} id={Styles.battleplan} onClick={handleChooseBattleplan(battleplan)}>{battleplan.title}</button>
+        <button id={Styles.icon} onClick={handleChooseBattleplanInfo(battleplan)}><img src={Info} alt="" /></button>
     </div>
     
-    const renderRandomButton = () => <button id='chooseBattleplanRandomButton' onClick={handleClickRandom}>Random Battleplan</button>
+    const renderRandomButton = () => <button id={Styles.randomButton} onClick={handleClickRandom}>Random Battleplan</button>
 
     return <div id='column' className='Chapter'>
         {battleplans && battleplans.map(renderBattleplan)}

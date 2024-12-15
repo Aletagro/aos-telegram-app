@@ -1,4 +1,4 @@
-#singlePlayerBattleplan {
+#battleplan {
     background: #ECECEC;
     color: black;
     border-radius: 4px;
@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
 }
-#singlePlayerInfoContainer {
+#infoContainer {
     display: flex;
     gap: 8px;
 }

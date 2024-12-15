@@ -1,8 +1,6 @@
-import React from 'react';
-import {singlePlayer} from '../utilities/appState';
+import React from 'react'
+import {singlePlayer} from '../utilities/appState'
 import Turn from './Turn'
-
-import './styles/Turn.css';
 
 const Turns = ({round, onUpdate}) => {
     const roundCount = singlePlayer.rounds.length

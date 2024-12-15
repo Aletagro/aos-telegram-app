@@ -4,7 +4,7 @@ import {singlePlayer} from '../utilities/appState'
 import GameResultPlayer from './GameResultPlayer'
 import GameResultStatistic from './GameResultStatistic'
 
-import './styles/GameResult.css'
+import Styles from './styles/GameResult.module.css'
 
 const GameResult = ({onUpdate}) => {
     const winnerIndex = singlePlayer.firstPlayer.vp === singlePlayer.secondPlayer.vp
@@ -39,16 +39,16 @@ const GameResult = ({onUpdate}) => {
     }
 
     return <div id='column' className='Chapter'>
-        <div id='gameResultContainer'>
+        <div id={Styles.container}>
             <GameResultPlayer player='firstPlayer' gameResult={gameResultText.firstPlayer} />
             <GameResultPlayer player='secondPlayer' gameResult={gameResultText.secondPlayer} />
         </div>
-        <b id='gameResultStatistics'>Statistics</b>
-        <div id='gameResultContainer'>
+        <b id={Styles.statistics}>Statistics</b>
+        <div id={Styles.container}>
             <GameResultStatistic player='firstPlayer' />
             <GameResultStatistic player='secondPlayer' />
         </div>
-        <button id='singlePlayerBottomButton' onClick={handleClickNewGame}>Start New Game</button>
+        <button id={Styles.bottomButton} onClick={handleClickNewGame}>Start New Game</button>
     </div>
 }
 

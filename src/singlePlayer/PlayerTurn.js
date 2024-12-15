@@ -1,9 +1,9 @@
-import React from 'react';
-import {useNavigate} from 'react-router-dom';
-import {singlePlayer} from '../utilities/appState';
+import React from 'react'
+import {useNavigate} from 'react-router-dom'
+import {singlePlayer} from '../utilities/appState'
 import Checkbox from '../components/Checkbox'
 
-import './styles/Turn.css';
+import Styles from './styles/Turn.module.css'
 
 const PlayerTurn = ({player, round, onUpdate}) => {
     const navigate = useNavigate()
@@ -42,25 +42,25 @@ const PlayerTurn = ({player, round, onUpdate}) => {
         onUpdate()
     }
 
-    const renderScoreParam = (param, index) => <div key={param.id} id='scoreParamContainer'>
-        <p id='scoreParamTitle'>{param.title}</p>
+    const renderScoreParam = (param, index) => <div key={param.id} id={Styles.scoreParamContainer}>
+        <p id={Styles.scoreParamTitle}>{param.title}</p>
         <Checkbox onClick={handleChangeParam(param, index)} checked={param.completed} />
     </div>
 
-    return <div id='currentRoundSubContainer'>
-        <p id='turnName'>{player === 'firstPlayer' ? '1st' : '2nd'} Player</p>
-        <button id={disabledButton ? 'turnTacticsDisabledButton' : 'turnTacticsButton'} disabled={disabledButton} onClick={handleChooseTactics(player)}>
+    return <div id={Styles.currentRoundSubContainer}>
+        <p id={Styles.name}>{player === 'firstPlayer' ? '1st' : '2nd'} Player</p>
+        <button id={disabledButton ? Styles.tacticsDisabledButton : Styles.tacticsButton} disabled={disabledButton} onClick={handleChooseTactics(player)}>
             {singlePlayer.rounds[roundNumber][player].tactics?.name || 'Choose Tactics'}
         </button>
-        <div id='turnSubContainer'>
+        <div id={Styles.subContainer}>
             {singlePlayer.rounds[roundNumber][player].score.map(renderScoreParam)}
-            <div id='turnSeparator' />
-            <div id='scoreParamContainer'>
+            <div id={Styles.separator} />
+            <div id={Styles.scoreParamContainer}>
                 <p>This turn VP</p>
                 <p>{singlePlayer.rounds[roundNumber][player].vp} VP</p>
             </div>
             {singlePlayer.rounds[roundNumber][player].objectiveVp > maxForObjectives
-                ? <p id='scoreParamContainer'>VP from objectives max 6</p>
+                ? <p id={Styles.scoreParamContainer}>VP from objectives max 6</p>
                 : null
             }
         </div>

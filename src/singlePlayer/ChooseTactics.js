@@ -1,10 +1,10 @@
-import React from 'react';
-import {useNavigate, useLocation} from 'react-router-dom';
+import React from 'react'
+import {useNavigate, useLocation} from 'react-router-dom'
 import Constants from '../Constants'
-import {singlePlayer} from '../utilities/appState';
+import {singlePlayer} from '../utilities/appState'
 import {replaceAsterisks, setTacticColor} from '../utilities/utils'
 
-import './styles/ChooseTactics.css';
+import Styles from './styles/ChooseTactics.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -24,9 +24,9 @@ const ChooseTactics = () => {
 
     const renderTactic = (tactic) => {
         const color = setTacticColor(tactic.textContent)
-        return <button key={tactic.id} id='chooseTactics' style={{border: `1px solid ${color}`}} onClick={handleChooseTactics(tactic)}>
-            <b id='chooseTacticsTitle' style={{background: color}}>{tactic.title}</b>
-            <p id='chooseTacticsText'>{replaceAsterisks(tactic.textContent)}</p>
+        return <button key={tactic.id} id={Styles.container} style={{border: `1px solid ${color}`}} onClick={handleChooseTactics(tactic)}>
+            <b id={Styles.title} style={{background: color}}>{tactic.title}</b>
+            <p id={Styles.text}>{replaceAsterisks(tactic.textContent)}</p>
         </button>
     }
     

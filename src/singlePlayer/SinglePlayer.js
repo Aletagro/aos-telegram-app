@@ -7,7 +7,7 @@ import PlayerInfo from './PlayerInfo'
 import GameResult from './GameResult'
 import Info from '../icons/info.svg'
 
-import './styles/SinglePlayer.css'
+import Styles from './styles/SinglePlayer.module.css'
 
 const SinglePlayer = () => {
     const navigate = useNavigate()
@@ -25,11 +25,11 @@ const SinglePlayer = () => {
         ? <GameResult onUpdate={handleUpdate} />
         : singlePlayer.gameStarted
             ? <div id='column' className='Chapter'>
-                <button id='singlePlayerBattleplan' onClick={handleClickBattleplan}>
+                <button id={Styles.battleplan} onClick={handleClickBattleplan}>
                     <p>Battleplan: <b>{singlePlayer.battleplan.name}</b></p>
                     <img src={Info} alt="" />
                 </button>
-                <div id='singlePlayerInfoContainer'>
+                <div id={Styles.infoContainer}>
                     <PlayerInfo player='firstPlayer' onUpdate={handleUpdate} />
                     <PlayerInfo player='secondPlayer' onUpdate={handleUpdate} />
                 </div>

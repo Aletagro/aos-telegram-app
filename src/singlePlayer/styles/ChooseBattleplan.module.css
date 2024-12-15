@@ -1,4 +1,4 @@
-#chooseBattleplanContainer {
+#container {
     background: #ECECEC;
     border-radius: 4px;
     border-width: 0px;
@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: space-between;
 }
-#chooseBattleplan {
+#battleplan {
     background: transparent;    
     border-width: 0px;
     padding: 16px;
@@ -17,7 +17,7 @@
     font-family: 'Minion Pro Bold';
     flex: 1;
 }
-#chooseBattleplanRandomButton {
+#randomButton {
     background: rgb(46, 46, 49);
     color: white;
     border-radius: 4px;
@@ -29,7 +29,7 @@
     text-align: start;
     font-family: 'Minion Pro Bold';
 }
-#chooseBattleplanIcon {
+#icon {
     border-width: 0px;
     background: transparent;
     position: relative;
