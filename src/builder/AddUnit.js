@@ -172,7 +172,7 @@ const AddUnit = () => {
         builderFilters.hidePotentialLegends = !hidePotentialLegends
     }
 
-    const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit/>
+    const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit isRegimentsOfRenown={isRegimentsOfRenown}/>
 
     const renderUnitsType = (type) => <div id={Styles.typeContainer} key={type.title}>
         <Accordion defaultExpanded={true}>

@@ -13,7 +13,7 @@ import Styles from './styles/UnitRow.module.css'
 
 const dataBase = require('../dataBase.json')
 
-const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId}) => {
+const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown}) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
     const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
@@ -76,7 +76,11 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     }
 
     const handleClickInfo = () => {
-        navigate('warscroll', {state: {title: unit.name, unit}})
+        if (isRegimentsOfRenown) {
+            navigate('regimentOfRenown', {state: {title: unit.name, regiment: unit}})
+        } else {
+            navigate('warscroll', {state: {title: unit.name, unit}})
+        }
     }
 
     const renderChooseOptionButton = (option) => <button id={Styles.chooseEnhancementButton} onClick={handleChooseOption(option)}>

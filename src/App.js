@@ -79,6 +79,9 @@ function App() {
       <Route path={'mainRules/catalog/army/builder/addUnit'} element={<AddUnit />} />
       <Route path={'mainRules/catalog/army/builder/addUnit/warscroll'} element={<Warscroll />} />
       <Route path={'mainRules/catalog/army/builder/addUnit/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/catalog/army/builder/addUnit/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'mainRules/catalog/army/builder/addUnit/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/catalog/army/builder/addUnit/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
       <Route path={'mainRules/catalog/army/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
       <Route path={'mainRules/catalog/army/builder/chooseOption'} element={<ChooseOption />} />
       <Route path={'mainRules/catalog/army/builder/chooseWeapon'} element={<ChooseWeapon />} />
@@ -122,6 +125,9 @@ function App() {
       <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit'} element={<AddUnit />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit/warscroll'} element={<Warscroll />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit/regimentOfRenown'} element={<RegimentOfRenown />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit/regimentOfRenown/warscroll'} element={<Warscroll />} />
+      <Route path={'chooseGrandAlliance/chooseFaction/builder/addUnit/regimentOfRenown/warscroll/calculator'} element={<Calculator />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseEnhancement'} element={<ChooseEnhancement />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseOption'} element={<ChooseOption />} />
       <Route path={'chooseGrandAlliance/chooseFaction/builder/chooseWeapon'} element={<ChooseWeapon />} />
