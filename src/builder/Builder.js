@@ -119,7 +119,7 @@ const Builder = () => {
 
     const handleChooseEnhancement = (name, type, data, isInfo) => () => {
         if (type === 'factionTerrain' && isInfo) {
-            navigate('warscroll', {state: {unit: data[0]}})
+            navigate('warscroll', {state: {unit: data.find(terrain => terrain.name === roster.factionTerrain)}})
         } else {
             navigate('chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo}})
         }
@@ -209,7 +209,7 @@ const Builder = () => {
     const renderEnhancement = (name, type, data) => data.length === 1
         ? <div id={Styles.secondAddButton}>
             <p>{data[0].name}</p>
-            <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
+            <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img className={Styles.icon} src={Info} alt="" /></button>
         </div>
         : <div id={Styles.addButton}>
             <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
@@ -218,7 +218,7 @@ const Builder = () => {
                     : `Choose ${name}`
                 }
             </button>
-            {type === 'manifestationLore'
+            {type === 'manifestationLore' || !roster[type]
                 ? null
                 : <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
             }
