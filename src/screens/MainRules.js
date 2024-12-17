@@ -18,6 +18,7 @@ const MainRules = () => {
             {Constants.grandAlliances.map(renderRow)}
             <Row title='Regiment Of Renown' navigateTo='regimentOfRenownList' />
             <Row title='Manifestations' navigateTo='manifestations' />
+            <Row title='Legends' navigateTo='legends' />
         </div>
     </>
 }

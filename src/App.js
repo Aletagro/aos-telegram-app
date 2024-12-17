@@ -17,6 +17,8 @@ import RuleChapters from './screens/RuleChapters';
 import Manifestations from './screens/Manifestations';
 import Rules from './screens/Rules';
 import Battleplan from './screens/Battleplan';
+import Legends from './screens/Legends';
+import LegendUnits from './screens/LegendUnits';
 import Header from './components/Header';
 import Lists from './builder/Lists';
 import ChooseGrandAlliance from './builder/ChooseGrandAlliance';
@@ -101,6 +103,10 @@ function App() {
       <Route path={'mainRules/manifestations'} element={<Manifestations />} />
       <Route path={'mainRules/manifestations/warscroll'} element={<Warscroll />} />
       <Route path={'mainRules/manifestations/warscroll/calculator'} element={<Calculator />} />
+      <Route path={'mainRules/legends'} element={<Legends />} />
+      <Route path={'mainRules/legends/legendUnits'} element={<LegendUnits />} />
+      <Route path={'mainRules/legends/legendUnits/warscroll'} element={<Warscroll />} />
+      <Route path={'mainRules/legends/legendUnits/warscroll/calculator'} element={<Calculator />} />
       <Route path={'lists'} element={<Lists />} />
       <Route path={'builder'} element={<Builder />} />
       <Route path={'builder/armyInfo'} element={<ArmyInfo />} />
