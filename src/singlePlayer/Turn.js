@@ -6,7 +6,6 @@ import {getNewRound} from '../utilities/utils'
 import Styles from './styles/Turn.module.css'
 
 const Turn = ({round, onUpdate}) => {
-    const disableNextRoundButton = !Boolean(singlePlayer.rounds[singlePlayer.currentRound - 1]?.firstPlayer.tactics.id && singlePlayer.rounds[singlePlayer.currentRound - 1]?.secondPlayer.tactics.id)
 
     const getUnderdogCP = (player) => singlePlayer.underdog === player ? 5 : 4
 
@@ -30,7 +29,7 @@ const Turn = ({round, onUpdate}) => {
             <PlayerTurn player='secondPlayer' round={round} onUpdate={onUpdate} />
         </div>
         {singlePlayer.currentRound === round
-            ? <button disabled={disableNextRoundButton} id={disableNextRoundButton ? Styles.disabledBottomButton : Styles.bottomButton} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
+            ? <button id={Styles.bottomButton} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
             : null
         }
     </div>
