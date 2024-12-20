@@ -113,7 +113,9 @@ const Warscroll = () => {
 
     const renderCharacteristic = (characteristic) => <div key={characteristic.value} id={Styles.characteristicSubContainer} style={{width: '20%'}}>
         <div id={Styles.characteristicValueContainer}>
-            <p id={Styles.characteristicValue}>{characteristic.value}</p>
+            <p id={characteristic.value.length > 3 ? Styles.characteristicLongValue : Styles.characteristicValue}>
+                {characteristic.value}
+            </p>
         </div>
         <p id={Styles.characteristicTitle}>{characteristic.title}</p>
     </div>

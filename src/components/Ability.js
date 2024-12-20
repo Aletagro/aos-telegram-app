@@ -37,7 +37,7 @@ ${keywords.length ? `Keywords: ${keywords.map((keyword) => keyword.name).join(',
         <button id={Styles.ability} onClick={handlleClick} style={{border: `1px solid ${borderColor}`}}>
             <div id={Styles.header} style={{background: borderColor}}>
                 <b id={Styles.headerText}>{ability.phaseDetails}</b>
-                {ability.cpCost && !isRegimentOfRenown ? <b id={Styles.cpCost}>{`${ability.cpCost} CP`}</b> : null}
+                {ability.cpCost && !isRegimentOfRenown ? <b id={Styles.cpCost}>{ability.cpCost}&nbsp;CP</b> : null}
                 {castingValue
                     ? <div id={Styles.castingValueContainer}>
                         <p id={Styles.castingValue}>{isRegimentOfRenown ? ability.cpCost : ability.castingValue}</p>

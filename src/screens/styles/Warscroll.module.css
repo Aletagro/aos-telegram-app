@@ -112,8 +112,16 @@
 
 #characteristicValue {
   color: white;
-  padding: 6px;
+  padding-top: 6px;
   font-size: 28px;
+  font-family: 'Minion Pro Bold';
+  text-align: center;
+}
+
+#characteristicLongValue {
+  color: white;
+  padding-top: 12px;
+  font-size: 16px;
   font-family: 'Minion Pro Bold';
   text-align: center;
 }
