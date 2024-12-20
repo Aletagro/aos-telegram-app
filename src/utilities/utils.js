@@ -129,6 +129,17 @@ export const getWarnings = (roster) => {
     if (roster.allegiance === 'Disciples of Tzeentch' && !roster.spellsLore) {
         warnings.push('Choose Spells Lore')
     }
+    let hasLegends = false
+    roster.regiments.forEach((regiment) => {
+        regiment.units.forEach(unit => {
+            if (unit.isLegends) {
+                hasLegends = true
+            }
+        })
+    })
+    if (hasLegends) {
+        warnings.push('You have Legends Unit in your Army')
+    }
     return warnings
 }
 

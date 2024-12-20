@@ -33,7 +33,8 @@ export const search = {
 }
 
 export const builderFilters = {
-    hidePotentialLegends: false
+    hidePotentialLegends: false,
+    showLegends: false
 }
 
 export const singlePlayer = {
