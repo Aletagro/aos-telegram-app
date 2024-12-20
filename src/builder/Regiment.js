@@ -27,7 +27,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     }
 
     const handleAddUnit = (regiment, title, index) => () => {
-        navigate('addUnit', {state: {
+        navigate('/addUnit', {state: {
             heroId: regiment.heroId,
             regimentId: index,
             alliganceId,
@@ -36,7 +36,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     }
 
     const handleClickUnit = (unit) => {
-        navigate('warscroll', {state: {title: unit.name, unit}})
+        navigate('/warscroll', {state: {title: unit.name, unit}})
     }
 
     const handleDeleteUnit = (unit, unitIndex) => {

@@ -18,7 +18,7 @@ const SinglePlayer = () => {
     }
 
     const handleClickBattleplan = () => {
-        navigate('battleplan', {state: {battleplan: singlePlayer.battleplan, title: singlePlayer.battleplan.name}})
+        navigate('/battleplan', {state: {battleplan: singlePlayer.battleplan, title: singlePlayer.battleplan.name}})
     }
 
     return singlePlayer.gameOver

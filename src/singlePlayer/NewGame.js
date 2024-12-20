@@ -11,7 +11,7 @@ const NewGame = ({onUpdate}) => {
     const disabledStartButton = !singlePlayer.battleplan.name
     
     const handleChooseBattleplan = () => {
-        navigate('chooseBattleplan', {state: {title: 'Choose Battleplan'}})
+        navigate('/chooseBattleplan', {state: {title: 'Choose Battleplan'}})
     }
 
     const handleClickStart = () => {

@@ -81,11 +81,11 @@ const Builder = () => {
     }, [])
 
     const handleClickAuxiliaryUnit = (unit) => {
-        navigate('warscroll', {state: {title: unit.name, unit}})
+        navigate('/warscroll', {state: {title: unit.name, unit}})
     }
 
     const handleClickRegimentOfRenown = (regiment) => {
-        navigate('regimentOfRenown', {state: {title: regiment.name, regiment}})
+        navigate('/regimentOfRenown', {state: {title: regiment.name, regiment}})
     }
 
     const handleDeleteAuxiliaryUnit = (unit, index) => {
@@ -102,7 +102,7 @@ const Builder = () => {
     }
 
     const handleAddAuxiliaryUnit = () => {
-        navigate('addUnit', {state: {
+        navigate('/addUnit', {state: {
             isAuxiliary: true,
             alliganceId: _alliganceId,
             title: 'Add Auxiliary Unit'
@@ -110,7 +110,7 @@ const Builder = () => {
     }
 
     const handleAddRegimentsOfRenown = () => {
-        navigate('addUnit', {state: {
+        navigate('/addUnit', {state: {
             isRegimentsOfRenown: true,
             alliganceId: _alliganceId,
             title: 'Add Regiments Of Renown'
@@ -119,9 +119,9 @@ const Builder = () => {
 
     const handleChooseEnhancement = (name, type, data, isInfo) => () => {
         if (type === 'factionTerrain' && isInfo) {
-            navigate('warscroll', {state: {unit: data.find(terrain => terrain.name === roster.factionTerrain)}})
+            navigate('/warscroll', {state: {unit: data.find(terrain => terrain.name === roster.factionTerrain)}})
         } else {
-            navigate('chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo}})
+            navigate('/chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo}})
         }
     }
 
@@ -147,7 +147,7 @@ const Builder = () => {
 
     const handleClickAllegiance = () => {
         const info = getInfo(Constants.armyEnhancements[0], {id: _alliganceId, name: roster.allegiance})
-        navigate('armyInfo', {state: {title: Constants.armyEnhancements[0].title, info, allegiance: {name: roster.allegiance}}})
+        navigate('/armyInfo', {state: {title: Constants.armyEnhancements[0].title, info, allegiance: {name: roster.allegiance}}})
     }
 
     const handleOpenModal = () => {setOpen(true)}

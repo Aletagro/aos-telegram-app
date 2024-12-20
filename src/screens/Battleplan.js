@@ -12,7 +12,6 @@ const Battleplan = () => {
     info.sort((a, b) => a.displayOrder - b.displayOrder)
     const imageUrl = info.find(rule => rule.contentType === 'image')?.imageUrl
     const twist = info.find(rule => rule.contentType === 'text')?.textContent
-
     return <>
         <img src={imageUrl} alt='battleplan' width='100%' />
         <div id='column' className='Chapter'>

@@ -1,5 +1,6 @@
-import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import React from 'react'
+import {useNavigate} from 'react-router-dom'
+import {navigationState} from '../utilities/appState'
 
 import Styles from './styles/Lists.module.css'
 
@@ -22,11 +23,12 @@ const Lists = () => {
     const navigate = useNavigate()
 
     const handleClick = ({grandAlliance}) => {
-        navigate('chooseGrandAlliance')
+        navigate('/chooseGrandAlliance')
     }
 
     const handleNavigateToRoster = (list) => () => {
-        navigate('builder', {state: {alliganceId: list.alliganceId, rosterId: list.id}})
+        navigate('/builder', {state: {alliganceId: list.alliganceId, rosterId: list.id}})
+        navigationState.isBuilder = true
     }
 
     const renderList = (list) => <button id={Styles.button} onClick={handleNavigateToRoster(list)} key={list.id}>

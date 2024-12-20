@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
-import {roster} from '../utilities/appState'
+import {roster, navigationState} from '../utilities/appState'
 import BuilderRow from './BuilderRow'
 import {sortByName} from '../utilities/utils'
 import HeaderImage from '../components/HeaderImage'
@@ -24,6 +24,7 @@ const ChooseFaction = () => {
 
     const handleClick = ({allegiance}) => {
         roster.allegiance = allegiance.name
+        navigationState.isBuilder = true
     }
     
     const renderRow = (allegiance) => <BuilderRow

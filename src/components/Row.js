@@ -8,7 +8,7 @@ const Row = ({title, subtitle, image, navigateTo, state, onClick}) => {
     const navigate = useNavigate()
 
     const handleClick = () => {
-        navigate(navigateTo, {state: {title, ...state}})
+        navigate(`/${navigateTo}`, {state: {title, ...state}})
         if (onClick) {
             onClick()
         }

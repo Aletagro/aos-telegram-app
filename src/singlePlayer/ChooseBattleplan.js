@@ -22,7 +22,7 @@ const ChooseBattleplan = () => {
     }
 
     const handleChooseBattleplanInfo = (battleplan) => () => {
-        navigate('battleplan', {state: {battleplan, title: battleplan.title}})
+        navigate('/battleplan', {state: {battleplan, title: battleplan.title}})
     }
 
     const handleClickRandom = () => {

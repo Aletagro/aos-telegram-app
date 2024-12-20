@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
-import {roster} from '../utilities/appState'
+import {roster, navigationState} from '../utilities/appState'
 import {replaceAsterisks, getInfo} from '../utilities/utils'
 
 import Styles from './styles/Army.module.css'
@@ -68,6 +68,7 @@ const Army = () => {
     const handleClickBuilder = () => {
         roster.grandAlliance = grandAlliance
         roster.allegiance = _allegiance.name
+        navigationState.isBuilder = true
     }
 
     const renderRow = (item) => <Row

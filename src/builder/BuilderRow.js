@@ -10,7 +10,7 @@ const BuilderRow = ({title, onClick, state, navigateTo}) => {
         if (onClick) {
             onClick(state)
         }
-        navigate(navigateTo, {state: {title, ...state}})
+        navigate(`/${navigateTo}`, {state: {title, ...state}})
     }
 
     return <div className='container'>

@@ -8,7 +8,7 @@ import Styles from './styles/Main.module.css'
 const Main = () => {
     // const navigate = useNavigate()
 
-    // const handleNavigateToTest = () => {navigate('developer')}
+    // const handleNavigateToTest = () => {navigate('/developer')}
 
     return <>
         <HeaderImage src='https://kartinki.pics/uploads/posts/2022-08/thumbs/1660848806_7-kartinkin-net-p-varkhammer-fentezi-malekit-oboi-krasivo-8.jpg' alt='main' />

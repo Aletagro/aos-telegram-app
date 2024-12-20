@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {roster, search} from '../utilities/appState'
+import {roster, search, navigationState} from '../utilities/appState'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
 import Export from '../icons/export.svg'
@@ -13,10 +13,7 @@ const Header = () => {
     const {pathname, state} = useLocation()
 
     const clearAppState = () => {
-        if (pathname === '/chooseGrandAlliance/chooseFaction/builder' ||
-            pathname === '/mainRules/catalog/army/builder' ||
-            pathname === '/mainRules/catalog/army/armyOfRenown/builder'
-        ) {
+        if (pathname === '/builder') {
             roster.regiments = [{units: [], heroId: '', points: 0}]
             roster.generalRegimentIndex = null
             roster.battleFormation = null
@@ -30,6 +27,7 @@ const Header = () => {
             roster.auxiliaryUnits = []
             roster.regimentOfRenown = null
             roster.battleFormation = ''
+            navigationState.isBuilder = false
         } else if (pathname === '/search') {
             search.value = ''
             search.warscrolls = []
@@ -54,14 +52,12 @@ const Header = () => {
         switch (pathname) {
             case '/search':
                 return null
-            case '/chooseGrandAlliance/chooseFaction/builder':
-            case '/mainRules/catalog/army/builder':
-            case '/mainRules/catalog/army/armyOfRenown/builder':
+            case '/builder':
                 return <button id={Styles.rightButton} onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
             default:
                 return <div id={Styles.rightButtons}>
                     <button id={Styles.rightButton} onClick={handleNavigateToSearch}><img src={Search} alt='' /></button>
-                    {pathname === '/' || pathname.includes('builder') || pathname === '/export'
+                    {pathname === '/' || pathname === '/export' || navigationState.isBuilder
                         ? null
                         : <button id={Styles.rightButton} onClick={handleNavigateToHome}><img src={Home} alt='' /></button>
                     }

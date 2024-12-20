@@ -52,19 +52,19 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
 
     const handleChooseEnhancement = (name, type) => () => {
         const data = type === 'artefact' ? artefacts : heroicTraits
-        navigate('chooseEnhancement', {state: {title: name, data, type, unitIndex, regimentIndex, isAuxiliary}})
+        navigate('/chooseEnhancement', {state: {title: name, data, type, unitIndex, regimentIndex, isAuxiliary}})
     }
 
     const handleChooseAdditionalOption = (option) => () => {
-        navigate('chooseEnhancement', {state: {title: option.name, data: option, type: option.name, unitIndex, regimentIndex, isAuxiliary, isAdditionalOption: true}})
+        navigate('/chooseEnhancement', {state: {title: option.name, data: option, type: option.name, unitIndex, regimentIndex, isAuxiliary, isAdditionalOption: true}})
     }
 
     const handleChooseOption = (optionGroup) => () => {
-        navigate('chooseOption', {state: {title: camelCaseToWords(capitalizeFirstLetter(optionGroup.optionGroupType)), optionGroup, unitIndex, regimentIndex, isAuxiliary}})
+        navigate('/chooseOption', {state: {title: camelCaseToWords(capitalizeFirstLetter(optionGroup.optionGroupType)), optionGroup, unitIndex, regimentIndex, isAuxiliary}})
     }
 
     const handleWeaponOption = () => {
-        navigate('chooseWeapon', {state: {
+        navigate('/chooseWeapon', {state: {
             title: 'Weapon Options',
             selectedWeaponOptions: unit.weaponOptions,
             weaponOptions,
@@ -77,9 +77,9 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
 
     const handleClickInfo = () => {
         if (isRegimentsOfRenown) {
-            navigate('regimentOfRenown', {state: {title: unit.name, regiment: unit}})
+            navigate('/regimentOfRenown', {state: {title: unit.name, regiment: unit}})
         } else {
-            navigate('warscroll', {state: {title: unit.name, unit}})
+            navigate('/warscroll', {state: {title: unit.name, unit}})
         }
     }
 

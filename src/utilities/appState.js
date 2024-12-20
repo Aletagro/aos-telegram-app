@@ -53,3 +53,7 @@ export const singlePlayer = {
 export const calc = {
     units: [{...Constants.newCalcUnit}]
 }
+
+export const navigationState = {
+    isBuilder: false
+}

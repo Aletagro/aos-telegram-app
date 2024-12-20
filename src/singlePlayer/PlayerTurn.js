@@ -12,7 +12,7 @@ const PlayerTurn = ({player, round, onUpdate}) => {
     const maxForObjectives = singlePlayer.rounds[roundNumber][player].maxForObjectives
 
     const handleChooseTactics = (player) => () => {
-        navigate('chooseTactics', {state: {title: 'Choose Tactics', player, alliance: singlePlayer[player].alliance.name}})
+        navigate('/chooseTactics', {state: {title: 'Choose Tactics', player, alliance: singlePlayer[player].alliance.name}})
     }
 
     const handleChangeParam = (param, index) => () => {

@@ -58,7 +58,7 @@ const Warscroll = () => {
             critOn: Constants.critOn[2]
         }))
         calc.units = [{name: unit.name, weapons: weaponsForCalculator}]
-        navigate('calculator', {state: {weapons: weaponsForCalculator, title: 'Damage Calculator'}})
+        navigate('/calculator', {state: {weapons: weaponsForCalculator, title: 'Damage Calculator'}})
     }
 
     const renderCellTitle = (cell, index) => <p key={index} id={Styles.cellTitle}>{cell}</p>
