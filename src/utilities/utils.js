@@ -1,6 +1,8 @@
 import parse from 'html-react-parser';
 import Constants from '../Constants'
 
+import includes from 'lodash/includes'
+
 const dataBase = require('../dataBase.json')
 
 export const sortByName = (array) => 
@@ -50,6 +52,7 @@ export const getErrors = (roster) => {
     let heroicTraitsCount = 0
     let atrefactsCount = 0
     let ensorcelledBannersCount = 0
+    let hasWarmasterInRegiments = []
     roster.regiments.forEach((regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
@@ -72,6 +75,9 @@ export const getErrors = (roster) => {
             if (unit.points * 2 > roster.pointsLimit) {
                 errors.push(`${unit.name} cost more than half the army`)
             }
+            if (unit.referenceKeywords.includes('Warmaster')) {
+                hasWarmasterInRegiments.push(index)
+            }
         })
     })
     if (heroicTraitsCount > 1) {
@@ -82,6 +88,9 @@ export const getErrors = (roster) => {
     }
     if (ensorcelledBannersCount > 1) {
         errors.push(`You have ${ensorcelledBannersCount} Ensorcelled Banners`)
+    }
+    if (hasWarmasterInRegiments.length && !includes(hasWarmasterInRegiments, roster.generalRegimentIndex)) {
+        errors.push("You have a Warmaster hero, but he isn't your general")
     }
     roster.auxiliaryUnits.forEach(unit => {
         if (unit.referenceKeywords.includes('Unique')) {
