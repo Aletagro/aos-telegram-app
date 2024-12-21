@@ -72,7 +72,6 @@ ${roster.points}/${roster.pointsLimit} Pts
         unit[additionalOption] ? <p>&#8226; {additionalOption}: {unit[additionalOption]}</p> : null
 
     const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
-        {console.log(unit)}
         <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost || 0} points)</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}

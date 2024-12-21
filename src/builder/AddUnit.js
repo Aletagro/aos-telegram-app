@@ -99,6 +99,7 @@ const AddUnit = () => {
         // ищем юнитов из опций с one и zeroToOne
         if (regimentOptionsOne.length) {
             const unitsInRegimentIds = roster.regiments[regimentId].units.map(unit => unit.id)
+            unitsInRegimentIds.shift()
             const onlyOneIds = roster.regiments[regimentId].units.map(unit => unit.onlyOne).filter(Boolean)
             regimentOptionsOne.forEach(option => {
                 if (!onlyOneIds.find(id => id === option.id)) {
@@ -131,7 +132,6 @@ const AddUnit = () => {
         }
         const uniqUnits = uniqBy(units, 'id')
         units = uniqUnits
-        console.log(units)
         hasPotentialLegends = setHasPonentialLegends(units)
         if (hasPotentialLegends && hidePotentialLegends) {
             units = filterPonentialLegends(units)
