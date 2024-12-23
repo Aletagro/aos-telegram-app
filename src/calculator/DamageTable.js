@@ -15,7 +15,7 @@ const DamageTable = ({units, target}) => {
     const getDamage = (weapon) => {
         const attacks = weapon.models * weapon.attacks + (weapon.champion ? 1 : 0)
         const hited = attacks * ((7 - weapon.toHit + (weapon.doubleHit ? weapon.critOn?.modificator : 0) - (weapon.autoWound ? weapon.critOn?.modificator : 0) - (weapon.mortal ? 1 : 0)) / 6)
-        const autoWounded = weapon.autoWound ? (attacks / 6) : 0
+        const autoWounded = weapon.autoWound ? (attacks / 6) * weapon.critOn?.modificator : 0
         const wounded = (hited * ((7 - weapon.toWound) / 6)) + autoWounded
         const damage = wounded * weapon.damage
         const resultBeforeSave = target.ward ? damage * ((target.ward - 1) / 6) : damage
