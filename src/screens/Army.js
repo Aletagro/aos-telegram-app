@@ -16,7 +16,7 @@ const Army = () => {
     if (!allegiance) {
         _allegiance = dataBase.data.faction_keyword.find(faction => faction.id === allegianceId)
     }
-    let items = []
+    let items = [{title: 'Warscrolls', screen: 'units'}]
     let rosterOptions
     if (isArmyOfRenown) {
         const publications = dataBase.data.publication.filter(
@@ -33,12 +33,6 @@ const Army = () => {
 
         rosterOptions = dataBase.data.bullet_point.filter(item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
-        // у Legion of the First Prince есть варскроллы
-        if (_allegiance.id === '3f9ccc30-1319-4a06-bb97-7b83373ce53f') {
-            items.push({title: 'Warscrolls', screen: 'units'})
-        }
-    } else {
-        items.push({title: 'Warscrolls', screen: 'units'})
     }
 
     // otherEnhancements

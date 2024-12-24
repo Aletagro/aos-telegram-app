@@ -67,7 +67,14 @@ const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
 
     const handleAddWeapon = () => {
         const newUnitWeapons = [...calc.units[index].weapons]
-        newUnitWeapons.push(getCalcWeapon())
+        let weapon = null
+        if (newUnitWeapons.length) {
+            weapon = {
+                models: newUnitWeapons[newUnitWeapons.length - 1]?.models,
+                critOn: {modificator: 1, title: '6+'}
+            }
+        }
+        newUnitWeapons.push(getCalcWeapon(weapon))
         calc.units[index].weapons = newUnitWeapons
         onUpdate()
     }
