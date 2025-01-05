@@ -7,10 +7,10 @@ import Styles from './styles/Rules.module.css'
 const dataBase = require('../dataBase.json')
 
 const Rules = ({info}) => {
-    const {paragraph} = useLocation().state
+    const {paragraph, rules} = useLocation().state
     const _paragraph = info || paragraph
-    const rules = dataBase.data.rule_container.filter((group) => group.ruleSectionId === _paragraph.id)
-    rules.sort((a, b) => a.displayOrder - b.displayOrder)
+    const _rules = rules || dataBase.data.rule_container.filter((group) => group.ruleSectionId === _paragraph.id)
+    _rules.sort((a, b) => a.displayOrder - b.displayOrder)
 
     const renderRuleComponent = (rule) => <Rule key={rule.id} rule={rule} />
 
@@ -25,7 +25,7 @@ const Rules = ({info}) => {
     }
 
     return <div id={Styles.container}>
-        {rules && rules.map(renderRule)}
+        {_rules && _rules.map(renderRule)}
     </div>
 }
 

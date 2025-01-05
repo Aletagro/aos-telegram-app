@@ -20,7 +20,7 @@ const Units = () => {
     const renderRow = (unit) => <Row
         key={unit?.id}
         title={unit?.name}
-        subtitle={unit?.points ? `${unit?.points} pts` : undefined}
+        rightText={unit?.points ? `${unit?.points} pts` : undefined}
         image={unit?.rowImage}
         navigateTo='warscroll'
         state={{unit}}

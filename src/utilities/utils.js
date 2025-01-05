@@ -5,8 +5,9 @@ import includes from 'lodash/includes'
 
 const dataBase = require('../dataBase.json')
 
-export const sortByName = (array) => 
-    array.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+export const sortByName = (array, param) => param
+    ? array.sort((a,b) => (a[param] > b[param]) ? 1 : ((b[param] > a[param]) ? -1 : 0))
+    : array.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
 
 export const unitsSortesByType = (units) => {
     const getUnitsByType = (type) => {

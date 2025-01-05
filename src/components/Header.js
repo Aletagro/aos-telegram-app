@@ -30,7 +30,9 @@ const Header = () => {
             navigationState.isBuilder = false
         } else if (pathname === '/search') {
             search.value = ''
-            search.warscrolls = []
+            search.Warscrolls = []
+            search.Rules = []
+            search.Allegiances = []
         }
     }
 
