@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
-import Accordion from '@mui/joy/Accordion'
-import AccordionDetails from '@mui/joy/AccordionDetails'
-import AccordionSummary from '@mui/joy/AccordionSummary'
 import {roster, builderFilters} from '../utilities/appState'
-import Constants from '../Constants'
 import {unitsSortesByType, sortByName} from '../utilities/utils'
 import UnitRow from './UnitRow'
 import Checkbox from '../components/Checkbox'
+import Accordion from '../components/Accordion'
 
 import uniqBy from 'lodash/uniqBy'
 
@@ -181,16 +178,11 @@ const AddUnit = () => {
 
     const renderRow = (unit) => <UnitRow key={unit?.id} unit={unit} onClick={handleClick} isAddUnit isRegimentsOfRenown={isRegimentsOfRenown}/>
 
-    const renderUnitsType = (type) => <div id={Styles.typeContainer} key={type.title}>
-        <Accordion defaultExpanded={true}>
-            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
-                <h4 id={Styles.header}>{type.title}</h4>
-            </AccordionSummary>
-            <AccordionDetails>
-                {type.units.map(renderRow)}
-            </AccordionDetails>
-        </Accordion>
-    </div>
+    const renderUnitsType = (type) => <Accordion
+        title={type.title}
+        data={type.units}
+        renderItem={renderRow}
+    />
 
     return <div id='column' className='Chapter'>
         {hasPotentialLegends

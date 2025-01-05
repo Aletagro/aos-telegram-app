@@ -163,6 +163,14 @@ const Constants = {
         {
             id: 'dc211333-b689-4380-b0b6-eb6add5ac1f2',
             name: "The Summerking's Entourage"
+        },
+        {
+            id: "037eca6d-f114-406d-87bd-8f26087f69bb",
+            name: "Enforcers of the Tithe"
+        },
+        {
+            id: "95c48875-b067-4876-b128-515bcf0459dd",
+            name: "Goroan Scions"
         }
     ],
     calculatorAbilities: [

@@ -1,7 +1,14 @@
 import parse from 'html-react-parser';
 import Constants from '../Constants'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
+import indexOf from 'lodash/indexOf'
+import forEach from 'lodash/forEach'
+import replace from 'lodash/replace'
 import includes from 'lodash/includes'
+import lowerCase from 'lodash/lowerCase'
 
 const dataBase = require('../dataBase.json')
 
@@ -11,20 +18,20 @@ export const sortByName = (array, param) => param
 
 export const unitsSortesByType = (units) => {
     const getUnitsByType = (type) => {
-        const _units = units.filter(unit => unit?.referenceKeywords.includes(type.name) && (type.withoutHero ? !unit.referenceKeywords.includes('Hero') : true))
+        const _units = filter(units, unit => includes(unit?.referenceKeywords, type.name) && (type.withoutHero ? !includes(unit.referenceKeywords, 'Hero') : true))
         if (_units.length > 0) {
             sortByName(_units)
-            return {units: _units, title: type.name.replace(/,/g, '')}
+            return {units: _units, title: replace(type.name, /,/g, '')}
         } else {
             return null
         }
     }
-    return Constants.unitsTypes.map(getUnitsByType).filter(Boolean)
+    return filter(map(Constants.unitsTypes, getUnitsByType), Boolean)
 }
 
 export const regimentSortesByGrandAlliances = (regiments) => {
     const getRegimentByGrandAlliances = (grandAlliance) => {
-        const _regiments = regiments.filter(regiment => regiment.keywords.includes(grandAlliance.name))
+        const _regiments = filter(regiments, regiment => includes(regiment.keywords, grandAlliance.name))
         if (_regiments.length > 0) {
             sortByName(_regiments)
             return {regiments: _regiments, title: grandAlliance.name}
@@ -32,7 +39,7 @@ export const regimentSortesByGrandAlliances = (regiments) => {
             return null
         }
     }
-    return Constants.grandAlliances.map(getRegimentByGrandAlliances).filter(Boolean)
+    return filter(map(Constants.grandAlliances, getRegimentByGrandAlliances), Boolean)
 }
 
 export const getErrors = (roster) => {
@@ -54,14 +61,14 @@ export const getErrors = (roster) => {
     let atrefactsCount = 0
     let ensorcelledBannersCount = 0
     let hasWarmasterInRegiments = []
-    roster.regiments.forEach((regiment, index) => {
+    forEach(roster.regiments, (regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
         } else if (index !== roster.generalRegimentIndex && regiment.units.length > 4){
             errors.push(`In Regiment ${index + 1} you have more than 3 units`)
         }
         regiment.units.forEach(unit => {
-            if (unit.referenceKeywords.includes('Unique')) {
+            if (includes(unit.referenceKeywords, 'Unique')) {
                 uniqueUnits.push(unit.name)
             }
             if (unit.heroicTrait) {
@@ -76,7 +83,7 @@ export const getErrors = (roster) => {
             if (unit.points * 2 > roster.pointsLimit) {
                 errors.push(`${unit.name} cost more than half the army`)
             }
-            if (unit.referenceKeywords.includes('Warmaster')) {
+            if (includes(unit.referenceKeywords, 'Warmaster')) {
                 hasWarmasterInRegiments.push(index)
             }
         })
@@ -93,15 +100,15 @@ export const getErrors = (roster) => {
     if (hasWarmasterInRegiments.length && !includes(hasWarmasterInRegiments, roster.generalRegimentIndex)) {
         errors.push("You have a Warmaster hero, but he isn't your general")
     }
-    roster.auxiliaryUnits.forEach(unit => {
-        if (unit.referenceKeywords.includes('Unique')) {
+    forEach(roster.auxiliaryUnits, unit => {
+        if (includes(unit.referenceKeywords, 'Unique')) {
             uniqueUnits.push(unit.name)
         }
     })
-    const duplicateUniqueUnits = uniqueUnits.filter((unit, index, units) => {
-        return units.indexOf(unit) !== index;
+    const duplicateUniqueUnits = filter(uniqueUnits, (unit, index, units) => {
+        return indexOf(units, unit) !== index;
     })
-    duplicateUniqueUnits.forEach(unit => {
+    forEach(duplicateUniqueUnits, unit => {
         errors.push(`You have more then one ${unit}`)
     })
     return errors
@@ -114,19 +121,19 @@ export const getWarnings = (roster) => {
     }
     if (!roster.manifestationLore) {
         let hasWizard = false
-        roster.regiments.forEach((regiment, index) => {
-            regiment.units.forEach(unit => {
-                if (unit.referenceKeywords.includes('Wizard')) {
+        forEach(roster.regiments, (regiment, index) => {
+            forEach(regiment.units, unit => {
+                if (includes(unit.referenceKeywords, 'Wizard')) {
                     hasWizard = true
                 }
             })
         })
-        roster.auxiliaryUnits.forEach(unit => {
-            if (unit.referenceKeywords.includes('Wizard')) {
+        forEach(roster.auxiliaryUnits, unit => {
+            if (includes(unit.referenceKeywords, 'Wizard')) {
                 hasWizard = true
             }
         })
-        if(Constants.regimentOfRenownsWithWizard.find(regimentOfRenown => regimentOfRenown?.id === roster.regimentOfRenown?.id)) {
+        if(find(Constants.regimentOfRenownsWithWizard, regimentOfRenown => regimentOfRenown?.id === roster.regimentOfRenown?.id)) {
             hasWizard = true
         }
         if (hasWizard) {
@@ -140,8 +147,8 @@ export const getWarnings = (roster) => {
         warnings.push('Choose Spells Lore')
     }
     let hasLegends = false
-    roster.regiments.forEach((regiment) => {
-        regiment.units.forEach(unit => {
+    forEach(roster.regiments, (regiment) => {
+        forEach(regiment.units, unit => {
             if (unit.isLegends) {
                 hasLegends = true
             }
@@ -156,7 +163,7 @@ export const getWarnings = (roster) => {
 export const getAvToDice = (count) => {
     const arr = [...Array(count+1).keys()]
     let sum = 0
-    arr.forEach(number => sum = sum + number)
+    forEach(arr, number => sum = sum + number)
     return sum / count
 }
 
@@ -164,13 +171,13 @@ export const getValue = (value) => {
     if (Number(value)) {
         return value
     }
-    const splitedValue = value.toLowerCase().split('d')
+    const splitedValue = lowerCase(value).split('d')
     if (splitedValue.length === 2) {
         let average
         if (Number(splitedValue[1])) {
             average = getAvToDice(Number(splitedValue[1]))
         } else {
-            const valueAfterD = splitedValue[1].split('').filter(item => item.trim())
+            const valueAfterD = filter(splitedValue[1].split(''), item => item.trim())
             if (Number(valueAfterD[0])) {
                 average = getAvToDice(Number(valueAfterD[0]))
             } else {
@@ -204,18 +211,18 @@ export const camelCaseToWords = (text) => {
 
 export const getWoundsCount = (roster) => {
     let woundsCount = 0
-    roster.regiments.forEach(regiment => {
-        regiment.units.forEach(unit => {
+    forEach(roster.regiments, regiment => {
+        forEach(regiment.units, unit => {
             woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
         })
     })
     if (roster.auxiliaryUnits.length > 0) {
-        roster.auxiliaryUnits.forEach(unit => {
+        forEach(roster.auxiliaryUnits, unit => {
             woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
         })
     }
     if (roster.regimentOfRenown) {
-        roster.regimentsOfRenownUnits.forEach(unit => {
+        forEach(roster.regimentsOfRenownUnits, unit => {
             woundsCount = woundsCount + (unit.modelCount * (unit.isReinforced ? 2 : 1) * unit.health)
         })
     }
@@ -224,7 +231,7 @@ export const getWoundsCount = (roster) => {
 
 export const replaceAsterisks = (string) => {
     if (string) {
-        let newString = string.replace(/(\*\*\*(.*?)\*\*\*)|(\*\*(.*?)\*\*)|(\*(.*?)\*)/g, (match, p1, p2, p3, p4, p5, p6) => {
+        let newString = replace(string, /(\*\*\*(.*?)\*\*\*)|(\*\*(.*?)\*\*)|(\*(.*?)\*)/g, (match, p1, p2, p3, p4, p5, p6) => {
             if (p1) {
                 return `<b><i>${p2}</i></b>`;
             } else if (p3) {
@@ -234,7 +241,7 @@ export const replaceAsterisks = (string) => {
             }
             return match; // На случай, если ничего не подошло
         });
-        if (newString.includes('<')) {
+        if (includes(newString, '<')) {
             return parse(newString)
         } else {
             return string
@@ -243,16 +250,16 @@ export const replaceAsterisks = (string) => {
     return string
 }
 
-export const removeAsterisks = (string) => string.replace(/\*/g, '')
+export const removeAsterisks = (string) => replace(string, /\*/g, '')
 
-export const replaceQuotation = (string) => string.replace('’', "'")
+export const replaceQuotation = (string) => replace(string, '’', "'")
 
 export const randomFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
 export const getScoreParams = (battleplan) => {
-    const data = Constants.battleplans.find(_battleplan => _battleplan.id === battleplan.id)
+    const data = find(Constants.battleplans, _battleplan => _battleplan.id === battleplan.id)
     if (data.maxForObjectives) {
         return {score: [...data.scoreParams], maxForObjectives: data.maxForObjectives}
     } else {

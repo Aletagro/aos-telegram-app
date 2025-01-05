@@ -1,21 +1,20 @@
 import React from 'react'
-import Accordion from '@mui/joy/Accordion'
-import AccordionDetails from '@mui/joy/AccordionDetails'
-import AccordionSummary from '@mui/joy/AccordionSummary'
 import Constants from '../Constants'
-import {sortByName, regimentSortesByGrandAlliances} from '../utilities/utils'
+import {regimentSortesByGrandAlliances} from '../utilities/utils'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
+import Accordion from '../components/Accordion'
 
-import Styles from './styles/RegimentsOfRenownList.module.css'
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
 
 const dataBase = require('../dataBase.json')
 
 const RegimentsOfRenownList = () => {
-    const regimentsOfRenown = sortByName(dataBase.data.ability_group.filter((group) => group.abilityGroupType === 'regimentOfRenown'))
-
+    const regimentsOfRenown = filter(dataBase.data.ability_group, (group) => group.abilityGroupType === 'regimentOfRenown')
     const sortedRegimentsOfRenown = regimentSortesByGrandAlliances(regimentsOfRenown.map(regiment => {
-        const keywords = dataBase.data.warscroll.find(warscroll => warscroll.id === regiment.regimentOfRenownRowImageWarscrollId).referenceKeywords
+        const keywords = find(dataBase.data.warscroll, warscroll => warscroll.id === regiment.regimentOfRenownRowImageWarscrollId).referenceKeywords
         return {...regiment, keywords}
     }))
 
@@ -27,21 +26,16 @@ const RegimentsOfRenownList = () => {
         state={{regiment}}
     />
 
-    const renderRegimentAlliance = (alliance) => <div id={Styles.typeContainer} key={alliance.title}>
-        <Accordion defaultExpanded={true}>
-            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
-                <h4 id={Styles.header}>{alliance.title}</h4>
-            </AccordionSummary>
-            <AccordionDetails>
-                {alliance.regiments.map(renderRow)}
-            </AccordionDetails>
-        </Accordion>
-    </div>
+    const renderRegimentAlliance = (alliance) => <Accordion
+        title={alliance.title}
+        data={alliance.regiments}
+        renderItem={renderRow}
+    />
 
     return <>
         <HeaderImage src={Constants.regimentsOfRenownImage} alt='Regiment Of Renown' />
         <div id='column' className='Chapter'>
-            {sortedRegimentsOfRenown && sortedRegimentsOfRenown.map(renderRegimentAlliance)}
+            {sortedRegimentsOfRenown && map(sortedRegimentsOfRenown, renderRegimentAlliance)}
         </div>
     </>
 }

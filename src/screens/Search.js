@@ -1,14 +1,10 @@
 import React, {useState, useReducer} from 'react'
-import Accordion from '@mui/joy/Accordion'
-import AccordionDetails from '@mui/joy/AccordionDetails'
-import AccordionSummary from '@mui/joy/AccordionSummary'
-import Constants from '../Constants'
 import useDebounce from '../utilities/useDebounce'
 import {sortByName} from '../utilities/utils'
 import {search} from '../utilities/appState'
 import Row from '../components/Row'
+import Accordion from '../components/Accordion'
 
-import map from 'lodash/map'
 import size from 'lodash/size'
 import filter from 'lodash/filter'
 import includes from 'lodash/includes'
@@ -75,16 +71,13 @@ const Search = () => {
         state={{allegiance}}
     />
 
-    const renderAccordion = (type, renderItem) => <div id={Styles.accordion} key={type}>
-        <Accordion expanded={search.expand[type]} onChange={handleChangeExpand}>
-            <AccordionSummary id={Styles.accordionHeaderContainer} sx={(theme) => (Constants.accordionStyle)}>
-                <h4 id={Styles.accordionHeader}>{type}</h4>
-            </AccordionSummary>
-            <AccordionDetails>
-                {map(search[type], renderItem)}
-            </AccordionDetails>
-        </Accordion>
-    </div>
+    const renderAccordion = (type, renderItem) => <Accordion
+        title={type}
+        data={search[type]}
+        renderItem={renderItem}
+        expanded={search.expand[type]}
+        onChangeExpand={handleChangeExpand}
+    />
 
     return <>
         <div id={Styles.container}>
