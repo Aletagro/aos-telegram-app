@@ -1,4 +1,6 @@
-import React from 'react';
+import React from 'react'
+
+import map from 'lodash/map'
 
 import Styles from './styles/RuFAQ.module.css'
 
@@ -12,7 +14,7 @@ const RuFAQ = () => {
     </div>
 
     return <div id='column' className='Chapter'>
-        {ruFAQ.data.map(renderQuestion)}
+        {map(ruFAQ.data, renderQuestion)}
     </div>
 }
 

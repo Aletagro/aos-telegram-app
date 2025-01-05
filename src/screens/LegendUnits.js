@@ -5,6 +5,8 @@ import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Accordion from '../components/Accordion'
 
+import map from 'lodash/map'
+
 const LegendUnits = () => {
     const {units, image, title} = useLocation().state
     const _units = unitsSortesByType(units)
@@ -27,7 +29,7 @@ const LegendUnits = () => {
     return <>
         <HeaderImage src={image} alt={title} isWide />
         <div id='column' className='Chapter'>
-            {_units.map(renderUnitsType)}
+            {map(_units, renderUnitsType)}
         </div>
     </>
 }

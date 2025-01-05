@@ -5,6 +5,10 @@ import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Ability from '../components/Ability'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
+
 import Styles from './styles/RegimentOfRenown.module.css'
 
 const dataBase = require('../dataBase.json')
@@ -12,9 +16,9 @@ const dataBase = require('../dataBase.json')
 const RegimentOfRenown = () => {
     window.scrollTo(0, 0)
     const {regiment} = useLocation().state
-    const regimentAbilities = dataBase.data.ability.filter((group) => group.abilityGroupId === regiment.id)
-    const warscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === regiment.id)
-    const warscrolls = sortByName(warscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId)))
+    const regimentAbilities = filter(dataBase.data.ability, (group) => group.abilityGroupId === regiment.id)
+    const warscrollsIds = filter(dataBase.data.ability_group_regiment_of_renown_linked_warscroll, warscroll => warscroll.abilityGroupId === regiment.id)
+    const warscrolls = sortByName(map(warscrollsIds, item => find(dataBase.data.warscroll, warscroll => warscroll.id === item.warscrollId)))
 
     const renderAbility = (ability) => <Ability
         key={ability.id}
@@ -38,9 +42,9 @@ const RegimentOfRenown = () => {
         <div id='column' className='Chapter'>
             <p id={Styles.text}>{replaceAsterisks(regiment.subsectionRulesText)}</p>
             <h4 id={Styles.title}>{regiment.regimentOfRenownPointsCost} points</h4>
-            {regimentAbilities && regimentAbilities.map(renderAbility)}
+            {regimentAbilities && map(regimentAbilities, renderAbility)}
             <h4 id={Styles.title}>Warscrolls</h4>
-            {warscrolls && warscrolls.map(renderWarscroll)}
+            {warscrolls && map(warscrolls, renderWarscroll)}
         </div>
     </>
 }

@@ -4,11 +4,14 @@ import Row from '../components/Row'
 import Battleplans from '../components/Battleplans'
 import Rules from './Rules'
 
+import map from 'lodash/map'
+import filter from 'lodash/filter'
+
 const dataBase = require('../dataBase.json')
 
 const RuleChapters = () => {
     const {chapter} = useLocation().state
-    const ruleChapters = dataBase.data.rule_section.filter((section) => section.parentId === chapter.id)
+    const ruleChapters = filter(dataBase.data.rule_section, (section) => section.parentId === chapter.id)
     ruleChapters.sort((a, b) => a.displayOrder - b.displayOrder)
 
     const renderRow = (paragraph) => <Row
@@ -21,7 +24,7 @@ const RuleChapters = () => {
     return ruleChapters.length > 0
         ? <>
             <div id='column' className='Chapter'>
-                {ruleChapters && ruleChapters.map(renderRow)}
+                {ruleChapters && map(ruleChapters, renderRow)}
             </div>
         </>
         : chapter.name === 'Battleplans'

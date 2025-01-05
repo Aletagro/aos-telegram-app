@@ -4,6 +4,11 @@ import 'react-toastify/dist/ReactToastify.css'
 import Constants from '../Constants'
 import {replaceAsterisks, removeAsterisks} from '../utilities/utils'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import join from 'lodash/join'
+import filter from 'lodash/filter'
+
 import Styles from './styles/Ability.module.css'
 
 const dataBase = require('../dataBase.json')
@@ -11,8 +16,8 @@ const dataBase = require('../dataBase.json')
 const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown, onClick}) => {
     const _abilityKeywordsName = abilityKeywordsName || 'warscroll_ability_keyword'
     const _abilityIdName = abilityIdName || 'warscrollAbilityId'
-    const keywordsIds = dataBase.data[_abilityKeywordsName].filter(keyword => keyword[_abilityIdName] === ability.id).map(item => item.keywordId)
-    const keywords = keywordsIds.map(keywordId => dataBase.data.keyword.find(keyword => keyword.id === keywordId))
+    const keywordsIds = map(filter(dataBase.data[_abilityKeywordsName], keyword => keyword[_abilityIdName] === ability.id), item => item.keywordId)
+    const keywords = map(keywordsIds, keywordId => find(dataBase.data.keyword, keyword => keyword.id === keywordId))
     const keywordsLength = keywords.length
     const borderColor = Constants.abilitiesTypes[ability.phase]
     // У абилок, которые привязаны к Regiment Of Renown сложность каста приходит в cpCost
@@ -24,7 +29,7 @@ const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenow
         } else {
             const abilityText = `${ability.name}
 Phase: ${ability.phaseDetails}${ability.cpCost && !isRegimentOfRenown ? `\nCP Cost: ${ability.cpCost}` : ''}${castingValue ? `\nCasting Value: ${castingValue}` : ''}\n${ability.declare ? `\nDeclare: ${removeAsterisks(ability.declare)}` : ''}${ability.effect ? `\nEffect: ${removeAsterisks(ability.effect)}` : ''}
-${keywords.length ? `Keywords: ${keywords.map((keyword) => keyword.name).join(', ')}` : ''}
+${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), ', ')}` : ''}
 `
             navigator.clipboard.writeText(abilityText)
             toast.success('Ability Copied', Constants.toastParams)
@@ -52,7 +57,7 @@ ${keywords.length ? `Keywords: ${keywords.map((keyword) => keyword.name).join(',
                 {keywordsLength
                     ? <div id={Styles.keywordsContainer}>
                         <b>Keywords:&nbsp;</b>
-                        {keywords.map(renderKeyword)}
+                        {map(keywords, renderKeyword)}
                     </div>
                     : null
                 }

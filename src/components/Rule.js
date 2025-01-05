@@ -5,6 +5,9 @@ import Constants from '../Constants'
 import Ability from './Ability'
 import {replaceAsterisks, removeAsterisks} from '../utilities/utils'
 
+import map from 'lodash/map'
+import filter from 'lodash/filter'
+
 import Styles from './styles/Rule.module.css'
 
 const dataBase = require('../dataBase.json')
@@ -43,13 +46,13 @@ const Rule = ({rule}) => {
             case 'image':
                 return <img src={rule.imageUrl} alt={rule.altText} width='100%' />
             case 'ability':
-                const abilities = dataBase.data.ability.filter((ability) => ability.id === rule.abilityId)
-                return abilities.map(renderAbility)
+                const abilities = filter(dataBase.data.ability, (ability) => ability.id === rule.abilityId)
+                return map(abilities, renderAbility)
             case 'bullets':
-                const bullets = dataBase.data.bullet_point.filter((point) => point.ruleContainerComponentId === rule.id)
+                const bullets = filter(dataBase.data.bullet_point, (point) => point.ruleContainerComponentId === rule.id)
                 bullets.sort((a, b) => a.displayOrder - b.displayOrder)
                 return <div id={Styles.lightgreyContainer}>
-                    {bullets.map(renderBullet)}
+                    {map(bullets, renderBullet)}
                 </div>
             default:
                 return null

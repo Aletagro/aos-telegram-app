@@ -1,10 +1,13 @@
 import React from 'react';
 import Row from './Row'
 
+import map from 'lodash/map'
+import filter from 'lodash/filter'
+
 const dataBase = require('../dataBase.json')
 
 const Battleplans = ({id}) => {
-    const battleplans = dataBase.data.rule_container.filter((group) => group.ruleSectionId === id)
+    const battleplans = filter(dataBase.data.rule_container, (group) => group.ruleSectionId === id)
     battleplans.sort((a, b) => a.displayOrder - b.displayOrder)
 
     const renderRow = (battleplan) => <Row
@@ -15,7 +18,7 @@ const Battleplans = ({id}) => {
     />
 
     return <div id='column' className='Chapter'>
-        {battleplans && battleplans.map(renderRow)}
+        {battleplans && map(battleplans, renderRow)}
     </div>
 }
 

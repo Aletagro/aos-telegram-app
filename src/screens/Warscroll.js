@@ -7,6 +7,11 @@ import Ability from '../components/Ability'
 import HeaderImage from '../components/HeaderImage'
 import Calculator from '../icons/calculator.svg'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
+import includes from 'lodash/includes'
+
 import Styles from './styles/Warscroll.module.css'
 
 const dataBase = require('../dataBase.json')
@@ -15,13 +20,13 @@ const Warscroll = () => {
     window.scrollTo(0, 0)
     const navigate = useNavigate()
     const unit = useLocation().state.unit
-    const weapons = dataBase.data.warscroll_weapon.filter(weapon => weapon.warscrollId === unit.id)
-    const meleeWeapons = weapons.filter(weapon => weapon.type === 'melee')
-    const rangeWeapons = weapons.filter(weapon => weapon.type === 'ranged')
-    let abilities = dataBase.data.warscroll_ability.filter(ability => ability.warscrollId === unit.id)
-    const regimentOptions = dataBase.data.warscroll_regiment_option.filter(option => option.warscrollId === unit.id)
-    const isManifestation = unit.referenceKeywords?.includes('Manifestation')
-    const manifestationInfo = isManifestation ? dataBase.data.lore_ability.find(ability => ability.linkedWarscrollId === unit.id) : undefined
+    const weapons = filter(dataBase.data.warscroll_weapon, weapon => weapon.warscrollId === unit.id)
+    const meleeWeapons = filter(weapons, weapon => weapon.type === 'melee')
+    const rangeWeapons = filter(weapons, weapon => weapon.type === 'ranged')
+    let abilities = filter(dataBase.data.warscroll_ability, ability => ability.warscrollId === unit.id)
+    const regimentOptions = filter(dataBase.data.warscroll_regiment_option, option => option.warscrollId === unit.id)
+    const isManifestation = includes(unit.referenceKeywords, 'Manifestation')
+    const manifestationInfo = isManifestation ? find(dataBase.data.lore_ability, ability => ability.linkedWarscrollId === unit.id) : undefined
     const characteristics = [
         {value: unit.move, title: 'Move'},
         {value: unit.health, title: 'Health'},
@@ -34,16 +39,16 @@ const Warscroll = () => {
     }
 
     const getWeaponAbilities = (weaponId) => {
-        const abilitiesIds = dataBase.data.warscroll_weapon_weapon_ability.filter(ability => ability.warscrollWeaponId === weaponId).map(ability => ability.weaponAbilityId)
-        const abilities = abilitiesIds.map(abilityId => dataBase.data.weapon_ability.find(wpAbility => wpAbility.id === abilityId))
+        const abilitiesIds = map(filter(dataBase.data.warscroll_weapon_weapon_ability, ability => ability.warscrollWeaponId === weaponId), ability => ability.weaponAbilityId)
+        const abilities = map(abilitiesIds, abilityId => find(dataBase.data.weapon_ability, wpAbility => wpAbility.id === abilityId))
         return abilities
     }
 
     const getWeaponAbilityForCalculator = (abilities, name) => Boolean(abilities.find(ability => ability.name === name))
 
     const handleNavigateToCalculator = () => {
-        const weaponsAbilities = weapons.map(weapon => getWeaponAbilities(weapon.id))
-        const weaponsForCalculator = weapons.map((weapon, index) => ({
+        const weaponsAbilities = map(weapons, weapon => getWeaponAbilities(weapon.id))
+        const weaponsForCalculator = map(weapons, (weapon, index) => ({
             name: weapon.name,
             attacks: getValue(weapon.attacks),
             damage: getValue(weapon.damage),
@@ -51,7 +56,7 @@ const Warscroll = () => {
             toWound: Number(weapon.wound[0]),
             models: Number(unit.modelCount),
             rend: Number(weapon.rend) || 0,
-            champion: unit.referenceKeywords?.includes('Champion') && !getWeaponAbilityForCalculator(weaponsAbilities[index], 'Companion'),
+            champion: includes(unit.referenceKeywords, 'Champion') && !getWeaponAbilityForCalculator(weaponsAbilities[index], 'Companion'),
             mortal: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (Mortal)'),
             autoWound: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (Auto-wound)'),
             doubleHit: getWeaponAbilityForCalculator(weaponsAbilities[index], 'Crit (2 Hits)'),
@@ -76,13 +81,13 @@ const Warscroll = () => {
                 <p id={Styles.weaponName}>{weapon.name}</p>
             </div>
             <div id={Styles.weaponCharacteristicsContainer}>
-                {titles.map(renderCellTitle)}
+                {map(titles, renderCellTitle)}
             </div>
             <div id={Styles.weaponCharacteristicsContainer}>
-                {values.map(renderCellValue)}
+                {map(values, renderCellValue)}
             </div>
             <div id={Styles.weaponAbilityContainer}>
-                {weaponAbilities.map(renderWeaponAbility)}
+                {map(weaponAbilities, renderWeaponAbility)}
             </div>
         </div>
     }
@@ -96,13 +101,13 @@ const Warscroll = () => {
                 <p id={Styles.weaponName}>{weapon.name}</p>
             </div>
             <div id={Styles.weaponCharacteristicsContainer}>
-                {titles.map(renderCellTitle)}
+                {map(titles, renderCellTitle)}
             </div>
             <div id={Styles.weaponCharacteristicsContainer}>
-                {values.map(renderCellValue)}
+                {map(values, renderCellValue)}
             </div>
             <div id={Styles.weaponAbilityContainer}>
-                {weaponAbilities.map(renderWeaponAbility)}
+                {map(weaponAbilities, renderWeaponAbility)}
             </div>
         </div>
     }
@@ -124,7 +129,7 @@ const Warscroll = () => {
         <HeaderImage src={unit.bannerImage} alt={unit.name} />
         <div id={Styles.container}>
             <div id={Styles.characteristicsContainer} className={Styles.flexContainer}>
-                {characteristics.map(renderCharacteristic)}
+                {map(characteristics, renderCharacteristic)}
             </div>
             {rangeWeapons.length > 0
                 ? <>
@@ -132,7 +137,7 @@ const Warscroll = () => {
                         <h3 id={Styles.warscrollChapterTitle}>Range Weapons</h3>
                         <button id={Styles.calculator} onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
                     </div>
-                    {rangeWeapons.map(renderRangeWeapon)}
+                    {map(rangeWeapons, renderRangeWeapon)}
                 </>
                 : null
             }
@@ -142,14 +147,14 @@ const Warscroll = () => {
                         <h3 id={Styles.warscrollChapterTitle}>Melee Weapons</h3>
                         <button id={Styles.calculator} onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
                     </div>
-                    {meleeWeapons.map(renderMeleeWeapon)}
+                    {map(meleeWeapons, renderMeleeWeapon)}
                 </>
                 : null
             }
             {abilities.length > 0
                 ? <>
                     <h3 id={Styles.warscrollChapterTitle}>Abilities</h3>
-                    {abilities.map(renderAbility)}
+                    {map(abilities, renderAbility)}
                 </>
                 : null
             }
@@ -163,7 +168,7 @@ const Warscroll = () => {
                     {regimentOptions.length > 0
                         ? <>
                             <b>Regiment Options</b>
-                            {regimentOptions.map(renderRegimentOption)}
+                            {map(regimentOptions, renderRegimentOption)}
                         </>
                         : null
                     }

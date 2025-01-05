@@ -3,6 +3,7 @@ import Constants from '../Constants'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 
+import map from 'lodash/map'
 import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
 import includes from 'lodash/includes'
@@ -40,7 +41,7 @@ const Legends = () => {
     return <>
         <HeaderImage src='https://dhss9aar8ocw.cloudfront.net/8b513e4a-acff-43fe-823d-77c34ce62687' alt='legends' />
         <div id='column' className='Chapter'>
-            {Constants.grandAlliances.map(renderRow)}
+            {map(Constants.grandAlliances, renderRow)}
         </div>
     </>
 }

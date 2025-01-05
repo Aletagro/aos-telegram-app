@@ -6,6 +6,12 @@ import Constants from '../Constants'
 import {roster, navigationState} from '../utilities/appState'
 import {replaceAsterisks, getInfo} from '../utilities/utils'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
+import forEach from 'lodash/forEach'
+import includes from 'lodash/includes'
+
 import Styles from './styles/Army.module.css'
 
 const dataBase = require('../dataBase.json')
@@ -14,37 +20,38 @@ const Army = () => {
     const {allegiance, isArmyOfRenown, allegianceId, grandAlliance} = useLocation().state
     let _allegiance = allegiance
     if (!allegiance) {
-        _allegiance = dataBase.data.faction_keyword.find(faction => faction.id === allegianceId)
+        _allegiance = find(dataBase.data.faction_keyword, faction => faction.id === allegianceId)
     }
     let items = [{title: 'Warscrolls', screen: 'units'}]
     let rosterOptions
     if (isArmyOfRenown) {
-        const publications = dataBase.data.publication.filter(
-            item => item.factionKeywordId === _allegiance.parentFactionKeywordId && item.name.includes('Army of Renown'))
+        const publications = filter(dataBase.data.publication,
+            item => item.factionKeywordId === _allegiance.parentFactionKeywordId && includes(item.name, 'Army of Renown')
+        )
         let publicationId
         if (publications.length > 1) {
-            publicationId = publications.find(item => item.name.includes(_allegiance.name.split(" ")[0]))?.id
+            publicationId = find(publications, item => includes(item.name, _allegiance.name.split(" ")[0]))?.id
         } else {
             publicationId = publications[0]?.id
         }
-        const ruleSectionId = dataBase.data.rule_section.find(item => item.publicationId === publicationId && item.displayOrder === 1)?.id
-        const ruleContainerId = dataBase.data.rule_container.find(item => item.ruleSectionId === ruleSectionId)?.id
-        const ruleContainerComponentId = dataBase.data.rule_container_component.find(item => item.ruleContainerId === ruleContainerId && item.contentType === 'bullets')?.id
+        const ruleSectionId = find(dataBase.data.rule_section, item => item.publicationId === publicationId && item.displayOrder === 1)?.id
+        const ruleContainerId = find(dataBase.data.rule_container, item => item.ruleSectionId === ruleSectionId)?.id
+        const ruleContainerComponentId = find(dataBase.data.rule_container_component, item => item.ruleContainerId === ruleContainerId && item.contentType === 'bullets')?.id
 
-        rosterOptions = dataBase.data.bullet_point.filter(item => item.ruleContainerComponentId === ruleContainerComponentId)
+        rosterOptions = filter(dataBase.data.bullet_point, item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
     }
 
     // otherEnhancements
-    const otherEnhancement = dataBase.data.ability_group.find((item) => item.factionId === _allegiance.id && item.abilityGroupType === 'otherEnhancements')
+    const otherEnhancement = find(dataBase.data.ability_group, (item) => item.factionId === _allegiance.id && item.abilityGroupType === 'otherEnhancements')
     if (otherEnhancement) {
-        const enhancements = dataBase.data.ability.filter((item) => item.abilityGroupId === otherEnhancement.id)
+        const enhancements = filter(dataBase.data.ability, (item) => item.abilityGroupId === otherEnhancement.id)
         if (enhancements.length > 0) {
             items.push({title: otherEnhancement.name, withoutTitle: true, restrictionText: otherEnhancement.restrictionText, abilities: enhancements})
         }
     }
 
-    Constants.armyEnhancements.forEach(screen => {
+    forEach(Constants.armyEnhancements, screen => {
         const info = getInfo(screen, _allegiance)
         if (info) {
             items.push(info)
@@ -54,9 +61,9 @@ const Army = () => {
     let armyOfRenown
     // armyOfRenown свинок достаем для джовсов
     if (_allegiance.id === '298391fb-3d74-4a26-b9cc-5f3ad5fe4852') {
-        armyOfRenown = [dataBase.data.faction_keyword.find((faction) => faction.id === 'f0198b42-f55e-4261-8443-083bb17ec9c8')]
+        armyOfRenown = [find(dataBase.data.faction_keyword, (faction) => faction.id === 'f0198b42-f55e-4261-8443-083bb17ec9c8')]
     } else {
-        armyOfRenown = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === _allegiance.id)
+        armyOfRenown = filter(dataBase.data.faction_keyword, (faction) => faction.parentFactionKeywordId === _allegiance.id)
     }
 
     const handleClickBuilder = () => {
@@ -97,14 +104,14 @@ const Army = () => {
             {armyOfRenown.length > 0
                 ? <div>
                     <p id={Styles.armyOfRenown}>Army of Renown</p>
-                    {armyOfRenown.map(renderArmyOfRenown)}
+                    {map(armyOfRenown, renderArmyOfRenown)}
                 </div>
                 : null
             }
             {isArmyOfRenown
                 ? <>
                     <h4 id={Styles.rosterOption}>Roster Options</h4>
-                    {rosterOptions.map(renderRosterOptions)}
+                    {map(rosterOptions, renderRosterOptions)}
                 </>
                 : null
             }

@@ -3,12 +3,16 @@ import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
+
 const dataBase = require('../dataBase.json')
 
 const CoreDocuments = () => {
-    const documentsIds = dataBase.data.publication_publication_group.filter((publication) => publication.publicationGroupId === Constants.coreDocumentsId)
-    let documents = documentsIds.map(({publicationId}) => dataBase.data.publication.find(publication => publication.id === publicationId))
-    documents = documents.filter(document => !document.spearheadName)
+    const documentsIds = filter(dataBase.data.publication_publication_group, (publication) => publication.publicationGroupId === Constants.coreDocumentsId)
+    let documents = map(documentsIds, ({publicationId}) => find(dataBase.data.publication, publication => publication.id === publicationId))
+    documents = filter(documents, document => !document.spearheadName)
     documents.sort((a, b) => a.displayOrder - b.displayOrder)
 
     const renderRow = (document) => <Row
@@ -26,7 +30,7 @@ const CoreDocuments = () => {
     return <>
         <HeaderImage src={Constants.rulesImage} alt='Core Documents' />
         <div id='column' className='Chapter'>
-            {documents && documents.map(renderRow)}
+            {documents && map(documents, renderRow)}
             {renderRuFAQRow()}
         </div>
     </>

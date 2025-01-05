@@ -4,17 +4,21 @@ import {sortByName} from '../utilities/utils'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 
+import map from 'lodash/map'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
+
 const dataBase = require('../dataBase.json')
 
 const Catalog = () => {
     const {grandAlliance} = useLocation().state
-    let allegiances = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === grandAlliance.id)
+    let allegiances = filter(dataBase.data.faction_keyword, (faction) => faction.parentFactionKeywordId === grandAlliance.id)
     // нужно чтобы орков разделить на отдельные книги
     if (grandAlliance.name === 'Destruction') {
-        const orrukWarclansId = allegiances.find(allegiance => allegiance.name === 'Orruk Warclans')?.id
-        const orrukAllegiances = dataBase.data.faction_keyword.filter((faction) => faction.parentFactionKeywordId === orrukWarclansId && !faction.armyOfRenown)
+        const orrukWarclansId = find(allegiances, allegiance => allegiance.name === 'Orruk Warclans')?.id
+        const orrukAllegiances = filter(dataBase.data.faction_keyword, (faction) => faction.parentFactionKeywordId === orrukWarclansId && !faction.armyOfRenown)
         allegiances = [...allegiances, ...orrukAllegiances]
-        allegiances = allegiances.filter(allegiance => allegiance.name !== 'Orruk Warclans')
+        allegiances = filter(allegiances, allegiance => allegiance.name !== 'Orruk Warclans')
     }
     sortByName(allegiances)
 
@@ -28,7 +32,7 @@ const Catalog = () => {
     return <>
         <HeaderImage src={grandAlliance.image} alt={grandAlliance.name} isWide />
         <div id='column' className='Chapter'>
-            {allegiances && allegiances.map(renderRow)}
+            {allegiances && map(allegiances, renderRow)}
         </div>
     </>
 }
