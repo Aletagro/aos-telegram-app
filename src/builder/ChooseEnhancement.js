@@ -12,6 +12,7 @@ const ChooseEnhancement = () => {
     const {data, type, unitIndex, regimentIndex, title, isInfo, isRosterInfo, isAuxiliary, isAdditionalOption} = useLocation().state
     const navigate = useNavigate()
     let _data = data
+    let info = {}
     if (type === 'battleFormation') {
         const formationsRules = data.map(formation => dataBase.data.battle_formation_rule.filter((item) => item.battleFormationId === formation?.id))
         _data = data.map((formation, index) => {
@@ -23,6 +24,10 @@ const ChooseEnhancement = () => {
         _data = data.map((lore, index) => {
             return {name: lore?.name, id: lore?.id, abilities: loresRules[index]}
         })
+        info = {
+            abilityKeywordsName: 'lore_ability_keyword',
+            abilityIdName: 'loreAbilityId'
+        }
     }
     if (type === 'factionTerrain') {
         _data = data.map((terrain, index) => ({name: terrain?.name, id: terrain?.id}))
@@ -77,7 +82,12 @@ const ChooseEnhancement = () => {
         navigate(-1)
     }
 
-    const renderEnhancement = (enhancement) => <Ability key={enhancement.id} ability={enhancement} onClick={isRosterInfo ? undefined : handleClickEnhancement} />
+    const renderEnhancement = (enhancement) => <Ability
+        key={enhancement.id}
+        ability={enhancement}
+        onClick={isRosterInfo ? undefined : handleClickEnhancement}
+        {...info}
+    />
 
     const renderManifestation = (manifestation) => <div key={manifestation.id} id={Styles.manifestation}>
         <RowImage src={manifestation.rowImage} alt={manifestation.name} />

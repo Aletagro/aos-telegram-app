@@ -36,7 +36,7 @@ ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), 
         }
     }
 
-    const renderKeyword = (keyword, index) => <p key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}&nbsp;</p>
+    const renderKeyword = (keyword, index) => <p id={Styles.keyword} key={keyword.id}>{keyword.name}{keywordsLength === index + 1 ? '' : ','}&nbsp;</p>
 
     return <>
         <button id={Styles.ability} onClick={handlleClick} style={{border: `1px solid ${borderColor}`}}>
@@ -56,7 +56,7 @@ ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), 
                 <p id={Styles.text}><b>Effect:</b> {replaceAsterisks(ability.effect)}</p>
                 {keywordsLength
                     ? <div id={Styles.keywordsContainer}>
-                        <b>Keywords:&nbsp;</b>
+                        <b id={Styles.keyword}>Keywords:&nbsp;</b>
                         {map(keywords, renderKeyword)}
                     </div>
                     : null
