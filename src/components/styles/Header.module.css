@@ -16,6 +16,8 @@
   font-size: 18px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: center;
+  flex: 1;
   overflow: hidden;
   display: block;
 }
