@@ -34,12 +34,12 @@ const top100Films = [
 ]
 
 const Registration = () => {
-    const [name, setName] = useState('')
-    const [surname, setSurname] = useState('')
+    const user = tg.initDataUnsafe?.user
+
+    const [name, setName] = useState(user.first_name || '')
+    const [surname, setSurname] = useState(user.last_name || '')
     const [city, setCity] = useState('')
     const [data, setData] = useState(null)
-
-    const initData = JSON.stringify(tg.initDataUnsafe)
 
     const handleChangeName = (e) => {
         setName(e.target.value)
@@ -50,7 +50,6 @@ const Registration = () => {
     }
 
     console.log('data', data)
-    console.log('initData', initData)
     console.log('tg.initData', tg.initData)
     console.log('tg.initDataUnsafe', tg.initDataUnsafe)
 
@@ -58,7 +57,6 @@ const Registration = () => {
         const _value = value || e.target.value
         setCity(_value)
         fetch(`https://hh.ru/shards/area_switcher/search?q=${_value}`, {mode: 'no-cors'})
-        // fetch('https://openlibrary.org/search/authors.json?q=tolkien')
             .then(response => {
                 console.log(response)
                 return response.json()
@@ -69,7 +67,7 @@ const Registration = () => {
     }
 
     const handleClickButton = () => {
-        toast.success(`${name}, ${surname}, ${city}`, Constants.toastParams)
+        toast.success(`${name}, ${surname}, ${city}, id: ${user?.id}`, Constants.toastParams)
     }
 
     return <div>
@@ -99,7 +97,6 @@ const Registration = () => {
         <div id={Styles.buttonContainer}>
             <button id={Styles.button} onClick={handleClickButton}>Зарегистрироваться</button>
         </div>
-        <p>initDataUnsafe: {initData}</p>
         <ToastContainer />
     </div>
 }
