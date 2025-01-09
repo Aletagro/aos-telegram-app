@@ -37,7 +37,9 @@ const Registration = () => {
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [city, setCity] = useState('')
-    const [data, setData] = useState(null);
+    const [data, setData] = useState(null)
+
+    const initData = JSON.stringify(tg.initDataUnsafe)
 
     const handleChangeName = (e) => {
         setName(e.target.value)
@@ -47,7 +49,7 @@ const Registration = () => {
         setSurname(e.target.value)
     }
 
-    console.log(data)
+    console.log(initData)
 
     const handleChangeCity = (e, value) => {
         const _value = value || e.target.value
@@ -94,9 +96,8 @@ const Registration = () => {
         <div id={Styles.buttonContainer}>
             <button id={Styles.button} onClick={handleClickButton}>Зарегистрироваться</button>
         </div>
-        <p>initData: {tg.initData}</p>
-        <p>initDataUnsafe: {JSON.stringify(tg.initDataUnsafe)}</p>
-        <p>initDataUnsafe: {JSON.stringify(tg.initDataUnsafe)}</p>
+        <p>initDataUnsafe: {initData}</p>
+        <p>user: {initData?.user}</p>
         <ToastContainer />
     </div>
 }
