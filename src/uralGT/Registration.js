@@ -51,6 +51,8 @@ const Registration = () => {
 
     console.log('data', data)
     console.log('initData', initData)
+    console.log('tg.initData', tg.initData)
+    console.log('tg.initDataUnsafe', tg.initDataUnsafe)
 
     const handleChangeCity = (e, value) => {
         const _value = value || e.target.value
@@ -98,7 +100,6 @@ const Registration = () => {
             <button id={Styles.button} onClick={handleClickButton}>Зарегистрироваться</button>
         </div>
         <p>initDataUnsafe: {initData}</p>
-        <p>user: {initData?.user}</p>
         <ToastContainer />
     </div>
 }
