@@ -1,14 +1,14 @@
 import React from 'react'
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 
 import Styles from './styles/Main.module.css'
 
 const Main = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
-    // const handleNavigateToTest = () => {navigate('/registration')}
+    const handleNavigateToTest = () => {navigate('/registration')}
 
     return <>
         <HeaderImage src='https://kartinki.pics/uploads/posts/2022-08/thumbs/1660848806_7-kartinkin-net-p-varkhammer-fentezi-malekit-oboi-krasivo-8.jpg' alt='main' />
@@ -20,7 +20,7 @@ const Main = () => {
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
             <p id={Styles.feedbackText}>The database was last updated on 20.12.2024</p>
-            {/* <button id={Styles.testButton} onClick={handleNavigateToTest}>test</button> */}
+            <button id={Styles.testButton} onClick={handleNavigateToTest}>test</button>
         </div>
     </>
 }
