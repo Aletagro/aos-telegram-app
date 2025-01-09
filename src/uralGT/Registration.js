@@ -49,7 +49,8 @@ const Registration = () => {
         setSurname(e.target.value)
     }
 
-    console.log(initData)
+    console.log('data', data)
+    console.log('initData', initData)
 
     const handleChangeCity = (e, value) => {
         const _value = value || e.target.value
