@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'

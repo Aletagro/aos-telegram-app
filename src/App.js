@@ -34,6 +34,7 @@ import SinglePlayer from './singlePlayer/SinglePlayer'
 import ChooseBattleplan from './singlePlayer/ChooseBattleplan'
 import ChooseTactics from './singlePlayer/ChooseTactics'
 import Developer from './screens/Developer'
+import Registration from './uralGT/Registration'
 
 import './App.css'
 
@@ -84,6 +85,7 @@ function App() {
       <Route path={'chooseTactics'} element={<ChooseTactics />} />
       <Route path={'chooseBattleplan'} element={<ChooseBattleplan />} />
       <Route path={'developer'} element={<Developer />} />
+      <Route path={'registration'} element={<Registration />} />
     </Routes>
   </div>
 }
