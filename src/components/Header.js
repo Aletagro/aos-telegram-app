@@ -53,7 +53,6 @@ const Header = () => {
     const renderRightButton = () => {
         switch (pathname) {
             case '/search':
-            case '/registration':
                 return null
             case '/builder':
                 return <button id={Styles.rightButton} onClick={handleNavigateToExport}><img src={Export} alt='' /></button>
@@ -69,7 +68,7 @@ const Header = () => {
     }
 
     return <div id={Styles.header}>
-        {pathname === '/' || pathname === '/registration'
+        {pathname === '/'
             ? null
             : <button id={Styles.leftButton} onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
         }
