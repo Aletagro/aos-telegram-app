@@ -54,6 +54,7 @@ ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), 
                 <h4 id={Styles.name}>{ability.name}</h4>
                 {ability.declare ? <p id={Styles.text}><b>Declare:</b> {replaceAsterisks(ability.declare)}</p> : null}
                 <p id={Styles.text}><b>Effect:</b> {replaceAsterisks(ability.effect)}</p>
+                {ability.altText ? <p id={Styles.text}>{replaceAsterisks(ability.altText)}</p> : null}
                 {keywordsLength
                     ? <div id={Styles.keywordsContainer}>
                         <b id={Styles.keyword}>Keywords:&nbsp;</b>
