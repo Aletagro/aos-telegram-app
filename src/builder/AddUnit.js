@@ -7,6 +7,7 @@ import Checkbox from '../components/Checkbox'
 import Accordion from '../components/Accordion'
 
 import uniqBy from 'lodash/uniqBy'
+import includes from 'lodash/includes'
 
 import Styles from './styles/AddUnit.module.css'
 
@@ -68,9 +69,11 @@ const AddUnit = () => {
         const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
         // определяем опция реджимента героя
         const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId, requiredRosterFactionKeywordId}) => warscrollId === heroId && (requiredRosterFactionKeywordId ? requiredRosterFactionKeywordId === alliganceId : true))
-        const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any' && !option.requiredWarscrollId)
+        const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any' && !option.requiredWarscrollId && (option.requiredFactionKeywordId !== '298391fb-3d74-4a26-b9cc-5f3ad5fe4852' || option.requiredFactionKeywordId !== '21ed7371-d9e3-4a05-8b2c-db46cee7d29d'))
         const regimentOptionsAnyWithRequiredWarscroll = regimentOptions.filter(option => option.childQuantity === 'any' && option.requiredWarscrollId)
         const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || option.childQuantity === 'zeroToOne')
+        const ironjawsOption = regimentOptions.find(option => option.requiredFactionKeywordId === '298391fb-3d74-4a26-b9cc-5f3ad5fe4852')
+        const kruleboyzOption = regimentOptions.find(option => option.requiredFactionKeywordId === '21ed7371-d9e3-4a05-8b2c-db46cee7d29d')
         // ищем юнитов из опций с любым количеством
         if (regimentOptionsAny.length) {
             // находим кейворды обязательных опций
@@ -126,6 +129,12 @@ const AddUnit = () => {
                     }
                 }
             })
+        }
+        if (ironjawsOption) {
+            units = units.filter(unit => includes(unit.referenceKeywords, 'Ironjawz'))
+        }
+        if (kruleboyzOption) {
+            units = units.filter(unit => includes(unit.referenceKeywords, 'Kruleboyz'))
         }
         const uniqUnits = uniqBy(units, 'id')
         units = uniqUnits

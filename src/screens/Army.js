@@ -59,9 +59,12 @@ const Army = () => {
     })
 
     let armyOfRenown
-    // armyOfRenown свинок достаем для джовсов
+    // Достаем для джовсов armyOfRenown
     if (_allegiance.id === '298391fb-3d74-4a26-b9cc-5f3ad5fe4852') {
-        armyOfRenown = [find(dataBase.data.faction_keyword, (faction) => faction.id === 'f0198b42-f55e-4261-8443-083bb17ec9c8')]
+        armyOfRenown = filter(dataBase.data.faction_keyword, (faction) => faction.id === 'f0198b42-f55e-4261-8443-083bb17ec9c8' || faction.id === '62cacaf1-c044-4338-9443-9ef762b1fe1f' || faction.id === '19121b3d-667c-4048-be52-90760f656b66')
+    // Достаем для крулов armyOfRenown
+    } else if (_allegiance.id === '21ed7371-d9e3-4a05-8b2c-db46cee7d29d') {
+        armyOfRenown = filter(dataBase.data.faction_keyword, (faction) => faction.id === 'bccf5ba7-6c62-4e17-872a-3838888d2c8e' || faction.id === '19121b3d-667c-4048-be52-90760f656b66')
     } else {
         armyOfRenown = filter(dataBase.data.faction_keyword, (faction) => faction.parentFactionKeywordId === _allegiance.id)
     }
