@@ -69,6 +69,7 @@ const AddUnit = () => {
         const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
         // определяем опция реджимента героя
         const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId, requiredRosterFactionKeywordId}) => warscrollId === heroId && (requiredRosterFactionKeywordId ? requiredRosterFactionKeywordId === alliganceId : true))
+        console.log(regimentOptions)
         const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any' && !option.requiredWarscrollId && (option.requiredFactionKeywordId !== '298391fb-3d74-4a26-b9cc-5f3ad5fe4852' || option.requiredFactionKeywordId !== '21ed7371-d9e3-4a05-8b2c-db46cee7d29d'))
         const regimentOptionsAnyWithRequiredWarscroll = regimentOptions.filter(option => option.childQuantity === 'any' && option.requiredWarscrollId)
         const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || option.childQuantity === 'zeroToOne')
@@ -130,10 +131,10 @@ const AddUnit = () => {
                 }
             })
         }
-        if (ironjawsOption) {
+        if (ironjawsOption && !kruleboyzOption) {
             units = units.filter(unit => includes(unit.referenceKeywords, 'Ironjawz'))
         }
-        if (kruleboyzOption) {
+        if (kruleboyzOption && !ironjawsOption) {
             units = units.filter(unit => includes(unit.referenceKeywords, 'Kruleboyz'))
         }
         const uniqUnits = uniqBy(units, 'id')
