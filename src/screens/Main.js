@@ -19,7 +19,7 @@ const Main = () => {
             <Row title='Damage Calculator' navigateTo='calculator' />
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
-            <p id={Styles.feedbackText}>The database was last updated on 20.12.2024</p>
+            <p id={Styles.feedbackText}>The database was last updated on 15.01.2025</p>
             {/* <button id={Styles.testButton} onClick={handleNavigateToTest}>test</button> */}
         </div>
     </>

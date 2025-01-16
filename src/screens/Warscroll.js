@@ -164,7 +164,7 @@ const Warscroll = () => {
                     <p id={Styles.unitDetailsText}>{unit.modelCount} model</p>
                     {unit.wargearOptionsText ? <p id={Styles.wargearOptions}>{replaceAsterisks(unit.wargearOptionsText)}</p> : null}
                     {unit.points ? <p id={Styles.unitDetailsText}>{unit.points} points</p> : null}
-                    <p id={Styles.unitDetailsText}><b>Base size:</b> {unit.baseSize}</p>
+                    {unit.baseSize ? <p id={Styles.unitDetailsText}><b>Base size:</b> {unit.baseSize}</p> : null}
                     {regimentOptions.length > 0
                         ? <>
                             <b>Regiment Options</b>

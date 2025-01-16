@@ -45,14 +45,18 @@ const Constants = {
             groupName: 'ability_group',
             ruleName: 'ability',
             ruleIdName: 'abilityGroupId',
-            abilityGroupType: 'artefactsOfPower'
+            abilityGroupType: 'artefactsOfPower',
+            abilityKeywordsName: 'ability_keyword',
+            abilityIdName: 'abilityId'
         },
         {
             title: 'Heroic Traits',
             groupName: 'ability_group',
             ruleName: 'ability',
             ruleIdName: 'abilityGroupId',
-            abilityGroupType: 'heroicTraits'
+            abilityGroupType: 'heroicTraits',
+            abilityKeywordsName: 'ability_keyword',
+            abilityIdName: 'abilityId'
         },
         {
             title: 'Spell Lores',
