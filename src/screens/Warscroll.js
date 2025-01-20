@@ -173,6 +173,7 @@ const Warscroll = () => {
                         : null
                     }
                     {unit.notes ? <p id={Styles.unitDetailsText}>Notes: {replaceAsterisks(unit.notes)}</p> : null}
+                    {unit.isLegends ? <b id={Styles.unitDetailsText}> This unit is in Legend</b> : null}
                 </div>
             </div>
             {unit.referenceKeywords

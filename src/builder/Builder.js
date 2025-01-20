@@ -74,6 +74,15 @@ const Builder = () => {
     if (!battleFormations.length) {
         roster.withoutBattleFormation = true
     }
+    let requiredGeneralId = allegiance?.rosterFactionKeywordRequiredGeneralWarscrollId
+    if (!allegiance) {
+        requiredGeneralId = dataBase.data.faction_keyword.find(faction => faction.id === _alliganceId)?.rosterFactionKeywordRequiredGeneralWarscrollId
+    }
+    let requiredGeneral = undefined
+    if (requiredGeneralId) {
+        requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
+        roster.requiredGeneral = requiredGeneral
+    }
 
     const handleAddRegiment = useCallback(() => {
         roster.regiments = [...roster.regiments, emptyRegiment]

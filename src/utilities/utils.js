@@ -61,6 +61,8 @@ export const getErrors = (roster) => {
     let atrefactsCount = 0
     let ensorcelledBannersCount = 0
     let hasWarmasterInRegiments = []
+    let hasRequiredGeneral = false
+    let isRequiredGeneralIsGeneral = false
     forEach(roster.regiments, (regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
@@ -86,6 +88,12 @@ export const getErrors = (roster) => {
             if (includes(unit.referenceKeywords, 'Warmaster')) {
                 hasWarmasterInRegiments.push(index)
             }
+            if (roster.requiredGeneral && unit.id === roster.requiredGeneral.id) {
+                hasRequiredGeneral = true
+                if (index === roster.generalRegimentIndex) {
+                    isRequiredGeneralIsGeneral = true
+                }
+            }
         })
     })
     if (heroicTraitsCount > 1) {
@@ -97,8 +105,16 @@ export const getErrors = (roster) => {
     if (ensorcelledBannersCount > 1) {
         errors.push(`You have ${ensorcelledBannersCount} Ensorcelled Banners`)
     }
-    if (hasWarmasterInRegiments.length && !includes(hasWarmasterInRegiments, roster.generalRegimentIndex)) {
+    if (hasWarmasterInRegiments.length && !includes(hasWarmasterInRegiments, roster.generalRegimentIndex) && !roster.requiredGeneral) {
         errors.push("You have a Warmaster hero, but he isn't your general")
+    }
+    if (roster.requiredGeneral) {
+        if (!hasRequiredGeneral) {
+            errors.push(`You must be included ${roster.requiredGeneral.name} in your roster`)
+        }
+        if (!isRequiredGeneralIsGeneral) {
+            errors.push(`${roster.requiredGeneral.name} must be your general`)
+        }
     }
     forEach(roster.auxiliaryUnits, unit => {
         if (includes(unit.referenceKeywords, 'Unique')) {

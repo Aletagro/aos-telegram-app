@@ -27,6 +27,7 @@ const Header = () => {
             roster.auxiliaryUnits = []
             roster.regimentOfRenown = null
             roster.battleFormation = ''
+            roster.requiredGeneral = null
             navigationState.isBuilder = false
         } else if (pathname === '/search') {
             search.value = ''
