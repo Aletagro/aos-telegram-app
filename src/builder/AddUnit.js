@@ -8,6 +8,7 @@ import Accordion from '../components/Accordion'
 
 import uniqBy from 'lodash/uniqBy'
 import includes from 'lodash/includes'
+import find from 'lodash/find'
 
 import Styles from './styles/AddUnit.module.css'
 
@@ -30,7 +31,9 @@ const AddUnit = () => {
             const filtredKeywords = unitKeywords.filter(Keyword => requiredKeywords.find(requiredKeyword => requiredKeyword.id === Keyword.keywordId))
             if (requiredKeywords?.length === filtredKeywords?.length) {
                 // Проверка, что нет исключающих кейвордов
-                if (!unitKeywords.find(unitKeyword => unitKeyword.keywordId === excludedKeywords[index]?.id)) {
+                if (!unitKeywords.find(unitKeyword => {
+                    return find(excludedKeywords[index], ['id', unitKeyword.keywordId])
+                })) {
                     isHas = true
                 }
             }
@@ -69,7 +72,6 @@ const AddUnit = () => {
         const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
         // определяем опция реджимента героя
         const regimentOptions = dataBase.data.warscroll_regiment_option.filter(({warscrollId, requiredRosterFactionKeywordId}) => warscrollId === heroId && (requiredRosterFactionKeywordId ? requiredRosterFactionKeywordId === alliganceId : true))
-        console.log(regimentOptions)
         const regimentOptionsAny = regimentOptions.filter(option => option.childQuantity === 'any' && !option.requiredWarscrollId && (option.requiredFactionKeywordId !== '298391fb-3d74-4a26-b9cc-5f3ad5fe4852' || option.requiredFactionKeywordId !== '21ed7371-d9e3-4a05-8b2c-db46cee7d29d'))
         const regimentOptionsAnyWithRequiredWarscroll = regimentOptions.filter(option => option.childQuantity === 'any' && option.requiredWarscrollId)
         const regimentOptionsOne = regimentOptions.filter(option => option.childQuantity === 'one' || option.childQuantity === 'zeroToOne')
@@ -81,8 +83,8 @@ const AddUnit = () => {
             const optionRequiredKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_required_keyword.filter(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
             const requiredKeywords = optionRequiredKeywords.map(keywords => keywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId)))
             // находим кейворды исключающих опций
-            const optionExcludedKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_excluded_keyword.find(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
-            const excludedKeywords = optionExcludedKeywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId))
+            const optionExcludedKeywords = regimentOptionsAny.map(({id}) => dataBase.data.warscroll_regiment_option_excluded_keyword.filter(({warscrollRegimentOptionId}) => warscrollRegimentOptionId === id))
+            const excludedKeywords = optionExcludedKeywords.map(keywords => keywords.map(keyword => dataBase.data.keyword.find(({id}) => id === keyword?.keywordId)))
             // ищем нужных нам юнитов
             const legalUnits = allUnitsKeywordsIds.filter(unitKeywordsIds => hasKeyword(unitKeywordsIds, requiredKeywords, excludedKeywords))
             const legalUnitsIds = legalUnits.map(unit => unit[0].warscrollId)

@@ -45,6 +45,9 @@ function App() {
     if (!tg.isExpanded) {
       tg.expand()
     }
+    if (!tg.isClosingConfirmationEnabled) {
+      tg.enableClosingConfirmation()
+    }
   }, [])
 
   return <div>
