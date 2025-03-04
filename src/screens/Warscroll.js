@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
 import {calc} from '../utilities/appState'
 import {getValue, replaceAsterisks} from '../utilities/utils'
 import Ability from '../components/Ability'
 import HeaderImage from '../components/HeaderImage'
+import Modal from '../components/Modal'
 import Calculator from '../icons/calculator.svg'
 
 import map from 'lodash/map'
@@ -18,6 +19,7 @@ const dataBase = require('../dataBase.json')
 
 const Warscroll = () => {
     window.scrollTo(0, 0)
+    const [modalData, setModalData] = useState({visible: false, title: '', text: ''})
     const navigate = useNavigate()
     const unit = useLocation().state.unit
     const weapons = filter(dataBase.data.warscroll_weapon, weapon => weapon.warscrollId === unit.id)
@@ -46,6 +48,14 @@ const Warscroll = () => {
 
     const getWeaponAbilityForCalculator = (abilities, name) => Boolean(abilities.find(ability => ability.name === name))
 
+    const handleCloseModal = () => {
+        setModalData({visible: false, title: '', text: ''})
+    }
+
+    const handleOpenModal = (title, text) => () => {
+        setModalData({visible: true, title, text})
+    }
+
     const handleNavigateToCalculator = () => {
         const weaponsAbilities = map(weapons, weapon => getWeaponAbilities(weapon.id))
         const weaponsForCalculator = map(weapons, (weapon, index) => ({
@@ -70,7 +80,13 @@ const Warscroll = () => {
 
     const renderCellValue = (cell, index) => <p key={index} id={Styles.cellValue}>{cell}</p>
 
-    const renderWeaponAbility = (ability) => <p key={ability.name} id={Styles.weaponAbilities}>{ability.name}</p>
+    const renderWeaponAbility = (ability) => <button
+        onClick={handleOpenModal(ability.name, replaceAsterisks(ability.rules))}
+        key={ability.name}
+        id={Styles.weaponAbilities}
+    >
+        {ability.name}
+    </button>
 
     const renderRangeWeapon = (weapon) => {
         const weaponAbilities = getWeaponAbilities(weapon.id)
@@ -183,6 +199,7 @@ const Warscroll = () => {
                 : null
             }
         </div>
+        <Modal {...modalData} onClose={handleCloseModal} />
     </>
 }
 

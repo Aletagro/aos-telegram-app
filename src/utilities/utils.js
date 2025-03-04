@@ -2,6 +2,7 @@ import parse from 'html-react-parser';
 import Constants from '../Constants'
 
 import map from 'lodash/map'
+import get from 'lodash/get'
 import find from 'lodash/find'
 import filter from 'lodash/filter'
 import indexOf from 'lodash/indexOf'
@@ -63,6 +64,8 @@ export const getErrors = (roster) => {
     let hasWarmasterInRegiments = []
     let hasRequiredGeneral = false
     let isRequiredGeneralIsGeneral = false
+    let jawsCount = 0
+            let krulsCount = 0
     forEach(roster.regiments, (regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
@@ -95,6 +98,14 @@ export const getErrors = (roster) => {
                 }
             }
         })
+        if (roster.allegiance === 'Big Waaagh!') {
+            if (get(regiment, 'units[0].name', '') === 'Kragnos, the End of Empire') {
+            } else if (includes(get(regiment, 'units[0].referenceKeywords', ''), 'Ironjawz')) {
+                jawsCount = jawsCount + 1
+            } else if (includes(get(regiment, 'units[0].referenceKeywords', ''), 'Kruleboyz')) {
+                krulsCount = krulsCount + 1
+            }
+        }
     })
     if (heroicTraitsCount > 1) {
         errors.push(`You have ${heroicTraitsCount} Heroic Traits`)
@@ -127,6 +138,9 @@ export const getErrors = (roster) => {
     forEach(duplicateUniqueUnits, unit => {
         errors.push(`You have more then one ${unit}`)
     })
+    if (jawsCount !== krulsCount) {
+        errors.push('For every regiment led by a Kruleboyz Hero you must also include regiment led by a Ironjawz Hero')
+    }
     return errors
 }
 
