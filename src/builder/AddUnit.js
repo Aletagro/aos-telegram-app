@@ -159,6 +159,8 @@ const AddUnit = () => {
         navigate(-1)
         if (isRegimentsOfRenown) {
             roster.regimentOfRenown = unit
+            const regimentsOfRenownWarscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === unit.id)
+            roster.regimentsOfRenownUnits = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
         } else if (isAuxiliary) {
             roster.auxiliaryUnits.push(unit)
         } else {

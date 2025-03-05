@@ -20,7 +20,9 @@ const Export = () => {
 
     const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit['Ensorcelled Banners'] ? `\n• ${unit['Ensorcelled Banners']}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
-    const getUnitsForExport = (units) => units.map(getUnitForExport).join('\n')
+    const getRoRUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount} x` : ''} ${unit.name} ${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit['Ensorcelled Banners'] ? `\n• ${unit['Ensorcelled Banners']}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
+
+    const getUnitsForExport = (units, isRoR) => units.map(isRoR ? getRoRUnitForExport : getUnitForExport).join('\n')
 
     const getWeaponForExport = ([key, value]) => value
         ? `\n• ${value} x ${key}`
@@ -48,7 +50,8 @@ Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regime
 ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}` : ''}
 -----
 ${getRegimentsForExport()}
-${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n-----` : ''}
+${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}
+${roster.regimentsOfRenownUnits.length > 0 ? `${getUnitsForExport(roster.regimentsOfRenownUnits, true)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
 Wounds: ${getWoundsCount(roster)}
 ${roster.points}/${roster.pointsLimit} Pts
@@ -81,7 +84,12 @@ ${roster.points}/${roster.pointsLimit} Pts
         {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
     </div>
 
-    const renderRegimentsOfRenownUnit = (unit) => <p key={unit.id}>{unit.name}</p>
+    const renderRegimentsOfRenownUnit = (unit) => <div>
+        <p>{unit.modelCount ? `${unit.modelCount} x` : ''} {unit.name}</p>
+        {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
+        {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
+        {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
+    </div>
 
     const renderRegiment = (regiment, index) => <div key={index}>
         <p>Regiment {index + 1}</p>

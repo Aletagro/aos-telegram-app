@@ -107,6 +107,17 @@ export const getErrors = (roster) => {
             }
         }
     })
+    // RoR с дп может брать артефакты и трейты
+    if (roster.regimentOfRenown.id === '11cc4585-4cf5-43eb-af29-e2cbcdb6f5dd') {
+        roster.regimentsOfRenownUnits.forEach((unit) => {
+            if (unit.heroicTrait) {
+                heroicTraitsCount += 1
+            }
+            if (unit.artefact) {
+                atrefactsCount += 1
+            }
+        })
+    }
     if (heroicTraitsCount > 1) {
         errors.push(`You have ${heroicTraitsCount} Heroic Traits`)
     }

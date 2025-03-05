@@ -9,22 +9,31 @@ import DarkGeneral from '../icons/darkGeneral.svg'
 import Info from '../icons/info.svg'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
+import find from 'lodash/find'
+
 import Styles from './styles/UnitRow.module.css'
 
 const dataBase = require('../dataBase.json')
 
-const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy, onReinforced, artefacts, heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown}) => {
+const UnitRow = ({
+    unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy,onReinforced, artefacts, withoutMargin,
+    heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown, isRoRUnitWithKeyword
+}) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
     const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
     const optionGroups = dataBase.data.option_group.filter(group => group.warscrollId === unit.id)
-    const marksOfChaos = optionGroups.find(group => group.optionGroupType === 'marksOfChaos')
+    const marksOfChaos = isRoRUnitWithKeyword ? undefined : optionGroups.find(group => group.optionGroupType === 'marksOfChaos')
     const otherWarscrollOption = optionGroups.find(group => group.optionGroupType === 'otherWarscrollOption')
     let additionalOption = dataBase.data.ability_group_required_warscroll.find(group => group.warscrollId === unit.id)?.abilityGroupId
     if (additionalOption) {
         additionalOption = dataBase.data.ability_group.find(group => group.id === additionalOption && group.factionId === alliganceId)
     }
     const weaponOptions = optionGroups.filter(group => group.optionGroupType === 'weapon')
+    let rowImage = unit?.rowImage
+    if (isRegimentsOfRenown) {
+        rowImage = find(dataBase.data.warscroll, ['id', unit.regimentOfRenownRowImageWarscrollId])?.rowImage
+    }
 
     const handleClick = () => {
         if (onClick) {
@@ -52,7 +61,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
 
     const handleChooseEnhancement = (name, type) => () => {
         const data = type === 'artefact' ? artefacts : heroicTraits
-        navigate('/chooseEnhancement', {state: {title: name, data, type, unitIndex, regimentIndex, isAuxiliary}})
+        navigate('/chooseEnhancement', {state: {title: name, data, type, unitIndex, regimentIndex, isAuxiliary, isRoRUnitWithKeyword}})
     }
 
     const handleChooseAdditionalOption = (option) => () => {
@@ -60,7 +69,7 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     }
 
     const handleChooseOption = (optionGroup) => () => {
-        navigate('/chooseOption', {state: {title: camelCaseToWords(capitalizeFirstLetter(optionGroup.optionGroupType)), optionGroup, unitIndex, regimentIndex, isAuxiliary}})
+        navigate('/chooseOption', {state: {title: camelCaseToWords(capitalizeFirstLetter(optionGroup.optionGroupType)), optionGroup, unitIndex, regimentIndex, isAuxiliary, isRoRUnitWithKeyword}})
     }
 
     const handleWeaponOption = () => {
@@ -100,11 +109,10 @@ const UnitRow = ({unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, 
     const renderChooseWeapon = () => <button id={Styles.chooseEnhancementButton} onClick={handleWeaponOption}>
         Weapon Options
     </button>
-
-    return <div id={Styles.container}>
+    return <div id={withoutMargin ? Styles.rorContainer : Styles.container}>
         <div className={Styles.row}>
             <button id={Styles.addUnitButton} onClick={handleClick}>
-                {unit?.rowImage ?<RowImage src={unit?.rowImage} alt={unit.name} /> : null}
+                {rowImage ? <RowImage src={rowImage} alt={unit.name} /> : null}
                 <div id={Styles.addUnitButtonSubContainer}>
                     {isGeneral ? <img id={Styles.generalIcon} src={DarkGeneral} alt=''/> : null}
                     <p id={Styles.name}>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>

@@ -29,7 +29,7 @@ const emptyRegiment = {
 }
 
 const Builder = () => {
-    const {allegiance, alliganceId} = useLocation().state
+    const {allegiance, alliganceId, rosterId} = useLocation().state
     const [open, setOpen] = useState(false)
     const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
@@ -50,38 +50,41 @@ const Builder = () => {
             manifestationsLores.unshift(lore)
         }
     })
-    if (spellsLores.length === 1 && !roster.spellsLore) {
-        roster.spellsLore = spellsLores[0].name
-    }
-    if (preyersLores.length === 1 && !roster.prayersLore) {
-        roster.prayersLore = preyersLores[0].name
-    }
-    if (manifestationsLores.length === 1 && !roster.manifestationLore) {
-        roster.manifestationLore = manifestationsLores[0].name
-    }
-    if (factionTerrains.length === 1 && !roster.factionTerrain) {
-        roster.factionTerrain = factionTerrains[0].name
-    }
-    if (roster.regimentOfRenown) {
-        const regimentsOfRenownWarscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === roster.regimentOfRenown.id)
-        roster.regimentsOfRenownUnits = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
-    }
     const artefactsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'artefactsOfPower')
     const artefacts = dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup?.id)
     const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
     const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === _alliganceId)
-    if (!battleFormations.length) {
-        roster.withoutBattleFormation = true
-    }
-    let requiredGeneralId = allegiance?.rosterFactionKeywordRequiredGeneralWarscrollId
-    if (!allegiance) {
-        requiredGeneralId = dataBase.data.faction_keyword.find(faction => faction.id === _alliganceId)?.rosterFactionKeywordRequiredGeneralWarscrollId
-    }
-    let requiredGeneral = undefined
-    if (requiredGeneralId) {
-        requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
-        roster.requiredGeneral = requiredGeneral
+
+    const getRoster = useCallback(() => {}, [])
+
+    if (rosterId) {
+        getRoster()
+    } else {
+        if (spellsLores.length === 1 && !roster.spellsLore) {
+            roster.spellsLore = spellsLores[0].name
+        }
+        if (preyersLores.length === 1 && !roster.prayersLore) {
+            roster.prayersLore = preyersLores[0].name
+        }
+        if (manifestationsLores.length === 1 && !roster.manifestationLore) {
+            roster.manifestationLore = manifestationsLores[0].name
+        }
+        if (factionTerrains.length === 1 && !roster.factionTerrain) {
+            roster.factionTerrain = factionTerrains[0].name
+        }
+        if (!battleFormations.length) {
+            roster.withoutBattleFormation = true
+        }
+        let requiredGeneralId = allegiance?.rosterFactionKeywordRequiredGeneralWarscrollId
+        if (!allegiance) {
+            requiredGeneralId = dataBase.data.faction_keyword.find(faction => faction.id === _alliganceId)?.rosterFactionKeywordRequiredGeneralWarscrollId
+        }
+        let requiredGeneral = undefined
+        if (requiredGeneralId) {
+            requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
+            roster.requiredGeneral = requiredGeneral
+        }
     }
 
     const handleAddRegiment = useCallback(() => {
@@ -195,17 +198,31 @@ const Builder = () => {
         unit={roster.regimentOfRenown}
         onClick={handleClickRegimentOfRenown}
         onDelete={handleDeleteRegimentOfRenown}
-        withoutCopy
         alliganceId={_alliganceId}
+        withoutMargin
+        withoutCopy
     />
 
-    const renderRegimentOfRenownUnit = (unit) => <Row
-        key={unit.id}
-        title={unit.name}
-        image={unit?.rowImage}
-        navigateTo='warscroll'
-        state={{unit}}
-    />
+    // RoR с дп может брать артефакты и трейты
+    const renderRegimentOfRenownUnit = (unit, index) => roster.regimentOfRenown.id === '11cc4585-4cf5-43eb-af29-e2cbcdb6f5dd'
+        ? <UnitRow
+            key={unit.id}
+            unit={unit}
+            onClick={handleClickAuxiliaryUnit}
+            unitIndex={index}
+            artefacts={artefacts}
+            heroicTraits={heroicTraits}
+            isRoRUnitWithKeyword
+            withoutMargin
+            withoutCopy
+        />
+        : <Row
+            key={unit.id}
+            title={unit.name}
+            image={unit?.rowImage}
+            navigateTo='warscroll'
+            state={{unit}}
+        />
 
     const renderManifestation = (manifestation) => <Row
         key={manifestation.id}
