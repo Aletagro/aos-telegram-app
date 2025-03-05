@@ -29,7 +29,7 @@ const emptyRegiment = {
 }
 
 const Builder = () => {
-    const {allegiance, alliganceId, rosterId} = useLocation().state
+    const {allegiance, alliganceId} = useLocation().state
     const [open, setOpen] = useState(false)
     const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
@@ -55,36 +55,30 @@ const Builder = () => {
     const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
     const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === _alliganceId)
-
-    const getRoster = useCallback(() => {}, [])
-
-    if (rosterId) {
-        getRoster()
-    } else {
-        if (spellsLores.length === 1 && !roster.spellsLore) {
-            roster.spellsLore = spellsLores[0].name
-        }
-        if (preyersLores.length === 1 && !roster.prayersLore) {
-            roster.prayersLore = preyersLores[0].name
-        }
-        if (manifestationsLores.length === 1 && !roster.manifestationLore) {
-            roster.manifestationLore = manifestationsLores[0].name
-        }
-        if (factionTerrains.length === 1 && !roster.factionTerrain) {
-            roster.factionTerrain = factionTerrains[0].name
-        }
-        if (!battleFormations.length) {
-            roster.withoutBattleFormation = true
-        }
-        let requiredGeneralId = allegiance?.rosterFactionKeywordRequiredGeneralWarscrollId
-        if (!allegiance) {
-            requiredGeneralId = dataBase.data.faction_keyword.find(faction => faction.id === _alliganceId)?.rosterFactionKeywordRequiredGeneralWarscrollId
-        }
-        let requiredGeneral = undefined
-        if (requiredGeneralId) {
-            requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
-            roster.requiredGeneral = requiredGeneral
-        }
+    
+    if (spellsLores.length === 1 && !roster.spellsLore) {
+        roster.spellsLore = spellsLores[0].name
+    }
+    if (preyersLores.length === 1 && !roster.prayersLore) {
+        roster.prayersLore = preyersLores[0].name
+    }
+    if (manifestationsLores.length === 1 && !roster.manifestationLore) {
+        roster.manifestationLore = manifestationsLores[0].name
+    }
+    if (factionTerrains.length === 1 && !roster.factionTerrain) {
+        roster.factionTerrain = factionTerrains[0].name
+    }
+    if (!battleFormations.length) {
+        roster.withoutBattleFormation = true
+    }
+    let requiredGeneralId = allegiance?.rosterFactionKeywordRequiredGeneralWarscrollId
+    if (!allegiance) {
+        requiredGeneralId = dataBase.data.faction_keyword.find(faction => faction.id === _alliganceId)?.rosterFactionKeywordRequiredGeneralWarscrollId
+    }
+    let requiredGeneral = undefined
+    if (requiredGeneralId) {
+        requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
+        roster.requiredGeneral = requiredGeneral
     }
 
     const handleAddRegiment = useCallback(() => {
@@ -190,8 +184,9 @@ const Builder = () => {
         artefacts={artefacts}
         heroicTraits={heroicTraits}
         onReinforced={handleReinforcedAuxiliary}
-        isAuxiliary
         alliganceId={_alliganceId}
+        withoutMargin
+        isAuxiliary
     />
 
     const renderRegimentOfRenown = () => <UnitRow
@@ -252,7 +247,7 @@ const Builder = () => {
             }
         </div>
         
-    const renderPointsLimitButton = (limit) => <button id={Styles.pointsLimitButton} onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
+    const renderPointsLimitButton = (limit) => <button key={limit} id={Styles.pointsLimitButton} onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
 
     const renderModalContent = () => <>
         <b id={Styles.pointsLimitTitle}>Points Limit</b>

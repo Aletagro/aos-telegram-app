@@ -15,6 +15,7 @@ const Main = () => {
         <div id='column' className='Chapter'>
             <Row title='Rules' navigateTo='mainRules' />
             <Row title='Builder' navigateTo='chooseGrandAlliance' />
+            {/* <Row title='Builder' navigateTo='lists' /> */}
             <Row title='Battle Dashboard' navigateTo='singlePlayer' />
             <Row title='Damage Calculator' navigateTo='calculator' />
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>

@@ -18,13 +18,17 @@ const RegimentsOfRenownList = () => {
         return {...regiment, keywords}
     }))
 
-    const renderRow = (regiment) => <Row
-        key={regiment.id}
-        title={regiment.name}
-        rightText={regiment?.regimentOfRenownPointsCost ? `${regiment?.regimentOfRenownPointsCost} pts` : undefined}
-        navigateTo='regimentOfRenown'
-        state={{regiment}}
-    />
+    const renderRow = (regiment) => {
+        const image = find(dataBase.data.warscroll, ['id', regiment.regimentOfRenownRowImageWarscrollId])?.rowImage
+        return <Row
+            key={regiment.id}
+            title={regiment.name}
+            rightText={regiment?.regimentOfRenownPointsCost ? `${regiment?.regimentOfRenownPointsCost} pts` : undefined}
+            navigateTo='regimentOfRenown'
+            state={{regiment}}
+            image={image}
+        />
+    }
 
     const renderRegimentAlliance = (alliance) => <Accordion
         title={alliance.title}
