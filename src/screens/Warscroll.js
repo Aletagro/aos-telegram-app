@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
 import {calc} from '../utilities/appState'
-import {getValue, replaceAsterisks} from '../utilities/utils'
+import {getValue, replaceAsterisks, getRegimentOption} from '../utilities/utils'
 import Ability from '../components/Ability'
 import HeaderImage from '../components/HeaderImage'
 import Modal from '../components/Modal'
@@ -76,6 +76,13 @@ const Warscroll = () => {
         navigate('/calculator', {state: {weapons: weaponsForCalculator, title: 'Damage Calculator'}})
     }
 
+    const handleClickRegimentOption = (option) => () => {
+        const {screen, title, data} = getRegimentOption(option, unit)
+        if (screen) {
+            navigate(`/${screen}`, {state: {title, ...data}})
+        }
+    }
+
     const renderCellTitle = (cell, index) => <p key={index} id={Styles.cellTitle}>{cell}</p>
 
     const renderCellValue = (cell, index) => <p key={index} id={Styles.cellValue}>{cell}</p>
@@ -130,7 +137,13 @@ const Warscroll = () => {
 
     const renderAbility = (ability) => <Ability key={ability.id} ability={ability} />
 
-    const renderRegimentOption = (option) => <p id={Styles.unitDetailsText} key={option.id}>&#8226; {replaceAsterisks(option.optionText)}</p>
+    const renderRegimentOption = (option) => <p
+        onClick={handleClickRegimentOption(option)}
+        id={Styles.regimentOption}
+        key={option.id}
+    >
+        {replaceAsterisks(option.optionText)}
+    </p>
 
     const renderCharacteristic = (characteristic) => <div key={characteristic.value} id={Styles.characteristicSubContainer} style={{width: '20%'}}>
         <div id={Styles.characteristicValueContainer}>
@@ -184,7 +197,9 @@ const Warscroll = () => {
                     {regimentOptions.length > 0
                         ? <>
                             <b>Regiment Options</b>
-                            {map(regimentOptions, renderRegimentOption)}
+                            <div id={Styles.regimentOptionContainer}>
+                                {map(regimentOptions, renderRegimentOption)}
+                            </div>
                         </>
                         : null
                     }
