@@ -1,16 +1,27 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {roster, search, navigationState} from '../utilities/appState'
+import {roster, search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances} from '../utilities/appState'
+import Constants from '../Constants'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
 import Export from '../icons/export.svg'
 import Home from '../icons/home.svg'
+
+import forEach from 'lodash/forEach'
 
 import Styles from './styles/Header.module.css'
 
 const Header = () => {
     const navigate = useNavigate()
     const {pathname, state} = useLocation()
+
+    const clearCollapseUnitsType = (_, key) => {
+        isCollapseUnitsTypes[key] = false
+    }
+
+    const clearCollapseRegimentAlliance = (_, key) => {
+        isCollapseRegimentAlliances[key] = false
+    }
 
     const clearAppState = () => {
         if (pathname === '/builder') {
@@ -35,6 +46,10 @@ const Header = () => {
             search.Warscrolls = []
             search.Rules = []
             search.Allegiances = []
+        } else if (pathname === '/units') {
+            forEach(Constants.defaultIsCollapseUnitsTypes, clearCollapseUnitsType)
+        } else if (pathname === '/regimentOfRenownList') {
+            forEach(Constants.defaultIsCollapseRegimentAlliances, clearCollapseRegimentAlliance)
         }
     }
 

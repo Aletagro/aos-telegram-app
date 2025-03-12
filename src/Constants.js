@@ -117,7 +117,7 @@ const Constants = {
     abilitiesTypes: {
         startOfTurn: 'black',
         combatPhase: 'darkred',
-        heroPhase: 'rgb(161, 146, 61)',
+        heroPhase: 'rgb(201 189 82)',
         movementPhase: 'grey',
         defensive: 'darkgreen',
         chargePhase: 'rgb(182, 92, 28)',
@@ -411,6 +411,22 @@ const Constants = {
         '& button:not([aria-selected="true"]):hover': {
             background: '#2E2D32',
         }
+    },
+    defaultIsCollapseUnitsTypes: {
+        'Hero': false,
+        'Infantry': false,
+        'Cavalry': false,
+        'Beast': false,
+        'Monster': false,
+        'War Machine': false,
+        'Manifestation': false,
+        'Faction Terrain': false
+    },
+    defaultIsCollapseRegimentAlliances: {
+        'Chaos': false,
+        'Death': false,
+        'Destruction': false,
+        'Order': false
     }
 }
 

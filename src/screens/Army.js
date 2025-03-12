@@ -4,7 +4,7 @@ import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 import {roster, navigationState} from '../utilities/appState'
-import {replaceAsterisks, getInfo} from '../utilities/utils'
+import {replaceAsterisks, getInfo, replaceQuotation} from '../utilities/utils'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -30,14 +30,13 @@ const Army = () => {
         )
         let publicationId
         if (publications.length > 1) {
-            publicationId = find(publications, item => includes(item.name, _allegiance.name.split(" ")[0]))?.id
+            publicationId = find(publications, item => includes(item.name, replaceQuotation(_allegiance.name.split(" ")[0])))?.id
         } else {
             publicationId = publications[0]?.id
         }
         const ruleSectionId = find(dataBase.data.rule_section, item => item.publicationId === publicationId && item.displayOrder === 1)?.id
         const ruleContainerId = find(dataBase.data.rule_container, item => item.ruleSectionId === ruleSectionId)?.id
         const ruleContainerComponentId = find(dataBase.data.rule_container_component, item => item.ruleContainerId === ruleContainerId && item.contentType === 'bullets')?.id
-
         rosterOptions = filter(dataBase.data.bullet_point, item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
     }

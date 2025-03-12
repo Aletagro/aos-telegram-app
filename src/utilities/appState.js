@@ -65,3 +65,7 @@ export const calc = {
 export const navigationState = {
     isBuilder: false
 }
+
+export const isCollapseUnitsTypes = Constants.defaultIsCollapseUnitsTypes
+
+export const isCollapseRegimentAlliances = Constants.defaultIsCollapseRegimentAlliances
