@@ -24,6 +24,7 @@ const ChooseFaction = () => {
 
     const handleClick = ({allegiance}) => {
         roster.allegiance = allegiance.name
+        roster.allegianceId = allegiance.id
         navigationState.isBuilder = true
     }
     

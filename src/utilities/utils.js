@@ -225,11 +225,7 @@ export const getValue = (value) => {
             } else {
                 return undefined
             }
-            if (valueAfterD[1] === '-') {
-                return average * (Number(splitedValue[0]) || 1) - Number(valueAfterD[2])
-            } else {
-                return average * (Number(splitedValue[0]) || 1) + Number(valueAfterD[2])
-            }
+            return average * (Number(splitedValue[0]) || 1) + Number(valueAfterD[1])
         }
         if (splitedValue[0]) {
             return average * Number(splitedValue[0])
