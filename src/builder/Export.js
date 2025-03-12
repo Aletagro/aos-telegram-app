@@ -5,17 +5,17 @@ import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
 
-import map from 'lodash/map'
+// import map from 'lodash/map'
 
 import Styles from './styles/Export.module.css'
 
 const additionalOptions = ['Ensorcelled Banners', 'First Circle Titles']
 
-const unitsKeys =  ['id', 'name', 'points', 'isReinforced', 'heroicTrait', 'artefact', 'marksOfChaos', 'otherWarscrollOption', 'Ensorcelled Banners'] 
+// const unitsKeys =  ['id', 'name', 'points', 'isReinforced', 'heroicTrait', 'artefact', 'marksOfChaos', 'otherWarscrollOption', 'Ensorcelled Banners'] 
 
-const rorKeys =  ['id', 'name', 'regimentOfRenownPointsCost']
+// const rorKeys =  ['id', 'name', 'regimentOfRenownPointsCost']
 
-const manifistationsKeys =  ['id', 'name']
+// const manifistationsKeys =  ['id', 'name']
 
 const Export = () => {
     const [isCopy, setIsCopy] = useState(false)
@@ -69,41 +69,41 @@ ${roster.points}/${roster.pointsLimit} Pts
         setIsCopy(true)
     }
 
-    const pickKeys = (unit, keys) => {
-        return keys.reduce((acc, key) => {
-            if (unit.hasOwnProperty(key)) {
-                acc[key] = unit[key];
-            }
-            return acc;
-        }, {});
-    }
+    // const pickKeys = (unit, keys) => {
+    //     return keys.reduce((acc, key) => {
+    //         if (unit.hasOwnProperty(key)) {
+    //             acc[key] = unit[key];
+    //         }
+    //         return acc;
+    //     }, {});
+    // }
 
-    const getShortUnits = (units, keys) => map(units, (unit) => {
-        return pickKeys(unit, keys)
-    })
+    // const getShortUnits = (units, keys) => map(units, (unit) => {
+    //     return pickKeys(unit, keys)
+    // })
 
-    const handleSaveList = () => {
-        let newRosier = {...roster}
-        const shortRegiments = map(newRosier.regiments, (regiment) => {
-            const units = getShortUnits(regiment.units, unitsKeys)
-            return {...regiment, units}
-        })
-        const shortAuxiliaries = getShortUnits(newRosier.auxiliaryUnits, unitsKeys)
-        const shortRoRUnits = getShortUnits(newRosier.regimentsOfRenownUnits, unitsKeys)
-        const shortRoR = newRosier.regimentOfRenown ? pickKeys(newRosier.regimentOfRenown, rorKeys) : null
-        const shortManifestationsList = newRosier.manifestationsList ? getShortUnits(newRosier.manifestationsList, manifistationsKeys) : []
-        const shortRoster = {
-            ...roster,
-            regiments: shortRegiments,
-            auxiliaryUnits: shortAuxiliaries,
-            regimentsOfRenownUnits: shortRoRUnits,
-            regimentOfRenown: shortRoR,
-            manifestationsList: shortManifestationsList,
-            name: 'test name',
-            isPublic: true
-        }
-        console.log(shortRoster)
-    }
+    // const handleSaveList = () => {
+    //     let newRosier = {...roster}
+    //     const shortRegiments = map(newRosier.regiments, (regiment) => {
+    //         const units = getShortUnits(regiment.units, unitsKeys)
+    //         return {...regiment, units}
+    //     })
+    //     const shortAuxiliaries = getShortUnits(newRosier.auxiliaryUnits, unitsKeys)
+    //     const shortRoRUnits = getShortUnits(newRosier.regimentsOfRenownUnits, unitsKeys)
+    //     const shortRoR = newRosier.regimentOfRenown ? pickKeys(newRosier.regimentOfRenown, rorKeys) : null
+    //     const shortManifestationsList = newRosier.manifestationsList ? getShortUnits(newRosier.manifestationsList, manifistationsKeys) : []
+    //     const shortRoster = {
+    //         ...roster,
+    //         regiments: shortRegiments,
+    //         auxiliaryUnits: shortAuxiliaries,
+    //         regimentsOfRenownUnits: shortRoRUnits,
+    //         regimentOfRenown: shortRoR,
+    //         manifestationsList: shortManifestationsList,
+    //         name: 'test name',
+    //         isPublic: true
+    //     }
+    //     console.log(shortRoster)
+    // }
 
     const renderWeapon = ([key, value]) => value
         ? <p>&#8226; {value} x {key}</p>
@@ -146,9 +146,9 @@ ${roster.points}/${roster.pointsLimit} Pts
     const renderWarning = (error, index) => <p  id={Styles.warning}>&#8226; {error}</p>
 
     return <div id={Styles.container}>
-        <div id={Styles.buttonContainer}>
+        {/* <div id={Styles.buttonContainer}>
             <button id={Styles.button} onClick={handleSaveList}>Save List</button>
-        </div>
+        </div> */}
         <div id={Styles.buttonContainer}>
             <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
         </div>
