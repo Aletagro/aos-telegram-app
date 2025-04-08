@@ -6,9 +6,11 @@ import UnitRow from './UnitRow'
 import Checkbox from '../components/Checkbox'
 import Accordion from '../components/Accordion'
 
-import uniqBy from 'lodash/uniqBy'
-import includes from 'lodash/includes'
 import find from 'lodash/find'
+import filter from 'lodash/filter'
+import uniqBy from 'lodash/uniqBy'
+import forEach from 'lodash/forEach'
+import includes from 'lodash/includes'
 
 import Styles from './styles/AddUnit.module.css'
 
@@ -159,8 +161,15 @@ const AddUnit = () => {
         navigate(-1)
         if (isRegimentsOfRenown) {
             roster.regimentOfRenown = unit
-            const regimentsOfRenownWarscrollsIds = dataBase.data.ability_group_regiment_of_renown_linked_warscroll.filter(warscroll => warscroll.abilityGroupId === unit.id)
-            roster.regimentsOfRenownUnits = regimentsOfRenownWarscrollsIds.map(item => dataBase.data.warscroll.find(warscroll => warscroll.id === item.warscrollId))
+            const regimentsOfRenownWarscrollsIds = filter(dataBase.data.ability_group_regiment_of_renown_linked_warscroll, ['abilityGroupId', unit.id])
+            const regimentsOfRenownUnits = []
+            forEach(regimentsOfRenownWarscrollsIds, item => {
+                const warscroll = find(dataBase.data.warscroll, ['id', item.warscrollId])
+                for (let i = item.instanceCount; i > 0; i--) {
+                    regimentsOfRenownUnits.push(warscroll)
+                }
+            })
+            roster.regimentsOfRenownUnits = regimentsOfRenownUnits
         } else if (isAuxiliary) {
             roster.auxiliaryUnits.push(unit)
         } else {

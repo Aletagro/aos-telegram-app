@@ -55,7 +55,7 @@ const Builder = () => {
     const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
     const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === _alliganceId)
-    
+
     if (spellsLores.length === 1 && !roster.spellsLore) {
         roster.spellsLore = spellsLores[0].name
     }
@@ -212,8 +212,8 @@ const Builder = () => {
             withoutCopy
         />
         : <Row
-            key={unit.id}
-            title={unit.name}
+            key={`${unit.id}-${index}`}
+            title={`${unit.modelCount} ${unit.name}`}
             image={unit?.rowImage}
             navigateTo='warscroll'
             state={{unit}}

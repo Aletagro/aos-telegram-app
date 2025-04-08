@@ -12,6 +12,7 @@ import map from 'lodash/map'
 import find from 'lodash/find'
 import filter from 'lodash/filter'
 import includes from 'lodash/includes'
+import upperFirst from 'lodash/upperFirst'
 
 import Styles from './styles/Warscroll.module.css'
 
@@ -59,7 +60,7 @@ const Warscroll = () => {
     const handleNavigateToCalculator = () => {
         const weaponsAbilities = map(weapons, weapon => getWeaponAbilities(weapon.id))
         const weaponsForCalculator = map(weapons, (weapon, index) => ({
-            name: weapon.name,
+            name: `${weapon.name} - ${upperFirst(weapon.type)}`,
             attacks: getValue(weapon.attacks),
             damage: getValue(weapon.damage),
             toHit: Number(weapon.hit[0]),

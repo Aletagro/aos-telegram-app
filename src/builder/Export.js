@@ -197,7 +197,6 @@ ${roster.points}/${roster.pointsLimit} Pts
             : null
         }
         <p>Wounds: {getWoundsCount(roster)}</p>
-        {roster.regimentsOfRenownUnits?.length > 1 ? <h6 id={Styles.note}>The number of wounds may contain an error due to Regiment Of Renown</h6> : null}
         <p>{roster.points}/{roster.pointsLimit} Pts</p>
         <ToastContainer />
     </div>
