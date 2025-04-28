@@ -1,8 +1,8 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {roster, navigationState} from '../utilities/appState'
+import {sortByName, cleanBuilder} from '../utilities/utils'
 import BuilderRow from './BuilderRow'
-import {sortByName} from '../utilities/utils'
 import HeaderImage from '../components/HeaderImage'
 
 import Styles from './styles/ChooseFaction.module.css'
@@ -23,8 +23,11 @@ const ChooseFaction = () => {
     sortByName(allegiances)
 
     const handleClick = ({allegiance}) => {
-        roster.allegiance = allegiance.name
-        roster.allegianceId = allegiance.id
+        if (roster.allegianceId !== allegiance.id) {
+            cleanBuilder()
+            roster.allegiance = allegiance.name
+            roster.allegianceId = allegiance.id
+        }
         navigationState.isBuilder = true
     }
     

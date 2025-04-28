@@ -4,7 +4,7 @@ import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 import {roster, navigationState} from '../utilities/appState'
-import {replaceAsterisks, getInfo, replaceQuotation} from '../utilities/utils'
+import {replaceAsterisks, getInfo, replaceQuotation, cleanBuilder} from '../utilities/utils'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -69,8 +69,11 @@ const Army = () => {
     }
 
     const handleClickBuilder = () => {
-        roster.grandAlliance = grandAlliance
-        roster.allegiance = _allegiance.name
+        if (roster.allegianceId !== allegiance.id) {
+            cleanBuilder()
+            roster.allegiance = allegiance.name
+            roster.allegianceId = allegiance.id
+        }
         navigationState.isBuilder = true
     }
 

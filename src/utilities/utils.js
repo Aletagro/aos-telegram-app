@@ -1,5 +1,6 @@
 import parse from 'html-react-parser';
 import Constants from '../Constants'
+import {roster} from '../utilities/appState'
 
 import map from 'lodash/map'
 import get from 'lodash/get'
@@ -462,4 +463,22 @@ export const getRegimentOption = (option, unit) => {
         }
     }
     return {}
+}
+
+export const cleanBuilder = () => {
+    roster.auxiliaryUnits = []
+    roster.battleFormation = ''
+    roster.factionTerrain = ''
+    roster.generalRegimentIndex = null
+    roster.manifestationLore = ''
+    roster.manifestationsList = []
+    roster.points = 0
+    roster.pointsLimit = 2000
+    roster.prayersLore = ''
+    roster.regimentOfRenown = null
+    roster.regiments = [{units: [], heroId: '', points: 0}]
+    roster.regimentsOfRenownUnits = []
+    roster.requiredGeneral = null
+    roster.spellsLore = ''
+    roster.withoutBattleFormation = false
 }

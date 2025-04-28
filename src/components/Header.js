@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {roster, search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances} from '../utilities/appState'
+import {search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances} from '../utilities/appState'
 import Constants from '../Constants'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
@@ -25,21 +25,6 @@ const Header = () => {
 
     const clearAppState = () => {
         if (pathname === '/builder') {
-            roster.auxiliaryUnits = []
-            roster.battleFormation = ''
-            roster.factionTerrain = ''
-            roster.generalRegimentIndex = null
-            roster.manifestationLore = ''
-            roster.manifestationsList = []
-            roster.points = 0
-            roster.pointsLimit = 2000
-            roster.prayersLore = ''
-            roster.regimentOfRenown = null
-            roster.regiments = [{units: [], heroId: '', points: 0}]
-            roster.regimentsOfRenownUnits = []
-            roster.requiredGeneral = null
-            roster.spellsLore = ''
-            roster.withoutBattleFormation = false
             navigationState.isBuilder = false
         } else if (pathname === '/search') {
             search.value = ''
