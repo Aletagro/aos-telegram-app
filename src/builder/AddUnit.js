@@ -122,7 +122,11 @@ const AddUnit = () => {
                         const excludedKeywordId = dataBase.data.warscroll_regiment_option_excluded_keyword.find(keyword => keyword.warscrollRegimentOptionId === option.id)?.keywordId
                         const excludedKeyword =  dataBase.data.keyword.find(keyword => keyword.id === excludedKeywordId)?.name
                         const warscrolls = warscrollIds.map(({warscrollId}) => {
-                            const _warscroll = allUnits.find(warscroll => warscroll.id === warscrollId && !unitsInRegimentIds.find(id => id === warscroll.id) && !warscroll.referenceKeywords.includes(excludedKeyword))
+                            const _warscroll = allUnits.find(warscroll => warscroll.id === warscrollId &&
+                                !unitsInRegimentIds.find(id => id === warscroll.id) &&
+                                !warscroll.referenceKeywords.includes(excludedKeyword) &&
+                                (warscroll.referenceKeywords.includes('Unique') ? warscroll.id !== heroId : true)
+                            )
                             if (_warscroll) {
                                 return {..._warscroll, onlyOne: option.id}
                             }
