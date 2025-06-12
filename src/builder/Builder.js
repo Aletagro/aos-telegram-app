@@ -12,7 +12,9 @@ import Add from '../icons/add.svg'
 import Info from '../icons/info.svg'
 import WhiteInfo from '../icons/whiteInfo.svg'
 
+import map from 'lodash/map'
 import size from 'lodash/size'
+import flatten from 'lodash/flatten'
 
 import Styles from './styles/Builder.module.css'
 
@@ -53,10 +55,10 @@ const Builder = () => {
             manifestationsLores.unshift(lore)
         }
     })
-    const artefactsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'artefactsOfPower')
-    const artefacts = dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup?.id)
-    const heroicTraitsGroup = dataBase.data.ability_group.find(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
-    const heroicTraits = dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)
+    const artefactsGroups = dataBase.data.ability_group.filter(group => group.factionId === _alliganceId && group.abilityGroupType === 'artefactsOfPower')
+    const artefacts = flatten(map(artefactsGroups, artefactsGroup => dataBase.data.ability.filter(ability => ability.abilityGroupId === artefactsGroup?.id)))
+    const heroicTraitsGroups = dataBase.data.ability_group.filter(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
+    const heroicTraits = flatten(map(heroicTraitsGroups, heroicTraitsGroup => dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)))
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === _alliganceId)
 
     if (spellsLores.length === 1 && !roster.spellsLore) {
