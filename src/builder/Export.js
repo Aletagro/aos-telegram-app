@@ -6,6 +6,8 @@ import {roster} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
 
 // import map from 'lodash/map'
+import get from 'lodash/get'
+import size from 'lodash/size'
 
 import Styles from './styles/Export.module.css'
 
@@ -53,6 +55,7 @@ const Export = () => {
         const rosterText = `${errors.length > 0 ? `Roster errors:\n${getErrorsText(errors)}\n\n` : ''}${warnings.length > 0 ? `Roster warnings:\n${getErrorsText(warnings)}\n\n` : ''}Grand Alliance: ${roster.grandAlliance}
 Faction: ${roster.allegiance}
 Battle Formation: ${roster.battleFormation}
+Battle Tactics Cards: ${get(roster, 'tactics[0].name', '')}${size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}
 Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
 
 ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}` : ''}
@@ -102,7 +105,6 @@ ${roster.points}/${roster.pointsLimit} Pts
     //         name: 'test name',
     //         isPublic: true
     //     }
-    //     console.log(shortRoster)
     // }
 
     const renderWeapon = ([key, value]) => value
@@ -169,12 +171,13 @@ ${roster.points}/${roster.pointsLimit} Pts
         <p>Grand Alliance: {roster.grandAlliance}</p>
         <p>Faction: {roster.allegiance}</p>
         <p>Battle Formation: {roster.battleFormation}</p>
+        <p>Battle Tactics Cards: {get(roster, 'tactics[0].name', '')}{size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}</p>
         <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
         {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         <br/>
         {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}</p> : null}
         {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
-        {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}</p> : null}
+        {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}{roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}</p> : null}
         <hr/>
         {roster.regiments.map(renderRegiment)}

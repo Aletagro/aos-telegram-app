@@ -5,10 +5,12 @@ import {isCollapseUnitsTypes} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Accordion from '../components/Accordion'
+import Constants from '../Constants'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
 import filter from 'lodash/filter'
+import includes from 'lodash/includes'
 
 const dataBase = require('../dataBase.json')
 
@@ -20,8 +22,9 @@ const Units = () => {
     if (units) {
         _units = unitsSortesByType(units)
     } else {
+        const isLegendaryArmies = includes(Constants.legendaryArmies, allegiance.id)
         const warscrollIds = map(filter(dataBase.data.warscroll_faction_keyword, (item) => item.factionKeywordId === allegiance.id), item => item.warscrollId)
-        _units = unitsSortesByType(filter(map(warscrollIds, warscrollId => find(dataBase.data.warscroll, scroll => scroll.id === warscrollId)), unit => !unit.isSpearhead && !unit.isLegends))
+        _units = unitsSortesByType(filter(map(warscrollIds, warscrollId => find(dataBase.data.warscroll, scroll => scroll.id === warscrollId)), unit => !unit.isSpearhead && (isLegendaryArmies ? true : !unit.isLegends)))
     }
 
     const handleChangeExpand = useCallback((e) => {

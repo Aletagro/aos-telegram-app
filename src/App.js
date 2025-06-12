@@ -17,6 +17,7 @@ import RuleChapters from './screens/RuleChapters'
 import Manifestations from './screens/Manifestations'
 import Rules from './screens/Rules'
 import Battleplan from './screens/Battleplan'
+import Tactic from './screens/Tactic'
 import Legends from './screens/Legends'
 import LegendUnits from './screens/LegendUnits'
 import Header from './components/Header'
@@ -26,6 +27,8 @@ import ChooseFaction from './builder/ChooseFaction'
 import Builder from './builder/Builder'
 import AddUnit from './builder/AddUnit'
 import ChooseEnhancement from './builder/ChooseEnhancement'
+import BuilderChooseTacticsCard from './builder/BuilderChooseTacticsCard'
+import BuilderTactics from './builder/BuilderTactics'
 import ChooseOption from './builder/ChooseOption'
 import ChooseWeapon from './builder/ChooseWeapon'
 import Export from './builder/Export'
@@ -67,6 +70,8 @@ function App() {
       <Route path={'regimentOfRenown'} element={<RegimentOfRenown />} />
       <Route path={'regimentOfRenownList'} element={<RegimentsOfRenownList />} />
       <Route path={'chooseEnhancement'} element={<ChooseEnhancement />} />
+      <Route path={'builderChooseTacticsCard'} element={<BuilderChooseTacticsCard />} />
+      <Route path={'builderTactics'} element={<BuilderTactics />} />
       <Route path={'chooseOption'} element={<ChooseOption />} />
       <Route path={'chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'search'} element={<Search />} />
@@ -76,6 +81,7 @@ function App() {
       <Route path={'ruleChapters'} element={<RuleChapters />} />
       <Route path={'rules'} element={<Rules />} />
       <Route path={'battleplan'} element={<Battleplan />} />
+      <Route path={'tactic'} element={<Tactic />} />
       <Route path={'manifestations'} element={<Manifestations />} />
       <Route path={'legends'} element={<Legends />} />
       <Route path={'legendUnits'} element={<LegendUnits />} />

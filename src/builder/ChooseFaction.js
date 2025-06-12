@@ -4,6 +4,9 @@ import {roster, navigationState} from '../utilities/appState'
 import {sortByName, cleanBuilder} from '../utilities/utils'
 import BuilderRow from './BuilderRow'
 import HeaderImage from '../components/HeaderImage'
+import Constants from '../Constants'
+
+import includes from 'lodash/includes'
 
 import Styles from './styles/ChooseFaction.module.css'
 
@@ -31,13 +34,16 @@ const ChooseFaction = () => {
         navigationState.isBuilder = true
     }
     
-    const renderRow = (allegiance) => <BuilderRow
-        key={allegiance.id}
-        title={allegiance.name}
-        navigateTo='builder'
-        state={{allegiance}}
-        onClick={handleClick}
-    />
+    const renderRow = (allegiance) => {
+        const isLegendaryArmies = includes(Constants.legendaryArmies, allegiance.id)
+        return <BuilderRow
+            key={allegiance.id}
+            title={`${allegiance.name}${isLegendaryArmies ? ' (Legend)' : ''}`}
+            navigateTo='builder'
+            state={{allegiance}}
+            onClick={handleClick}
+        />
+    }
 
     const renderArmyOfRenown = (army) => army.map(renderRow)
 

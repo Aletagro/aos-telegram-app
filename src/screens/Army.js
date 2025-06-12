@@ -40,6 +40,24 @@ const Army = () => {
         rosterOptions = filter(dataBase.data.bullet_point, item => item.ruleContainerComponentId === ruleContainerComponentId)
         rosterOptions.sort((a, b) => a.displayOrder - b.displayOrder)
     }
+    let addendasId = ''
+    // Достаем для джовсов addendasId
+    if (_allegiance.id === '298391fb-3d74-4a26-b9cc-5f3ad5fe4852') {
+        addendasId = '75bae3d0-2f58-491f-b11c-47d36eee796a'
+    // Достаем для крулов addendasId
+    } else if (_allegiance.id === '21ed7371-d9e3-4a05-8b2c-db46cee7d29d') {
+        addendasId = '6bef51dd-844d-4cc1-b0d3-118c7c6af9a2'
+    } else {
+        addendasId = find(dataBase.data.publication, item => item.factionKeywordId === _allegiance.id && (includes(item.name, 'Faction Pack') || includes(item.name, 'Battletome')))?.id
+    }
+    const addendas =  find(dataBase.data.rule_section, item => item.publicationId === addendasId && !item.parentId)
+
+    forEach(Constants.armyEnhancements, screen => {
+        const info = getInfo(screen, _allegiance)
+        if (info) {
+            items.push(info)
+        }
+    })
 
     // otherEnhancements
     const otherEnhancement = find(dataBase.data.ability_group, (item) => item.factionId === _allegiance.id && item.abilityGroupType === 'otherEnhancements')
@@ -49,13 +67,6 @@ const Army = () => {
             items.push({title: otherEnhancement.name, withoutTitle: true, restrictionText: otherEnhancement.restrictionText, abilities: enhancements})
         }
     }
-
-    forEach(Constants.armyEnhancements, screen => {
-        const info = getInfo(screen, _allegiance)
-        if (info) {
-            items.push(info)
-        }
-    })
 
     let armyOfRenown
     // Достаем для джовсов armyOfRenown
@@ -84,12 +95,17 @@ const Army = () => {
         state={{allegiance: _allegiance, info: item}}
     />
 
-
     const renderBuilderRow = () => <Row
         title='Builder'
         navigateTo='builder'
         state={{alliganceId: _allegiance.id}}
         onClick={handleClickBuilder}
+    />
+
+    const renderAddendas = () => <Row
+        title={addendas.name}
+        navigateTo='ruleChapters'
+        state={{chapter: addendas}}
     />
 
     const renderArmyOfRenown = (item) => <Row
@@ -106,6 +122,7 @@ const Army = () => {
         <div id='column' className='Chapter'>
             {items.map(renderRow)}
             {renderBuilderRow()}
+            {addendas && renderAddendas()}
             {armyOfRenown.length > 0
                 ? <div>
                     <p id={Styles.armyOfRenown}>Army of Renown</p>

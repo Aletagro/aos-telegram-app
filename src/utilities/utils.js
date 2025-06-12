@@ -324,15 +324,6 @@ export const getNewRound = (battleplan) => {
     return newRound
 }
 
-export const setTacticColor = (tactic) => {
-    const match = tactic.match(/Keywords:\s*(\S+)/)
-    if (match) {
-        const keyword = match[1].replaceAll('*', '')
-        return Constants.tacticsTypes[keyword] || Constants.tacticsTypes.UNIVERSAL
-    }
-    return Constants.tacticsTypes.UNIVERSAL
-}
-
 export const getInfo = (screen, allegiance) => {
     let abilitiesGroup = dataBase.data[screen.groupName].filter((item) => 
         item.factionId === allegiance.id &&
@@ -481,4 +472,11 @@ export const cleanBuilder = () => {
     roster.requiredGeneral = null
     roster.spellsLore = ''
     roster.withoutBattleFormation = false
+    roster.manifestationsPoints = 0
+    roster.tactics = []
+}
+
+export const getStringAfterDash = (text) => {
+    const match = text.match(/ - (.+)/)
+    return match ? match[1] : text
 }

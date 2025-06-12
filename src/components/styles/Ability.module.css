@@ -35,7 +35,7 @@
 #castingValueContainer {
   background: black;
   border-radius: 50px;
-  width: 18px;
+  width: 16px;
   padding: 4px;
   border: 1px solid white;
 }
@@ -46,6 +46,10 @@
   margin: 0px;
   position: relative;
   top: 1px;
+}
+
+#points {
+  color: white;
 }
 
 #container {

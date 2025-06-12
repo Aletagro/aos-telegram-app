@@ -76,12 +76,13 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
+            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts of']
         }
     ],
     coreDocumentsId: 'e918110c-418e-4a50-90bc-484581a0fa5c',
+    ghbId: '3e05b549-40a4-43e5-b0f7-5ef6d1ffdbd2',
     rulesImage: 'https://dhss9aar8ocw.cloudfront.net/09a5c1fd-a186-4517-8a6f-0a107374eb45',
-    manifestationsPublicationId: '318c212e-cbcd-4b44-a44d-318f3ae180a0',
+    manifestationsPublicationId: '38c85d13-0436-48ac-adb3-1c9319b16d13',
     regimentsOfRenownImage: 'https://dhss9aar8ocw.cloudfront.net/39478fae-cf03-40ee-a130-6fef03492c44',
     unitsTypes: [
         {
@@ -125,11 +126,9 @@ const Constants = {
         endOfTurn: 'indigo'
     },
     tacticsTypes: {
-        UNIVERSAL: 'black',
-        CHAOS: 'darkred',
-        DESTRUCTION: 'darkgreen',
-        ORDER: 'rgb(26, 72, 110)',
-        DEATH: 'indigo'
+        affray: 'darkgreen',
+        strike: 'rgb(26, 72, 110)',
+        domination: 'rgb(182, 92, 28)'
     },
     regimentOfRenownsWithWizard: [
         {
@@ -427,7 +426,9 @@ const Constants = {
         'Death': false,
         'Destruction': false,
         'Order': false
-    }
+    },
+    legendaryArmies: ['262eabc2-f3b4-4296-9ef5-632d6cf1aadf', '5425ee6d-56cb-44a3-9f82-78b6864890da'],
+    noBreakSpace: '\u00a0'
 }
 
 export default Constants

@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState} from 'react'
+import React, {useCallback, useReducer, useState, useEffect} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Modal from '@mui/joy/Modal'
 import ModalDialog from '@mui/joy/ModalDialog'
@@ -12,12 +12,14 @@ import Add from '../icons/add.svg'
 import Info from '../icons/info.svg'
 import WhiteInfo from '../icons/whiteInfo.svg'
 
+import size from 'lodash/size'
+
 import Styles from './styles/Builder.module.css'
 
 const dataBase = require('../dataBase.json')
 
 const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
-const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures']
+const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts of']
 const pointsLimits = ['1000', '1500', '2000', '2500', '3000']
 
 const emptyRegiment = {
@@ -31,6 +33,7 @@ const emptyRegiment = {
 const Builder = () => {
     const {allegiance, alliganceId} = useLocation().state
     const [open, setOpen] = useState(false)
+    const [pointError, setPointError] = useState(false)
     const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
     // eslint-disable-next-line
@@ -80,6 +83,17 @@ const Builder = () => {
         requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
         roster.requiredGeneral = requiredGeneral
     }
+
+    useEffect(() => {
+        let hasError = false
+        if (roster.pointsLimit - roster.points < 0) {
+            hasError = true
+        }
+        if (hasError !== pointError) {
+            setPointError(hasError)
+        }
+    // eslint-disable-next-line
+    }, [roster.points])
 
     const handleAddRegiment = useCallback(() => {
         roster.regiments = [...roster.regiments, emptyRegiment]
@@ -131,6 +145,10 @@ const Builder = () => {
         }
     }
 
+    const handleChooseTactics = () => {
+        navigate('/builderChooseTacticsCard', {state: {title: 'Choose Tactics Card'}})
+    }
+
     const handleReinforcedAuxiliary = (unit, unitIndex) => {
         if (unit.isReinforced) {
             const _points = unit.points / 2
@@ -163,6 +181,10 @@ const Builder = () => {
     const handleClickPointsLimitButton = (limit) => () => {
         roster.pointsLimit = limit
         handleCloseModal()
+    }
+
+    const handleClickTactics = (card) => () => {
+        navigate('/builderTactics', {state: {title: card.name, cardId: card.id}})
     }
 
     const renderRegiment = (regiment, index) => <Regiment
@@ -237,7 +259,7 @@ const Builder = () => {
         : <div id={Styles.addButton}>
             <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
                 {roster[type]
-                    ? `${name} : ${roster[type]}`
+                    ? `${name} : ${roster[type]}${type === 'manifestationLore' && roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}`
                     : `Choose ${name}`
                 }
             </button>
@@ -263,8 +285,8 @@ const Builder = () => {
             <p id={Styles.text}>Allegiance: <b>{roster.allegiance}</b></p>
             <p>Wounds: {getWoundsCount(roster)}</p>
         </button>
-        <button onClick={handleOpenModal} id={Styles.pointsContainer}>
-            <p id={Styles.pointsTitle}>Army: {roster.points}/{roster.pointsLimit} Points</p>
+        <button onClick={handleOpenModal} id={pointError ? Styles.errorPointsContainer : Styles.pointsContainer}>
+            <p id={Styles.pointsTitle}>Army: {roster.points}/{roster.pointsLimit} Points ({roster.pointsLimit - roster.points})</p>
             <img id={Styles.pointsTitleInfoIcon} src={WhiteInfo} alt="" />
         </button>
         {battleFormations.length
@@ -273,6 +295,23 @@ const Builder = () => {
                     ? `Battle Formation : ${roster.battleFormation}`
                     : 'Choose Battle Formation'
                 }
+            </button>
+            : null
+        }
+        <button id={size(roster.tactics) === 2 ? Styles.secondAddButton : Styles.addButton} onClick={handleChooseTactics}>
+            {size(roster.tactics) === 2 ? `Your Tactics Cards` : 'Choose Tactics Cards'}
+        </button>
+        {roster.tactics[0]
+            ? <button onClick={handleClickTactics(roster.tactics[0])} id={Styles.secondAddButton}>
+                <p>First Card: {roster.tactics[0].name}</p>
+                <img src={Info} alt="" />
+            </button>
+            : null
+        }
+        {roster.tactics[1]
+            ? <button onClick={handleClickTactics(roster.tactics[1])} id={Styles.secondAddButton}>
+                <p>Second Card: {roster.tactics[1].name}</p>
+                <img src={Info} alt="" />
             </button>
             : null
         }

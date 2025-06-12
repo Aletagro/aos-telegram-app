@@ -24,7 +24,9 @@ export const roster = {
     manifestationsList: [],
     factionTerrain: '',
     pointsLimit: 2000,
-    points: 0
+    points: 0,
+    manifestationsPoints: 0,
+    tactics: []
 }
 
 export const search = {
