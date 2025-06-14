@@ -26,7 +26,10 @@ export const roster = {
     pointsLimit: 2000,
     points: 0,
     manifestationsPoints: 0,
-    tactics: []
+    terrainPoints: 0,
+    spellsLorePoints: 0,
+    tactics: [],
+    otherEnhancement: undefined
 }
 
 export const search = {

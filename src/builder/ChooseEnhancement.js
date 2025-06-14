@@ -24,7 +24,7 @@ const ChooseEnhancement = () => {
     if (type === 'spellsLore' || type === 'prayersLore') {
         const loresRules = data.map(lore => dataBase.data.lore_ability.filter((item) => item.loreId === lore?.id))
         _data = data.map((lore, index) => {
-            return {name: lore?.name, id: lore?.id, abilities: loresRules[index]}
+            return {name: lore?.name, id: lore?.id, points: lore?.points || 0, abilities: loresRules[index]}
         })
         info = {
             abilityKeywordsName: 'lore_ability_keyword',
@@ -82,6 +82,11 @@ const ChooseEnhancement = () => {
                 roster.points += pointsDiff
                 roster.manifestationsPoints = block.points
             }
+        }
+        if (type === 'spellsLore' && block.points !== roster.spellsLorePoints) {
+            const pointsDiff = block.points - roster.spellsLorePoints
+            roster.points += pointsDiff
+            roster.spellsLorePoints = block.points
         }
         navigate(-1)
     }

@@ -10,6 +10,7 @@ import Info from '../icons/info.svg'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
 import find from 'lodash/find'
+import includes from 'lodash/includes'
 
 import Styles from './styles/UnitRow.module.css'
 
@@ -17,7 +18,7 @@ const dataBase = require('../dataBase.json')
 
 const UnitRow = ({
     unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy,onReinforced, artefacts, withoutMargin,
-    heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown, isRoRUnitWithKeyword
+    heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown, isRoRUnitWithKeyword, otherEnhancement
 }) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
@@ -34,6 +35,11 @@ const UnitRow = ({
     if (isRegimentsOfRenown) {
         rowImage = find(dataBase.data.warscroll, ['id', unit.regimentOfRenownRowImageWarscrollId])?.rowImage
     }
+    let requiredKeyword = undefined
+    if (otherEnhancement) {
+        const requiredKeywordId = find(dataBase.data.ability_group_required_keyword, ['abilityGroupId', otherEnhancement.id])?.keywordId
+        requiredKeyword = find(dataBase.data.keyword, ['id', requiredKeywordId])?.name
+    } 
 
     const handleClick = () => {
         if (onClick) {
@@ -109,6 +115,7 @@ const UnitRow = ({
     const renderChooseWeapon = () => <button id={Styles.chooseEnhancementButton} onClick={handleWeaponOption}>
         Weapon Options
     </button>
+
     return <div id={withoutMargin ? Styles.rorContainer : Styles.container}>
         <div className={Styles.row}>
             <button id={Styles.addUnitButton} onClick={handleClick}>
@@ -143,12 +150,13 @@ const UnitRow = ({
             </div>
             : null
         }
-        {(optionGroups.length > 0 || additionalOption) && !isAddUnit
+        {(optionGroups.length > 0 || additionalOption || otherEnhancement) && !isAddUnit
             ? <div id={Styles.enhancementsContainer}>
                 {weaponOptions.length > 0 ? renderChooseWeapon() : null}
                 {marksOfChaos ? renderChooseOptionButton(marksOfChaos) : null}
                 {additionalOption ? renderAdditionalOption(additionalOption) : null}
                 {otherWarscrollOption ? renderChooseOptionButton(otherWarscrollOption) : null}
+                {otherEnhancement && includes(unit.referenceKeywords, requiredKeyword) ? renderAdditionalOption(otherEnhancement) : null}
             </div>
             : null
         }

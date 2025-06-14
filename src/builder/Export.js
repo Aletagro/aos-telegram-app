@@ -11,7 +11,6 @@ import size from 'lodash/size'
 
 import Styles from './styles/Export.module.css'
 
-const additionalOptions = ['Ensorcelled Banners', 'First Circle Titles']
 
 // const unitsKeys =  ['id', 'name', 'points', 'isReinforced', 'heroicTrait', 'artefact', 'marksOfChaos', 'otherWarscrollOption', 'Ensorcelled Banners'] 
 
@@ -28,7 +27,7 @@ const Export = () => {
 
     const getErrorsText = (_errors) => _errors.map(getErrorText).join('\n')
 
-    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit['Ensorcelled Banners'] ? `\n• ${unit['Ensorcelled Banners']}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
+    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit[roster.otherEnhancement] ? `\n• ${unit[roster.otherEnhancement]}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
     const getRoRUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount} x` : ''} ${unit.name} ${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit['Ensorcelled Banners'] ? `\n• ${unit['Ensorcelled Banners']}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
@@ -58,7 +57,7 @@ Battle Formation: ${roster.battleFormation}
 Battle Tactics Cards: ${get(roster, 'tactics[0].name', '')}${size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}
 Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
 
-${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}` : ''}
+${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.spellsLorePoints ? ` (${roster.spellsLorePoints}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.terrainPoints ? ` (${roster.terrainPoints}${Constants.noBreakSpace}pts)` : ''}` : ''}
 -----
 ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}
@@ -117,7 +116,7 @@ ${roster.points}/${roster.pointsLimit} Pts
 
     const renderWeaponOptions = (weaponOptions) => Object.entries(weaponOptions).map(renderWeaponOption)
 
-    const renderAdditionalOption = (unit) => (additionalOption) =>
+    const renderAdditionalOption = (unit, additionalOption) =>
         unit[additionalOption] ? <p>&#8226; {additionalOption}: {unit[additionalOption]}</p> : null
 
     const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
@@ -126,7 +125,7 @@ ${roster.points}/${roster.pointsLimit} Pts
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
         {unit.weaponOptions ? renderWeaponOptions(unit.weaponOptions) : null}
         {unit.marksOfChaos ? <p>&#8226; Mark Of Chaos: {unit.marksOfChaos}</p> : null}
-        {additionalOptions.map(renderAdditionalOption(unit))}
+        {roster.otherEnhancement ? renderAdditionalOption(unit, roster.otherEnhancement) : null}
         {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
     </div>
 
@@ -175,10 +174,10 @@ ${roster.points}/${roster.pointsLimit} Pts
         <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
         {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         <br/>
-        {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}</p> : null}
+        {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}{roster.spellsLorePoints ? ` (${roster.spellsLorePoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
         {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}{roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
-        {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}</p> : null}
+        {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}{roster.terrainPoints ? ` (${roster.terrainPoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         <hr/>
         {roster.regiments.map(renderRegiment)}
         <hr/>

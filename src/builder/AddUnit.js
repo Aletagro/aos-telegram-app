@@ -69,7 +69,7 @@ const AddUnit = () => {
         units = unitsSortesByType(units)
     } else if (heroId) {
         // определяем всех юнитов фракции
-        const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && (showLegends ?  true : !unit.isLegends) && unit.points)
+        const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && (showLegends ?  true : !unit.isLegends) && !includes(unit.referenceKeywords, 'Faction Terrain') && !includes(unit.referenceKeywords, 'Manifestation'))
         // определяем кейворды всех юнитов фракции
         const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
         // определяем опция реджимента героя

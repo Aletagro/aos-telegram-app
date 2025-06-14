@@ -76,7 +76,7 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts of']
+            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts']
         }
     ],
     coreDocumentsId: 'e918110c-418e-4a50-90bc-484581a0fa5c',

@@ -14,6 +14,8 @@ import WhiteInfo from '../icons/whiteInfo.svg'
 
 import map from 'lodash/map'
 import size from 'lodash/size'
+import find from 'lodash/find'
+import filter from 'lodash/filter'
 import flatten from 'lodash/flatten'
 
 import Styles from './styles/Builder.module.css'
@@ -21,7 +23,7 @@ import Styles from './styles/Builder.module.css'
 const dataBase = require('../dataBase.json')
 
 const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
-const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts of']
+const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts']
 const pointsLimits = ['1000', '1500', '2000', '2500', '3000']
 
 const emptyRegiment = {
@@ -60,7 +62,13 @@ const Builder = () => {
     const heroicTraitsGroups = dataBase.data.ability_group.filter(group => group.factionId === _alliganceId && group.abilityGroupType === 'heroicTraits')
     const heroicTraits = flatten(map(heroicTraitsGroups, heroicTraitsGroup => dataBase.data.ability.filter(ability => ability.abilityGroupId === heroicTraitsGroup?.id)))
     const battleFormations = dataBase.data.battle_formation.filter(formation => formation.factionId === _alliganceId)
-
+    const otherEnhancementsGroup = find(dataBase.data.ability_group, (item) => item.factionId === _alliganceId && item.abilityGroupType === 'otherEnhancements')
+    let otherEnhancement = null
+    if (otherEnhancementsGroup) {
+        const abilities = filter(dataBase.data.ability, ['abilityGroupId', otherEnhancementsGroup.id])
+        otherEnhancement = {name: otherEnhancementsGroup?.name, id: otherEnhancementsGroup?.id, abilities}
+        roster.otherEnhancement = otherEnhancement.name
+    }
     if (spellsLores.length === 1 && !roster.spellsLore) {
         roster.spellsLore = spellsLores[0].name
     }
@@ -72,6 +80,8 @@ const Builder = () => {
     }
     if (factionTerrains.length === 1 && !roster.factionTerrain) {
         roster.factionTerrain = factionTerrains[0].name
+        roster.terrainPoints = factionTerrains[0].points
+        roster.points += factionTerrains[0].points
     }
     if (!battleFormations.length) {
         roster.withoutBattleFormation = true
@@ -197,6 +207,7 @@ const Builder = () => {
         forceUpdate={forceUpdate}
         artefacts={artefacts}
         heroicTraits={heroicTraits}
+        otherEnhancement={otherEnhancement}
     />
 
     const renderAuxiliaryUnit = (unit, index) => <UnitRow
@@ -251,17 +262,30 @@ const Builder = () => {
         state={{unit: manifestation}}
     />
 
+    const renderEnhancementPoints = (type) => {
+        switch (type) {
+            case 'manifestationLore':
+                return roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''
+            case 'factionTerrain':
+                return roster.terrainPoints ? ` (${roster.terrainPoints}${Constants.noBreakSpace}pts)` : ''
+            case 'spellsLore':
+                return roster.spellsLorePoints ? ` (${roster.spellsLorePoints}${Constants.noBreakSpace}pts)` : ''
+            default:
+                return ''
+        }
+    }
+
     const renderEnhancement = (name, type, data) => data.length === 1
         ? <div id={Styles.secondAddButton}>
             <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
-                {data[0].name}
+                {data[0].name}{renderEnhancementPoints(type)}
             </button>
             <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img className={Styles.icon} src={Info} alt="" /></button>
         </div>
         : <div id={Styles.addButton}>
             <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
                 {roster[type]
-                    ? `${name} : ${roster[type]}${type === 'manifestationLore' && roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}`
+                    ? `${name} : ${roster[type]}${renderEnhancementPoints(type)}`
                     : `Choose ${name}`
                 }
             </button>

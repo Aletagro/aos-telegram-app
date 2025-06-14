@@ -62,7 +62,7 @@ export const getErrors = (roster) => {
     const uniqueUnits = []
     let heroicTraitsCount = 0
     let atrefactsCount = 0
-    let ensorcelledBannersCount = 0
+    let otherEnhancementCount = 0
     let hasWarmasterInRegiments = []
     let hasRequiredGeneral = false
     let isRequiredGeneralIsGeneral = false
@@ -84,8 +84,8 @@ export const getErrors = (roster) => {
             if (unit.artefact) {
                 atrefactsCount += 1
             }
-            if (unit['Ensorcelled Banners']) {
-                ensorcelledBannersCount += 1
+            if (unit[roster.otherEnhancement]) {
+                otherEnhancementCount += 1
             }
             if (unit.points * 2 > roster.pointsLimit) {
                 errors.push(`${unit.name} cost more than half the army`)
@@ -126,8 +126,8 @@ export const getErrors = (roster) => {
     if (atrefactsCount > 1) {
         errors.push(`You have ${atrefactsCount} Atrefacts`)
     }
-    if (ensorcelledBannersCount > 1) {
-        errors.push(`You have ${ensorcelledBannersCount} Ensorcelled Banners`)
+    if (otherEnhancementCount > (roster.otherEnhancement === 'First Circle Titles' ? 3 : 1)) {
+        errors.push(`You have ${otherEnhancementCount} ${roster.otherEnhancement}`)
     }
     if (hasWarmasterInRegiments.length && !includes(hasWarmasterInRegiments, roster.generalRegimentIndex) && !roster.requiredGeneral) {
         errors.push("You have a Warmaster hero, but he isn't your general")
@@ -338,7 +338,7 @@ export const getInfo = (screen, allegiance) => {
     }
     const abilitiesRules = abilitiesGroup.map(formation => dataBase.data[screen.ruleName].filter((item) => item[screen.ruleIdName] === formation?.id))
     const abilities = abilitiesGroup.map((formation, index) => {
-        return {name: formation?.name, id: formation?.id, abilities: abilitiesRules[index]}
+        return {name: formation?.name, id: formation?.id, points: formation?.points || 0, abilities: abilitiesRules[index]}
     })
     if (abilities.length > 0) {
         return {title: screen.title, abilities}
@@ -391,7 +391,7 @@ export const getRegimentOption = (option, unit) => {
     }
     const warscrollIds = dataBase.data.warscroll_faction_keyword.filter((item) => item.factionKeywordId === alliganceId).map(item => item.warscrollId)
     // определяем всех юнитов фракции
-    const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && unit.points !== null)
+    const allUnits = warscrollIds.map(warscrollId => dataBase.data.warscroll.find(scroll => scroll.id === warscrollId)).filter(unit => !unit.isSpearhead && !unit.isLegends && !includes(unit.referenceKeywords, 'Faction Terrain') && !includes(unit.referenceKeywords, 'Manifestation'))
     // определяем кейворды всех юнитов фракции
     const allUnitsKeywordsIds = allUnits.map(unit => dataBase.data.warscroll_keyword.filter(keyword => keyword.warscrollId === unit.id))
     let units = []
@@ -474,6 +474,7 @@ export const cleanBuilder = () => {
     roster.withoutBattleFormation = false
     roster.manifestationsPoints = 0
     roster.tactics = []
+    roster.otherEnhancement = undefined
 }
 
 export const getStringAfterDash = (text) => {

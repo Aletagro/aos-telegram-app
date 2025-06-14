@@ -15,7 +15,7 @@ const emptyRegiment = {
     heroicTrait: ''
 }
 
-const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits}) => {
+const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits, otherEnhancement}) => {
     const navigate = useNavigate()
 
     const handleDeleteRegiment = () => {
@@ -98,6 +98,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
         onCopy={handleCopy}
         artefacts={artefacts}
         heroicTraits={heroicTraits}
+        otherEnhancement={otherEnhancement}
         isGeneral={regiment.heroId && _index === 0 && roster.generalRegimentIndex === index}
         alliganceId={alliganceId}
     />

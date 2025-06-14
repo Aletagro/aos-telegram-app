@@ -22,7 +22,10 @@ const ArmyInfo = () => {
     />
 
     const renderBlock = (block) => <div key={block.id}>
-        <p id={Styles.title}>{block.name}</p>
+        <div id={Styles.blockHeader}>
+            <b id={Styles.title}>{block.name}</b>
+            {block.points ? <p id={Styles.title}>{block.points} pts</p> : null}
+        </div>
         {map(block.abilities, renderAbility)}
     </div>
 
