@@ -32,7 +32,7 @@ const ChooseEnhancement = () => {
         }
     }
     if (type === 'factionTerrain') {
-        _data = data.map((terrain, index) => ({name: terrain?.name, id: terrain?.id}))
+        _data = data.map((terrain, index) => ({name: terrain?.name, id: terrain?.id, points: terrain?.points || 0}))
     }
     if (type === 'manifestationLore') {
         const lores = data.map(lore => dataBase.data.lore_ability.filter((item) => item.loreId === lore?.id))
@@ -88,6 +88,11 @@ const ChooseEnhancement = () => {
             roster.points += pointsDiff
             roster.spellsLorePoints = block.points
         }
+        if (type === 'factionTerrain' && block.points !== roster.terrainPoints) {
+            const pointsDiff = block.points - roster.terrainPoints
+            roster.points += pointsDiff
+            roster.terrainPoints = block.points
+        }
         navigate(-1)
     }
 
@@ -96,6 +101,16 @@ const ChooseEnhancement = () => {
             roster[type] = ''
             if (type === 'manifestationLore') {
                 roster.manifestationsList = []
+                if (roster.manifestationsPoints) {
+                    roster.points -= roster.manifestationsPoints
+                    roster.manifestationsPoints = 0
+                }
+            } else if (type === 'spellsLore' && roster.spellsLorePoints) {
+                roster.points -= roster.spellsLorePoints
+                roster.spellsLorePoints = 0
+            } else if (type === 'factionTerrain' && roster.terrainPoints) {
+                roster.points -= roster.terrainPoints
+                roster.terrainPoints = 0
             }
         } else if (isRoRUnitWithKeyword) {
             const newUnit = {...roster.regimentsOfRenownUnits[unitIndex], [type]: ''}

@@ -78,7 +78,7 @@ const Builder = () => {
     if (manifestationsLores.length === 1 && !roster.manifestationLore) {
         roster.manifestationLore = manifestationsLores[0].name
     }
-    if (factionTerrains.length === 1 && !roster.factionTerrain) {
+    if (factionTerrains.length === 1 && !roster.factionTerrain && !factionTerrains[0].points) {
         roster.factionTerrain = factionTerrains[0].name
         roster.terrainPoints = factionTerrains[0].points
         roster.points += factionTerrains[0].points
@@ -151,7 +151,8 @@ const Builder = () => {
 
     const handleChooseEnhancement = (name, type, data, isInfo) => () => {
         if (type === 'factionTerrain' && isInfo) {
-            navigate('/warscroll', {state: {unit: data.find(terrain => terrain.name === roster.factionTerrain)}})
+            const terrain = data.find(terrain => terrain.name === roster.factionTerrain)
+            navigate('/warscroll', {state: {unit: terrain, title: terrain.name}})
         } else {
             navigate('/chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo}})
         }
@@ -275,7 +276,7 @@ const Builder = () => {
         }
     }
 
-    const renderEnhancement = (name, type, data) => data.length === 1
+    const renderEnhancement = (name, type, data) => data.length === 1 && !data[0].points
         ? <div id={Styles.secondAddButton}>
             <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data, true)}>
                 {data[0].name}{renderEnhancementPoints(type)}
