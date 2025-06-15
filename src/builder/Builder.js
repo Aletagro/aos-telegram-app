@@ -277,7 +277,7 @@ const Builder = () => {
 
     const renderEnhancement = (name, type, data) => data.length === 1
         ? <div id={Styles.secondAddButton}>
-            <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
+            <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data, true)}>
                 {data[0].name}{renderEnhancementPoints(type)}
             </button>
             <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img className={Styles.icon} src={Info} alt="" /></button>
