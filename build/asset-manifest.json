@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/aos-telegram-app/static/css/main.c603f156.css",
+    "main.js": "/aos-telegram-app/static/js/main.2126edde.js",
+    "static/media/placeholder.png": "/aos-telegram-app/static/media/placeholder.816f67bc014b91894c3e.png",
+    "static/media/malekith.png": "/aos-telegram-app/static/media/malekith.6e0b07f7d78ebe386dc6.png",
+    "static/media/MinionPro-Bold.woff": "/aos-telegram-app/static/media/MinionPro-Bold.e73f42dae2e6ae675375.woff",
+    "static/media/MinionPro-Regular.woff": "/aos-telegram-app/static/media/MinionPro-Regular.7cfa635450eff096f301.woff",
+    "static/media/calculator.svg": "/aos-telegram-app/static/media/calculator.f724ea6fabd284bd48378ca5b8742f9f.svg",
+    "static/media/add.svg": "/aos-telegram-app/static/media/add.fc78ba00fcec417be7fade2132452c3e.svg",
+    "static/media/export.svg": "/aos-telegram-app/static/media/export.891ab20efb017ba3fc68b8ca59b6b9e7.svg",
+    "static/media/delete.svg": "/aos-telegram-app/static/media/delete.5b90fab076dec066ad769f8f7e7448cf.svg",
+    "static/media/info.svg": "/aos-telegram-app/static/media/info.c0d2f9a8c6adfb10f29ebcfc3a454222.svg",
+    "static/media/whiteInfo.svg": "/aos-telegram-app/static/media/whiteInfo.5b6b03f826355624bf19acd07a3c98b4.svg",
+    "static/media/whiteClose.svg": "/aos-telegram-app/static/media/whiteClose.5a0cb2bed81922514e4c4015f9b6a12a.svg",
+    "static/media/search.svg": "/aos-telegram-app/static/media/search.64ecb22b491aeb2452de642dcd58b212.svg",
+    "static/media/home.svg": "/aos-telegram-app/static/media/home.3c2eafab94ed556dfcc4d1d782d176f2.svg",
+    "static/media/close.svg": "/aos-telegram-app/static/media/close.39b1afcff9b7e6d1b59c5b450cc68919.svg",
+    "static/media/arrowBack.svg": "/aos-telegram-app/static/media/arrowBack.c94b089a5632f3346459ad327116314c.svg",
+    "static/media/whiteCopy.svg": "/aos-telegram-app/static/media/whiteCopy.0d202b6fafa9edf369abcc84e983be2b.svg",
+    "static/media/copy.svg": "/aos-telegram-app/static/media/copy.3fb355d1d836891fb914a4f892176c6d.svg",
+    "index.html": "/aos-telegram-app/index.html",
+    "static/media/book.svg": "/aos-telegram-app/static/media/book.5375825f5532c8244a0b4431c1320105.svg",
+    "static/media/darkGeneral.svg": "/aos-telegram-app/static/media/darkGeneral.4aef633e12e06421e7d4ad9e6f39a245.svg",
+    "static/media/general.svg": "/aos-telegram-app/static/media/general.38560f8a3e8fd25424a3ba1ad3c9e899.svg",
+    "static/media/checkmark.svg": "/aos-telegram-app/static/media/checkmark.dbdab7321ae9bb7ab9148b5090c3b09a.svg",
+    "static/media/goldCheckmark.svg": "/aos-telegram-app/static/media/goldCheckmark.3ba83c49489fe35dc43e87829735d5a0.svg",
+    "static/media/plus.svg": "/aos-telegram-app/static/media/plus.1821b69dd59c40f640858714c03302df.svg",
+    "static/media/minus.svg": "/aos-telegram-app/static/media/minus.e96d94d06862f0e438941502b49deb0e.svg",
+    "main.c603f156.css.map": "/aos-telegram-app/static/css/main.c603f156.css.map",
+    "main.2126edde.js.map": "/aos-telegram-app/static/js/main.2126edde.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c603f156.css",
+    "static/js/main.2126edde.js"
+  ]
+}
