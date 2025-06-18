@@ -28,7 +28,6 @@ import Builder from './builder/Builder'
 import AddUnit from './builder/AddUnit'
 import ChooseEnhancement from './builder/ChooseEnhancement'
 import BuilderChooseTacticsCard from './builder/BuilderChooseTacticsCard'
-import BuilderTactics from './builder/BuilderTactics'
 import ChooseOption from './builder/ChooseOption'
 import ChooseWeapon from './builder/ChooseWeapon'
 import Export from './builder/Export'
@@ -71,7 +70,6 @@ function App() {
       <Route path={'regimentOfRenownList'} element={<RegimentsOfRenownList />} />
       <Route path={'chooseEnhancement'} element={<ChooseEnhancement />} />
       <Route path={'builderChooseTacticsCard'} element={<BuilderChooseTacticsCard />} />
-      <Route path={'builderTactics'} element={<BuilderTactics />} />
       <Route path={'chooseOption'} element={<ChooseOption />} />
       <Route path={'chooseWeapon'} element={<ChooseWeapon />} />
       <Route path={'search'} element={<Search />} />

@@ -156,7 +156,10 @@ const UnitRow = ({
                 {marksOfChaos ? renderChooseOptionButton(marksOfChaos) : null}
                 {additionalOption ? renderAdditionalOption(additionalOption) : null}
                 {otherWarscrollOption ? renderChooseOptionButton(otherWarscrollOption) : null}
-                {otherEnhancement && includes(unit.referenceKeywords, requiredKeyword) ? renderAdditionalOption(otherEnhancement) : null}
+                {otherEnhancement && includes(unit.referenceKeywords, requiredKeyword) && !unit.referenceKeywords?.includes('Unique')
+                    ? renderAdditionalOption(otherEnhancement)
+                    : null
+                }
             </div>
             : null
         }

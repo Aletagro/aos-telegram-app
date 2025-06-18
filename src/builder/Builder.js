@@ -197,7 +197,7 @@ const Builder = () => {
     }
 
     const handleClickTactics = (card) => () => {
-        navigate('/builderTactics', {state: {title: card.name, cardId: card.id}})
+        navigate('/tactic', {state: {title: card.name, tactic: card}})
     }
 
     const renderRegiment = (regiment, index) => <Regiment
