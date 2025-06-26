@@ -37,10 +37,18 @@ export const search = {
     Warscrolls: [],
     Rules: [],
     Allegiances: [],
+    'Battle Formation': [],
+    Abilities: [],
+    'Lore Abilities': [],
+    'Regiment of Renown': [],
     expand: {
         Warscrolls: true,
         Rules: true,
-        Allegiances: true
+        Allegiances: true,
+        'Battle Formation': true,
+        Abilities: true,
+        'Lore Abilities': true,
+        'Regiment of Renown': true
     }
 }
 
