@@ -57,14 +57,14 @@ Battle Formation: ${roster.battleFormation}
 Battle Tactics Cards: ${get(roster, 'tactics[0].name', '')}${size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}
 Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
 
-${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.spellsLorePoints ? ` (${roster.spellsLorePoints}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.terrainPoints ? ` (${roster.terrainPoints}${Constants.noBreakSpace}pts)` : ''}` : ''}
+${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}` : ''}
 -----
 ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}
 ${roster.regimentsOfRenownUnits.length > 0 ? `${getUnitsForExport(roster.regimentsOfRenownUnits, true)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
 Wounds: ${getWoundsCount(roster)}
-${roster.points}/${roster.pointsLimit} Pts
+${roster.points.all}/${roster.pointsLimit} Pts
 `
         navigator.clipboard.writeText(rosterText)
         toast.success('List Copied', Constants.toastParams)
@@ -174,10 +174,10 @@ ${roster.points}/${roster.pointsLimit} Pts
         <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
         {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         <br/>
-        {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}{roster.spellsLorePoints ? ` (${roster.spellsLorePoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
+        {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}{roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
-        {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}{roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
-        {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}{roster.terrainPoints ? ` (${roster.terrainPoints}${Constants.noBreakSpace}pts)` : ''}</p> : null}
+        {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}{roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}</p> : null}
+        {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}{roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         <hr/>
         {roster.regiments.map(renderRegiment)}
         <hr/>
@@ -199,7 +199,7 @@ ${roster.points}/${roster.pointsLimit} Pts
             : null
         }
         <p>Wounds: {getWoundsCount(roster)}</p>
-        <p>{roster.points}/{roster.pointsLimit} Pts</p>
+        <p>{roster.points.all}/{roster.pointsLimit} Pts</p>
         <ToastContainer />
     </div>
 }

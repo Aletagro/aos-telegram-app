@@ -364,7 +364,7 @@ const Lists = () => {
         roster.grandAlliance = list.grandAlliance
         roster.manifestationLore = list.manifestationLore
         roster.manifestationsList = getUnits(list.manifestationsList)
-        roster.points = list.points
+        roster.points = list.points || {all: 0}
         roster.pointsLimit = list.pointsLimit
         roster.prayersLore = list.prayersLore
         roster.regimentOfRenown = find(dataBase.data.ability_group, ['id', list.regimentOfRenown?.id]) 

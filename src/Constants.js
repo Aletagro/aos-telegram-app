@@ -235,7 +235,7 @@ const Constants = {
         {modificator: 2, title: 'Crit on 5+'},
         {modificator: 1, title: 'Crit on 6+'}
     ],
-    battleplansRuleSectionId: '97befff2-c7fa-4ee2-aa73-1e7fe2e8d8cd',
+    battleplansRuleSectionId: '4870769b-c759-4fa2-bc85-da79ab5d6957',
     tacticsIds: {
         Universal: 'b14bc337-1f07-47ab-853c-e7484b6b6661',
         Order: 'b2e81319-fd3c-4ee4-aae6-f3547efee8b6',

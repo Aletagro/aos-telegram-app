@@ -24,10 +24,9 @@ export const roster = {
     manifestationsList: [],
     factionTerrain: '',
     pointsLimit: 2000,
-    points: 0,
-    manifestationsPoints: 0,
-    terrainPoints: 0,
-    spellsLorePoints: 0,
+    points: {
+        all: 0
+    },
     tactics: [],
     otherEnhancement: undefined
 }

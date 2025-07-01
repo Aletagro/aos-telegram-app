@@ -64,7 +64,7 @@ const ChooseEnhancement = () => {
                     [`${type}-points`]: enhancement.points
                 }
                 roster.regiments[regimentIndex].points += enhancementPointsDiff
-                roster.points += enhancementPointsDiff
+                roster.points.all += enhancementPointsDiff
             } else {
                 newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: enhancement.name}
             }
@@ -77,21 +77,21 @@ const ChooseEnhancement = () => {
         roster[type] = block.name
         if (type === 'manifestationLore') {
             roster.manifestationsList = block.abilities
-            if (block.points !== roster.manifestationsPoints) {
-                const pointsDiff = block.points - roster.manifestationsPoints
-                roster.points += pointsDiff
-                roster.manifestationsPoints = block.points
+            if (block.points !== roster.points.manifestations) {
+                const pointsDiff = block.points - (roster.points.manifestations || 0)
+                roster.points.all += pointsDiff
+                roster.points.manifestations = block.points
             }
         }
-        if (type === 'spellsLore' && block.points !== roster.spellsLorePoints) {
-            const pointsDiff = block.points - roster.spellsLorePoints
-            roster.points += pointsDiff
-            roster.spellsLorePoints = block.points
+        if (type === 'spellsLore' && block.points !== roster.points.spellsLore) {
+            const pointsDiff = block.points - (roster.points.spellsLore || 0)
+            roster.points.all += pointsDiff
+            roster.points.spellsLore = block.points
         }
-        if (type === 'factionTerrain' && block.points !== roster.terrainPoints) {
-            const pointsDiff = block.points - roster.terrainPoints
-            roster.points += pointsDiff
-            roster.terrainPoints = block.points
+        if (type === 'factionTerrain' && block.points !== roster.points.terrain) {
+            const pointsDiff = block.points - (roster.points.terrain || 0)
+            roster.points.all += pointsDiff
+            roster.points.terrain = block.points
         }
         navigate(-1)
     }
@@ -101,16 +101,16 @@ const ChooseEnhancement = () => {
             roster[type] = ''
             if (type === 'manifestationLore') {
                 roster.manifestationsList = []
-                if (roster.manifestationsPoints) {
-                    roster.points -= roster.manifestationsPoints
-                    roster.manifestationsPoints = 0
+                if (roster.points.manifestations) {
+                    roster.points.all -= roster.points.manifestations
+                    roster.points.manifestations = 0
                 }
-            } else if (type === 'spellsLore' && roster.spellsLorePoints) {
-                roster.points -= roster.spellsLorePoints
-                roster.spellsLorePoints = 0
-            } else if (type === 'factionTerrain' && roster.terrainPoints) {
-                roster.points -= roster.terrainPoints
-                roster.terrainPoints = 0
+            } else if (type === 'spellsLore' && roster.points.spellsLore) {
+                roster.points.all -= roster.points.spellsLore
+                roster.points.spellsLore = 0
+            } else if (type === 'factionTerrain' && roster.points.terrain) {
+                roster.points.all -= roster.points.terrain
+                roster.points.terrain = 0
             }
         } else if (isRoRUnitWithKeyword) {
             const newUnit = {...roster.regimentsOfRenownUnits[unitIndex], [type]: ''}
@@ -129,7 +129,7 @@ const ChooseEnhancement = () => {
                     [`${type}-points`]: 0
                 }
                 roster.regiments[regimentIndex].points -= enhancementPoints
-                roster.points -= enhancementPoints
+                roster.points.all -= enhancementPoints
             } else {
                 newUnit = {...roster.regiments[regimentIndex].units[unitIndex], [type]: ''}
             }

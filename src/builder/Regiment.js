@@ -20,7 +20,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
 
     const handleDeleteRegiment = () => {
         const newRegiments = [...roster.regiments]
-        roster.points = roster.points - newRegiments[index].points
+        roster.points.all -= newRegiments[index].points
         newRegiments.splice(index, 1)
         roster.regiments = newRegiments
         forceUpdate()
@@ -42,10 +42,10 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     const handleDeleteUnit = (unit, unitIndex) => {
         const newRegiment = {...regiment}
         if (unitIndex === 0) {
-            roster.points = roster.points - newRegiment.points
+            roster.points.all -= newRegiment.points
             roster.regiments[index] = emptyRegiment
         } else {
-            roster.points = roster.points - unit.points
+            roster.points.all -= unit.points
             newRegiment.points = newRegiment.points - unit.points
             newRegiment.units.splice(unitIndex, 1)
             roster.regiments[index] = newRegiment
@@ -56,7 +56,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     const handleCopy = (unit) => {
         roster.regiments[index].units.push(unit)
         roster.regiments[index].points = roster.regiments[index].points + unit.points
-        roster.points = roster.points + unit.points
+        roster.points.all += unit.points
         forceUpdate()
     }
 
@@ -69,7 +69,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
                 points: _points
             }
             roster.regiments[index].points = roster.regiments[index].points - _points
-            roster.points = roster.points - _points
+            roster.points.all -= _points
         } else {
             roster.regiments[index].units[unitIndex] = {
                 ...roster.regiments[index].units[unitIndex],
@@ -77,7 +77,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
                 points: unit.points * 2
             }
             roster.regiments[index].points = roster.regiments[index].points + unit.points
-            roster.points = roster.points + unit.points
+            roster.points.all += unit.points
         }
         forceUpdate()
     }

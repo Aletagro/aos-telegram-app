@@ -190,7 +190,7 @@ const AddUnit = () => {
             }
             roster.regiments[regimentId] = newRegiment
         }
-        roster.points = roster.points + (unit.points || unit.regimentOfRenownPointsCost || 0)
+        roster.points.all += unit.points || unit.regimentOfRenownPointsCost || 0
     }
 
     const handleChangeHidePotentialLegends = () => {

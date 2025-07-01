@@ -80,8 +80,8 @@ const Builder = () => {
     }
     if (factionTerrains.length === 1 && !roster.factionTerrain && !factionTerrains[0].points) {
         roster.factionTerrain = factionTerrains[0].name
-        roster.terrainPoints = factionTerrains[0].points
-        roster.points += factionTerrains[0].points
+        roster.points.terrain = factionTerrains[0].points
+        roster.points.all += factionTerrains[0].points
     }
     if (!battleFormations.length) {
         roster.withoutBattleFormation = true
@@ -98,14 +98,14 @@ const Builder = () => {
 
     useEffect(() => {
         let hasError = false
-        if (roster.pointsLimit - roster.points < 0) {
+        if (roster.pointsLimit - roster.points.all < 0) {
             hasError = true
         }
         if (hasError !== pointError) {
             setPointError(hasError)
         }
     // eslint-disable-next-line
-    }, [roster.points])
+    }, [roster.points.all])
 
     const handleAddRegiment = useCallback(() => {
         roster.regiments = [...roster.regiments, emptyRegiment]
@@ -122,14 +122,14 @@ const Builder = () => {
 
     const handleDeleteAuxiliaryUnit = (unit, index) => {
         roster.auxiliaryUnits.splice(index, 1)
-        roster.points = roster.points - unit.points
+        roster.points.all -= unit.points
         forceUpdate()
     }
 
     const handleDeleteRegimentOfRenown = (regiment, index) => {
         roster.regimentOfRenown = null
         roster.regimentsOfRenownUnits = []
-        roster.points = roster.points - regiment.regimentOfRenownPointsCost
+        roster.points.all -= regiment.regimentOfRenownPointsCost
         forceUpdate()
     }
 
@@ -170,14 +170,14 @@ const Builder = () => {
                 isReinforced: false,
                 points: _points
             }
-            roster.points = roster.points - _points
+            roster.points.all -= _points
         } else {
             roster.auxiliaryUnits[unitIndex] = {
                 ...roster.auxiliaryUnits[unitIndex],
                 isReinforced: true,
                 points: unit.points * 2
             }
-            roster.points = roster.points + unit.points
+            roster.points.all += unit.points
         }
         forceUpdate()
     }
@@ -266,11 +266,11 @@ const Builder = () => {
     const renderEnhancementPoints = (type) => {
         switch (type) {
             case 'manifestationLore':
-                return roster.manifestationsPoints ? ` (${roster.manifestationsPoints}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.manifestations ? ` (${roster.points?.manifestations}${Constants.noBreakSpace}pts)` : ''
             case 'factionTerrain':
-                return roster.terrainPoints ? ` (${roster.terrainPoints}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.terrain ? ` (${roster.points?.terrain}${Constants.noBreakSpace}pts)` : ''
             case 'spellsLore':
-                return roster.spellsLorePoints ? ` (${roster.spellsLorePoints}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.spellsLore ? ` (${roster.points?.spellsLore}${Constants.noBreakSpace}pts)` : ''
             default:
                 return ''
         }
@@ -313,7 +313,7 @@ const Builder = () => {
             <p>Wounds: {getWoundsCount(roster)}</p>
         </button>
         <button onClick={handleOpenModal} id={pointError ? Styles.errorPointsContainer : Styles.pointsContainer}>
-            <p id={Styles.pointsTitle}>Army: {roster.points}/{roster.pointsLimit} Points ({roster.pointsLimit - roster.points})</p>
+            <p id={Styles.pointsTitle}>Army: {roster.points?.all}/{roster.pointsLimit} Points ({roster.pointsLimit - roster.points?.all})</p>
             <img id={Styles.pointsTitleInfoIcon} src={WhiteInfo} alt="" />
         </button>
         {battleFormations.length

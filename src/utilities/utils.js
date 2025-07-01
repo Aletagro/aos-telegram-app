@@ -50,7 +50,7 @@ export const getErrors = (roster) => {
     if (!roster) {
         return errors
     }
-    if (roster.points > roster.pointsLimit) {
+    if (roster.points.all > roster.pointsLimit) {
         errors.push(`You use more than ${roster.pointsLimit} points`)
     }
     if (!roster.battleFormation  && !roster.withoutBattleFormation) {
@@ -463,7 +463,7 @@ export const cleanBuilder = () => {
     roster.generalRegimentIndex = null
     roster.manifestationLore = ''
     roster.manifestationsList = []
-    roster.points = 0
+    roster.points = {all: 0}
     roster.pointsLimit = 2000
     roster.prayersLore = ''
     roster.regimentOfRenown = null
@@ -472,7 +472,6 @@ export const cleanBuilder = () => {
     roster.requiredGeneral = null
     roster.spellsLore = ''
     roster.withoutBattleFormation = false
-    roster.manifestationsPoints = 0
     roster.tactics = []
     roster.otherEnhancement = undefined
 }
