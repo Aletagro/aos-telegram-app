@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import Textarea from '@mui/joy/Textarea'
 import {getTextAfter, parseRegiments, getStringAfterDash} from '../utilities/utils'
 import {roster, navigationState} from '../utilities/appState'
+import Constants from '../Constants'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -37,6 +38,24 @@ const PasteList = () => {
         return {units, points, heroId: units[0]?.id || ''}
     }
 
+    const setTactic = (tacticsString) => {
+        const parts = tacticsString.split(/\s+and\s+/i)
+        const matchedParts = []
+        // Проверяем комбинации частей, так как "Intercept and Recover" состоит из двух "and"
+        for (let i = 0; i < parts.length; i++) {
+          for (let j = i + 1; j <= parts.length; j++) {
+            const combined = parts.slice(i, j).join(" and ")
+            if (Constants.tacticsCards.includes(combined)) {
+              matchedParts.push(combined)
+              i = j - 1 // Пропускаем уже проверенные части
+              break
+            }
+          }
+        }
+      
+        return matchedParts;
+      }
+
     const getTactic = (tacticName) => {
         const tacticCard = find(dataBase.data.rule_container, (card) => getStringAfterDash(card.title) === tacticName)
         return tacticCard ? {...tacticCard, name: tacticName} : null
@@ -66,8 +85,8 @@ const PasteList = () => {
             const splitPoints = split(getTextAfter(list, 'Pts', true), '/')
             const parsedRegiments = parseRegiments(list)
             const regiments = map(parsedRegiments.regiments, setRegiment)
-            const tacticsString = getTextAfter(list, 'Battle Tactics Cards:')
-            const tactics = compact(map(split(tacticsString, ' and '), getTactic))
+            const tacticsString = setTactic(getTextAfter(list, 'Battle Tactics Cards:'))
+            const tactics = compact(map(tacticsString, getTactic))
             const factionTerrain = split(getTextAfter(list, 'Faction Terrain:'), ' (')[0]
             const prayersLore = split(getTextAfter(list, 'Prayer Lore:'), ' (')[0]
             const spellsLore = split(getTextAfter(list, 'Spell Lore:'), ' (')[0]

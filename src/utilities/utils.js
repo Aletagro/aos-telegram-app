@@ -545,7 +545,7 @@ export const parseRegiments = (input) => {
         // Начало РоРа
         if (line.startsWith('Regiment Of Renown')) {
             isRegimentOfRenown = true
-            regimentOfRenown.name = split(lines[i + 1], ' (')[0]
+            regimentOfRenown.name = split(lines[i + 1], ' (')[0].trim()
         }
         // Начало нового реджимента
         else if (line.startsWith('Regiment')) {

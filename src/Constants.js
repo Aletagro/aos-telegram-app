@@ -469,7 +469,8 @@ const Constants = {
         "Trugg's Troggherd",
         "Da King's Gitz",
         "Droggz's Gitmob"
-    ]
+    ],
+    tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force']
 }
 
 export default Constants
