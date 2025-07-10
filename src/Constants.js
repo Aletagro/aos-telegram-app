@@ -428,7 +428,48 @@ const Constants = {
         'Order': false
     },
     legendaryArmies: ['262eabc2-f3b4-4296-9ef5-632d6cf1aadf', '5425ee6d-56cb-44a3-9f82-78b6864890da'],
-    noBreakSpace: '\u00a0'
+    noBreakSpace: '\u00a0',
+    listsMax: 3,
+    chaosFaction: [
+        "Beasts of Chaos",
+        "Blades of Khorne",
+        "Disciples of Tzeentch",
+        "Hedonites of Slaanesh",
+        "Maggotkin of Nurgle",
+        "Skaven",
+        "Slaves to Darkness",
+        "The Great-Grand Gnawhorde",
+        "Thanquol's Mutated Menagerie",
+        "The Swords of Chaos",
+        "Tribes of the Snow Peaks",
+        "Legion of the First Prince"
+    ],
+    deathFaction: [
+        "Flesh-eater Courts",
+        "Nighthaunt",
+        "Ossiarch Bonereapers",
+        "Soulblight Gravelords",
+        "Knights of the Crimson Keep",
+        "Scions of Nulahmia",
+        "Barrow Legion"
+    ],
+    destructionFaction: [
+        "Bonesplitterz",
+        "Gloomspite Gitz",
+        "Ironjawz",
+        "Kruleboyz",
+        "Ogor Mawtribes",
+        "Sons of Behemat",
+        "The Roving Maw",
+        "Krazogg’s Grunta Stampede",
+        "Zoggrok's Ironmongerz",
+        "Murkvast Menagerie",
+        "Big Waaagh!",
+        "King Brodd's Stomp",
+        "Trugg's Troggherd",
+        "Da King's Gitz",
+        "Droggz's Gitmob"
+    ]
 }
 
 export default Constants

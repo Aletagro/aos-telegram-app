@@ -4,7 +4,7 @@ import Modal from '@mui/joy/Modal'
 import ModalDialog from '@mui/joy/ModalDialog'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
-import {getWoundsCount, getInfo} from '../utilities/utils'
+import {getWoundsCount, getInfo, setRosterGrandAlliance} from '../utilities/utils'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import Row from '../components/Row'
@@ -29,9 +29,7 @@ const pointsLimits = ['1000', '1500', '2000', '2500', '3000']
 const emptyRegiment = {
     units: [],
     heroId: '',
-    points: 0,
-    artefact: '',
-    heroicTrait: ''
+    points: 0
 }
 
 const Builder = () => {
@@ -86,14 +84,12 @@ const Builder = () => {
     if (!battleFormations.length) {
         roster.withoutBattleFormation = true
     }
-    let requiredGeneralId = allegiance?.rosterFactionKeywordRequiredGeneralWarscrollId
-    if (!allegiance) {
-        requiredGeneralId = dataBase.data.faction_keyword.find(faction => faction.id === _alliganceId)?.rosterFactionKeywordRequiredGeneralWarscrollId
-    }
-    let requiredGeneral = undefined
+    let requiredGeneralId = find(dataBase.data.roster_faction_keyword_required_general_warscroll, ['factionKeywordId', _alliganceId])?.warscrollId
     if (requiredGeneralId) {
-        requiredGeneral = dataBase.data.warscroll.find(unit => unit.id === requiredGeneralId)
-        roster.requiredGeneral = requiredGeneral
+        roster.requiredGeneral = find(dataBase.data.warscroll, ['id', requiredGeneralId])
+    }
+    if (!roster.grandAlliance) {
+        setRosterGrandAlliance(roster.allegiance)
     }
 
     useEffect(() => {
@@ -223,6 +219,7 @@ const Builder = () => {
         alliganceId={_alliganceId}
         withoutMargin
         isAuxiliary
+        otherEnhancement={otherEnhancement}
     />
 
     const renderRegimentOfRenown = () => <UnitRow

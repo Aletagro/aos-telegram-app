@@ -1,33 +1,47 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react'
 import {ToastContainer, toast} from 'react-toastify'
+import Modal from '@mui/joy/Modal'
+import ModalDialog from '@mui/joy/ModalDialog'
 import 'react-toastify/dist/ReactToastify.css'
+import FloatingLabelInput from '../components/FloatingLabelInput'
+import Checkbox from '../components/Checkbox'
 import Constants from '../Constants'
-import {roster} from '../utilities/appState'
-import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
+import {roster, lists} from '../utilities/appState'
+import {getErrors, getWarnings, getWoundsCount, cleanObject} from '../utilities/utils'
+import Close from '../icons/close.svg'
 
-// import map from 'lodash/map'
+import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
 
 import Styles from './styles/Export.module.css'
 
+const tg = window.Telegram.WebApp
 
-// const unitsKeys =  ['id', 'name', 'points', 'isReinforced', 'heroicTrait', 'artefact', 'marksOfChaos', 'otherWarscrollOption', 'Ensorcelled Banners'] 
+const unitsKeys =  ['id', 'name', 'points', 'modelCount', 'isReinforced', 'heroicTrait', 'artefact', 'otherWarscrollOption', 'marksOfChaos', roster.otherEnhancement, 'weaponOptions'] 
 
-// const rorKeys =  ['id', 'name', 'regimentOfRenownPointsCost']
+const rorKeys =  ['id', 'name', 'regimentOfRenownPointsCost']
 
-// const manifistationsKeys =  ['id', 'name']
+const manifistationsKeys =  ['id', 'name']
 
 const Export = () => {
+    // eslint-disable-next-line
+    const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     const [isCopy, setIsCopy] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [listName, setListName] = useState(roster.listName || `List-${lists.count + 1}`)
+    const [isListPublic, setIsListPublic] = useState(true)
     const errors = getErrors(roster)
     const warnings = getWarnings(roster)
+    const wounds = getWoundsCount(roster)
+    const drops = roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)
+    const user = tg.initDataUnsafe?.user
 
     const getErrorText = (error) => `- ${error}`
 
     const getErrorsText = (_errors) => _errors.map(getErrorText).join('\n')
 
-    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} ${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit[roster.otherEnhancement] ? `\n• ${unit[roster.otherEnhancement]}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
+    const getUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x ` : ''}${unit.name} (${unit.points || unit.regimentOfRenownPointsCost || 0} points)${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit[roster.otherEnhancement] ? `\n[${roster.otherEnhancement}]: ${unit[roster.otherEnhancement]}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
     const getRoRUnitForExport = (unit) => `${unit.modelCount ? `${unit.modelCount} x` : ''} ${unit.name} ${unit.artefact ? `\n[Artefact]: ${unit.artefact}` : ''}${unit.heroicTrait ? `\n[Heroic Trait]: ${unit.heroicTrait}` : ''}${unit.weaponOptions ? `${getWeaponOptionsForExport(unit)}` : ''}${unit.marksOfChaos ? `\n• ${unit.marksOfChaos}` : ''}${unit['Ensorcelled Banners'] ? `\n• ${unit['Ensorcelled Banners']}` : ''}${unit.otherWarscrollOption ? `\n• ${unit.otherWarscrollOption}` : ''}`
 
@@ -55,7 +69,7 @@ const Export = () => {
 Faction: ${roster.allegiance}
 Battle Formation: ${roster.battleFormation}
 Battle Tactics Cards: ${get(roster, 'tactics[0].name', '')}${size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}
-Drops: ${roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
+Drops: ${drops}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
 
 ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}` : ''}
 -----
@@ -63,7 +77,7 @@ ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}
 ${roster.regimentsOfRenownUnits.length > 0 ? `${getUnitsForExport(roster.regimentsOfRenownUnits, true)}\n-----` : ''}
 ${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
-Wounds: ${getWoundsCount(roster)}
+Wounds: ${wounds}
 ${roster.points.all}/${roster.pointsLimit} Pts
 `
         navigator.clipboard.writeText(rosterText)
@@ -71,40 +85,148 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         setIsCopy(true)
     }
 
-    // const pickKeys = (unit, keys) => {
-    //     return keys.reduce((acc, key) => {
-    //         if (unit.hasOwnProperty(key)) {
-    //             acc[key] = unit[key];
-    //         }
-    //         return acc;
-    //     }, {});
+    const pickKeys = (unit, keys) => {
+        return keys.reduce((acc, key) => {
+            if (unit.hasOwnProperty(key)) {
+                acc[key] = unit[key];
+            }
+            return acc;
+        }, {});
+    }
+
+    const getShortUnits = (units = [], keys) => {
+        if (size(units)) {
+            return map(units, (unit) => {
+                return pickKeys(unit, keys)
+            })
+        }
+        return null
+    }
+
+    const getShortRegiments = () => {
+        return map(roster.regiments, (regiment) => {
+            const units = getShortUnits(regiment.units, unitsKeys)
+            return JSON.stringify({...regiment, units})
+        })
+    }
+
+    const handleSaveList = async () => {
+        const data = cleanObject({
+            id: roster.id,
+            allegiance: roster.allegiance,
+            allegiance_id: roster.allegianceId,
+            auxiliary_units: JSON.stringify(getShortUnits(roster.auxiliaryUnits, unitsKeys)),
+            battle_formation: roster.battleFormation,
+            faction_terrain: roster.factionTerrain,
+            general_regiment_index: roster.generalRegimentIndex,
+            grand_alliance: roster.grandAlliance,
+            manifestation_lore: roster.manifestationLore,
+            manifestations_list: JSON.stringify(getShortUnits(roster.manifestationsList, manifistationsKeys)),
+            points: roster.points,
+            points_limit: roster.pointsLimit,
+            prayers_lore: roster.prayersLore,
+            regiment_of_renown: roster.regimentOfRenown ? JSON.stringify(pickKeys(roster.regimentOfRenown, rorKeys)) : null,
+            regiments: getShortRegiments(),
+            regiments_of_renown_units: JSON.stringify(getShortUnits(roster.regimentsOfRenownUnits, unitsKeys)),
+            spells_lore: roster.spellsLore,
+            tactics: map(roster.tactics, 'name'),
+            tg_id: user?.id,
+            name: `${user?.last_name || ''} ${user?.first_name || ''}`,
+            is_public: isListPublic,
+            note: {...roster.note, wounds, drops},
+            list_name: listName
+        })
+
+        try {
+            if (roster.id) {
+                await fetch('https://aoscom.online/list', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': "application/json, text/javascript, /; q=0.01"
+                    }
+                })
+            } else {
+                await fetch('https://aoscom.online/list', {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': "application/json, text/javascript, /; q=0.01"
+                    }
+                })
+            }
+        } catch (err) {
+            console.error(err.message)
+        }
+        handleCloseModal()
+        toast.success('List Saved', Constants.toastParams)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+    }
+
+    // const handleClickSaveButton = () => {
+    //     setIsModalOpen(true)
     // }
 
-    // const getShortUnits = (units, keys) => map(units, (unit) => {
-    //     return pickKeys(unit, keys)
-    // })
+    const handleDeleteList = (listId) => async () => {
+        try {
+            await fetch(`https://aoscom.online/list/?id=${listId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': "application/json, text/javascript, /; q=0.01"
+                }
+            })
+            lists.count--
+            forceUpdate()
+        } catch (err) {
+            console.error(err.message)
+        }
+    }
 
-    // const handleSaveList = () => {
-    //     let newRosier = {...roster}
-    //     const shortRegiments = map(newRosier.regiments, (regiment) => {
-    //         const units = getShortUnits(regiment.units, unitsKeys)
-    //         return {...regiment, units}
-    //     })
-    //     const shortAuxiliaries = getShortUnits(newRosier.auxiliaryUnits, unitsKeys)
-    //     const shortRoRUnits = getShortUnits(newRosier.regimentsOfRenownUnits, unitsKeys)
-    //     const shortRoR = newRosier.regimentOfRenown ? pickKeys(newRosier.regimentOfRenown, rorKeys) : null
-    //     const shortManifestationsList = newRosier.manifestationsList ? getShortUnits(newRosier.manifestationsList, manifistationsKeys) : []
-    //     const shortRoster = {
-    //         ...roster,
-    //         regiments: shortRegiments,
-    //         auxiliaryUnits: shortAuxiliaries,
-    //         regimentsOfRenownUnits: shortRoRUnits,
-    //         regimentOfRenown: shortRoR,
-    //         manifestationsList: shortManifestationsList,
-    //         name: 'test name',
-    //         isPublic: true
-    //     }
-    // }
+    const renderList = (list) => <div id={Styles.listDeletedContainer} onClick={handleDeleteList(list.id)}>
+        <div>
+            <p id={Styles.listDeletedTitle}>{list.name}</p>
+            <p id={Styles.listDeletedSubtitle}>{list.allegiance}</p>
+        </div>
+        <img id={Styles.allegianceInfoIcon} src={Close} alt="" />
+    </div>
+
+    const handleBlurName = (e) => {
+        setListName(e.target.value)
+    }
+    const handleChangePublic = () => {
+        setIsListPublic(!isListPublic)
+    }
+
+    const renderModalContent = () => {
+        if (lists.count >= Constants.listsMax) {
+            return <>
+                <b id={Styles.modalTitle}>You have reached limit of saved lists</b>
+                <p id={Styles.modalText}>You can delete one of your list</p>
+                {map(lists.data, renderList)}
+            </>
+        }
+        return <>
+            <b id={Styles.modalTitle}>Save Roster</b>
+            <FloatingLabelInput
+                style={inputStyles.listName}
+                onBlur={handleBlurName}
+                label='List Name'
+                defaultValue={listName}
+            />
+            <div id={Styles.publicCheckboxContainer} onClick={handleChangePublic}>
+                <p id={Styles.potentialLegends}>Save as public</p>
+                <Checkbox onClick={handleChangePublic} checked={isListPublic} />
+            </div>
+            <p id={Styles.publicNote}>Other users will be able to see this list.</p>
+            <button id={listName ? Styles.button : Styles.disabledButton} disabled={!listName} onClick={handleSaveList}>Save</button>
+        </>
+    }
 
     const renderWeapon = ([key, value]) => value
         ? <p>&#8226; {value} x {key}</p>
@@ -136,7 +258,7 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         {unit.otherWarscrollOption ? <p>&#8226; {unit.otherWarscrollOption}</p> : null}
     </div>
 
-    const renderRegiment = (regiment, index) => <div key={index}>
+    const renderRegiment = (regiment, index) => <div key={index} id={Styles.regiment}>
         <p>Regiment {index + 1}</p>
         {roster.generalRegimentIndex === index ? <p>General's regiment</p> : null}
         {regiment.units.map(renderUnit)}
@@ -148,10 +270,10 @@ ${roster.points.all}/${roster.pointsLimit} Pts
 
     return <div id={Styles.container}>
         {/* <div id={Styles.buttonContainer}>
-            <button id={Styles.button} onClick={handleSaveList}>Save List</button>
+            <button id={Styles.button} onClick={handleClickSaveButton}>Save List</button>
         </div> */}
         <div id={Styles.buttonContainer}>
-            <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Export List'}</button>
+            <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Copy List'}</button>
         </div>
         {errors.length > 0
             ? <div id={Styles.errorsContainer}>
@@ -171,7 +293,7 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         <p>Faction: {roster.allegiance}</p>
         <p>Battle Formation: {roster.battleFormation}</p>
         <p>Battle Tactics Cards: {get(roster, 'tactics[0].name', '')}{size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}</p>
-        <p>Drops: {roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)}</p>
+        <p>Drops: {drops}</p>
         {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         <br/>
         {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}{roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}</p> : null}
@@ -198,10 +320,26 @@ ${roster.points.all}/${roster.pointsLimit} Pts
             </div>
             : null
         }
-        <p>Wounds: {getWoundsCount(roster)}</p>
+        <p>Wounds: {wounds}</p>
         <p>{roster.points.all}/{roster.pointsLimit} Pts</p>
         <ToastContainer />
+        <Modal open={isModalOpen} onClose={handleCloseModal}>
+            <ModalDialog layout="center">
+                {renderModalContent()}
+            </ModalDialog>
+        </Modal>
     </div>
 }
 
 export default Export
+
+const inputStyles = {
+    listName: {
+        '--Input-minHeight': '48px',
+        borderRadius: '4px',
+        'border-color': '#B4B4B4',
+        color: '#000000',
+        'box-shadow': 'none',
+        'font-family': 'Minion Pro Bold'
+    }
+}

@@ -7,9 +7,7 @@ export const roster = {
         {
             units: [],
             heroId: '',
-            points: 0,
-            artefact: '',
-            heroicTrait: ''
+            points: 0
         }
     ],
     generalRegimentIndex: null,
@@ -81,3 +79,8 @@ export const navigationState = {
 export const isCollapseUnitsTypes = Constants.defaultIsCollapseUnitsTypes
 
 export const isCollapseRegimentAlliances = Constants.defaultIsCollapseRegimentAlliances
+
+export const lists = {
+    count: 0,
+    data: []
+}

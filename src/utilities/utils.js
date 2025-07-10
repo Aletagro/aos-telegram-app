@@ -6,6 +6,7 @@ import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
 import find from 'lodash/find'
+import split from 'lodash/split'
 import filter from 'lodash/filter'
 import indexOf from 'lodash/indexOf'
 import forEach from 'lodash/forEach'
@@ -457,10 +458,14 @@ export const getRegimentOption = (option, unit) => {
 }
 
 export const cleanBuilder = () => {
+    roster.id = undefined
+    roster.allegiance = ''
+    roster.allegianceId = ''
     roster.auxiliaryUnits = []
     roster.battleFormation = ''
     roster.factionTerrain = ''
     roster.generalRegimentIndex = null
+    roster.grandAlliance = ''
     roster.manifestationLore = ''
     roster.manifestationsList = []
     roster.points = {all: 0}
@@ -471,12 +476,127 @@ export const cleanBuilder = () => {
     roster.regimentsOfRenownUnits = []
     roster.requiredGeneral = null
     roster.spellsLore = ''
-    roster.withoutBattleFormation = false
     roster.tactics = []
+    roster.isPublic = true
+    roster.note = ''
+    roster.listName = ''
+    roster.withoutBattleFormation = false
     roster.otherEnhancement = undefined
 }
 
 export const getStringAfterDash = (text) => {
     const match = text.match(/ - (.+)/)
     return match ? match[1] : text
+}
+
+export const setRosterGrandAlliance = (allegiance) => {
+    let grandAlliance = 'Order'
+    if (includes(Constants.chaosFaction, allegiance)) {
+        grandAlliance = 'Chaos'
+    } else if (includes(Constants.deathFaction, allegiance)) {
+        grandAlliance = 'Death'
+    } else if (includes(Constants.destructionFaction, allegiance)) {
+        grandAlliance = 'Destruction'
+    }
+    roster.grandAlliance = grandAlliance
+}
+
+export const cleanObject = (object) => {  
+    for (let key in object) {
+      if (object[key] === '' || object[key] === null || object[key] === undefined) {
+        delete object[key]
+      }
+    }  
+    return object
+}
+
+export const getTextAfter = (searchIn, searchFor, before = false) => {
+    // Используем indexOf для поиска индекса начала искомой строки
+    const index = searchIn.indexOf(searchFor)
+    // Если строка не найдена — возвращаем null
+    if (index === -1) {
+        return null
+    }
+    if (before) {
+        // Возвращаем то, что до searchFor
+        const lineStart = searchIn.lastIndexOf('\n', index) + 1
+        const lineContentBefore = searchIn.slice(lineStart, index).trim()
+        return lineContentBefore
+    } else {
+        // Возвращаем то, что после searchFor
+        const startIndex = index + searchFor.length
+        const endIndex = searchIn.indexOf('\n', startIndex)
+        const endOfString = endIndex === -1 ? searchIn.length : endIndex
+        return searchIn.slice(startIndex, endOfString).trim()
+    }
+}
+
+export const parseRegiments = (input) => {
+    const lines = input.split('\n')
+    const regiments = []
+    const auxiliaryUnits = []
+    const regimentOfRenown = {name: '', units: []}
+    let currentRegiment = null
+    let generalIndex = null
+    let isAuxiliaryUnits = false
+    let isRegimentOfRenown = false
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        // Начало РоРа
+        if (line.startsWith('Regiment Of Renown')) {
+            isRegimentOfRenown = true
+            regimentOfRenown.name = split(lines[i + 1], ' (')[0]
+        }
+        // Начало нового реджимента
+        else if (line.startsWith('Regiment')) {
+            const match = line.match(/Regiment (\d+)/);
+            if (match) {
+                const index = parseInt(match[1], 10) - 1; // отсчёт с 0
+                currentRegiment = [];
+                regiments[index] = currentRegiment; // сохраняем по индексу
+                // Проверяем, есть ли "General's regiment" в следующей строке
+                if (i + 1 < lines.length && lines[i + 1].trim() === "General's regiment") {
+                    generalIndex = index;
+                }
+            }
+        }
+        // Начало Auxiliary юнитов
+        if (line.startsWith('Auxiliary Units')) {
+            isAuxiliaryUnits = true
+            isRegimentOfRenown = false
+        }
+        // Юнит: начинается с числа и "x"
+        else if (/^\d+ x/.test(line)) {
+            const unit = {};
+            const modelCountMatch = line.match(/^(\d+) x/);
+            const nameMatch = line.match(/\d+\sx\s(.+?)(?:\s*\(\d+\s*points?\))?$/);
+            const pointsMatch = line.match(/\((\d+)\s*points?\)/);
+    
+            unit.modelCount = parseInt(modelCountMatch[1], 10);
+            unit.name = nameMatch ? nameMatch[1].trim() : '';
+            unit.points = pointsMatch ? parseInt(pointsMatch[1], 10) : 0;
+            if (isRegimentOfRenown) {
+                regimentOfRenown.units.push(unit)
+            } else if (isAuxiliaryUnits) {
+                auxiliaryUnits.push(unit)
+            } else {
+                currentRegiment.push(unit)
+            }
+        }
+        // Улучшения: [Type]: Value
+        else if (line.startsWith('[')) {
+            const propMatch = line.match(/^\[(.+?)\]:\s*(.+)$/);
+            if (propMatch && currentRegiment && currentRegiment.length > 0) {
+            const lastUnit = isRegimentOfRenown
+                ? regimentOfRenown.units[regimentOfRenown.units.length - 1]
+                : isAuxiliaryUnits
+                    ? auxiliaryUnits[auxiliaryUnits.length - 1]
+                    : currentRegiment[currentRegiment.length - 1];
+            const key = propMatch[1].trim();
+            const value = propMatch[2].trim();
+            lastUnit[key] = value;
+            }
+        }
+    }
+    return {generalIndex, regiments, auxiliaryUnits, regimentOfRenown}
 }
