@@ -24,6 +24,7 @@ import Styles from './styles/PasteList.module.css'
 const dataBase = require('../dataBase.json')
 
 const spellIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
+const manifestationsIncludesTexts = ['Lore of the Abyss']
 
 const PasteList = () => {
     const navigate = useNavigate()
@@ -206,7 +207,7 @@ const PasteList = () => {
                 meta.tactics.push(_string)
             } else {
                 const lore = find(dataBase.data.lore, ['name', _string])
-                if (lore.publicationId === Constants.manifestationsPublicationId) {
+                if (lore.publicationId === Constants.manifestationsPublicationId || includes(manifestationsIncludesTexts, lore.name)) {
                     meta.manifestationLore = _string
                 } else if (find(spellIncludesTexts, text => includes(lore.name, text))) {
                     meta.spellsLore = _string
