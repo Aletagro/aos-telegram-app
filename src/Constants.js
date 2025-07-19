@@ -428,6 +428,18 @@ const Constants = {
         'Destruction': false,
         'Order': false
     },
+    defaultIsCollapseRosterInfo: {
+        'Warscrolls': false,
+        'Manifestations': false,
+        'Faction Terrain': false,
+        'Enchancements': false,
+        'Battle Traits': true,
+        'Battle Formations': false,
+        'Spells Lore': true,
+        'Prayer Lores': true,
+        'Universal Commands': true,
+        'Universal Abilities': true
+    },
     legendaryArmies: ['262eabc2-f3b4-4296-9ef5-632d6cf1aadf', '5425ee6d-56cb-44a3-9f82-78b6864890da'],
     noBreakSpace: '\u00a0',
     listsMax: 3,
@@ -471,7 +483,37 @@ const Constants = {
         "Da King's Gitz",
         "Droggz's Gitmob"
     ],
-    tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force']
+    tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
+    universalCommands: [
+        {name: 'Magical Intervention', id: '108d8f93-9216-495e-9245-971f9e74112b'},
+        {name: 'Rally', id: '838515df-51c3-458d-b082-8551378e3a63'},
+        {name: 'At the Double', id: '810e7c04-56f1-4a53-b2ef-9c678715cdd9'},
+        {name: 'Redeploy', id: '8fec538b-0593-460c-ad0b-a36637e3061a'},
+        {name: 'Covering Fire', id: 'd301bc99-6dfd-481e-bbd5-ed37f0c1c3d1'},
+        {name: 'Counter-charge', id: 'ebd1dd7b-4087-4e0e-b587-e8653352e3a3'},
+        {name: 'Forward to Victory', id: 'c0fc1fca-1686-4aa1-bcb7-8867c348ef05'},
+        {name: 'All-out Attack', id: '68b6382e-ac34-44cc-86c0-01a96c6ad843'},
+        {name: 'All-out Defence', id: '29cb6793-a18e-43e9-854e-547cac0347f1'},
+        {name: 'Power Through', id: 'aca50afb-7096-418c-9f90-681ac81e167f'}
+    ],
+    universalAbilities: [
+        {name: 'Activate Place of Power', id: 'd7a4d92a-0c0f-4d85-a2b0-e65335976358'},
+        {name: 'Deploy Faction Terrain', id: '23580118-9620-459e-a6f7-4184340c8ebc'},
+        {name: 'Deploy Regiment', id: '30238fab-a246-4aee-9f76-8ad483d8c4aa'},
+        {name: 'Deploy Unit', id: '3a353bd5-9e49-4e5b-a3ad-f7a1cf77abdd'},
+        {name: 'Banish Manifestation', id: '17dacc42-a30e-49ae-beab-8138cd754b89'},
+        {name: 'Sacred Rites', id: '9afeed67-0bf6-4d38-8661-8e7214222ee5'},
+        {name: 'Unbind', id: '323c81ab-d38c-43dc-b372-c7137ea3d4dd'},
+        {name: 'Fly', id: '68c0aff7-2c03-4ffc-8e49-cfe0137e3aa4'},
+        {name: 'Normal Move', id: '84ee4f51-a652-422b-98f6-ac9df75df77f'},
+        {name: 'Retreat', id: '27a61018-34fb-4bb2-92d2-ad3fcb9c0300'},
+        {name: 'Run', id: 'b497a269-d42c-41ef-9d02-e343dfdd8004'},
+        {name: 'Guarded Hero', id: 'dc1ef658-2783-4692-81dc-e1dc0cb9028a'},
+        {name: 'Shoot', id: 'd7a8c209-8721-4d85-9fd1-7691f5e31ba6'},
+        {name: 'Charge', id: '2e5ce689-8a3c-4f13-8954-2fb8f43a09fc'},
+        {name: 'Fight', id: '047cc685-8fdd-4321-91e0-320df82a700b'},
+        {name: 'Ward Save', id: '600781dd-8d0c-4cfc-b763-7d9e832e8ec0'}
+    ]
 }
 
 export default Constants

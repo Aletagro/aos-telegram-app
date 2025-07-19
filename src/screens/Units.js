@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react'
 import {useLocation} from 'react-router-dom'
 import {unitsSortesByType} from '../utilities/utils'
 import {isCollapseUnitsTypes} from '../utilities/appState'

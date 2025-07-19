@@ -80,6 +80,8 @@ export const isCollapseUnitsTypes = Constants.defaultIsCollapseUnitsTypes
 
 export const isCollapseRegimentAlliances = Constants.defaultIsCollapseRegimentAlliances
 
+export const isCollapseRosterInfo = Constants.defaultIsCollapseRosterInfo
+
 export const lists = {
     count: 0,
     data: []

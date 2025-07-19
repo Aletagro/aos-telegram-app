@@ -7,6 +7,7 @@ import get from 'lodash/get'
 import size from 'lodash/size'
 import find from 'lodash/find'
 import last from 'lodash/last'
+import uniq from 'lodash/uniq'
 import split from 'lodash/split'
 import filter from 'lodash/filter'
 import indexOf from 'lodash/indexOf'
@@ -792,4 +793,49 @@ export const parseListForListbot = (input) => {
     }
     regiments = filter(regiments, regiment => size(regiment))
     return {generalIndex, regiments, meta, factionTerrain}
+}
+
+export const getRosterInfo = () => {
+    const regimentsUnits = []
+    const enchancementsNames = []
+
+    const setEnchancementName = (unit) => {
+        if (unit.heroicTrait) {
+            enchancementsNames.push(unit.heroicTrait)
+        }
+        if (unit.artefact) {
+            enchancementsNames.push(unit.artefact)
+        }
+        if (unit[roster.otherEnhancement]) {
+            enchancementsNames.push(unit[roster.otherEnhancement])
+        }
+    }
+
+    forEach(roster.regiments, regiment => forEach(regiment.units, unit => {
+        regimentsUnits.push(unit)
+        setEnchancementName(unit)
+    }))
+    forEach(roster.auxiliaryUnits, unit => {
+        setEnchancementName(unit)
+    })
+    const warscrolls = uniq([...regimentsUnits, ...roster.auxiliaryUnits, ...roster.regimentsOfRenownUnits])
+    const enchancements = map(uniq(enchancementsNames), name => find(dataBase.data.ability, ['name', name]))
+    const factionTerrain = roster.factionTerrain ? find(dataBase.data.warscroll, ['name', roster.factionTerrain]) : undefined
+    const battleTraitsGroups = getInfo(Constants.armyEnhancements[0], {id: roster.allegianceId, name: roster.allegiance})?.abilities
+    const battleTraits = []
+    forEach(battleTraitsGroups, group => forEach(group.abilities, ability => battleTraits.push(ability)))
+    const battleFormationId = find(dataBase.data.battle_formation, ['name', roster.battleFormation])?.id
+    const battleFormation = filter(dataBase.data.battle_formation_rule, ['battleFormationId', battleFormationId]) 
+    const spellsLoreId = roster.spellsLore ? find(dataBase.data.lore, ['name', roster.spellsLore])?.id : undefined
+    const spells = spellsLoreId ? filter(dataBase.data.lore_ability, ['loreId', spellsLoreId]) : undefined
+    const prayersLoreId = roster.prayersLore ? find(dataBase.data.lore, ['name', roster.prayersLore])?.id : undefined
+    const prayers = prayersLoreId ? filter(dataBase.data.lore_ability, ['loreId', prayersLoreId]) : undefined
+    const battleTactics = map(roster.tactics, tacticCard => {
+        const cardId = find(dataBase.data.battle_tactic_card, ['name', tacticCard.name])?.id
+        const tactics = filter(dataBase.data.battle_tactic, ['battleTacticCardId', cardId])
+        return {name: tacticCard.name, tactics}
+    })
+    const universalCommands = map(Constants.universalCommands, item => find(dataBase.data.ability, ['id', item.id]))
+    const universalAbilities = map(Constants.universalAbilities, item => find(dataBase.data.ability, ['id', item.id]))
+    return {warscrolls, enchancements, factionTerrain, battleTraits, battleFormation, spells, prayers, battleTactics, universalCommands, universalAbilities}
 }

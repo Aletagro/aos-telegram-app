@@ -1,4 +1,5 @@
 import React, {useState, useReducer} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import Modal from '@mui/joy/Modal'
 import ModalDialog from '@mui/joy/ModalDialog'
@@ -25,6 +26,7 @@ const rorKeys =  ['id', 'name', 'regimentOfRenownPointsCost']
 const manifistationsKeys =  ['id', 'name']
 
 const Export = () => {
+    const navigate = useNavigate()
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     const [isCopy, setIsCopy] = useState(false)
@@ -203,6 +205,10 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         setIsListPublic(!isListPublic)
     }
 
+    const handleShowRosterInfo = () => {
+        navigate('/rosterInfo', {state: {title: 'Roster Info'}})
+    }
+
     const renderModalContent = () => {
         if (lists.count >= Constants.listsMax) {
             return <>
@@ -274,6 +280,9 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         </div> */}
         <div id={Styles.buttonContainer}>
             <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Copy List'}</button>
+        </div>
+        <div id={Styles.buttonContainer}>
+            <button id={Styles.button} onClick={handleShowRosterInfo}>Show Roster Info</button>
         </div>
         {errors.length > 0
             ? <div id={Styles.errorsContainer}>

@@ -31,6 +31,7 @@ import BuilderChooseTacticsCard from './builder/BuilderChooseTacticsCard'
 import ChooseOption from './builder/ChooseOption'
 import ChooseWeapon from './builder/ChooseWeapon'
 import Export from './builder/Export'
+import RosterInfo from './builder/RosterInfo'
 import PasteList from './builder/PasteList'
 import Calculator from './calculator/Calculator'
 import SinglePlayer from './singlePlayer/SinglePlayer'
@@ -88,6 +89,7 @@ function App() {
       <Route path={'chooseGrandAlliance'} element={<ChooseGrandAlliance />} />
       <Route path={'chooseFaction'} element={<ChooseFaction />} />
       <Route path={'export'} element={<Export />} />
+      <Route path={'rosterInfo'} element={<RosterInfo />} />
       <Route path={'pasteList'} element={<PasteList />} />
       <Route path={'singlePlayer'} element={<SinglePlayer />} />
       <Route path={'chooseTactics'} element={<ChooseTactics />} />
