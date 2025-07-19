@@ -49,7 +49,7 @@ ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), 
                     </div>
                     : null
                 }
-                {ability.points ? <b id={Styles.points}>{ability.points} pts</b> : null}
+                {ability.points ? <b id={Styles.points}>{ability.points}{Constants.noBreakSpace}pts</b> : null}
             </div>
             <div id={Styles.container}>
                 <h4 id={Styles.name}>{ability.name}</h4>
