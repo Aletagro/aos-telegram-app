@@ -32,9 +32,9 @@ const Warscroll = () => {
     let manifestationInfo = undefined
     if (isManifestation) {
         manifestationInfo = find(dataBase.data.lore_ability, ability => ability.linkedWarscrollId === unit.id)
-        const lore = find(dataBase.data.lore , ['id', manifestationInfo.loreId])
+        const lore = find(dataBase.data.lore , ['id', manifestationInfo?.loreId])
         // нужно для того, чтобы правильно показывать абилку у спеллов орков и в аорах
-        if (lore.factionId) {
+        if (lore?.factionId) {
             const loreId = find(dataBase.data.lore , lore => lore.factionId === allegianceId && includes(lore.name, 'Manifestation'))?.id
             manifestationInfo = find(dataBase.data.lore_ability, ability => ability.linkedWarscrollId === unit.id && (loreId ? ability.loreId === loreId : true))
         }
