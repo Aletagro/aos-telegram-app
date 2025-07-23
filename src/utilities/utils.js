@@ -818,6 +818,9 @@ export const getRosterInfo = () => {
     forEach(roster.auxiliaryUnits, unit => {
         setEnchancementName(unit)
     })
+    forEach(roster.regimentsOfRenownUnits, unit => {
+        setEnchancementName(unit)
+    })
     const warscrolls = uniq([...regimentsUnits, ...roster.auxiliaryUnits, ...roster.regimentsOfRenownUnits])
     const enchancements = map(uniq(enchancementsNames), name => find(dataBase.data.ability, ['name', name]))
     const factionTerrain = roster.factionTerrain ? find(dataBase.data.warscroll, ['name', roster.factionTerrain]) : undefined
