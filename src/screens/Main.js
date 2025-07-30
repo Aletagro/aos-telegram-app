@@ -17,7 +17,7 @@ const Main = () => {
             <Row title='Paste List' navigateTo='pasteList' />
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
-            <p id={Styles.feedbackText}>The database was last updated on 16.07.2025</p>
+            <p id={Styles.feedbackText}>The database was last updated on 30.07.2025</p>
         </div>
     </>
 }
