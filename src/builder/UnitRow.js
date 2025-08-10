@@ -9,7 +9,10 @@ import DarkGeneral from '../icons/darkGeneral.svg'
 import Info from '../icons/info.svg'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
+import map from 'lodash/map'
 import find from 'lodash/find'
+import size from 'lodash/size'
+import forEach from 'lodash/forEach'
 import includes from 'lodash/includes'
 
 import Styles from './styles/UnitRow.module.css'
@@ -18,7 +21,7 @@ const dataBase = require('../dataBase.json')
 
 const UnitRow = ({
     unit, unitIndex, regimentIndex, isAddUnit, onClick, onDelete, onCopy,onReinforced, artefacts, withoutMargin,
-    heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown, isRoRUnitWithKeyword, otherEnhancement
+    heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown, isRoRUnitWithKeyword, otherEnhancements
 }) => {
     const navigate = useNavigate()
     const isHero = unit.referenceKeywords?.includes('Hero') 
@@ -35,10 +38,12 @@ const UnitRow = ({
     if (isRegimentsOfRenown) {
         rowImage = find(dataBase.data.warscroll, ['id', unit.regimentOfRenownRowImageWarscrollId])?.rowImage
     }
-    let requiredKeyword = undefined
-    if (otherEnhancement) {
-        const requiredKeywordId = find(dataBase.data.ability_group_required_keyword, ['abilityGroupId', otherEnhancement.id])?.keywordId
-        requiredKeyword = find(dataBase.data.keyword, ['id', requiredKeywordId])?.name
+    let requiredOtherEnhancementKeywords = []
+    if (size(otherEnhancements)) {
+        forEach(otherEnhancements, otherEnhancement => {
+            const requiredKeywordId = find(dataBase.data.ability_group_required_keyword, ['abilityGroupId', otherEnhancement.id])?.keywordId
+            requiredOtherEnhancementKeywords.push(find(dataBase.data.keyword, ['id', requiredKeywordId])?.name)
+        })
     } 
 
     const handleClick = () => {
@@ -150,16 +155,16 @@ const UnitRow = ({
             </div>
             : null
         }
-        {(optionGroups.length > 0 || additionalOption || otherEnhancement) && !isAddUnit
+        {(optionGroups.length > 0 || additionalOption || size(otherEnhancements)) && !isAddUnit
             ? <div id={Styles.enhancementsContainer}>
                 {weaponOptions.length > 0 ? renderChooseWeapon() : null}
                 {marksOfChaos ? renderChooseOptionButton(marksOfChaos) : null}
                 {additionalOption ? renderAdditionalOption(additionalOption) : null}
                 {otherWarscrollOption ? renderChooseOptionButton(otherWarscrollOption) : null}
-                {otherEnhancement && includes(unit.referenceKeywords, requiredKeyword) && !unit.referenceKeywords?.includes('Unique')
+                {map(otherEnhancements, (otherEnhancement, index) => otherEnhancement && includes(unit.referenceKeywords, requiredOtherEnhancementKeywords[index]) && !unit.referenceKeywords?.includes('Unique')
                     ? renderAdditionalOption(otherEnhancement)
                     : null
-                }
+                )}
             </div>
             : null
         }
