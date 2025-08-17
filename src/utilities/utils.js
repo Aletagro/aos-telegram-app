@@ -742,18 +742,21 @@ export const parseRegimentsForWHAoS = (input) => {
 
 export const getFactionForWHAoS = (text) => {
     // Регулярное выражение для поиска шаблона "часть1 | часть2 | часть3"
-    const regex = /^([^|\n]+)\s*\|\s*([^|\n]+)\s*\|\s*([^|\n]+)$/m;
-    const lines = text.split('\n');
-    
-    for (const line of lines) {
-        const match = line.trim().match(regex);
-        if (match) {
-            // Возвращаем части без лишних пробелов
-            return [match[1].trim(), match[2].trim(), match[3].trim()];
+    const lines = text.split('\n')
+    // на ios и андроиде сохраняется по-разному, четвертым элементом передаём, что это ios
+    if (lines[1]) {
+        for (const line of lines) {
+            const regex = /^([^|\n]+)\s*\|\s*([^|\n]+)\s*\|\s*([^|\n]+)$/m
+            const match = line.trim().match(regex)
+            if (match) {
+                // Возвращаем части без лишних пробелов
+                return [match[1].trim(), match[2].trim(), match[3].trim(), true]
+            }
         }
+    } else {
+        return ['', lines[2], lines[3], false]
     }
-    
-    return null; // Если ничего не найдено
+    return null // Если ничего не найдено
 }
 
 export const findCommonOptionId = (arrays) => {

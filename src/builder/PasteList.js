@@ -147,25 +147,28 @@ const PasteList = () => {
         return {units, points, heroId: units[0]?.id || ''}
     }
 
-    const setTactic = (tacticsString) => {
+    const setTactic = (tacticsString, isCommaSplit) => {
         if (!tacticsString) {
             return []
         }
-        const parts = tacticsString.split(/\s+and\s+/i)
-        const matchedParts = []
-        // Проверяем комбинации частей, так как "Intercept and Recover" состоит из двух "and"
-        for (let i = 0; i < parts.length; i++) {
-          for (let j = i + 1; j <= parts.length; j++) {
-            const combined = parts.slice(i, j).join(" and ")
-            if (includes(Constants.tacticsCards, combined)) {
-              matchedParts.push(combined)
-              i = j - 1 // Пропускаем уже проверенные части
-              break
+        if (isCommaSplit) {
+            return split(tacticsString, ', ')
+        } else {
+            const parts = tacticsString.split(/\s+and\s+/i)
+            const matchedParts = []
+            // Проверяем комбинации частей, так как "Intercept and Recover" состоит из двух "and"
+            for (let i = 0; i < parts.length; i++) {
+                for (let j = i + 1; j <= parts.length; j++) {
+                    const combined = parts.slice(i, j).join(" and ")
+                    if (includes(Constants.tacticsCards, combined)) {
+                    matchedParts.push(combined)
+                    i = j - 1 // Пропускаем уже проверенные части
+                    break
+                    }
+                }
             }
-          }
+            return matchedParts
         }
-      
-        return matchedParts;
       }
 
     const getTactic = (tacticName) => {
@@ -298,6 +301,7 @@ const PasteList = () => {
         const listInfo = getFactionForWHAoS(list)
         const allegianceId = find(dataBase.data.faction_keyword, ['name', listInfo[1]])?.id
         if (allegianceId) {
+            const isIOS = listInfo[3]
             const factionTerrain = split(getTextAfter(list, 'Faction Terrain', false, true), ' (')[0]
             const manifestationLore = split(getTextAfter(list, 'Manifestation Lore -'), ' (')[0]
             const manifestationLoreId = find(dataBase.data.lore, ['name', manifestationLore])?.id
@@ -305,9 +309,10 @@ const PasteList = () => {
             const manifestationsList = map(manifestationSpells, spell => find(dataBase.data.warscroll, ['id', spell.linkedWarscrollId]))
             const prayersLore = split(getTextAfter(list, 'Prayer Lore -'), ' (')[0]
             const spellsLore = split(getTextAfter(list, 'Spell Lore -'), ' (')[0]
-            const tacticsString = setTactic(getTextAfter(list, 'Battle Tactics Cards:'))
+            const tacticsString = isIOS ? setTactic(getTextAfter(list, 'Battle Tactics Cards:')) : setTactic(getTextAfter(list, 'Battle Tactic Cards:'), true)
             const tactics = compact(map(tacticsString, getTactic))
-            const splitPoints = split(split(getTextAfter(list, 'pts', true), ' ')[1], '/')
+            const splitPointsLine = split(getTextAfter(list, 'pts', true), ' ')
+            const splitPoints = split(last(splitPointsLine), '/')
             const points = getPoints(splitPoints[0], factionTerrain, prayersLore, spellsLore, manifestationLore)
             const parsedRegiments = parseRegimentsForWHAoS(list)
             const regiments = map(parsedRegiments.regiments, setRegiment)
