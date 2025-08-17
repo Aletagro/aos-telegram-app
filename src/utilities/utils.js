@@ -754,7 +754,11 @@ export const getFactionForWHAoS = (text) => {
             }
         }
     } else {
-        return ['', lines[2], lines[3], false]
+        if (includes(lines[2], 'Orruk Warclans')) {
+            return ['Orruk Warclans', split(lines[2], '| ')[1], lines[3], false]
+        } else {
+            return ['', lines[2], lines[3], false]
+        }
     }
     return null // Если ничего не найдено
 }
