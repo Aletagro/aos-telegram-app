@@ -1,5 +1,5 @@
-import {useEffect} from 'react'
-import {Route, Routes} from 'react-router-dom'
+import {useEffect, useRef} from 'react'
+import {Route, Routes, useNavigate, useLocation} from 'react-router-dom'
 import Main from './screens/Main'
 import MainRules from './screens/MainRules'
 import Catalog from './screens/Catalog'
@@ -43,7 +43,54 @@ import './App.css'
 
 const tg = window.Telegram.WebApp
 
+const useSwipeBack = () => {
+  const navigate = useNavigate()
+  const {pathname} = useLocation()
+  const touchStart = useRef(null)
+  const threshold = 100; // минимальное расстояние свайпа
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      const handleTouchStart = (e) => {
+        // Начинаем отслеживать только от левого края экрана
+        if (e.touches[0].clientX < 50) {
+          touchStart.current = e.touches[0].clientX
+        }
+      }
+
+      const handleTouchMove = (e) => {
+        if (touchStart.current === null) return
+        const currentX = e.touches[0].clientX
+        const deltaX = currentX - touchStart.current
+        // Свайп справа налево (положительное значение)
+        if (deltaX > threshold) {
+          navigate(-1);
+          touchStart.current = null
+        }
+      }
+
+      const handleTouchEnd = () => {
+        touchStart.current = null
+      }
+
+      document.addEventListener('touchstart', handleTouchStart)
+      document.addEventListener('touchmove', handleTouchMove)
+      document.addEventListener('touchend', handleTouchEnd)
+
+      return () => {
+        document.removeEventListener('touchstart', handleTouchStart)
+        document.removeEventListener('touchmove', handleTouchMove)
+        document.removeEventListener('touchend', handleTouchEnd)
+      }
+    }
+  }, [navigate, pathname])
+
+  return null
+}
+
 function App() {
+  useSwipeBack()
+
   useEffect(() => {
     tg.ready()
     if (!tg.isExpanded) {
