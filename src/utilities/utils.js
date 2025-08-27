@@ -78,6 +78,7 @@ export const getErrors = (roster) => {
     let mightyLordCount = 0
     let isMightyLordGeneral = false
     const unitsNames = []
+    let requiredUnitsIds = []
     forEach(roster.regiments, (regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
@@ -119,6 +120,9 @@ export const getErrors = (roster) => {
                 if (roster.generalRegimentIndex === index) {
                     isMightyLordGeneral = true
                 }
+            }
+            if (includes(roster.requiredUnitsIds, unit.id)) {
+                requiredUnitsIds.push(unit.id)
             }
         })
         if (roster.allegiance === 'Big Waaagh!') {
@@ -170,6 +174,9 @@ export const getErrors = (roster) => {
         if (includes(unit.referenceKeywords, 'Unique')) {
             uniqueUnits.push(unit.name)
         }
+        if (includes(roster.requiredUnitsIds, unit.id)) {
+            requiredUnitsIds.push(unit.id)
+        }
     })
     forEach(unitsNames, unitsName => {
         if (startsWith(unitsName, 'Scourge of Ghyran ')) {
@@ -196,6 +203,16 @@ export const getErrors = (roster) => {
         if (!isMightyLordGeneral) {
             errors.push('Mighty Lord of Khorne must be your general')
         }
+    }
+    if (size(roster.requiredUnitsIds)) {
+        requiredUnitsIds = uniq(requiredUnitsIds)
+        const filteredRequiredUnitsIds = filter(roster.requiredUnitsIds, requiredUnitsId => !includes(requiredUnitsIds, requiredUnitsId))
+        forEach(filteredRequiredUnitsIds, requiredUnitsId => {
+            const unitName = find(dataBase.data.warscroll, ['id', requiredUnitsId])?.name
+            if (unitName) {
+                errors.push(`You must be included ${unitName} in your roster`)
+            }
+        })
     }
     return errors
 }
@@ -521,6 +538,7 @@ export const cleanBuilder = () => {
     roster.regiments = [{units: [], heroId: '', points: 0}]
     roster.regimentsOfRenownUnits = []
     roster.requiredGeneral = null
+    roster.requiredUnitsIds = []
     roster.spellsLore = ''
     roster.tactics = []
     roster.isPublic = true
