@@ -8,7 +8,7 @@ import FloatingLabelInput from '../components/FloatingLabelInput'
 import Checkbox from '../components/Checkbox'
 import Constants from '../Constants'
 import {roster, main} from '../utilities/appState'
-import {getErrors, getWarnings, getWoundsCount, cleanObject} from '../utilities/utils'
+import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
 import Close from '../icons/close.svg'
 
 import map from 'lodash/map'
@@ -125,7 +125,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const handleSaveList = async () => {
-        const data = cleanObject({
+        const data = {
             name: listName,
             allegiance: roster.allegiance,
             allegiance_id: roster.allegianceId,
@@ -139,7 +139,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
             points: JSON.stringify(roster.points),
             points_limit: roster.pointsLimit,
             prayers_lore: roster.prayersLore,
-            regiment_of_renown: roster.regimentOfRenown ? JSON.stringify(pickKeys(roster.regimentOfRenown, rorKeys)) : null,
+            regiment_of_renown: roster.regimentOfRenown ? JSON.stringify(pickKeys(roster.regimentOfRenown, rorKeys)) : '',
             regiments: JSON.stringify(getShortRegiments()),
             regiments_of_renown_units: JSON.stringify(getShortUnits(roster.regimentsOfRenownUnits, unitsKeys)),
             spells_lore: roster.spellsLore,
@@ -147,7 +147,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
             tg_id: user?.id,
             is_public: isListPublic,
             note: roster.id && roster.note ? JSON.stringify({...JSON.parse(roster.note), noteText: roster.noteText, wounds, drops}) : JSON.stringify({...roster.note, noteText: roster.noteText, wounds, drops}),
-        })
+        }
         try {
             if (roster.id) {
                 await fetch(`https://aoscom.online/rosters_db/update_roster?roster_id=${roster.id}`, {

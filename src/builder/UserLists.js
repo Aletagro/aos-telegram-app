@@ -60,6 +60,9 @@ const UserLists = () => {
         navigate('/chooseGrandAlliance')
     }
 
+    const handlePasteList = () => {
+        navigate('/pasteList')
+    }
 
     const getUnits = (units) => map(units, (unit) => {
         const _unit = find(dataBase.data.warscroll, ['id', unit.id])
@@ -143,6 +146,10 @@ const UserLists = () => {
     return  <div id='column' className='Chapter'>
         <button id={Styles.newRosterButton} onClick={handleAddNewRoster}>
             <p>New List</p>
+            <img src={Add} alt='' />
+        </button>
+        <button id={Styles.newRosterButton} onClick={handlePasteList}>
+            <p>Paste List</p>
             <img src={Add} alt='' />
         </button>
         <p id={Styles.notice}>You can only save 3 army lists.</p>

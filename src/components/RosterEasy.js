@@ -62,6 +62,7 @@ const RosterEasy = ({roster, onClick}) => {
             <p>Regiment {index + 1}</p>
             {roster.generalRegimentIndex === index ? <p>General's regiment</p> : null}
             {map(JSON.parse(regiment)?.units, renderUnit)}
+            <br/>
         </div>
 
     return <div id={Styles.container} onClick={handleClick}>
