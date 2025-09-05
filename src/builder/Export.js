@@ -31,7 +31,7 @@ const Export = () => {
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     const [isCopy, setIsCopy] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [listName, setListName] = useState(roster.listName || `List-${size(main.rosters)}`)
+    const [listName, setListName] = useState(roster.name || `List-${size(main.rosters)}`)
     const [isListPublic, setIsListPublic] = useState(true)
     const errors = getErrors(roster)
     const warnings = getWarnings(roster)
@@ -187,8 +187,6 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     const handleClickSaveButton = () => {
         if (!get(main, 'user.tg_id')) {
             navigate('/registration')
-        } else if (roster.id) {
-            handleSaveList()
         } else {
             setIsModalOpen(true)
         }
@@ -241,7 +239,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const renderModalContent = () => {
-        if (size(main.rosters) >= Constants.listsMax) {
+        if (size(main.rosters) >= Constants.listsMax && !roster.id) {
             return <>
                 <b id={Styles.modalTitle}>You have reached limit of saved lists</b>
                 <p id={Styles.modalText}>You can delete one of your list</p>

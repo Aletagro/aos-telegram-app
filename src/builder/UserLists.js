@@ -104,7 +104,7 @@ const UserLists = () => {
         roster.spellsLore = list.spells_lore
         roster.isPublic = list.is_public
         roster.note = list.note
-        roster.listName = list.list_name
+        roster.name = list.name
         navigationState.isBuilder = true
         navigate('/builder', {state: {title: list.allegiance, alliganceId: list.allegiance_id}})
     }

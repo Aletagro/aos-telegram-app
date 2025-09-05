@@ -566,7 +566,7 @@ export const cleanBuilder = () => {
     roster.tactics = []
     roster.isPublic = true
     roster.note = ''
-    roster.listName = ''
+    roster.name = ''
     roster.withoutBattleFormation = false
     roster.otherEnhancements = []
     roster.noteText = ''
