@@ -21,8 +21,10 @@ import Battleplan from './screens/Battleplan'
 import Tactic from './screens/Tactic'
 import Legends from './screens/Legends'
 import LegendUnits from './screens/LegendUnits'
+import Registration from './screens/Registration'
 import Header from './components/Header'
 import Lists from './builder/Lists'
+import UserLists from './builder/UserLists'
 import ChooseGrandAlliance from './builder/ChooseGrandAlliance'
 import ChooseFaction from './builder/ChooseFaction'
 import Builder from './builder/Builder'
@@ -89,9 +91,11 @@ function App() {
       <Route path={'legends'} element={<Legends />} />
       <Route path={'legendUnits'} element={<LegendUnits />} />
       <Route path={'lists'} element={<Lists />} />
+      <Route path={'userLists'} element={<UserLists />} />
       <Route path={'chooseGrandAlliance'} element={<ChooseGrandAlliance />} />
       <Route path={'chooseFaction'} element={<ChooseFaction />} />
       <Route path={'export'} element={<Export />} />
+      <Route path={'registration'} element={<Registration />} />
       <Route path={'rosterInfo'} element={<RosterInfo />} />
       <Route path={'pasteList'} element={<PasteList />} />
       <Route path={'singlePlayer'} element={<SinglePlayer />} />

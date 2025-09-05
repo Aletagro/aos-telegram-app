@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react'
+import React, {useEffect, useCallback, useState, useReducer} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import Modal from '@mui/joy/Modal'
@@ -7,13 +7,15 @@ import 'react-toastify/dist/ReactToastify.css'
 import FloatingLabelInput from '../components/FloatingLabelInput'
 import Checkbox from '../components/Checkbox'
 import Constants from '../Constants'
-import {roster, lists} from '../utilities/appState'
+import {roster, main} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount, cleanObject} from '../utilities/utils'
 import Close from '../icons/close.svg'
 
 import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
+import filter from 'lodash/filter'
+import includes from 'lodash/includes'
 
 import Styles from './styles/Export.module.css'
 
@@ -29,7 +31,7 @@ const Export = () => {
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     const [isCopy, setIsCopy] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [listName, setListName] = useState(roster.listName || `List-${lists.count + 1}`)
+    const [listName, setListName] = useState(roster.listName || `List-${size(main.rosters)}`)
     const [isListPublic, setIsListPublic] = useState(true)
     const errors = getErrors(roster)
     const warnings = getWarnings(roster)
@@ -37,6 +39,16 @@ const Export = () => {
     const drops = roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)
     const user = tg.initDataUnsafe?.user
     const unitsKeys =  ['id', 'name', 'points', 'modelCount', 'isReinforced', 'heroicTrait', 'artefact', 'otherWarscrollOption', 'marksOfChaos', ...roster.otherEnhancements, 'weaponOptions'] 
+    const disableButton = Boolean(size(errors))
+
+    useEffect(() => {
+        if (main.showSaveListModal) {
+            main.showSaveListModal = false
+            setIsModalOpen(true)
+        }
+        handleGetLists()
+    // eslint-disable-next-line
+    }, [])
 
     const getErrorText = (error) => `- ${error}`
 
@@ -77,11 +89,10 @@ Drops: ${drops}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.aux
 ${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}` : ''}
 -----
 ${getRegimentsForExport()}
-${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}
-${roster.regimentsOfRenownUnits.length > 0 ? `${getUnitsForExport(roster.regimentsOfRenownUnits, true)}\n-----` : ''}
-${roster.auxiliaryUnits.length > 0 ? `Auxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
+${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}${roster.regimentsOfRenownUnits.length > 0 ? `\n${getUnitsForExport(roster.regimentsOfRenownUnits, true)}\n-----` : ''}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
 Wounds: ${wounds}
 ${roster.points.all}/${roster.pointsLimit} Pts
+${roster.noteText ? `Note: ${roster.noteText}` : ''}
 `
         navigator.clipboard.writeText(rosterText)
         toast.success('List Copied', Constants.toastParams)
@@ -115,7 +126,7 @@ ${roster.points.all}/${roster.pointsLimit} Pts
 
     const handleSaveList = async () => {
         const data = cleanObject({
-            id: roster.id,
+            name: listName,
             allegiance: roster.allegiance,
             allegiance_id: roster.allegianceId,
             auxiliary_units: JSON.stringify(getShortUnits(roster.auxiliaryUnits, unitsKeys)),
@@ -125,33 +136,21 @@ ${roster.points.all}/${roster.pointsLimit} Pts
             grand_alliance: roster.grandAlliance,
             manifestation_lore: roster.manifestationLore,
             manifestations_list: JSON.stringify(getShortUnits(roster.manifestationsList, manifistationsKeys)),
-            points: roster.points,
+            points: JSON.stringify(roster.points),
             points_limit: roster.pointsLimit,
             prayers_lore: roster.prayersLore,
             regiment_of_renown: roster.regimentOfRenown ? JSON.stringify(pickKeys(roster.regimentOfRenown, rorKeys)) : null,
-            regiments: getShortRegiments(),
+            regiments: JSON.stringify(getShortRegiments()),
             regiments_of_renown_units: JSON.stringify(getShortUnits(roster.regimentsOfRenownUnits, unitsKeys)),
             spells_lore: roster.spellsLore,
-            tactics: map(roster.tactics, 'name'),
+            tactics: JSON.stringify(map(roster.tactics, 'name')),
             tg_id: user?.id,
-            name: `${user?.last_name || ''} ${user?.first_name || ''}`,
             is_public: isListPublic,
-            note: {...roster.note, wounds, drops},
-            list_name: listName
+            note: roster.id && roster.note ? JSON.stringify({...JSON.parse(roster.note), noteText: roster.noteText, wounds, drops}) : JSON.stringify({...roster.note, noteText: roster.noteText, wounds, drops}),
         })
-
         try {
             if (roster.id) {
-                await fetch('https://aoscom.online/list', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': "application/json, text/javascript, /; q=0.01"
-                    }
-                })
-            } else {
-                await fetch('https://aoscom.online/list', {
+                await fetch(`https://aoscom.online/rosters_db/update_roster?roster_id=${roster.id}`, {
                     method: 'PUT',
                     body: JSON.stringify(data),
                     headers: {
@@ -159,6 +158,20 @@ ${roster.points.all}/${roster.pointsLimit} Pts
                         'Accept': "application/json, text/javascript, /; q=0.01"
                     }
                 })
+            } else {
+                await fetch('https://aoscom.online/rosters_db/new_roster', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': "application/json, text/javascript, /; q=0.01"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    roster.id = get(data, 'roster_id')
+                })
+                .catch(error => console.error(error))
             }
         } catch (err) {
             console.error(err.message)
@@ -171,25 +184,42 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         setIsModalOpen(false)
     }
 
-    // const handleClickSaveButton = () => {
-    //     setIsModalOpen(true)
-    // }
-
-    const handleDeleteList = (listId) => async () => {
-        try {
-            await fetch(`https://aoscom.online/list/?id=${listId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': "application/json, text/javascript, /; q=0.01"
-                }
-            })
-            lists.count--
-            forceUpdate()
-        } catch (err) {
-            console.error(err.message)
+    const handleClickSaveButton = () => {
+        if (!get(main, 'user.tg_id')) {
+            navigate('/registration')
+        } else if (roster.id) {
+            handleSaveList()
+        } else {
+            setIsModalOpen(true)
         }
     }
+
+    const handleDeleteList = (listId) => async () => {
+        await fetch(`https://aoscom.online/rosters_db/delete_roster?roster_id=${listId}&tg_id=${user?.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': "application/json, text/javascript, /; q=0.01"
+            }
+        })
+            .then(() => {
+                main.rosters = filter(main.rosters, roster => roster.id !== listId)
+                toast.success('List deleted', Constants.toastParams)
+                forceUpdate()
+            })
+            .catch(error => console.error(error))
+    }
+
+    const handleGetLists = useCallback(async () => {
+        fetch(`https://aoscom.online/rosters_db/rosters_by_user?tg_id=${user?.id}`)
+            .then(response => response.json())
+            .then(data => {
+                main.rosters = data.rosters
+                forceUpdate()
+            })
+            .catch(error => console.error(error))
+      }, [user?.id])
+
 
     const renderList = (list) => <div id={Styles.listDeletedContainer} onClick={handleDeleteList(list.id)}>
         <div>
@@ -211,11 +241,11 @@ ${roster.points.all}/${roster.pointsLimit} Pts
     }
 
     const renderModalContent = () => {
-        if (lists.count >= Constants.listsMax) {
+        if (size(main.rosters) >= Constants.listsMax) {
             return <>
                 <b id={Styles.modalTitle}>You have reached limit of saved lists</b>
                 <p id={Styles.modalText}>You can delete one of your list</p>
-                {map(lists.data, renderList)}
+                {map(main.rosters, renderList)}
             </>
         }
         return <>
@@ -276,9 +306,18 @@ ${roster.points.all}/${roster.pointsLimit} Pts
     const renderWarning = (error, index) => <p  id={Styles.warning}>&#8226; {error}</p>
 
     return <div id={Styles.container}>
-        {/* <div id={Styles.buttonContainer}>
-            <button id={Styles.button} onClick={handleClickSaveButton}>Save List</button>
-        </div> */}
+        {includes(Constants.testersIds)
+            ? <>
+                <div id={Styles.buttonContainer}>
+                    <button id={disableButton ? Styles.disabledButton : Styles.button} onClick={handleClickSaveButton} disabled={disableButton}>Save List</button>
+                </div>
+                {disableButton
+                    ? <p id={Styles.errorText}>Until all errors are corrected, the list cannot be saved</p>
+                    : null
+                }
+            </>
+            : null
+        }
         <div id={Styles.buttonContainer}>
             <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Copy List'}</button>
         </div>
@@ -332,6 +371,7 @@ ${roster.points.all}/${roster.pointsLimit} Pts
         }
         <p>Wounds: {wounds}</p>
         <p>{roster.points.all}/{roster.pointsLimit} Pts</p>
+        {roster.noteText ? <p>Note: {roster.noteText}</p> : null}
         <ToastContainer />
         <Modal open={isModalOpen} onClose={handleCloseModal}>
             <ModalDialog layout="center">

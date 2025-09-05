@@ -7,7 +7,7 @@ import DialogContent from '@mui/joy/DialogContent'
 
 import Styles from './styles/Modal.module.css'
 
-const CustomModal = ({title, text, visible, onClose}) => {
+const CustomModal = ({title, text, visible, onClose, Content}) => {
     const [_visible, setVisible] = useState(visible)
 
     useEffect(() => {
@@ -23,12 +23,19 @@ const CustomModal = ({title, text, visible, onClose}) => {
         }
     }
 
+    const renderContent = () => Content()
+
     return <>
         <Modal open={visible} onClose={handleClose}>
         <ModalDialog layout='center'>
             <ModalClose />
             <DialogTitle>{title}</DialogTitle>
-            <DialogContent><p id={Styles.text}>{text}</p></DialogContent>
+            <DialogContent>
+                {Content
+                    ? renderContent()
+                    : <p id={Styles.text}>{text}</p>
+                }
+            </DialogContent>
         </ModalDialog>
         </Modal>
     </>

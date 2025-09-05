@@ -1,6 +1,6 @@
-import * as React from 'react';
-import {styled} from '@mui/joy/styles';
-import Input from '@mui/joy/Input';
+import * as React from 'react'
+import {styled} from '@mui/joy/styles'
+import Input from '@mui/joy/Input'
 
 const StyledInput = styled('input')({
   border: 'none', // remove the native input border
@@ -42,7 +42,7 @@ const StyledInput = styled('input')({
     borderBottomLeftRadius:
       'calc(var(--Input-radius) - var(--variant-borderWidth, 0px))',
   },
-});
+})
 
 const StyledLabel = styled('label')(({ theme }) => ({
   position: 'absolute',
@@ -51,7 +51,7 @@ const StyledLabel = styled('label')(({ theme }) => ({
   color: theme.vars.palette.text.tertiary,
   fontWeight: theme.vars.fontWeight.md,
   transition: 'all 150ms cubic-bezier(0.4, 0, 0.2, 1)',
-}));
+}))
 
 const InnerInput = (props) => {
   const id = React.useId()

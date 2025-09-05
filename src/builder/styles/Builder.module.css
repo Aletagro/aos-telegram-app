@@ -127,3 +127,10 @@
   border-width: 0px;
   padding: 0px;
 }
+
+#noteTitle {
+  font-size: 18px;
+  line-height: 24px;
+  padding-bottom: 4px;
+  padding-top: 8px;
+}

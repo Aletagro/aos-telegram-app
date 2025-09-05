@@ -102,3 +102,10 @@
 #regiment {
   padding-bottom: 12px;
 }
+
+#errorText {
+  margin-top: -12px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: red;
+}

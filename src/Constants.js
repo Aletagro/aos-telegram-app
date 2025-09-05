@@ -456,7 +456,9 @@ const Constants = {
         "Hedonites of Slaanesh",
         "Maggotkin of Nurgle",
         "Skaven",
-        "Slaves to Darkness",
+        "Slaves to Darkness"
+    ],
+    chaosAoRs: [
         "The Great-Grand Gnawhorde",
         "Thanquol's Mutated Menagerie",
         "The Swords of Chaos",
@@ -469,7 +471,13 @@ const Constants = {
         "Flesh-eater Courts",
         "Nighthaunt",
         "Ossiarch Bonereapers",
-        "Soulblight Gravelords",
+        "Soulblight Gravelords"
+    ],
+    deathAoRs: [
+        "The Equinox Feast",
+        "The Knights of New Summercourt",
+        "The Eternal Nightmare",
+        "The Clattering Procession",
         "Knights of the Crimson Keep",
         "Scions of Nulahmia",
         "Barrow Legion"
@@ -480,7 +488,9 @@ const Constants = {
         "Ironjawz",
         "Kruleboyz",
         "Ogor Mawtribes",
-        "Sons of Behemat",
+        "Sons of Behemat"
+    ],
+    destructionAoRs: [
         "The Roving Maw",
         "Krazogg’s Grunta Stampede",
         "Zoggrok's Ironmongerz",
@@ -490,6 +500,29 @@ const Constants = {
         "Trugg's Troggherd",
         "Da King's Gitz",
         "Droggz's Gitmob"
+    ],
+    orderFaction: [
+        'Cities of Sigmar',
+        'Daughters of Khaine',
+        'Fyreslayers',
+        'Idoneth Deepkin',
+        'Kharadron Overlords',
+        'Lumineth Realm-lords',
+        'Stormcast Eternals',
+        'Sylvaneth'
+    ],
+    orderAoRs: [
+        'The Croneseer’s Pariahs',
+        'Lofnir Drothkeepers',
+        'Wardens of the Chorrileum',
+        'The First Phalanx of Ionrach',
+        'Grundstok Expeditionary Force',
+        "The Magnate's Crew",
+        'Pioneer Outpost',
+        'Draconith Skywing',
+        'Ruination Brotherhood',
+        'Heroes of the First-Forged',
+        'The Evergreen Hunt'
     ],
     tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
     universalCommands: [
@@ -521,6 +554,19 @@ const Constants = {
         {name: 'Charge', id: '2e5ce689-8a3c-4f13-8954-2fb8f43a09fc'},
         {name: 'Fight', id: '047cc685-8fdd-4321-91e0-320df82a700b'},
         {name: 'Ward Save', id: '600781dd-8d0c-4cfc-b763-7d9e832e8ec0'}
+    ],
+    myTgId: 530569849,
+    testersIds: [
+        // 530569849, // Я
+        // 210233387, // Загубин
+        // 225084114, // Зайцев Ваня
+        // 835889046, // Плакс
+        // 208050275, // Гоша
+        // 437257338, // Игорь
+        // 205134265, // Петя
+        // 94613054, // Семёнов
+        // 200821933, // Вован
+        // 306287992 // Тёма Курепин
     ]
 }
 

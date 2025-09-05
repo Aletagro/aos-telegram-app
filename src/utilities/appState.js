@@ -1,5 +1,20 @@
 import Constants from '../Constants'
 
+export const main = {
+    user: {},
+    rosters: [],
+    lists: [],
+    userReq: false,
+    showSaveListModal: false
+}
+
+export const lists = {
+    data: [],
+    meta: {},
+    filters: {all: true, points_limit: 2000},
+    isFirstReq: true
+}
+
 export const roster = {
     grandAlliance: '',
     allegiance: '',
@@ -81,8 +96,3 @@ export const isCollapseUnitsTypes = Constants.defaultIsCollapseUnitsTypes
 export const isCollapseRegimentAlliances = Constants.defaultIsCollapseRegimentAlliances
 
 export const isCollapseRosterInfo = Constants.defaultIsCollapseRosterInfo
-
-export const lists = {
-    count: 0,
-    data: []
-}

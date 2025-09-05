@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import {search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances} from '../utilities/appState'
+import {search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances, lists} from '../utilities/appState'
 import Constants from '../Constants'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
@@ -35,6 +35,11 @@ const Header = () => {
             forEach(Constants.defaultIsCollapseUnitsTypes, clearCollapseUnitsType)
         } else if (pathname === '/regimentOfRenownList') {
             forEach(Constants.defaultIsCollapseRegimentAlliances, clearCollapseRegimentAlliance)
+        } else if (pathname === '/lists') {
+            lists.data = []
+            lists.meta = {}
+            lists.isFirstReq = true
+            lists.filters = {all: true, points_limit: 2000}
         }
     }
 

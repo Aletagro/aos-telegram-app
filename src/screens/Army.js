@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
-import {roster, navigationState} from '../utilities/appState'
+import {roster, navigationState, lists} from '../utilities/appState'
 import {replaceAsterisks, getInfo, replaceQuotation, cleanBuilder} from '../utilities/utils'
 
 import map from 'lodash/map'
@@ -91,6 +91,14 @@ const Army = () => {
         navigationState.isBuilder = true
     }
 
+    const handleClickLists = () => {
+        lists.filters = {
+            grand_alliance: grandAlliance,
+            allegiance: allegiance.name,
+            points_limit: 2000
+        }
+    }
+
     const renderRow = (item) => <Row
         key={item.title}
         title={item.title}
@@ -103,6 +111,12 @@ const Army = () => {
         navigateTo='builder'
         state={{alliganceId: _allegiance.id}}
         onClick={handleClickBuilder}
+    />
+
+    const renderListsRow = () => <Row
+        title='Lists'
+        navigateTo='lists'
+        onClick={handleClickLists}
     />
 
     const renderAddendas = () => <Row
@@ -125,6 +139,7 @@ const Army = () => {
         <div id='column' className='Chapter'>
             {items.map(renderRow)}
             {renderBuilderRow()}
+            {renderListsRow()}
             {addendas && renderAddendas()}
             {armyOfRenown.length > 0
                 ? <div>

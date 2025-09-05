@@ -569,6 +569,7 @@ export const cleanBuilder = () => {
     roster.listName = ''
     roster.withoutBattleFormation = false
     roster.otherEnhancements = []
+    roster.noteText = ''
 }
 
 export const getStringAfterDash = (text) => {
@@ -578,11 +579,11 @@ export const getStringAfterDash = (text) => {
 
 export const setRosterGrandAlliance = (allegiance) => {
     let grandAlliance = 'Order'
-    if (includes(Constants.chaosFaction, allegiance)) {
+    if (includes([...Constants.chaosFaction, ...Constants.chaosAoRs], allegiance)) {
         grandAlliance = 'Chaos'
-    } else if (includes(Constants.deathFaction, allegiance)) {
+    } else if (includes([...Constants.deathFaction, ...Constants.deathAoRs], allegiance)) {
         grandAlliance = 'Death'
-    } else if (includes(Constants.destructionFaction, allegiance)) {
+    } else if (includes([...Constants.destructionFaction, ...Constants.destructionAoRs], allegiance)) {
         grandAlliance = 'Destruction'
     }
     roster.grandAlliance = grandAlliance

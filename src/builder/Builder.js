@@ -2,6 +2,7 @@ import React, {useCallback, useReducer, useState, useEffect} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Modal from '@mui/joy/Modal'
 import ModalDialog from '@mui/joy/ModalDialog'
+import Textarea from '@mui/joy/Textarea'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {getWoundsCount, getInfo, setRosterGrandAlliance} from '../utilities/utils'
@@ -203,6 +204,10 @@ const Builder = () => {
         navigate('/tactic', {state: {title: card.name, tactic: card}})
     }
 
+    const handleChangeNote = (e) => {
+        roster.noteText = e.target.value
+    }
+
     const renderRegiment = (regiment, index) => <Regiment
         key={index}
         regiment={regiment}
@@ -302,6 +307,17 @@ const Builder = () => {
         
     const renderPointsLimitButton = (limit) => <button key={limit} id={Styles.pointsLimitButton} onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
 
+    const renderNoteInput = () => <div>
+        <p id={Styles.noteTitle}>Note</p>
+        <Textarea
+            defaultValue={roster.noteText}
+            placeholder='Comment about your list'
+            onChange={handleChangeNote}
+            minRows={3}
+            sx={{'fontFamily': 'Minion Pro Regular'}}
+        />
+    </div>
+    console.log(roster)
     const renderModalContent = () => <>
         <b id={Styles.pointsLimitTitle}>Points Limit</b>
         {pointsLimits.map(renderPointsLimitButton)}
@@ -381,6 +397,7 @@ const Builder = () => {
         {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}
         {roster.manifestationsList?.map(renderManifestation)}
         {factionTerrains.length > 0 ? renderEnhancement('Faction Terrain', 'factionTerrain', factionTerrains) : null}
+        {renderNoteInput()}
         <Modal open={open} onClose={handleCloseModal}>
             <ModalDialog layout="center">
                 {renderModalContent()}

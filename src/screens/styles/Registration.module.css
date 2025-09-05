@@ -1,0 +1,30 @@
+#title {
+    font-size: 20px;
+    text-align: center;
+    padding: 16px 0px;
+}
+#regButton {
+    background: rgb(46, 46, 49);
+    color: white;
+    border-width: 0px;
+    border-radius: 4px;
+    text-align: start;
+    padding: 16px 12px;
+    font-size: 16px;
+    font-family: 'Minion Pro Bold';
+    width: 100%;
+    text-align: center;
+}
+#disableRegButton {
+    background: rgb(201, 200, 199);
+    color: white;
+    border-width: 0px;
+    border-radius: 4px;
+    text-align: start;
+    padding: 12px 12px;
+    font-size: 16px;
+    line-height: 22px;
+    font-family: 'Minion Pro Bold';
+    width: 100%;
+    text-align: center;
+}
