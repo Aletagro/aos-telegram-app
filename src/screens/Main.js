@@ -32,7 +32,7 @@ const Main = () => {
         <HeaderImage src={malekith} alt='main' />
         <div id='column' className='Chapter'>
             <Row title='Rules' navigateTo='mainRules' />
-            {includes(Constants.testersIds)
+            {includes(Constants.testersIds, user?.id)
                 ? <>
                     <Row title='Builder' navigateTo='userLists' />
                     <Row title='Lists' navigateTo='lists'/>

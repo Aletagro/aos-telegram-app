@@ -306,7 +306,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     const renderWarning = (error, index) => <p  id={Styles.warning}>&#8226; {error}</p>
 
     return <div id={Styles.container}>
-        {includes(Constants.testersIds)
+        {includes(Constants.testersIds, user?.id)
             ? <>
                 <div id={Styles.buttonContainer}>
                     <button id={disableButton ? Styles.disabledButton : Styles.button} onClick={handleClickSaveButton} disabled={disableButton}>Save List</button>
