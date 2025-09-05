@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Textarea from '@mui/joy/Textarea'
 import Checkbox from '../components/Checkbox'
-import {getTextAfter, parseRegiments, getStringAfterDash, getFactionForWHAoS, parseRegimentsForWHAoS, findCommonOptionId, setRosterGrandAlliance, parseListForListbot} from '../utilities/utils'
+import {getTextAfter, parseRegiments, getStringAfterDash, getFactionForWHAoS, parseRegimentsForWHAoS, findCommonOptionId, setRosterGrandAlliance, parseListForListbot, cleanBuilder} from '../utilities/utils'
 import {roster, navigationState} from '../utilities/appState'
 import Constants from '../Constants'
 
@@ -377,6 +377,7 @@ const PasteList = () => {
     }
 
     const handleNavigateToRoster = () => {
+        cleanBuilder()
         switch (source) {
             case 'OurApp':
                 handleNavigateUseOurApp()
