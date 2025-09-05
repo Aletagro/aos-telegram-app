@@ -26,7 +26,7 @@ const Registration = () => {
     const user = tg.initDataUnsafe?.user
     const [firstname, setFirstName] = useState(user?.first_name || '')
     const [lastname, setLastname] = useState(user?.last_name || '')
-    const [country, setCountry] = useState(user?.country || '')
+    const [country, setCountry] = useState('')
     const [city, setCity] = useState('')
     const [countriesList, setCountriesList] = useState([])
 
