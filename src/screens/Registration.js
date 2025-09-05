@@ -1,7 +1,10 @@
 import React, {useReducer, useState, useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
+import Autocomplete from '@mui/joy/Autocomplete'
 import {main} from '../utilities/appState'
 import FloatingLabelInput from '../components/FloatingLabelInput'
+
+import map from 'lodash/map'
 
 import Styles from './styles/Registration.module.css'
 
@@ -25,6 +28,7 @@ const Registration = () => {
     const [lastname, setLastname] = useState(user?.last_name || '')
     const [country, setCountry] = useState(user?.country || '')
     const [city, setCity] = useState('')
+    const [countriesList, setCountriesList] = useState([])
 
     const isDisableButton = !firstname || !lastname || !country || !city
 
@@ -44,7 +48,23 @@ const Registration = () => {
                 main.showSaveListModal = true
             })
             .catch(error => console.error(error))
-      }, [navigate, firstname, lastname, country, city, user, user?.id])
+      }, [navigate, firstname, lastname, country, city, user?.id])
+
+    const getCountriesList = useCallback(async (value) => {
+        await fetch(`https://restcountries.com/v3.1/name/${value}?fields=name`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    setCountriesList([])
+                } else {
+                    setCountriesList(map(data, 'name.common'))
+                }
+            })
+            .catch(error => {
+                setCountriesList([])
+                console.error(error)
+            })
+      }, [])
 
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
@@ -56,6 +76,7 @@ const Registration = () => {
 
     const handleChangeCountry = (e, value) => {
         setCountry(value || e.target.value)
+        getCountriesList(value || e.target.value)
     }
 
     const handleChangeCity = (e, value) => {
@@ -76,11 +97,15 @@ const Registration = () => {
             label='Surname'
             value={lastname}
         />
-        <FloatingLabelInput
-            style={inputStyle}
-            onChange={handleChangeCountry}
-            label='Country'
+        <Autocomplete
+            placeholder='Country'
+            onInputChange={handleChangeCountry}
+            options={countriesList}
+            sx={inputStyle}
             value={country}
+            autoComplete={true}
+            autoSelect={true}
+            freeSolo={true}
         />
         <FloatingLabelInput
             style={inputStyle}

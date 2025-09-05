@@ -42,7 +42,7 @@ const Main = () => {
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
             <Row title='Paste List' navigateTo='pasteList' />
-            {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
+            {/* {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null} */}
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
             <p id={Styles.feedbackText}>The database was last updated on 30.07.2025</p>
