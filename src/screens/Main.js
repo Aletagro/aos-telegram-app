@@ -3,9 +3,7 @@ import {main} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import malekith from '../images/malekith.png'
-import Constants from '../Constants'
-
-import includes from 'lodash/includes'
+// import Constants from '../Constants'
 
 import Styles from './styles/Main.module.css'
 
@@ -32,16 +30,10 @@ const Main = () => {
         <HeaderImage src={malekith} alt='main' />
         <div id='column' className='Chapter'>
             <Row title='Rules' navigateTo='mainRules' />
-            {includes(Constants.testersIds, user?.id)
-                ? <>
-                    <Row title='Builder' navigateTo='userLists' />
-                    <Row title='Community Lists' navigateTo='lists'/>
-                </>
-                : <Row title='Builder' navigateTo='chooseGrandAlliance' />
-            }
+            <Row title='Builder' navigateTo='userLists' />
+            <Row title='Community Lists' navigateTo='lists'/>
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
-            {includes(Constants.testersIds, user?.id) ? null : <Row title='Paste List' navigateTo='pasteList' />}
             {/* {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null} */}
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>

@@ -15,7 +15,6 @@ import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
 import filter from 'lodash/filter'
-import includes from 'lodash/includes'
 
 import Styles from './styles/Export.module.css'
 
@@ -317,16 +316,11 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     const renderWarning = (error, index) => <p  id={Styles.warning}>&#8226; {error}</p>
 
     return <div id={Styles.container}>
-        {includes(Constants.testersIds, user?.id)
-            ? <>
-                <div id={Styles.buttonContainer}>
-                    <button id={disableButton ? Styles.disabledButton : Styles.button} onClick={handleClickSaveButton} disabled={disableButton}>Save List</button>
-                </div>
-                {disableButton
-                    ? <p id={Styles.errorText}>Until all errors are corrected, the list cannot be saved</p>
-                    : null
-                }
-            </>
+         <div id={Styles.buttonContainer}>
+            <button id={disableButton ? Styles.disabledButton : Styles.button} onClick={handleClickSaveButton} disabled={disableButton}>Save List</button>
+        </div>
+        {disableButton
+            ? <p id={Styles.errorText}>Until all errors are corrected, the list cannot be saved</p>
             : null
         }
         <div id={Styles.buttonContainer}>

@@ -114,7 +114,7 @@ const Army = () => {
     />
 
     const renderListsRow = () => <Row
-        title='Lists'
+        title='Community Lists'
         navigateTo='lists'
         onClick={handleClickLists}
     />
