@@ -35,7 +35,7 @@ const Main = () => {
             {includes(Constants.testersIds, user?.id)
                 ? <>
                     <Row title='Builder' navigateTo='userLists' />
-                    <Row title='Lists' navigateTo='lists'/>
+                    <Row title='Community Lists' navigateTo='lists'/>
                 </>
                 : <Row title='Builder' navigateTo='chooseGrandAlliance' />
             }

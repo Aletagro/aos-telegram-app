@@ -33,6 +33,7 @@ const Export = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [listName, setListName] = useState(roster.name || `List-${size(main.rosters)}`)
     const [isListPublic, setIsListPublic] = useState(true)
+    const [saveAsNew, setSaveAsNew] = useState(false)
     const errors = getErrors(roster)
     const warnings = getWarnings(roster)
     const wounds = getWoundsCount(roster)
@@ -149,7 +150,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
             note: roster.id && roster.note ? JSON.stringify({...JSON.parse(roster.note), noteText: roster.noteText, wounds, drops}) : JSON.stringify({...roster.note, noteText: roster.noteText, wounds, drops}),
         }
         try {
-            if (roster.id) {
+            if (roster.id && !saveAsNew) {
                 await fetch(`https://aoscom.online/rosters_db/update_roster?roster_id=${roster.id}`, {
                     method: 'PUT',
                     body: JSON.stringify(data),
@@ -230,8 +231,13 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     const handleBlurName = (e) => {
         setListName(e.target.value)
     }
+
     const handleChangePublic = () => {
         setIsListPublic(!isListPublic)
+    }
+
+    const handleChangeAsNew = () => {
+        setSaveAsNew(!saveAsNew)
     }
 
     const handleShowRosterInfo = () => {
@@ -259,6 +265,13 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
                 <Checkbox onClick={handleChangePublic} checked={isListPublic} />
             </div>
             <p id={Styles.publicNote}>Other users will be able to see this list.</p>
+            {roster.id
+                ? <div id={Styles.publicCheckboxContainer} onClick={handleChangeAsNew}>
+                    <p id={Styles.potentialLegends}>Save as new List</p>
+                    <Checkbox onClick={handleChangeAsNew} checked={saveAsNew} />
+                </div>
+                : null
+            }
             <button id={listName ? Styles.button : Styles.disabledButton} disabled={!listName} onClick={handleSaveList}>Save</button>
         </>
     }
