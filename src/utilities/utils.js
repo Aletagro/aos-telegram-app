@@ -933,3 +933,12 @@ export const getRosterInfo = () => {
     const universalAbilities = map(Constants.universalAbilities, item => find(dataBase.data.ability, ['id', item.id]))
     return {warscrolls, enchancements, factionTerrain, battleTraits, battleFormation, spells, prayers, battleTactics, universalCommands, universalAbilities}
 }
+
+export const getUnitsRowRightText = (unit) => {
+    const isManifestation = includes(unit.referenceKeywords, 'Manifestation')
+    if (isManifestation) {
+        const manifestationInfo = find(dataBase.data.lore_ability, ability => ability.linkedWarscrollId === unit.id)
+        return `${manifestationInfo.castingValue}+/${unit.control}`
+    }
+    return unit?.points ? `${unit?.points} pts` : undefined
+}

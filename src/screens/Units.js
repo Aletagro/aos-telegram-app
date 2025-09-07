@@ -1,6 +1,6 @@
 import React, {useCallback, useReducer} from 'react'
 import {useLocation} from 'react-router-dom'
-import {unitsSortesByType} from '../utilities/utils'
+import {unitsSortesByType, getUnitsRowRightText} from '../utilities/utils'
 import {isCollapseUnitsTypes} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
@@ -35,7 +35,7 @@ const Units = () => {
     const renderRow = (unit) => <Row
         key={unit?.id}
         title={unit?.name}
-        rightText={unit?.points ? `${unit?.points} pts` : undefined}
+        rightText={getUnitsRowRightText(unit)}
         image={unit?.rowImage}
         navigateTo='warscroll'
         state={{unit, allegianceId: allegiance?.id}}
@@ -48,7 +48,7 @@ const Units = () => {
         expanded={!isCollapseUnitsTypes[type.title]}
         onChangeExpand={handleChangeExpand}
     />
-
+    console.log(_units)
     return <>
         {allegiance?.rosterHeaderImage
             ? <HeaderImage src={allegiance?.rosterHeaderImage} alt={allegiance?.name} isWide />

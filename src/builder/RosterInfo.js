@@ -1,6 +1,6 @@
 import React, {useCallback, useReducer, useMemo} from 'react'
 import {roster, isCollapseRosterInfo} from '../utilities/appState'
-import {getRosterInfo} from '../utilities/utils'
+import {getRosterInfo, getUnitsRowRightText} from '../utilities/utils'
 import Ability from '../components/Ability'
 import Accordion from '../components/Accordion'
 import BattleTactic from '../components/BattleTactic'
@@ -25,7 +25,7 @@ const ChooseWeapon = () => {
     const renderWarscroll = (unit) => <Row
         key={unit?.id}
         title={unit?.name}
-        rightText={unit?.points ? `${unit?.points} pts` : undefined}
+        rightText={getUnitsRowRightText(unit)}
         image={unit?.rowImage}
         navigateTo='warscroll'
         state={{unit, allegianceId: roster.allegianceId}}

@@ -264,7 +264,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
                 <Checkbox onClick={handleChangePublic} checked={isListPublic} />
             </div>
             <p id={Styles.publicNote}>Other users will be able to see this list.</p>
-            {roster.id
+            {roster.id && size(main.rosters) > Constants.listsMax
                 ? <div id={Styles.publicCheckboxContainer} onClick={handleChangeAsNew}>
                     <p id={Styles.potentialLegends}>Save as new List</p>
                     <Checkbox onClick={handleChangeAsNew} checked={saveAsNew} />
