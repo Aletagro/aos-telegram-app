@@ -1,4 +1,5 @@
 import React from 'react'
+import Constants from '../Constants'
 
 import map from 'lodash/map'
 import size from 'lodash/size'
@@ -102,6 +103,7 @@ const RosterEasy = ({roster, onClick}) => {
         <p>Wounds: {note?.wounds}</p>
         <p>{JSON.parse(roster.points)?.all}/{roster.points_limit} Pts</p>
         {note.noteText ? <p>Note: {note?.noteText}</p> : null}
+        {(roster.last_changes < Constants.fullDatelastUpdate) ? <p id={Styles.warning}>Warning: List created before last update!</p> : null}
     </div>
 }
 

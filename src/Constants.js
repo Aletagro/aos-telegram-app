@@ -569,7 +569,9 @@ const Constants = {
         306287992, // Тёма Курепин
         589760439, // Коля
         431627556 // Матвейка
-    ]
+    ],
+    lastUpdate: '24.09.2025',
+    fullDatelastUpdate: '2025-09-24T17:15:00.0000'
 }
 
 export default Constants

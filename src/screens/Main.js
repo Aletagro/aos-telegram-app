@@ -3,7 +3,7 @@ import {main} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
 import malekith from '../images/malekith.png'
-// import Constants from '../Constants'
+import Constants from '../Constants'
 
 import Styles from './styles/Main.module.css'
 
@@ -37,7 +37,7 @@ const Main = () => {
             {/* {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null} */}
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
-            <p id={Styles.feedbackText}>The database was last updated on 30.07.2025</p>
+            <p id={Styles.feedbackText}>The database was last updated on {Constants.lastUpdate}</p>
         </div>
     </>
 }

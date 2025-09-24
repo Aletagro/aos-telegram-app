@@ -1,7 +1,11 @@
 #container {
-    padding: 12px;
-    background: rgb(201, 200, 199);
-    margin-bottom: 16px;
-    border-radius: 4px;
-  }
+  padding: 12px;
+  background: rgb(201, 200, 199);
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+#warning {
+  padding-top: 8px;
+  color: darkred
+}
   
