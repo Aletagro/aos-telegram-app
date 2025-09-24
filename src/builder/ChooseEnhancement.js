@@ -108,6 +108,10 @@ const ChooseEnhancement = () => {
             const pointsDiff = block.points - (roster.points.spellsLore || 0)
             roster.points.all += pointsDiff
             roster.points.spellsLore = block.points
+        } else if (type === 'prayersLore' && block.points !== roster.points.prayersLore) {
+            const pointsDiff = block.points - (roster.points.prayersLore || 0)
+            roster.points.all += pointsDiff
+            roster.points.prayersLore = block.points
         } else if (type === 'factionTerrain' && block.points !== roster.points.terrain) {
             const pointsDiff = block.points - (roster.points.terrain || 0)
             roster.points.all += pointsDiff
@@ -133,6 +137,9 @@ const ChooseEnhancement = () => {
             } else if (type === 'spellsLore' && roster.points.spellsLore) {
                 roster.points.all -= roster.points.spellsLore
                 roster.points.spellsLore = 0
+            } else if (type === 'prayersLore' && roster.points.prayersLore) {
+                roster.points.all -= roster.points.prayersLore
+                roster.points.prayersLore = 0
             } else if (type === 'factionTerrain' && roster.points.terrain) {
                 roster.points.all -= roster.points.terrain
                 roster.points.terrain = 0

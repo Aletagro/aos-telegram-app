@@ -87,7 +87,7 @@ Battle Formation: ${roster.battleFormation}${roster.points.battleFormation ? ` (
 Battle Tactics Cards: ${get(roster, 'tactics[0].name', '')}${size(roster.tactics) === 2 ? ` and ${get(roster, 'tactics[1].name', '')}` : ''}
 Drops: ${drops}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliaries: ${roster.auxiliaryUnits.length}` : ''}
 
-${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}` : ''}
+${roster.spellsLore ? `Spell Lore: ${roster.spellsLore}${roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.prayersLore ? `\nPrayer Lore: ${roster.prayersLore}${roster.points.prayersLore ? ` (${roster.points.prayersLore}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.manifestationLore ? `\nManifestation Lore: ${roster.manifestationLore}${roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}` : ''}${roster.factionTerrain ? `\nFaction Terrain: ${roster.factionTerrain}${roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}` : ''}
 -----
 ${getRegimentsForExport()}
 ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regimentOfRenown)}\n` : ''}${roster.regimentsOfRenownUnits.length > 0 ? `\n${getUnitsForExport(roster.regimentsOfRenownUnits, true)}\n-----` : ''}${roster.auxiliaryUnits.length > 0 ? `\nAuxiliary Units\n${getUnitsForExport(roster.auxiliaryUnits)}\n-----` : ''}
@@ -352,7 +352,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
         {roster.auxiliaryUnits.length > 0 ? <p>Auxiliaries: {roster.auxiliaryUnits.length}</p> : null}
         <br/>
         {roster.spellsLore ? <p>Spell Lore: {roster.spellsLore}{roster.points.spellsLore ? ` (${roster.points.spellsLore}${Constants.noBreakSpace}pts)` : ''}</p> : null}
-        {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}</p> : null}
+        {roster.prayersLore ? <p>Prayer Lore: {roster.prayersLore}{roster.points.prayersLore ? ` (${roster.points.prayersLore}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         {roster.manifestationLore ? <p>Manifestation Lore: {roster.manifestationLore}{roster.points.manifestations ? ` (${roster.points.manifestations}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         {roster.factionTerrain ? <p>Faction Terrain: {roster.factionTerrain}{roster.points.terrain ? ` (${roster.points.terrain}${Constants.noBreakSpace}pts)` : ''}</p> : null}
         <hr/>
