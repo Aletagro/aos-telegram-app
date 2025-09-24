@@ -556,6 +556,10 @@ const Constants = {
         {name: 'Ward Save', id: '600781dd-8d0c-4cfc-b763-7d9e832e8ec0'}
     ],
     myTgId: 530569849,
+    developersIds: [
+        530569849, // Я
+        200821933, // Вован
+    ],
     testersIds: [
         530569849, // Я
         210233387, // Загубин

@@ -15,6 +15,7 @@ import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
 import filter from 'lodash/filter'
+import includes from 'lodash/includes'
 
 import Styles from './styles/Export.module.css'
 
@@ -244,7 +245,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const renderModalContent = () => {
-        if (size(main.rosters) >= Constants.listsMax && !roster.id) {
+        if (size(main.rosters) >= Constants.listsMax && !roster.id && !includes(Constants.developersIds, user?.id)) {
             return <>
                 <b id={Styles.modalTitle}>You have reached limit of saved lists</b>
                 <p id={Styles.modalText}>You can delete one of your list</p>
@@ -264,7 +265,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
                 <Checkbox onClick={handleChangePublic} checked={isListPublic} />
             </div>
             <p id={Styles.publicNote}>Other users will be able to see this list.</p>
-            {roster.id && size(main.rosters) > Constants.listsMax
+            {roster.id && size(main.rosters) > Constants.listsMax && !includes(Constants.developersIds, user?.id)
                 ? <div id={Styles.publicCheckboxContainer} onClick={handleChangeAsNew}>
                     <p id={Styles.potentialLegends}>Save as new List</p>
                     <Checkbox onClick={handleChangeAsNew} checked={saveAsNew} />

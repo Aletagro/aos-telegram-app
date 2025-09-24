@@ -13,6 +13,7 @@ import map from 'lodash/map'
 import find from 'lodash/find'
 import size from 'lodash/size'
 import compact from 'lodash/compact'
+import includes from 'lodash/includes'
 
 import Styles from './styles/UserLists.module.css'
 
@@ -152,7 +153,10 @@ const UserLists = () => {
             <p>Paste List</p>
             <img src={Add} alt='' />
         </button>
-        <p id={Styles.notice}>You can only save 3 army lists.</p>
+        {includes(Constants.developersIds, user?.id)
+            ? null
+            : <p id={Styles.notice}>You can only save {Constants.listsMax} army lists.</p>
+        }
         <div id={Styles.buttonContainer}>
             {map(main.rosters, renderList)}
         </div>
