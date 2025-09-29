@@ -78,8 +78,10 @@ const Lists = () => {
                     points = _unit.points + encantmentsPoints
                 }
             } else {
-                if (unit.isReinforced && unit.points !== (_unit.points * 2)) {
-                    points = _unit.points * 2
+                if (unit.isReinforced) {
+                    if (unit.points !== (_unit.points * 2)) {
+                        points = _unit.points * 2
+                    }
                 } else if (unit.points !== _unit.points) {
                     points = _unit.points
                 }
