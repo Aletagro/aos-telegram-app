@@ -48,7 +48,7 @@ const Units = () => {
         expanded={!isCollapseUnitsTypes[type.title]}
         onChangeExpand={handleChangeExpand}
     />
-    console.log(_units)
+
     return <>
         {allegiance?.rosterHeaderImage
             ? <HeaderImage src={allegiance?.rosterHeaderImage} alt={allegiance?.name} isWide />

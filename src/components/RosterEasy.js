@@ -16,6 +16,7 @@ const RosterEasy = ({roster, onClick}) => {
     const regiments = JSON.parse(roster.regiments)
     const auxiliaryUnits = JSON.parse(roster.auxiliary_units)
     let otherEnhancements = []
+    const points = JSON.parse(roster.points)
     const otherEnhancementsGroups = filter(dataBase.data.ability_group, (item) => item.factionId === roster.allegianceId && item.abilityGroupType === 'otherEnhancements')
     if (size(otherEnhancementsGroups)) {
         forEach(otherEnhancementsGroups, otherEnhancementsGroup => {
@@ -71,15 +72,15 @@ const RosterEasy = ({roster, onClick}) => {
         <p>List Name: {roster.name}</p> 
         <p>Grand Alliance: {roster.grand_alliance}</p>
         <p>Faction: {roster.allegiance}</p>
-        <p>Battle Formation: {roster.battle_formation}</p>
+        <p>Battle Formation: {roster.battle_formation}{points.battleFormation ? ` (${points.battleFormation} points)` : null}</p>
         <p>Battle Tactics Cards: {tactics[0]}{size(tactics) === 2 ? ` and ${tactics[1]}` : ''}</p>
         <p>Drops: {note?.drops}</p>
         {size(auxiliaryUnits) ? <p>Auxiliaries: {size(auxiliaryUnits)}</p> : null}
         <br/>
-        {roster.spells_lore ? <p>Spell Lore: {roster.spells_lore}</p> : null}
-        {roster.prayers_lore ? <p>Prayer Lore: {roster.prayers_lore}</p> : null}
-        {roster.manifestation_lore ? <p>Manifestation Lore: {roster.manifestation_lore}</p> : null}
-        {roster.faction_terrain ? <p>Faction Terrain: {roster.faction_terrain}</p> : null}
+        {roster.spells_lore ? <p>Spell Lore: {roster.spells_lore}{points.spellsLore ? ` (${points.spellsLore} points)` : null}</p> : null}
+        {roster.prayers_lore ? <p>Prayer Lore: {roster.prayers_lore}{points.prayersLore ? ` (${points.prayersLore} points)` : null}</p> : null}
+        {roster.manifestation_lore ? <p>Manifestation Lore: {roster.manifestation_lore}{points.manifestations ? ` (${points.manifestations} points)` : null}</p> : null}
+        {roster.faction_terrain ? <p>Faction Terrain: {roster.faction_terrain}{points.terrain ? ` (${points.terrain} points)` : null}</p> : null}
         <hr/>
         {map(regiments, renderRegiment)}
         <hr/>
@@ -101,7 +102,7 @@ const RosterEasy = ({roster, onClick}) => {
             : null
         }
         <p>Wounds: {note?.wounds}</p>
-        <p>{JSON.parse(roster.points)?.all}/{roster.points_limit} Pts</p>
+        <p>{points?.all}/{roster.points_limit} Pts</p>
         {note.noteText ? <p>Note: {note?.noteText}</p> : null}
         {(roster.last_changes < Constants.fullDatelastUpdate) ? <p id={Styles.warning}>Warning: List created before last update!</p> : null}
     </div>

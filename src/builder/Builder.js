@@ -280,6 +280,8 @@ const Builder = () => {
                 return roster.points?.terrain ? ` (${roster.points?.terrain}${Constants.noBreakSpace}pts)` : ''
             case 'spellsLore':
                 return roster.points?.spellsLore ? ` (${roster.points?.spellsLore}${Constants.noBreakSpace}pts)` : ''
+            case 'prayersLore':
+                return roster.points?.prayersLore ? ` (${roster.points?.prayersLore}${Constants.noBreakSpace}pts)` : ''
             default:
                 return ''
         }
@@ -317,7 +319,7 @@ const Builder = () => {
             sx={{'fontFamily': 'Minion Pro Regular'}}
         />
     </div>
-    console.log(roster)
+
     const renderModalContent = () => <>
         <b id={Styles.pointsLimitTitle}>Points Limit</b>
         {pointsLimits.map(renderPointsLimitButton)}
@@ -339,7 +341,7 @@ const Builder = () => {
         {battleFormations.length
             ? <button id={roster.battleFormation ? Styles.secondAddButton : Styles.addButton} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
                 {roster.battleFormation
-                    ? `Battle Formation : ${roster.battleFormation}`
+                    ? `Battle Formation : ${roster.battleFormation}${roster.points?.battleFormation ? ` (${roster.points?.battleFormation}${Constants.noBreakSpace}pts)` : null}`
                     : 'Choose Battle Formation'
                 }
             </button>
