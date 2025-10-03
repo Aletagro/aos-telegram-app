@@ -508,6 +508,7 @@ const Constants = {
         'Idoneth Deepkin',
         'Kharadron Overlords',
         'Lumineth Realm-lords',
+        'Seraphon',
         'Stormcast Eternals',
         'Sylvaneth'
     ],
