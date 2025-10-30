@@ -84,6 +84,7 @@ export const getErrors = (roster) => {
     let heroIroncladsCount = 0
     let heroBlackCoach = 0
     let heroSoGBlackCoach = 0
+    let swordsOfChaosTitles = []
     forEach(roster.regiments, (regiment, index) => {
         if (index === roster.generalRegimentIndex && regiment.units.length > 5) {
             errors.push("In General's Regiment you have more than 4 units")
@@ -140,6 +141,9 @@ export const getErrors = (roster) => {
             }
             if (includes(roster.requiredUnitsIds, unit.id)) {
                 requiredUnitsIds.push(unit.id)
+            }
+            if (unit['First Circle Titles']) {
+                swordsOfChaosTitles.push(unit['First Circle Titles'])
             }
         })
         if (roster.allegiance === 'Big Waaagh!') {
@@ -206,6 +210,9 @@ export const getErrors = (roster) => {
         if (unit.id === '5bedefb3-4a40-4b3a-9c9d-4e86d97d9c6f') {
             heroSoGBlackCoach += 1
         }
+        if (unit['First Circle Titles']) {
+            swordsOfChaosTitles.push(unit['First Circle Titles'])
+        }
     })
     forEach(unitsNames, unitsName => {
         if (startsWith(unitsName, 'Scourge of Ghyran ')) {
@@ -260,6 +267,15 @@ export const getErrors = (roster) => {
         if (heroSoGBlackCoach > 1) {
             errors.push('You can only have 1 Scourge of Ghyran Black Coach (Hero) in your army')
         }
+    }
+    // В АоРе The Swords of Chaos нельзе дублировать титулы варангардов
+    if (roster.allegianceId === 'b9efbcc9-15ad-46e8-9c2e-ed136d7ffb7a') {
+        const duplicateSwordsOfChaosTitles = uniq(filter(swordsOfChaosTitles, (title, index, titles) => {
+            return indexOf(titles, title) !== index;
+        }))
+        forEach(duplicateSwordsOfChaosTitles, title => {
+            errors.push(`You have more then one ${title}. You can only select each option from First Circles Titles once in your army`)
+        })
     }
     return errors
 }

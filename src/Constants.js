@@ -454,6 +454,7 @@ const Constants = {
         "Blades of Khorne",
         "Disciples of Tzeentch",
         "Hedonites of Slaanesh",
+        "Helsmiths of Hashut",
         "Maggotkin of Nurgle",
         "Skaven",
         "Slaves to Darkness"
@@ -465,7 +466,9 @@ const Constants = {
         "Tribes of the Snow Peaks",
         "Legion of the First Prince",
         "Gorechosen Champions",
-        "The Baleful Lords"
+        "The Baleful Lords",
+        "Taar's Grand Forgehost",
+        "Ziggurat Stampede"
     ],
     deathFaction: [
         "Flesh-eater Courts",
