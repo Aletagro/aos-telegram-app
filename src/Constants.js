@@ -602,7 +602,7 @@ const Constants = {
         431627556 // Матвейка
     ],
     lastUpdate: '18.12.2025',
-    fullDatelastUpdate: '2025-09-24T17:15:00.0000',
+    fullDatelastUpdate: '2025-12-18T15:15:00.0000',
     spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }
 
