@@ -32,6 +32,7 @@ const Main = () => {
             <Row title='Rules' navigateTo='mainRules' />
             <Row title='Builder' navigateTo='userLists' />
             <Row title='Community Lists' navigateTo='lists'/>
+            <Row title='Spearhead' navigateTo='spearhead'/>
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
             {/* {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null} */}

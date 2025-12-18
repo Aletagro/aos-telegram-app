@@ -11,7 +11,7 @@ import find from 'lodash/find'
 import Styles from './styles/ArmyInfo.module.css'
 
 const ArmyInfo = () => {
-    const {allegiance, info} = useLocation().state
+    const {allegiance, info, isSpearhead} = useLocation().state
     const armyEnhancement = find(Constants.armyEnhancements, enhancement => enhancement.title === info.title)
 
     const renderAbility = (ability) => <Ability
@@ -33,7 +33,7 @@ const ArmyInfo = () => {
     }
 
     return <>
-        {allegiance.rosterHeaderImage ? <HeaderImage src={allegiance.rosterHeaderImage} alt={allegiance.name} isWide /> : null}
+        {allegiance ? <HeaderImage src={allegiance.rosterHeaderImage || allegiance.backgroundImage} alt={allegiance.name} isWide={!isSpearhead} /> : null}
         <div id='column' className='Chapter'>
         {info.restrictionText ? <p id={Styles.note}>{replaceAsterisks(info.restrictionText)}</p> : null}
         {map(info.abilities, info.withoutTitle ? renderAbility : renderBlock)}

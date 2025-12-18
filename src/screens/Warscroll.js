@@ -163,7 +163,7 @@ const Warscroll = () => {
         </div>
         <p id={Styles.characteristicTitle}>{characteristic.title}</p>
     </div>
-    console.log(unit)
+
     return <>
         <HeaderImage src={unit.bannerImage} alt={unit.name} />
         <div id={Styles.container}>

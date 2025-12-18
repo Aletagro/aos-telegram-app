@@ -80,6 +80,29 @@ const Constants = {
             includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts']
         }
     ],
+    spearheadArmyEnhancements: [
+        {
+            ruleName: 'ability',
+            title: 'Battle Traits',
+            groupName: 'ability_group',
+            abilityGroupType: 'battleTraits',
+            withoutTitle: true
+        },
+        {
+            ruleName: 'ability',
+            title: 'Regiment Abilities',
+            groupName: 'ability_group',
+            abilityGroupType: 'regimentAbilities',
+            withoutTitle: true
+        },
+        {
+            ruleName: 'ability',
+            title: 'Enhancements',
+            groupName: 'ability_group',
+            abilityGroupType: 'spearheadEnhancements',
+            withoutTitle: true
+        }
+    ],
     coreDocumentsId: 'e918110c-418e-4a50-90bc-484581a0fa5c',
     ghbId: '3e05b549-40a4-43e5-b0f7-5ef6d1ffdbd2',
     hideChaptersIds: [
@@ -578,8 +601,9 @@ const Constants = {
         589760439, // Коля
         431627556 // Матвейка
     ],
-    lastUpdate: '30.10.2025',
-    fullDatelastUpdate: '2025-09-24T17:15:00.0000'
+    lastUpdate: '18.12.2025',
+    fullDatelastUpdate: '2025-09-24T17:15:00.0000',
+    spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }
 
 export default Constants

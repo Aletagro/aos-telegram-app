@@ -474,6 +474,25 @@ export const getInfo = (screen, allegiance) => {
     }
 }
 
+export const getSpearheadInfo = (screen, armyId) => {
+    const allArmyGroups = map(filter(dataBase.data.ability_group_publication, ['publicationId', armyId]), 'abilityGroupId')
+    let abilitiesGroup = find(dataBase.data[screen.groupName], (item) => 
+        includes(allArmyGroups, item.id) &&
+        item.abilityGroupType === screen.abilityGroupType
+    )
+    const abilities = filter(dataBase.data[screen.ruleName], ['abilityGroupId', abilitiesGroup.id])
+    if (size(abilities)) {
+        return {
+            title: screen.title,
+            abilities,
+            withoutTitle: screen.withoutTitle,
+            restrictionText: abilitiesGroup.restrictionText            
+        }
+    } else {
+        return null
+    }
+}
+
 export const getCalcUnit = (unit) => {
     if (unit) {
         const weapons = unit.weapons.map(getCalcWeapon)
