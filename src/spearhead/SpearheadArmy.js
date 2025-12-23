@@ -16,9 +16,9 @@ const dataBase = require('../dataBase.json')
 
 const SpearheadArmy = () => {
     const {army} = useLocation().state
-    const ruleSection = find(dataBase.data.rule_section, ['publicationId', army.id])
+    const ruleSection = find(dataBase.data.rule_section, ['name', army.spearheadName])
     const ruleContainer = find(dataBase.data.rule_container, ['ruleSectionId', ruleSection.id])
-    const unitsInfo = sortByName(filter(dataBase.data.rule_container_component, ['ruleContainerId', ruleContainer.id]), 'displayOrder')
+    const unitsInfo = sortByName(filter(dataBase.data.rule_container_component, ['ruleContainerId', ruleContainer?.id]), 'displayOrder')
     const unitsIds = filter(dataBase.data.warscroll_publication, ['publicationId', army.id])
     const units = map(unitsIds, ({warscrollId}) => find(dataBase.data.warscroll, ['id', warscrollId]))
     const items = []

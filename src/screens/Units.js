@@ -42,6 +42,7 @@ const Units = () => {
     />
 
     const renderUnitsType = (type) => <Accordion
+        key={type.title}
         title={type.title}
         data={type.units}
         renderItem={renderRow}
@@ -55,7 +56,7 @@ const Units = () => {
             : null
         }
         <div id='column' className='Chapter'>
-            {_units.map(renderUnitsType)}
+            {map(_units, renderUnitsType)}
         </div>
     </>
 }
