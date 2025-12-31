@@ -471,7 +471,7 @@ const Constants = {
     },
     legendaryArmies: ['262eabc2-f3b4-4296-9ef5-632d6cf1aadf', '5425ee6d-56cb-44a3-9f82-78b6864890da'],
     noBreakSpace: '\u00a0',
-    listsMax: 3,
+    listsMax: 4,
     chaosFaction: [
         "Beasts of Chaos",
         "Blades of Khorne",

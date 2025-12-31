@@ -1,7 +1,7 @@
 import React from 'react'
 import {useLocation} from 'react-router-dom'
 import Constants from '../Constants'
-import {sortByName, getSpearheadInfo, removeAsterisks} from '../utilities/utils'
+import {sortByName, getSpearheadInfo, removeAsterisks, replaceAsterisks} from '../utilities/utils'
 import HeaderImage from '../components/HeaderImage'
 import Row from '../components/Row'
 
@@ -41,7 +41,7 @@ const SpearheadArmy = () => {
         ? null
         : info.contentType === 'textBold' || info.contentType === 'header'
             ? <b id={Styles.infoText} key={info.id}>{removeAsterisks(info.textContent)}</b>
-            : <p id={Styles.infoText} key={info.id}>{info.textContent}</p>
+            : <p id={Styles.infoText} key={info.id}>{replaceAsterisks(info.textContent)}</p>
 
     return <>
         <HeaderImage src={army.backgroundImage} alt='Spearhead Army' />
