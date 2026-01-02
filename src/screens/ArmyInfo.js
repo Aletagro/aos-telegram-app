@@ -39,6 +39,7 @@ const ArmyInfo = () => {
         }
         <div id='column' className='Chapter'>
         {info.restrictionText ? <p id={Styles.note}>{replaceAsterisks(info.restrictionText)}</p> : null}
+        {info.image ? <HeaderImage src={info.image} alt={allegiance.name} /> : null}
         {map(info.abilities, info.withoutTitle ? renderAbility : renderBlock)}
         </div>
     </>

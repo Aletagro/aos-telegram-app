@@ -488,6 +488,13 @@ export const getSpearheadInfo = (screen, armyId) => {
             withoutTitle: screen.withoutTitle,
             restrictionText: abilitiesGroup.restrictionText            
         }
+    } else if (screen.abilityGroupType === 'battleTraits' && abilitiesGroup.subsectionRulesText) {
+        return {
+            title: screen.title,
+            withoutTitle: screen.withoutTitle,
+            restrictionText: abilitiesGroup.subsectionRulesText,        
+            image: abilitiesGroup.image            
+        }
     } else {
         return null
     }
