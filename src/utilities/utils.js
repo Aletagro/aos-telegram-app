@@ -456,7 +456,7 @@ export const getInfo = (screen, allegiance) => {
             : true
         ) &&
         (screen.excludedTexts
-            ? Boolean(screen.excludedTexts.find(text => !item.name.includes(text)))
+            ? isEmpty(filter(screen.excludedTexts, text => item.name.includes(text)))
             : true
         )
     )

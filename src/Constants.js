@@ -67,7 +67,7 @@ const Constants = {
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
             includesTexts: ['Lore of', 'Spell Lore', 'Arcane'],
-            excludedTexts: ['Lore of the Abyss']
+            excludedTexts: ['Lore of the Abyss', 'Lore of Virulence']
         },
         {
             title: 'Prayer Lores',
@@ -77,7 +77,7 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts']
+            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts', 'Lore of Virulence']
         }
     ],
     spearheadArmyEnhancements: [
@@ -601,7 +601,7 @@ const Constants = {
         589760439, // Коля
         431627556 // Матвейка
     ],
-    lastUpdate: '18.12.2025',
+    lastUpdate: '14.01.2026',
     fullDatelastUpdate: '2025-12-18T15:15:00.0000',
     spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }
