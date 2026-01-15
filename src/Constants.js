@@ -491,7 +491,9 @@ const Constants = {
         "Gorechosen Champions",
         "The Baleful Lords",
         "Taar's Grand Forgehost",
-        "Ziggurat Stampede"
+        "Ziggurat Stampede",
+        "Cycle of Corruption",
+        "The Gardeners of Nurgle"
     ],
     deathFaction: [
         "Flesh-eater Courts",

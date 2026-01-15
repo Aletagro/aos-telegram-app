@@ -137,7 +137,7 @@ const Army = () => {
     return <>
         <HeaderImage src={_allegiance.rosterHeaderImage} alt={_allegiance.name} isWide />
         <div id='column' className='Chapter'>
-            {items.map(renderRow)}
+            {map(items, renderRow)}
             {renderBuilderRow()}
             {renderListsRow()}
             {addendas && renderAddendas()}
