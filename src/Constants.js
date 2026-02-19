@@ -493,7 +493,9 @@ const Constants = {
         "Taar's Grand Forgehost",
         "Ziggurat Stampede",
         "Cycle of Corruption",
-        "The Gardeners of Nurgle"
+        "The Gardeners of Nurgle",
+        "Change-Cult Uprising",
+        "The Oracles of Fate"
     ],
     deathFaction: [
         "Flesh-eater Courts",
@@ -551,7 +553,9 @@ const Constants = {
         'Draconith Skywing',
         'Ruination Brotherhood',
         'Heroes of the First-Forged',
-        'The Evergreen Hunt'
+        'The Evergreen Hunt',
+        'Vanari Paragons',
+        'Aelementiri Conclave'
     ],
     tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
     universalCommands: [
@@ -603,8 +607,8 @@ const Constants = {
         589760439, // Коля
         431627556 // Матвейка
     ],
-    lastUpdate: '14.01.2026',
-    fullDatelastUpdate: '2025-12-18T15:15:00.0000',
+    lastUpdate: '19.02.2026',
+    fullDatelastUpdate: '2026-02-19T15:00:00.0000',
     spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }
 
