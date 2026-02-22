@@ -1003,7 +1003,8 @@ export const getRosterInfo = () => {
 export const getUnitsRowRightText = (unit) => {
     const isManifestation = includes(unit.referenceKeywords, 'Manifestation')
     if (isManifestation) {
-        const manifestationInfo = find(dataBase.data.lore_ability, ability => ability.linkedWarscrollId === unit.id)
+        const loreAbilityId = find(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])?.loreAbilityId
+        const manifestationInfo = find(dataBase.data.lore_ability, ['id', loreAbilityId])
         if (manifestationInfo) {
             return `${manifestationInfo.castingValue}+/${unit.control}`
         }
