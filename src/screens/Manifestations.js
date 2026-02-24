@@ -16,8 +16,8 @@ const Manifestations = () => {
     sortByName(lores)
 
     const renderUnit = (unit) => <Row
-        key={unit.id}
-        title={unit.name}
+        key={unit?.id}
+        title={unit?.name}
         rightText={getUnitsRowRightText(unit)}
         image={unit?.rowImage}
         navigateTo='warscroll'
@@ -26,9 +26,12 @@ const Manifestations = () => {
 
     const renderLore = (lore) => {
         const spells = filter(dataBase.data.lore_ability, ability => ability.loreId === lore.id)
-        const units = map(spells, spell => find(dataBase.data.warscroll, warscroll => warscroll.id === spell.linkedWarscrollId))
+        const units = map(spells, spell => {
+            const warscrollId = find(dataBase.data.lore_ability_linked_warscroll, ['loreAbilityId', spell.id])?.warscrollId
+            return find(dataBase.data.warscroll, ['id', warscrollId])
+        })
         return <Accordion
-            title={lore.name}
+            title={lore?.name}
             subtitle={lore.points ? `${lore.points} pts` : undefined}
             data={units}
             renderItem={renderUnit}

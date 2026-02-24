@@ -24,8 +24,8 @@ const UnitRow = ({
     heroicTraits, withoutCopy, isAuxiliary, isGeneral, alliganceId, isRegimentsOfRenown, isRoRUnitWithKeyword, otherEnhancements
 }) => {
     const navigate = useNavigate()
-    const isHero = unit.referenceKeywords?.includes('Hero') 
-    const isShowEnhancements = isHero && !unit.referenceKeywords?.includes('Unique')
+    const isHero = unit?.referenceKeywords?.includes('Hero') 
+    const isShowEnhancements = isHero && !unit?.referenceKeywords?.includes('Unique')
     const optionGroups = dataBase.data.option_group.filter(group => group.warscrollId === unit.id)
     const marksOfChaos = isRoRUnitWithKeyword ? undefined : optionGroups.find(group => group.optionGroupType === 'marksOfChaos')
     const otherWarscrollOption = optionGroups.find(group => group.optionGroupType === 'otherWarscrollOption')
