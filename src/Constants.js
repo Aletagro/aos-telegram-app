@@ -510,7 +510,9 @@ const Constants = {
         "The Clattering Procession",
         "Knights of the Crimson Keep",
         "Scions of Nulahmia",
-        "Barrow Legion"
+        "Barrow Legion",
+        "The Null Myriad",
+        "The Lance of Ossia"
     ],
     destructionFaction: [
         "Bonesplitterz",
