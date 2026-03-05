@@ -607,7 +607,7 @@ const Constants = {
         589760439, // Коля
         431627556 // Матвейка
     ],
-    lastUpdate: '19.02.2026',
+    lastUpdate: '05.03.2026',
     fullDatelastUpdate: '2026-02-19T15:00:00.0000',
     spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }
