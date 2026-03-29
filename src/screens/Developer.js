@@ -1,8 +1,16 @@
-import React from 'react';
+import React from 'react'
+import bridge from '@vkontakte/vk-bridge'
 
 const tg = window.Telegram.WebApp
 
 const Developer = () => {
+    bridge.send('VKWebAppGetLaunchParams')
+    .then((data) => { 
+        console.log(data)
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 
     return <div>
         <p>test</p>

@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import bridge from '@vkontakte/vk-bridge'
 import {main} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
@@ -11,6 +12,14 @@ const tg = window.Telegram.WebApp
 
 const Main = () => {
     const user = tg.initDataUnsafe?.user
+
+    bridge.send('VKWebAppGetLaunchParams')
+    .then((data) => { 
+        console.log(data)
+    })
+    .catch((error) => {
+        console.log(error)
+    })
 
     useEffect(() => {
         if (!main.userReq) {
@@ -35,7 +44,7 @@ const Main = () => {
             <Row title='Spearhead' navigateTo='spearhead'/>
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
-            {/* {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null} */}
+            {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
             <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
             <p id={Styles.feedbackText}>The database was last updated on {Constants.lastUpdate}</p>
