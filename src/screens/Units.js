@@ -9,13 +9,14 @@ import Constants from '../Constants'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
+import size from 'lodash/size'
 import filter from 'lodash/filter'
 import includes from 'lodash/includes'
 
 const dataBase = require('../dataBase.json')
 
 const Units = () => {
-    const {allegiance, units} = useLocation().state
+    const {allegiance, units, isArmyOfRenown} = useLocation().state
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     let _units = []
@@ -23,7 +24,15 @@ const Units = () => {
         _units = unitsSortesByType(units)
     } else {
         const isLegendaryArmies = includes(Constants.legendaryArmies, allegiance?.id)
-        const warscrollIds = map(filter(dataBase.data.warscroll_faction_keyword, (item) => item.factionKeywordId === allegiance.id), item => item.warscrollId)
+        let warscrollIds = map(filter(dataBase.data.warscroll_faction_keyword, (item) => item.factionKeywordId === allegiance.id), item => item.warscrollId)
+        if (isArmyOfRenown) {
+            const loreId = find(dataBase.data.lore, lore => lore.factionId === allegiance?.id && includes(lore.name, 'Manifestation'))?.id
+            const loreAbilityId = find(dataBase.data.lore_ability, ['loreId', loreId])?.id
+            const spellsWarscrollIds = map(filter(dataBase.data.lore_ability_linked_warscroll, ['loreAbilityId', loreAbilityId]), 'warscrollId')
+            if (size(spellsWarscrollIds)) {
+                warscrollIds = [...warscrollIds, ...spellsWarscrollIds]
+            }
+        }
         _units = unitsSortesByType(filter(map(warscrollIds, warscrollId => find(dataBase.data.warscroll, scroll => scroll.id === warscrollId)), unit => !unit.isSpearhead && (isLegendaryArmies ? true : !unit.isLegends)))
     }
 

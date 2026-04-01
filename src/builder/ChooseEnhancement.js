@@ -6,6 +6,8 @@ import RowImage from '../components/RowImage'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
+import filter from 'lodash/filter'
+import includes from 'lodash/includes'
 
 import Styles from './styles/ChooseEnhancement.module.css'
 
@@ -13,7 +15,7 @@ const dataBase = require('../dataBase.json')
 
 const ChooseEnhancement = () => {
     const {
-        data, type, unitIndex, regimentIndex, title, isInfo, isRosterInfo, isAuxiliary, isAdditionalOption, isRoRUnitWithKeyword
+        data, type, unitIndex, regimentIndex, title, isInfo, isRosterInfo, isAuxiliary, isAdditionalOption, isRoRUnitWithKeyword, alliganceId
     } = useLocation().state
     const navigate = useNavigate()
     let _data = data
@@ -39,11 +41,19 @@ const ChooseEnhancement = () => {
     }
     if (type === 'manifestationLore') {
         const lores = data.map(lore => dataBase.data.lore_ability.filter((item) => item.loreId === lore?.id))
-        const units = map(lores, lore => {
-            const warscrollIds = map(lore, spell => {
-                const warscrollId = find(dataBase.data.lore_ability_linked_warscroll, ['loreAbilityId', spell.id])?.warscrollId
-                return warscrollId
-            })
+        const isArmyOfRenown = find(dataBase.data.faction_keyword, ['id', alliganceId])?.armyOfRenown
+        const units = map(lores, (lore, index) => {
+            let warscrollIds = []
+            if (isArmyOfRenown && index === 0) {
+                const loreId = find(dataBase.data.lore, lore => lore.factionId === alliganceId && includes(lore.name, 'Manifestation'))?.id
+                const loreAbilityId = find(dataBase.data.lore_ability, ['loreId', loreId])?.id
+                warscrollIds = map(filter(dataBase.data.lore_ability_linked_warscroll, ['loreAbilityId', loreAbilityId]), 'warscrollId')
+            } else {
+                warscrollIds = map(lore, spell => {
+                    const warscrollId = find(dataBase.data.lore_ability_linked_warscroll, ['loreAbilityId', spell.id])?.warscrollId
+                    return warscrollId
+                })
+            }
             return map(warscrollIds, id => find(dataBase.data.warscroll, ['id', id]))
         })
         _data = data.map((lore, index) => {

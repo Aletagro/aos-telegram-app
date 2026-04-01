@@ -103,7 +103,7 @@ const Army = () => {
         key={item.title}
         title={item.title}
         navigateTo={item.screen || 'armyInfo'}
-        state={{allegiance: _allegiance, info: item}}
+        state={{allegiance: _allegiance, info: item, isArmyOfRenown}}
     />
 
     const renderBuilderRow = () => <Row

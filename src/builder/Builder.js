@@ -159,7 +159,7 @@ const Builder = () => {
             const terrain = data.find(terrain => terrain.name === roster.factionTerrain)
             navigate('/warscroll', {state: {unit: terrain, title: terrain.name}})
         } else {
-            navigate('/chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo}})
+            navigate('/chooseEnhancement', {state: {title: name, data, type, isRosterInfo: true, isInfo, alliganceId: _alliganceId}})
         }
     }
 

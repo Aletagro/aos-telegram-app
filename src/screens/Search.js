@@ -105,8 +105,12 @@ const Search = () => {
         state={{allegiance}}
     />
 
-    const renderAbility = (ability) =>
-        <Ability key={ability.id} ability={ability} />
+    const renderAbility = (ability) => <Ability
+        key={ability.id}
+        ability={ability}
+        abilityKeywordsName='ability_keyword'
+        abilityIdName='abilityId'
+    />
 
     const renderAccordion = (type, renderItem) => <Accordion
         key={type}
@@ -116,7 +120,7 @@ const Search = () => {
         expanded={search.expand[type]}
         onChangeExpand={handleChangeExpand}
     />
-
+    console.log(search.Abilities)
     return <>
         <div id={Styles.container}>
             <input id={Styles.input} onChange={handleChange} autoFocus placeholder='Start Typing' type='search' name='search' size={40} />
