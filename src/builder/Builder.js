@@ -265,13 +265,15 @@ const Builder = () => {
             state={{unit}}
         />
 
-    const renderManifestation = (manifestation) => <Row
-        key={manifestation.id}
-        title={manifestation.name}
-        image={manifestation.rowImage}
-        navigateTo='warscroll'
-        state={{unit: manifestation, allegianceId: _alliganceId}}
-    />
+    const renderManifestation = (manifestation) => manifestation
+        ? <Row
+            key={manifestation.id}
+            title={manifestation.name}
+            image={manifestation.rowImage}
+            navigateTo='warscroll'
+            state={{unit: manifestation, allegianceId: _alliganceId}}
+        />
+        : null
 
     const renderEnhancementPoints = (type) => {
         switch (type) {
