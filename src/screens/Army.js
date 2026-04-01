@@ -119,6 +119,12 @@ const Army = () => {
         onClick={handleClickLists}
     />
 
+    const renderUnitKeywordsRow = () => <Row
+        title='Units Keywords'
+        navigateTo='keywords'
+        state={{keywords: Constants.unitKeywords[_allegiance.name]?.sort(), alliganceId: _allegiance.id}}
+    />
+
     const renderAddendas = () => <Row
         title={addendas.name}
         navigateTo='ruleChapters'
@@ -140,6 +146,10 @@ const Army = () => {
             {map(items, renderRow)}
             {renderBuilderRow()}
             {renderListsRow()}
+            {size(Constants.unitKeywords[_allegiance.name])
+                ? renderUnitKeywordsRow()
+                : null
+            }
             {addendas && renderAddendas()}
             {armyOfRenown.length > 0
                 ? <div>
