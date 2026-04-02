@@ -5,6 +5,7 @@ import {roster} from '../utilities/appState'
 import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
+import keys from 'lodash/keys'
 import find from 'lodash/find'
 import last from 'lodash/last'
 import uniq from 'lodash/uniq'
@@ -14,8 +15,12 @@ import isEmpty from 'lodash/isEmpty'
 import indexOf from 'lodash/indexOf'
 import forEach from 'lodash/forEach'
 import replace from 'lodash/replace'
+import trimEnd from 'lodash/trimEnd'
 import includes from 'lodash/includes'
+import endsWith from 'lodash/endsWith'
+import startCase from 'lodash/startCase'
 import lowerCase from 'lodash/lowerCase'
+import capitalize from 'lodash/capitalize'
 import startsWith from 'lodash/startsWith'
 
 const dataBase = require('../dataBase.json')
@@ -395,14 +400,14 @@ export const replaceAsterisks = (string) => {
     if (string) {
         let newString = replace(string, /(\*\*\*(.*?)\*\*\*)|(\*\*(.*?)\*\*)|(\*(.*?)\*)/g, (match, p1, p2, p3, p4, p5, p6) => {
             if (p1) {
-                return `<b><i>${p2}</i></b>`;
+                return `<b><i>${p2}</i></b>`
             } else if (p3) {
-                return `<b>${p4}</b>`;
+                return `<b>${p4}</b>`
             } else if (p5) {
-                return `<i>${p6}</i>`;
+                return `<i>${p6}</i>`
             }
-            return match; // На случай, если ничего не подошло
-        });
+            return match // На случай, если ничего не подошло
+        })
         if (includes(newString, '<')) {
             return parse(newString)
         } else {
@@ -416,9 +421,141 @@ export const removeAsterisks = (string) => replace(string, /\*/g, '')
 
 export const replaceQuotation = (string) => replace(string, '’', "'")
 
+export const findKeywords = (string) => {
+    if (string) {
+        const regex = /(non-)?\*\*([А-ЯA-Z\s-]+)\*\*/g
+        return [...string.matchAll(regex)].map(match => {
+            const prefix = match[1] || ''
+            const content = match[2].trim()
+            return prefix + content
+        })
+    }
+    return []
+}
+
+export const findKeywordsInAbility = (ability) => {
+    const keywords = uniq([...findKeywords(ability.declare), ...findKeywords(ability.usedBy), ...findKeywords(ability.effect)])
+    return filter(keywords, keyword => !includes(Constants.hiddenKeywords, keyword))
+}
+
+export const findKeywordInString = (string, keywords) => {
+    const cleanText = string.replace(/^non-/i, '')
+    const foundKeywords = []
+    for (const keyword of keywords) {
+        const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        const regex = new RegExp(`\\b${escapedKeyword}\\b`, 'i')
+        if (regex.test(cleanText)) {
+            foundKeywords.push(keyword)
+        }
+    }
+    return foundKeywords
+}
+
+export const removePrefix = (string, prefix) => {
+    const escapedPrefix = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const regex = new RegExp(`^${escapedPrefix}\\s+`, 'i')
+    return replace(string, regex, '').trim()
+}
+
+export const setKeywordInfo = (keyword) => {
+    let _keyword = keyword
+    let additionKeywords = []
+    let isNon = false
+    let factionKeyword
+    const generalKeywords = findKeywordInString(keyword, Constants.generalKeywords)
+    if (size(generalKeywords)) {
+        if (includes(keyword, 'non')) {
+            _keyword = replace(_keyword, 'non-', '')
+            isNon = true
+        }
+        forEach(generalKeywords, generalKeyword => {
+            _keyword = replace(_keyword, generalKeyword, '').trim()
+        })
+        // Проверяем осталось ли что-то от кейворда вообще, если нет, то возвращаем
+        if (_keyword) {
+            additionKeywords = map(generalKeywords, generalKeyword => {
+                if (generalKeyword === 'HEROES') {
+                    return 'Hero'
+                }
+                if (generalKeyword === 'WIZARDS') {
+                    return 'Wizard'
+                }
+                if (generalKeyword === 'MONSTERS') {
+                    return 'Monster'
+                }
+                return capitalize(generalKeyword)
+            })
+        } else {
+            _keyword = keyword
+        }
+    }
+    _keyword = capitalize(_keyword)
+    let keywordId = find(dataBase.data.keyword, ({name}) => lowerCase(name) === lowerCase(_keyword))?.id
+    if (!keywordId) {
+        factionKeyword = findKeywordInString(_keyword, keys(Constants.unitKeywords))?.[0]
+        if (factionKeyword) {
+            _keyword = capitalize(removePrefix(_keyword, factionKeyword))
+            keywordId = find(dataBase.data.keyword, ['name', _keyword])?.id
+        }
+    }
+    if (endsWith(_keyword, 's') && (startsWith(_keyword, 'Wizard') || startsWith(_keyword, 'Priest') || startsWith(_keyword, 'Noble') || startsWith(_keyword, 'Abhorrant') ||  startsWith(_keyword, 'Skyvessel'))) {
+        _keyword = trimEnd(_keyword, 's')
+        keywordId = find(dataBase.data.keyword, ['name', _keyword])?.id
+    }
+    let warscrollIds = filter(dataBase.data.warscroll_keyword, ['keywordId', keywordId])
+    const units = filter(map(warscrollIds, ({warscrollId}) => find(dataBase.data.warscroll, ['id', warscrollId])), unit => {
+        if (factionKeyword && !includes(unit.referenceKeywords, factionKeyword)) {
+            return false
+        }
+        if (size(additionKeywords)) {
+            let isDelete = false
+            forEach(additionKeywords, (additionKeyword, index) => {
+                let _additionKeyword = additionKeyword
+                if (endsWith(additionKeyword, 's') && (startsWith(additionKeyword, 'Wizard') || startsWith(additionKeyword, 'Priest'))) {
+                    _additionKeyword = trimEnd(_additionKeyword, 's')
+                }
+                const isIncluded = includes(unit.referenceKeywords, _additionKeyword)
+                if (index === 0 && isNon) {
+                    if (isIncluded) {
+                        isDelete = true
+                    }
+                } else if (!isIncluded) {
+                    isDelete = true
+                }
+            })
+            if (isDelete) {
+                return false
+            }
+        }
+        return !unit.isSpearhead && !unit.isLegends
+    })
+    if (size(units)) {
+        return {type: 'units', params: {units, title: _keyword}}
+    }
+    const ability = find(dataBase.data.ability, ({name}) => lowerCase(name) === lowerCase(_keyword))
+    if (ability) {
+        return {type: 'ability', ability}
+    }
+    const unit = find(dataBase.data.warscroll, warscroll => lowerCase(warscroll.name) === lowerCase(_keyword))
+    if (unit) {
+        return {type: 'warscroll', params: {unit, title: startCase(_keyword)}}
+    }
+    if (factionKeyword) {
+        const allegiance = find(dataBase.data.faction_keyword, ['name', factionKeyword])
+        return {type: 'faction', params: {
+            allegiance,
+            title: factionKeyword,
+            includedKeywords: isNon && size(additionKeywords) === 1
+                ? []
+                : additionKeywords,
+            excludedKeywords: isNon ? [last(additionKeywords)] : []
+        }}
+    }
+}
+
 export const randomFromInterval = (min, max) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
 export const getScoreParams = (battleplan) => {
     const data = find(Constants.battleplans, _battleplan => _battleplan.id === battleplan.id)
