@@ -22,7 +22,7 @@ const Warscroll = () => {
     window.scrollTo(0, 0)
     const [modalData, setModalData] = useState({visible: false, title: '', text: ''})
     const navigate = useNavigate()
-    const {unit, allegianceId} = useLocation().state
+    const {unit} = useLocation().state
     const weapons = filter(dataBase.data.warscroll_weapon, weapon => weapon.warscrollId === unit.id)
     const meleeWeapons = filter(weapons, weapon => weapon.type === 'melee')
     const rangeWeapons = filter(weapons, weapon => weapon.type === 'ranged')
@@ -33,12 +33,12 @@ const Warscroll = () => {
     if (isManifestation) {
         const loreAbilityId = find(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])?.loreAbilityId
         manifestationInfo = find(dataBase.data.lore_ability, ['id', loreAbilityId])
-        const lore = find(dataBase.data.lore , ['id', manifestationInfo?.loreId])
-        // нужно для того, чтобы правильно показывать абилку у спеллов орков и в аорах
-        if (lore?.factionId) {
-            const loreId = find(dataBase.data.lore , lore => lore.factionId === allegianceId && includes(lore.name, 'Manifestation'))?.id
-            manifestationInfo = find(dataBase.data.lore_ability, ability => ability.id === loreAbilityId && (loreId ? ability.loreId === loreId : true))
-        }
+        // // нужно для того, чтобы правильно показывать абилку у спеллов орков и в аорах
+        // const lore = find(dataBase.data.lore , ['id', manifestationInfo?.loreId])
+        // if (lore?.factionId) {
+        //     const loreId = find(dataBase.data.lore , lore => lore.factionId === allegianceId && includes(lore.name, 'Manifestation'))?.id
+        //     manifestationInfo = find(dataBase.data.lore_ability, ability => ability.id === loreAbilityId && (loreId ? ability.loreId === loreId : true))
+        // }
     }
     const characteristics = [
         {value: unit.move, title: 'Move'},

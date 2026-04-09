@@ -67,7 +67,7 @@ const Constants = {
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
             includesTexts: ['Lore of', 'Spell Lore', 'Arcane'],
-            excludedTexts: ['Lore of the Abyss', 'Lore of Virulence']
+            excludedTexts: ['Lore of the Abyss', 'Lore of Virulence', 'Lore of the Spirit-Song']
         },
         {
             title: 'Prayer Lores',
@@ -77,7 +77,7 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts', 'Lore of Virulence']
+            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song']
         }
     ],
     spearheadArmyEnhancements: [
@@ -546,6 +546,8 @@ const Constants = {
     ],
     orderAoRs: [
         'The Croneseer’s Pariahs',
+        'Zainthar Kai',
+        'Champions of the Arena',
         'Lofnir Drothkeepers',
         'Wardens of the Chorrileum',
         'The First Phalanx of Ionrach',
@@ -556,6 +558,8 @@ const Constants = {
         'Ruination Brotherhood',
         'Heroes of the First-Forged',
         'The Evergreen Hunt',
+        'Lords of the Clan',
+        'Soulpod Guardians',
         'Vanari Paragons',
         'Aelementiri Conclave'
     ],
@@ -610,17 +614,17 @@ const Constants = {
         "Ogor Mawtribes": ['Gutbusters', 'Beastclaw Raiders'],
         "Sons of Behemat": [],
         'Cities of Sigmar': ['Human', 'Aelf', 'Duardin'],
-        'Daughters of Khaine': ['Melusai', 'Aelf'],
+        'Daughters of Khaine': ['Aelf'],
         'Fyreslayers': ['Magmadroth'],
         'Idoneth Deepkin': ['Akhelian', 'Eidolon', 'Isharann', 'Namarti'],
         'Kharadron Overlords': ['Skyfarer', 'Skyvessel', 'Auto-Endrin'],
         'Lumineth Realm-lords': ['Alarith', 'Vanari', 'Scinari', 'Hurakan', 'Ydrilan'],
         'Seraphon': ['Slann', 'Skink', 'Saurus', 'Kroxigor'],
         'Stormcast Eternals': ['Extremis Chamber', 'Warrior Chamber', 'Ruination Chamber', 'Vanguard Chamber'],
-        'Sylvaneth': ['Kurnothi']
+        'Sylvaneth': ['Kurnothi', 'Forest Elder', 'Revenant']
     },
     generalKeywords: ['HERO', 'HEROES', 'INFANTRY', 'MONSTER', 'MONSTERS', 'CAVALRY', 'BEAST', 'WAR MACHINE', 'MANIFESTATION', 'WIZARD', 'WIZARDS', 'PRIEST', 'PRIESTS', 'UNIQUE', 'FLY', 'WARFLOCK', 'HOBGROT', 'SKRYRE'],
-    hiddenKeywords: ['', 'CORE', 'non-CORE', 'ATTACK', 'RAMPAGE', 'HERO', 'HEROES', 'non-HERO', 'non-HERO INFANTRY', 'UNIQUE', 'MONSTER', 'MONSTERS', 'non-MONSTER', 'INFANTRY', 'CAVALRY', 'BEAST', 'BEASTS', 'WAR MACHINE', 'MANIFESTATION', 'MANIFESTATIONS', 'SPELL', 'SPELLS', 'PRAYER', 'PRAYERS', 'X', 'WIZARD', 'WIZARDS', 'PRIEST', 'PRIESTS', 'FACTION TERRAIN', 'non-FACTION TERRAIN', 'STRIKE-LAST', 'STRIKE-FIRST', 'UNLIMITED', 'BLOOD TITHE', 'MOVE', 'SUMMON', 'SUMMON SPELL', 'non-SUMMON SPELL', 'BANISH', 'FLY', 'non-FLY', 'BURNING', 'EUPHORIC', 'non-EUPHORIC', 'HOBGROT', 'DISEASED', 'DELUSION', 'SENTENCED', 'non-UNIQUE DEATH', 'DEATH', 'UR-GOLD RUNE', 'TIDAL', 'IDONETH DEEPKIN MANIFESTATIONS', 'FLAGSHIP', 'AELSLING', 'ASTERISM', 'SACROSANCT CHAMBER', 'SOULBURNED', 'HUNTED', 'non-KURNOTHI', 'DESTRUCTION HERO'],
+    hiddenKeywords: ['', 'CORE', 'non-CORE', 'ATTACK', 'RAMPAGE', 'HERO', 'HEROES', 'non-HERO', 'non-HERO INFANTRY', 'UNIQUE', 'MONSTER', 'MONSTERS', 'non-MONSTER', 'INFANTRY', 'CAVALRY', 'BEAST', 'BEASTS', 'WAR MACHINE', 'MANIFESTATION', 'MANIFESTATIONS', 'SPELL', 'SPELLS', 'PRAYER', 'PRAYERS', 'X', 'WIZARD', 'WIZARDS', 'PRIEST', 'PRIESTS', 'FACTION TERRAIN', 'non-FACTION TERRAIN', 'STRIKE-LAST', 'STRIKE-FIRST', 'UNLIMITED', 'BLOOD TITHE', 'MOVE', 'SUMMON', 'SUMMON SPELL', 'non-SUMMON SPELL', 'BANISH', 'FLY', 'non-FLY', 'BURNING', 'EUPHORIC', 'non-EUPHORIC', 'HOBGROT', 'DISEASED', 'DELUSION', 'SENTENCED', 'non-UNIQUE DEATH', 'DEATH', 'UR-GOLD RUNE', 'TIDAL', 'IDONETH DEEPKIN MANIFESTATIONS', 'FLAGSHIP', 'AELSLING', 'ASTERISM', 'SACROSANCT CHAMBER', 'SOULBURNED', 'HUNTED', 'non-KURNOTHI', 'DESTRUCTION HERO', 'EXALTED'],
     myTgId: 530569849,
     developersIds: [
         530569849, // Я

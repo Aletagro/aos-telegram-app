@@ -26,8 +26,8 @@ import Styles from './styles/Builder.module.css'
 const dataBase = require('../dataBase.json')
 
 const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
-const spellsExcludedTexts = ['Lore of the Abyss', 'Lore of Virulence']
-const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts', 'Lore of Virulence']
+const spellsExcludedTexts = ['Lore of the Abyss', 'Lore of Virulence', 'Lore of the Spirit-Song']
+const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song']
 const pointsLimits = ['1000', '1500', '2000', '2500', '3000']
 
 const emptyRegiment = {

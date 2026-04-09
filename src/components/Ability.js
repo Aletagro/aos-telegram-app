@@ -49,7 +49,7 @@ ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), 
     const handlleClickUsedKeyword = (keyword) => (e) => {
         e.stopPropagation()
         const data = setKeywordInfo(keyword)
-        switch (data.type) {
+        switch (data?.type) {
             case 'units':
                 navigate(`/units`, {state: data.params})
                 break
