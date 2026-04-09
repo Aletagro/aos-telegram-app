@@ -59352,7 +59352,7 @@
       },
       {
         "id": "f014c909-2d80-4c6d-89a0-f0be2d2b977c",
-        "text": "Any **OSSIARCH B0NEREAPERS INFANTRY** units",
+        "text": "Any **OSSIARCH BONEREAPERS INFANTRY** units",
         "indent": 0,
         "displayOrder": 3,
         "ruleContainerComponentId": "46c06daa-a17c-4e7c-aa2b-79cd0a51c265"
@@ -112228,7 +112228,7 @@
         "lore": "This talisman contains the siphoned intellects of many esteemed martial leaders distilled into a single black gemstone, which bestows upon the bearer the knowledge of a thousand battles. Such military acumen ensures any troops under their command will act with supreme precision on the battlefield.",
         "declare": null,
         "usedBy": null,
-        "effect": "No mortal damage is inflicted on friendly **OSSIARCH B0NEREAPERS** units by **RETREAT** abilities while they are wholly within 12\" of this unit.",
+        "effect": "No mortal damage is inflicted on friendly **OSSIARCH BONEREAPERS** units by **RETREAT** abilities while they are wholly within 12\" of this unit.",
         "image": null,
         "altText": null,
         "subsectionName": null,
