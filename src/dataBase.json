@@ -131635,10 +131635,6 @@
         "warscrollId": "88a719db-4b91-4716-8412-568f9cc9aa72"
       },
       {
-        "loreAbilityId": "706f1e85-770e-4699-97fb-46edf33e81e0",
-        "warscrollId": "da9db9bc-604a-4973-961e-8d1bac36bec0"
-      },
-      {
         "loreAbilityId": "7359f1a3-9ecf-48ec-bd2c-e9bb9f49fee7",
         "warscrollId": "0881d4d1-88e7-4869-95f4-cf7ce0ba268b"
       },
@@ -131649,10 +131645,6 @@
       {
         "loreAbilityId": "74c44843-d9d4-470c-a2c0-701a5e2372b2",
         "warscrollId": "88a719db-4b91-4716-8412-568f9cc9aa72"
-      },
-      {
-        "loreAbilityId": "74c44843-d9d4-470c-a2c0-701a5e2372b2",
-        "warscrollId": "da9db9bc-604a-4973-961e-8d1bac36bec0"
       },
       {
         "loreAbilityId": "75f95506-889f-4077-ad02-7e16da5f651e",
@@ -131712,6 +131704,14 @@
       },
       {
         "loreAbilityId": "96165595-53ac-44bd-aa28-862ddfd68835",
+        "warscrollId": "da9db9bc-604a-4973-961e-8d1bac36bec0"
+      },
+      {
+        "loreAbilityId": "74c44843-d9d4-470c-a2c0-701a5e2372b2",
+        "warscrollId": "da9db9bc-604a-4973-961e-8d1bac36bec0"
+      },
+      {
+        "loreAbilityId": "706f1e85-770e-4699-97fb-46edf33e81e0",
         "warscrollId": "da9db9bc-604a-4973-961e-8d1bac36bec0"
       },
       {
