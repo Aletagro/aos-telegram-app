@@ -128,7 +128,6 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
 
     const handleSaveList = async () => {
         setIsDisableSaveButton(true)
-        console.log('handleSaveList', isDisableSaveButton)
         const data = {
             name: listName,
             allegiance: roster.allegiance,
@@ -152,34 +151,34 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
             is_public: isListPublic,
             note: roster.id && roster.note ? JSON.stringify({...JSON.parse(roster.note), noteText: roster.noteText, wounds, drops}) : JSON.stringify({...roster.note, noteText: roster.noteText, wounds, drops}),
         }
-        // try {
-        //     if (roster.id && !saveAsNew) {
-        //         await fetch(`https://aoscom.online/rosters_db/update_roster?roster_id=${roster.id}`, {
-        //             method: 'PUT',
-        //             body: JSON.stringify(data),
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'Accept': "application/json, text/javascript, /; q=0.01"
-        //             }
-        //         })
-        //     } else {
-        //         await fetch('https://aoscom.online/rosters_db/new_roster', {
-        //             method: 'POST',
-        //             body: JSON.stringify(data),
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 'Accept': "application/json, text/javascript, /; q=0.01"
-        //             }
-        //         })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             roster.id = get(data, 'roster_id')
-        //         })
-        //         .catch(error => console.error(error))
-        //     }
-        // } catch (err) {
-        //     console.error(err.message)
-        // }
+        try {
+            if (roster.id && !saveAsNew) {
+                await fetch(`https://aoscom.online/rosters_db/update_roster?roster_id=${roster.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': "application/json, text/javascript, /; q=0.01"
+                    }
+                })
+            } else {
+                await fetch('https://aoscom.online/rosters_db/new_roster', {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': "application/json, text/javascript, /; q=0.01"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    roster.id = get(data, 'roster_id')
+                })
+                .catch(error => console.error(error))
+            }
+        } catch (err) {
+            console.error(err.message)
+        }
         handleCloseModal()
         toast.success('List Saved', Constants.toastParams)
     }
