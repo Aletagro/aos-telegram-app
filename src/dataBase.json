@@ -137336,7 +137336,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Hero, War Machine, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Hero, War Machine, Order, Cities of Sigmar, Sigmarite",
         "move": "8\"",
         "save": "2+",
         "control": "5",
@@ -141340,7 +141340,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Cavalry, Champion, Standard Bearer (1/5), Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Cavalry, Champion, Standard Bearer (1/5), Order, Cities of Sigmar, Sigmarite",
         "move": "10\"",
         "save": "3+",
         "control": "1",
@@ -142348,7 +142348,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Unique, Infantry, Champion, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Infantry, Champion, Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "6+",
         "control": "1",
@@ -145148,7 +145148,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": true,
         "hiddenFromBattleProfiles": true,
-        "referenceKeywords": "Unique, Hero, Infantry, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Hero, Infantry, Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "3+",
         "control": "2",
@@ -148032,7 +148032,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": true,
         "hiddenFromBattleProfiles": true,
-        "referenceKeywords": "Unique, Hero, Wizard (1), Infantry, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Hero, Wizard (1), Infantry, Order, Cities of Sigmar, Sigmarite",
         "move": "6\"",
         "save": "5+",
         "control": "2",
@@ -152008,7 +152008,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Unique, Infantry, Champion, Ward (5+), Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Infantry, Champion, Ward (5+), Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "5+",
         "control": "1",
@@ -155060,7 +155060,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": true,
         "hiddenFromBattleProfiles": true,
-        "referenceKeywords": "Unique, Hero, Wizard (1), Infantry, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Hero, Wizard (1), Infantry, Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "6+",
         "control": "2",
@@ -156992,7 +156992,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": true,
         "hiddenFromBattleProfiles": true,
-        "referenceKeywords": "Unique, Hero, Infantry, Ward (6+), Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Hero, Infantry, Ward (6+), Order, Cities of Sigmar, Sigmarite",
         "move": "6\"",
         "save": "5+",
         "control": "2",
@@ -159568,7 +159568,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Hero, War Machine, Wizard (1), Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Hero, War Machine, Wizard (1), Order, Cities of Sigmar, Sigmarite",
         "move": "8\"",
         "save": "4+",
         "control": "5",
@@ -165252,7 +165252,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": true,
         "hiddenFromBattleProfiles": true,
-        "referenceKeywords": "Unique, Hero, Infantry, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Hero, Infantry, Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "3+",
         "control": "2",
@@ -168808,7 +168808,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "War Machine, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "War Machine, Order, Cities of Sigmar, Sigmarite",
         "move": "8\"",
         "save": "4+",
         "control": "5",
@@ -169536,7 +169536,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Hero, War Machine, Wizard (1), Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Hero, War Machine, Wizard (1), Order, Cities of Sigmar, Sigmarite",
         "move": "8\"",
         "save": "4+",
         "control": "5",
@@ -169648,7 +169648,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Unique, Hero, Priest (2), Infantry, Ward (4+), Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Unique, Hero, Priest (2), Infantry, Ward (4+), Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "5+",
         "control": "2",
@@ -169704,7 +169704,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "War Machine, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "War Machine, Order, Cities of Sigmar, Sigmarite",
         "move": "8\"",
         "save": "4+",
         "control": "5",
@@ -169732,7 +169732,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Hero, Monster, Fly, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Hero, Monster, Fly, Order, Cities of Sigmar, Sigmarite",
         "move": "12\"",
         "save": "4+",
         "control": "5",
@@ -169956,7 +169956,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Infantry, Champion, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Infantry, Champion, Order, Cities of Sigmar, Sigmarite",
         "move": "6\"",
         "save": "6+",
         "control": "1",
@@ -169984,7 +169984,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Hero, Monster, Wizard (1), Fly, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Hero, Monster, Wizard (1), Fly, Order, Cities of Sigmar, Sigmarite",
         "move": "12\"",
         "save": "4+",
         "control": "5",
@@ -170460,7 +170460,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "War Machine, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "War Machine, Order, Cities of Sigmar, Sigmarite",
         "move": "8\"",
         "save": "2+",
         "control": "5",
@@ -170600,7 +170600,7 @@
         "hiddenFromReference": false,
         "hiddenFromStormForge": false,
         "hiddenFromBattleProfiles": false,
-        "referenceKeywords": "Hero, Wizard (1), Infantry, Order, Cities of Sigmar, Human",
+        "referenceKeywords": "Hero, Wizard (1), Infantry, Order, Cities of Sigmar, Sigmarite",
         "move": "5\"",
         "save": "6+",
         "control": "2",
@@ -190022,7 +190022,7 @@
       },
       {
         "warscrollId": "e56d194c-6827-4678-800f-dbec3684cd3f",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "030c21bd-104f-4b90-ba7d-60eb9f014b5e",
@@ -190342,7 +190342,7 @@
       },
       {
         "warscrollId": "b872f515-bb69-41aa-bc11-fd5a67b231ef",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "b872f515-bb69-41aa-bc11-fd5a67b231ef",
@@ -190382,7 +190382,7 @@
       },
       {
         "warscrollId": "185ed666-154a-4b5c-ada3-cc0d5f976f07",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "185ed666-154a-4b5c-ada3-cc0d5f976f07",
@@ -190566,7 +190566,7 @@
       },
       {
         "warscrollId": "050713ea-9152-43aa-bc34-d6cee274d2c1",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "09ab2f3f-b533-4bb0-a826-bfc44698e761",
@@ -192806,7 +192806,7 @@
       },
       {
         "warscrollId": "2990531f-fee4-46cc-9250-bf9f92d66cce",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "2990531f-fee4-46cc-9250-bf9f92d66cce",
@@ -193446,7 +193446,7 @@
       },
       {
         "warscrollId": "30170cb3-4078-4286-b7e5-cebbc74e3f2b",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "30170cb3-4078-4286-b7e5-cebbc74e3f2b",
@@ -193858,7 +193858,7 @@
       },
       {
         "warscrollId": "4f3a937e-f9af-4dbe-b6d2-e83ce05b4f66",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "4f3a937e-f9af-4dbe-b6d2-e83ce05b4f66",
@@ -194934,7 +194934,7 @@
       },
       {
         "warscrollId": "47ffb09b-2ca6-4b70-8fc0-2bc5ad2aacad",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "47ffb09b-2ca6-4b70-8fc0-2bc5ad2aacad",
@@ -196386,7 +196386,7 @@
       },
       {
         "warscrollId": "07893819-22ee-4c62-984b-cfd7d699d42e",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "07893819-22ee-4c62-984b-cfd7d699d42e",
@@ -196526,7 +196526,7 @@
       },
       {
         "warscrollId": "5f5d3e24-3a58-4706-8842-203b5929fe27",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "5f5d3e24-3a58-4706-8842-203b5929fe27",
@@ -198798,7 +198798,7 @@
       },
       {
         "warscrollId": "80381ab8-2a7a-43a1-964e-bea1688a962c",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "80381ab8-2a7a-43a1-964e-bea1688a962c",
@@ -200498,7 +200498,7 @@
       },
       {
         "warscrollId": "98655d83-169d-4259-9dae-fd79bfc75708",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "98655d83-169d-4259-9dae-fd79bfc75708",
@@ -201670,7 +201670,7 @@
       },
       {
         "warscrollId": "a72e6ffb-d620-4964-8e1a-054e638c50b7",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "a72e6ffb-d620-4964-8e1a-054e638c50b7",
@@ -206354,7 +206354,7 @@
       },
       {
         "warscrollId": "e6c777e8-eaf8-454a-9a7b-83a19c9d0a4c",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "e6c777e8-eaf8-454a-9a7b-83a19c9d0a4c",
@@ -208310,7 +208310,7 @@
       },
       {
         "warscrollId": "ffaae771-df5a-4b41-934a-a5f794e94c9b",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "ca15a877-173e-48b1-96f7-2f8b75232085",
@@ -208538,7 +208538,7 @@
       },
       {
         "warscrollId": "a5f4e900-b59d-4648-a931-3762d5d89da4",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "a5f4e900-b59d-4648-a931-3762d5d89da4",
@@ -208614,7 +208614,7 @@
       },
       {
         "warscrollId": "5e2b8828-7f11-411e-89d0-0d5fdce2830e",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "5e2b8828-7f11-411e-89d0-0d5fdce2830e",
@@ -208810,7 +208810,7 @@
       },
       {
         "warscrollId": "e635f1ff-6e2b-493d-a53f-c9670597900d",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "eba57286-6fcb-422d-a7cb-42712a3f1351",
@@ -208998,7 +208998,7 @@
       },
       {
         "warscrollId": "53982959-8889-419e-a9c3-518ac487aae4",
-        "keywordId": "a3332845-0f4a-4338-ab81-6c16fe9b0e88"
+        "keywordId": "94a82b9c-0643-4c6c-9c6e-8b5956ea0ca8"
       },
       {
         "warscrollId": "6c7ca7ee-d096-4e27-8839-347e519baa61",
