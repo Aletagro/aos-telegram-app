@@ -561,7 +561,9 @@ const Constants = {
         'Lords of the Clan',
         'Soulpod Guardians',
         'Vanari Paragons',
-        'Aelementiri Conclave'
+        'Aelementiri Conclave',
+        'The Iron March',
+        'Allies of the Free Cities'
     ],
     tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
     universalCommands: [
