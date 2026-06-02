@@ -44,7 +44,11 @@ const UnitRow = ({
             const requiredKeywordId = find(dataBase.data.ability_group_required_keyword, ['abilityGroupId', otherEnhancement.id])?.keywordId
             requiredOtherEnhancementKeywords.push(find(dataBase.data.keyword, ['id', requiredKeywordId])?.name)
         })
-    } 
+    }
+    let isCogfort = false
+    if (unit.id === '0c632405-8a16-4429-8437-11e6dfdcca1c' || unit.id === '9d0a2d00-22f4-49b3-9c66-af03cefb4b93') {
+        isCogfort = true
+    }
 
     const handleClick = () => {
         if (onClick) {
@@ -117,6 +121,16 @@ const UnitRow = ({
         }
     </button>
 
+    const renderOtherEnhancement = (otherEnhancement, index) => {
+        if (otherEnhancement && includes(unit.referenceKeywords, requiredOtherEnhancementKeywords[index]) && !unit.referenceKeywords?.includes('Unique')) {
+            return renderAdditionalOption(otherEnhancement)
+        } else if (isCogfort && otherEnhancement.name === 'Ironweld Innovations') {
+            return renderAdditionalOption(otherEnhancement)
+        } else {
+            return null
+        }
+    }
+
     const renderChooseWeapon = () => <button id={Styles.chooseEnhancementButton} onClick={handleWeaponOption}>
         Weapon Options
     </button>
@@ -144,7 +158,7 @@ const UnitRow = ({
             {onDelete ? <button id={Styles.button} onClick={handleDelete}><img src={Close} alt="" /></button> : null}
             {isAddUnit ? <button id={Styles.infoButton} onClick={handleClickInfo}><img src={Info} alt="" /></button> : null}
         </div>
-        {isShowEnhancements && !isAddUnit
+        {isShowEnhancements && !isAddUnit && !isCogfort
             ? <div id={Styles.enhancementsContainer}>
                 <button id={Styles.chooseEnhancementButton} onClick={handleChooseEnhancement('Artefacts', 'artefact')}>
                     {unit.artefact ? `Artefact: ${unit.artefact}` : 'Сhoose Artefact'}
@@ -161,10 +175,7 @@ const UnitRow = ({
                 {marksOfChaos ? renderChooseOptionButton(marksOfChaos) : null}
                 {additionalOption ? renderAdditionalOption(additionalOption) : null}
                 {otherWarscrollOption ? renderChooseOptionButton(otherWarscrollOption) : null}
-                {map(otherEnhancements, (otherEnhancement, index) => otherEnhancement && includes(unit.referenceKeywords, requiredOtherEnhancementKeywords[index]) && !unit.referenceKeywords?.includes('Unique')
-                    ? renderAdditionalOption(otherEnhancement)
-                    : null
-                )}
+                {map(otherEnhancements, renderOtherEnhancement)}
             </div>
             : null
         }
