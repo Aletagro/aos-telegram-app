@@ -615,7 +615,7 @@ const Constants = {
         "Kruleboyz": [],
         "Ogor Mawtribes": ['Gutbusters', 'Beastclaw Raiders'],
         "Sons of Behemat": [],
-        'Cities of Sigmar': ['Human', 'Aelf', 'Duardin'],
+        'Cities of Sigmar': ['Human', 'Aelf', 'Duardin', 'Sigmarite'],
         'Daughters of Khaine': ['Aelf'],
         'Fyreslayers': ['Magmadroth'],
         'Idoneth Deepkin': ['Akhelian', 'Eidolon', 'Isharann', 'Namarti'],
