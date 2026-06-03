@@ -72,7 +72,7 @@ const ChooseEnhancement = () => {
             if (!enhancementPoints) {
                 const enhancementName = roster.regimentsOfRenownUnits[unitIndex][type]
                 if (enhancementName) {
-                    enhancementPoints = find(data, ['name', enhancementName])?.points
+                    enhancementPoints = find(data, ['name', enhancementName])?.points || 0
                 }
             }
             if (enhancement.points !== enhancementPoints) {
@@ -93,7 +93,7 @@ const ChooseEnhancement = () => {
             if (!enhancementPoints) {
                 const enhancementName = roster.auxiliaryUnits[unitIndex][type]
                 if (enhancementName) {
-                    enhancementPoints = find(data, ['name', enhancementName])?.points
+                    enhancementPoints = find(data, ['name', enhancementName])?.points || 0
                 }
             }
             if (enhancement.points !== enhancementPoints) {
@@ -114,7 +114,7 @@ const ChooseEnhancement = () => {
             if (!enhancementPoints) {
                 const enhancementName = roster.regiments[regimentIndex].units[unitIndex][type]
                 if (enhancementName) {
-                    enhancementPoints = find(data, ['name', enhancementName])?.points
+                    enhancementPoints = find(data, ['name', enhancementName])?.points || 0
                 }
             }
             if (enhancement.points !== enhancementPoints) {
@@ -192,7 +192,7 @@ const ChooseEnhancement = () => {
             if (!enhancementPoints) {
                 const enhancementName = roster.regimentsOfRenownUnits[unitIndex][type]
                 if (enhancementName) {
-                    enhancementPoints = find(data, ['name', enhancementName])?.points
+                    enhancementPoints = find(data, ['name', enhancementName])?.points || 0
                 }
             }
             if (enhancementPoints) {
@@ -212,7 +212,7 @@ const ChooseEnhancement = () => {
             if (!enhancementPoints) {
                 const enhancementName = roster.auxiliaryUnits[unitIndex][type]
                 if (enhancementName) {
-                    enhancementPoints = find(data, ['name', enhancementName])?.points
+                    enhancementPoints = find(data, ['name', enhancementName])?.points || 0
                 }
             }
             if (enhancementPoints) {
@@ -232,7 +232,7 @@ const ChooseEnhancement = () => {
             if (!enhancementPoints) {
                 const enhancementName = roster.regiments[regimentIndex].units[unitIndex][type]
                 if (enhancementName) {
-                    enhancementPoints = find(data, ['name', enhancementName])?.points
+                    enhancementPoints = find(data, ['name', enhancementName])?.points || 0
                 }
             }
             if (enhancementPoints) {
