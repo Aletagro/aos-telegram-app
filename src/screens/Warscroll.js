@@ -27,7 +27,7 @@ const Warscroll = () => {
     const meleeWeapons = filter(weapons, weapon => weapon.type === 'melee')
     const rangeWeapons = filter(weapons, weapon => weapon.type === 'ranged')
     let abilities = filter(dataBase.data.warscroll_ability, ability => ability.warscrollId === unit.id)
-    const regimentOptions = filter(dataBase.data.warscroll_regiment_option, option => option.warscrollId === unit.id)
+    const regimentOptions = filter(dataBase.data.warscroll_regiment_option, option => option.warscrollId === unit.id && !option.hiddenFromReference)
     const isManifestation = includes(unit.referenceKeywords, 'Manifestation')
     let manifestationInfo = undefined
     if (isManifestation) {
