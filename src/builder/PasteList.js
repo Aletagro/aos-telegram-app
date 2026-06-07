@@ -131,7 +131,7 @@ const PasteList = () => {
         return {
             ..._unit,
             ...unit,
-            isReinforced: _unit.cannotBeReinforced ? false :  _unit.points !== unit.points, 
+            isReinforced: (_unit.cannotBeReinforced || !unit.points) ? false :  _unit.points !== unit.points, 
             modelCount: _unit?.modelCount,
             artefact: unit.Artefact,
             heroicTrait: unit['Heroic Trait'],

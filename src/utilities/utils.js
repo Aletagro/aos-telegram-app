@@ -248,12 +248,17 @@ export const getErrors = (roster) => {
     if (size(roster.requiredUnitsIds)) {
         requiredUnitsIds = uniq(requiredUnitsIds)
         const filteredRequiredUnitsIds = filter(roster.requiredUnitsIds, requiredUnitsId => !includes(requiredUnitsIds, requiredUnitsId))
-        forEach(filteredRequiredUnitsIds, requiredUnitsId => {
-            const unitName = find(dataBase.data.warscroll, ['id', requiredUnitsId])?.name
-            if (unitName) {
-                errors.push(`You must be included ${unitName} in your roster`)
-            }
-        })
+        const needCheck = roster.requiredUnitsLimit
+            ? size(filteredRequiredUnitsIds) > roster.requiredUnitsLimit
+            : true
+        if (needCheck) {
+            forEach(filteredRequiredUnitsIds, requiredUnitsId => {
+                const unitName = find(dataBase.data.warscroll, ['id', requiredUnitsId])?.name
+                if (unitName) {
+                    errors.push(`You must be included ${unitName} in your roster`)
+                }
+            })
+        }
     }
     // В АоРе The Magnate's Crew нельзя иметь Брокка и геройский Айронклад одновременно. И всего один геройскйи Айронклад
     if (roster.allegianceId === '09e28194-8a37-4c3b-aaa5-8aa38bcfd9ac') {

@@ -565,7 +565,7 @@ const Constants = {
         'The Iron March',
         'Allies of the Free Cities'
     ],
-    tacticsCards: ['Attuned to Ghyran', 'Master the Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
+    tacticsCards: ['Attuned to Ghyran', 'Master The Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
     universalCommands: [
         {name: 'Magical Intervention', id: '108d8f93-9216-495e-9245-971f9e74112b'},
         {name: 'Rally', id: '838515df-51c3-458d-b082-8551378e3a63'},

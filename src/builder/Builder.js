@@ -97,6 +97,9 @@ const Builder = () => {
         roster.requiredGeneral = find(dataBase.data.warscroll, ['id', requiredGeneralIds[0].warscrollId])
     }
     roster.requiredUnitsIds = map(filter(dataBase.data.roster_faction_keyword_required_warscroll, ['factionKeywordId', _alliganceId]), 'warscrollId')
+    if (size(roster.requiredUnitsIds) > 1) {
+        roster.requiredUnitsLimit = find(dataBase.data.faction_keyword_restriction_group, ['factionKeywordId', _alliganceId])?.limit
+    }
     if (!roster.grandAlliance) {
         setRosterGrandAlliance(roster.allegiance)
     }
