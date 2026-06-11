@@ -133995,12 +133995,24 @@
         "warscrollId": "6fca9c5e-19c1-4c60-8275-51713260a14d"
       },
       {
-        "loreAbilityId": "1e95be64-6336-41f4-afb5-fa7991e6be17",
+        "loreAbilityId": "453029e1-9e76-4641-98e5-f51c7fc66693",
         "warscrollId": "a6563aa6-ea34-4839-bc97-3751ceea8261"
       },
       {
         "loreAbilityId": "1e95be64-6336-41f4-afb5-fa7991e6be17",
+        "warscrollId": "a6563aa6-ea34-4839-bc97-3751ceea8261"
+      },
+      {
+        "loreAbilityId": "5d96e4c3-7809-4763-9b83-6a70d4424e49",
         "warscrollId": "a89fe005-6fe8-4e79-962f-acf6c05c8487"
+      },
+      {
+        "loreAbilityId": "1e95be64-6336-41f4-afb5-fa7991e6be17",
+        "warscrollId": "a89fe005-6fe8-4e79-962f-acf6c05c8487"
+      },
+      {
+        "loreAbilityId": "86aa3bb3-1135-443f-923c-213e1df0f6c1",
+        "warscrollId": "e7c0920b-17d4-4e5d-b9fa-73d37c5da013"
       },
       {
         "loreAbilityId": "1e95be64-6336-41f4-afb5-fa7991e6be17",
@@ -134039,6 +134051,10 @@
         "warscrollId": "60c7f2f1-404e-4977-a010-038fb7d3fe0e"
       },
       {
+        "loreAbilityId": "969f6951-c251-49f5-a864-d1b00cffdd61",
+        "warscrollId": "bd0c4986-83f1-483e-acd6-79ab07f919fa"
+      },
+      {
         "loreAbilityId": "2e7b7967-c945-4d67-a784-c17532441dd2",
         "warscrollId": "bd0c4986-83f1-483e-acd6-79ab07f919fa"
       },
@@ -134067,8 +134083,16 @@
         "warscrollId": "1f389b58-568d-441c-87ad-6d323459d6ef"
       },
       {
+        "loreAbilityId": "76469906-31ea-4f0c-b6cb-f7421a012ce9",
+        "warscrollId": "1baecb1d-ea09-4153-8296-502af5b08428"
+      },
+      {
         "loreAbilityId": "3cff61e0-6151-43ae-a2f3-6a7660c74d08",
         "warscrollId": "1baecb1d-ea09-4153-8296-502af5b08428"
+      },
+      {
+        "loreAbilityId": "78744860-7829-4540-b319-6bc62de58797",
+        "warscrollId": "5dae3fef-12cd-4189-9626-47a0e6440b6e"
       },
       {
         "loreAbilityId": "3cff61e0-6151-43ae-a2f3-6a7660c74d08",
@@ -134099,10 +134123,6 @@
         "warscrollId": "dc8a5718-de41-4c64-9d75-f088be43749e"
       },
       {
-        "loreAbilityId": "453029e1-9e76-4641-98e5-f51c7fc66693",
-        "warscrollId": "a6563aa6-ea34-4839-bc97-3751ceea8261"
-      },
-      {
         "loreAbilityId": "45c9cbfc-1e6a-422a-84e2-7a78db439c62",
         "warscrollId": "ed9db579-64fc-4675-9bef-4058f425ea66"
       },
@@ -134123,8 +134143,16 @@
         "warscrollId": "11f165d4-5077-4145-927a-2a276f02b68f"
       },
       {
+        "loreAbilityId": "50d60241-751b-450c-a46d-144e89851683",
+        "warscrollId": "4cefa477-9922-4ebf-b454-2ccea8ae55e3"
+      },
+      {
         "loreAbilityId": "4992c9af-f1ca-4a7e-88bf-efa0dbdf9a29",
         "warscrollId": "4cefa477-9922-4ebf-b454-2ccea8ae55e3"
+      },
+      {
+        "loreAbilityId": "ae693e0a-6ae1-4340-8bb4-595c0184fa13",
+        "warscrollId": "a99a117d-e816-4a4c-8dca-0e4e6060c196"
       },
       {
         "loreAbilityId": "4992c9af-f1ca-4a7e-88bf-efa0dbdf9a29",
@@ -134135,8 +134163,8 @@
         "warscrollId": "88a719db-4b91-4716-8412-568f9cc9aa72"
       },
       {
-        "loreAbilityId": "50d60241-751b-450c-a46d-144e89851683",
-        "warscrollId": "4cefa477-9922-4ebf-b454-2ccea8ae55e3"
+        "loreAbilityId": "b70a3006-5681-4c64-8d35-72dd268c4d83",
+        "warscrollId": "0a01b580-8b4b-4989-bd1c-4e29a70d9a55"
       },
       {
         "loreAbilityId": "52f5e2e4-76b6-4ee6-aebc-0dc703ca8986",
@@ -134163,10 +134191,6 @@
         "warscrollId": "0881d4d1-88e7-4869-95f4-cf7ce0ba268b"
       },
       {
-        "loreAbilityId": "5d96e4c3-7809-4763-9b83-6a70d4424e49",
-        "warscrollId": "a89fe005-6fe8-4e79-962f-acf6c05c8487"
-      },
-      {
         "loreAbilityId": "613120da-27cf-403a-ab16-ab01da217540",
         "warscrollId": "effe32d7-ee64-4a7a-8edc-bfeaf32b9ba1"
       },
@@ -134187,6 +134211,10 @@
         "warscrollId": "2e7d5c2e-aa1f-4252-a63e-2eb49802d441"
       },
       {
+        "loreAbilityId": "c7be60e5-2c61-49bd-a267-4354fbed25f4",
+        "warscrollId": "86a07ddc-46c5-4e1b-a75b-bc0f4cddc71c"
+      },
+      {
         "loreAbilityId": "6ba0726d-9301-43f6-aa02-5058bcab7512",
         "warscrollId": "86a07ddc-46c5-4e1b-a75b-bc0f4cddc71c"
       },
@@ -134197,6 +134225,10 @@
       {
         "loreAbilityId": "6e94ceb3-0c67-4315-84d6-6740ad3e5d24",
         "warscrollId": "eed073c7-9c3b-4cc1-8ca0-76c15281b851"
+      },
+      {
+        "loreAbilityId": "cc58e854-ca11-4711-a1ea-ab4c06d4ad38",
+        "warscrollId": "0abc2bdc-fba5-4cf1-866a-37789cdd90ec"
       },
       {
         "loreAbilityId": "706f1e85-770e-4699-97fb-46edf33e81e0",
@@ -134231,24 +134263,12 @@
         "warscrollId": "0a01b580-8b4b-4989-bd1c-4e29a70d9a55"
       },
       {
-        "loreAbilityId": "76469906-31ea-4f0c-b6cb-f7421a012ce9",
-        "warscrollId": "1baecb1d-ea09-4153-8296-502af5b08428"
-      },
-      {
-        "loreAbilityId": "78744860-7829-4540-b319-6bc62de58797",
-        "warscrollId": "5dae3fef-12cd-4189-9626-47a0e6440b6e"
-      },
-      {
         "loreAbilityId": "7b61f617-d67b-4be0-8a1d-baf497e75725",
         "warscrollId": "14742ee9-e104-465f-8d12-b4142bf24b45"
       },
       {
         "loreAbilityId": "7d163bf3-e6c9-4511-bed8-8349eb2ce243",
         "warscrollId": "adca3859-b2af-4b11-9f5f-6618a95c5a04"
-      },
-      {
-        "loreAbilityId": "86aa3bb3-1135-443f-923c-213e1df0f6c1",
-        "warscrollId": "e7c0920b-17d4-4e5d-b9fa-73d37c5da013"
       },
       {
         "loreAbilityId": "88ae785a-a4a4-45ea-8990-48f5202a559e",
@@ -134287,10 +134307,6 @@
         "warscrollId": "da9db9bc-604a-4973-961e-8d1bac36bec0"
       },
       {
-        "loreAbilityId": "969f6951-c251-49f5-a864-d1b00cffdd61",
-        "warscrollId": "bd0c4986-83f1-483e-acd6-79ab07f919fa"
-      },
-      {
         "loreAbilityId": "96f57880-280f-4460-acb5-840a2af79897",
         "warscrollId": "439c88c5-2018-4c19-a031-5f535ad8a6b2"
       },
@@ -134319,6 +134335,10 @@
         "warscrollId": "1f9600c9-5e09-41ee-bdfd-03aae0f34541"
       },
       {
+        "loreAbilityId": "b7fad1fc-029d-4e8b-bfa9-3158bc0c1835",
+        "warscrollId": "271348a4-c72d-47c8-ae94-0f604d29530c"
+      },
+      {
         "loreAbilityId": "a7f155a6-71bd-4eb5-b5cd-8c5eda904913",
         "warscrollId": "271348a4-c72d-47c8-ae94-0f604d29530c"
       },
@@ -134327,20 +134347,8 @@
         "warscrollId": "5fb9f85d-0087-458e-abf9-b3425f5e7552"
       },
       {
-        "loreAbilityId": "ae693e0a-6ae1-4340-8bb4-595c0184fa13",
-        "warscrollId": "a99a117d-e816-4a4c-8dca-0e4e6060c196"
-      },
-      {
         "loreAbilityId": "b0777479-04e9-42f7-bcd4-69a3a85566e7",
         "warscrollId": "d45f55e9-480c-44ca-a4d5-dd7b632ed647"
-      },
-      {
-        "loreAbilityId": "b70a3006-5681-4c64-8d35-72dd268c4d83",
-        "warscrollId": "0a01b580-8b4b-4989-bd1c-4e29a70d9a55"
-      },
-      {
-        "loreAbilityId": "b7fad1fc-029d-4e8b-bfa9-3158bc0c1835",
-        "warscrollId": "271348a4-c72d-47c8-ae94-0f604d29530c"
       },
       {
         "loreAbilityId": "bedbfb59-9443-4f1e-b97c-c857a48f8aba",
@@ -134355,10 +134363,6 @@
         "warscrollId": "8f972c56-74cc-48c9-ba96-df7e61b4618e"
       },
       {
-        "loreAbilityId": "c7be60e5-2c61-49bd-a267-4354fbed25f4",
-        "warscrollId": "86a07ddc-46c5-4e1b-a75b-bc0f4cddc71c"
-      },
-      {
         "loreAbilityId": "c82cd89d-1e36-4487-ad4e-357263fddaec",
         "warscrollId": "5db3ef5f-4f1e-4ae7-875a-b5a87743b3f9"
       },
@@ -134369,10 +134373,6 @@
       {
         "loreAbilityId": "cbb2ae05-abdc-4486-a380-cf2f45de0843",
         "warscrollId": "bdb057e6-7f63-4f9e-8a4b-8c593c2564c6"
-      },
-      {
-        "loreAbilityId": "cc58e854-ca11-4711-a1ea-ab4c06d4ad38",
-        "warscrollId": "0abc2bdc-fba5-4cf1-866a-37789cdd90ec"
       },
       {
         "loreAbilityId": "cefb56ea-41cc-4e40-b6a6-65a50b1c2430",
@@ -221462,7 +221462,7 @@
       {
         "id": "49b2343a-1c62-4668-8aa2-dc2cb99d4842",
         "name": "Mortarch of Sacrament",
-        "phaseDetails": "Once Per Turn, Reaction: Opponent declared a **SPELL** ability for a unit within 18\" of this uni",
+        "phaseDetails": "Once Per Turn, Reaction: Opponent declared a **SPELL** ability for a unit within 18\" of this unit",
         "phase": "heroPhase",
         "castingValue": null,
         "cpCost": null,
