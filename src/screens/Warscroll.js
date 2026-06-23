@@ -33,7 +33,6 @@ const Warscroll = () => {
     if (isManifestation) {
         const loreAbilityId = find(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])?.loreAbilityId
         manifestationInfo = find(dataBase.data.lore_ability, ['id', loreAbilityId])
-        console.log(unit.id)
         // // нужно для того, чтобы правильно показывать абилку у спеллов орков и в аорах
         // const lore = find(dataBase.data.lore , ['id', manifestationInfo?.loreId])
         // if (lore?.factionId) {
