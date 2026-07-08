@@ -153701,10 +153701,6 @@
       },
       {
         "loreAbilityId": "50d60241-751b-450c-a46d-144e89851683",
-        "warscrollId": "4cefa477-9922-4ebf-b454-2ccea8ae55e3"
-      },
-      {
-        "loreAbilityId": "50d60241-751b-450c-a46d-144e89851683",
         "keywordId": "062a6fc9-a76f-4e7f-b157-e078ff3e7c4f"
       },
       {
@@ -154502,14 +154498,6 @@
       {
         "loreAbilityId": "ae228fbb-75aa-431b-9fdb-d0740df15502",
         "keywordId": "c1074b72-6d9e-4012-8a0d-6b4684d3dede"
-      },
-      {
-        "loreAbilityId": "10294c55-348c-4399-a6ba-ccd1ee03ab73",
-        "warscrollId": "a99a117d-e816-4a4c-8dca-0e4e6060c196"
-      },
-      {
-        "loreAbilityId": "ae693e0a-6ae1-4340-8bb4-595c0184fa13",
-        "warscrollId": "a99a117d-e816-4a4c-8dca-0e4e6060c196"
       },
       {
         "loreAbilityId": "ae693e0a-6ae1-4340-8bb4-595c0184fa13",
@@ -155388,6 +155376,10 @@
       {
         "loreAbilityId": "b70a3006-5681-4c64-8d35-72dd268c4d83",
         "warscrollId": "0a01b580-8b4b-4989-bd1c-4e29a70d9a55"
+      },
+      {
+        "loreAbilityId": "ae693e0a-6ae1-4340-8bb4-595c0184fa13",
+        "warscrollId": "a99a117d-e816-4a4c-8dca-0e4e6060c196"
       },
       {
         "loreAbilityId": "10294c55-348c-4399-a6ba-ccd1ee03ab73",
@@ -293855,6 +293847,10 @@
       }
     ],
     "warscroll_regiment_option_excluded_keyword": [
+      {
+        "warscrollRegimentOptionId": "72e4d717-019d-4058-9216-7de650923678",
+        "keywordId": "fea9a8c1-796a-4fa3-ad16-9b739901e8a5"
+      },
       {
         "warscrollRegimentOptionId": "01282f94-6447-41f5-a1f2-212544f4a014",
         "keywordId": "fea9a8c1-796a-4fa3-ad16-9b739901e8a5"
