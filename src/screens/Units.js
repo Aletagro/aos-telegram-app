@@ -1,6 +1,6 @@
 import React, {useCallback, useReducer} from 'react'
 import {useLocation} from 'react-router-dom'
-import {unitsSortesByType, getUnitsRowRightText} from '../utilities/utils'
+import {unitsSortesByType, getUnitsRowRightText, isScourgeOfGhyran} from '../utilities/utils'
 import {isCollapseUnitsTypes} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
@@ -69,6 +69,7 @@ const Units = () => {
                 map(warscrollIds, warscrollId => find(dataBase.data.warscroll, scroll => scroll.id === warscrollId)), unit => {
                     return !unit.isSpearhead &&
                         (isLegendaryArmies ? true : !unit.isLegends) && 
+                        (isLegendaryArmies ? true : !isScourgeOfGhyran(unit.id, true)) && 
                         (size(includedKeywords) ? checkIncludedKeywords(unit) : true) &&
                         (size(excludedKeywords) ? checkExcludedKeywords(unit) : true)
                 }

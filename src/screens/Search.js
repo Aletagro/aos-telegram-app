@@ -120,7 +120,7 @@ const Search = () => {
         expanded={search.expand[type]}
         onChangeExpand={handleChangeExpand}
     />
-    console.log(search.Abilities)
+
     return <>
         <div id={Styles.container}>
             <input id={Styles.input} onChange={handleChange} autoFocus placeholder='Start Typing' type='search' name='search' size={40} />

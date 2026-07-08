@@ -77,7 +77,7 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Bendictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song']
+            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Benedictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Proclamations']
         }
     ],
     spearheadArmyEnhancements: [
@@ -104,7 +104,10 @@ const Constants = {
         }
     ],
     coreDocumentsId: 'e918110c-418e-4a50-90bc-484581a0fa5c',
-    ghbId: '3e05b549-40a4-43e5-b0f7-5ef6d1ffdbd2',
+    ghbId: 'cf456401-f84b-4278-a63d-a4de52dde29f',
+    ghb25_26Id: '3e05b549-40a4-43e5-b0f7-5ef6d1ffdbd2',
+    sogPublicationId: '292d6e8e-a50d-4a5c-bd5f-70f85110c7f0',
+    tacticsCardPublicationId: '03e7448e-15e4-498c-b5c8-971ec5224757',
     hideChaptersIds: [
         '27931b97-5750-4600-bac4-a09dada60dcd', // Spearhead Battlepack: Sand and Bone
         '308aceba-6694-4d60-a98a-233a4d7e9702', // Spearhead Battlepack: Fire and Jade
@@ -495,7 +498,9 @@ const Constants = {
         "Cycle of Corruption",
         "The Gardeners of Nurgle",
         "Change-Cult Uprising",
-        "The Oracles of Fate"
+        "The Oracles of Fate",
+        "Court of the Godlings",
+        "Decadent Host"
     ],
     deathFaction: [
         "Flesh-eater Courts",
@@ -565,7 +570,8 @@ const Constants = {
         'The Iron March',
         'Allies of the Free Cities'
     ],
-    tacticsCards: ['Attuned to Ghyran', 'Master The Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
+    tacticsCards: ['Burning for Vengeance', 'Legend of the Parch', 'Siege of Ashes', 'Flanking Firestorm', 'Smokescreen', 'Blazing Onslaught'],
+    oldTacticsCards: ['Attuned to Ghyran', 'Master The Paths', 'Restless Energy', 'Intercept and Recover', 'Wrathful Cycles', 'Scouting Force'],
     universalCommands: [
         {name: 'Magical Intervention', id: '108d8f93-9216-495e-9245-971f9e74112b'},
         {name: 'Rally', id: '838515df-51c3-458d-b082-8551378e3a63'},
@@ -646,8 +652,8 @@ const Constants = {
         589760439, // Коля
         431627556 // Матвейка
     ],
-    lastUpdate: '02.06.2026',
-    fullDatelastUpdate: '2026-02-19T15:00:00.0000',
+    lastUpdate: '08.07.2026',
+    fullDatelastUpdate: '2026-07-08T21:00:00.0000',
     spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }
 

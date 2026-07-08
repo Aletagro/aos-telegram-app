@@ -12,6 +12,8 @@ import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 import map from 'lodash/map'
 import find from 'lodash/find'
 import size from 'lodash/size'
+import every from 'lodash/every'
+import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
 import includes from 'lodash/includes'
 
@@ -39,10 +41,13 @@ const UnitRow = ({
         rowImage = find(dataBase.data.warscroll, ['id', unit.regimentOfRenownRowImageWarscrollId])?.rowImage
     }
     let requiredOtherEnhancementKeywords = []
+    let excludedOtherEnhancementKeywords = []
     if (size(otherEnhancements)) {
         forEach(otherEnhancements, otherEnhancement => {
             const requiredKeywordId = find(dataBase.data.ability_group_required_keyword, ['abilityGroupId', otherEnhancement.id])?.keywordId
             requiredOtherEnhancementKeywords.push(find(dataBase.data.keyword, ['id', requiredKeywordId])?.name)
+            const excludedKeywords = filter(dataBase.data.ability_group_excluded_keyword, ['abilityGroupId', otherEnhancement.id])
+            excludedOtherEnhancementKeywords.push(map(excludedKeywords, excludedKeyword => find(dataBase.data.keyword, ['id', excludedKeyword.keywordId])?.name))
         })
     }
     let isCogfort = false
@@ -122,7 +127,12 @@ const UnitRow = ({
     </button>
 
     const renderOtherEnhancement = (otherEnhancement, index) => {
-        if (otherEnhancement && includes(unit.referenceKeywords, requiredOtherEnhancementKeywords[index]) && !unit.referenceKeywords?.includes('Unique')) {
+        if (
+            otherEnhancement &&
+            (requiredOtherEnhancementKeywords[index] ? includes(unit.referenceKeywords, requiredOtherEnhancementKeywords[index]) : true) &&
+            (excludedOtherEnhancementKeywords[index] ? every(excludedOtherEnhancementKeywords[index], keyword => !includes(unit.referenceKeywords, keyword)) : true) &&
+            !unit.referenceKeywords?.includes('Unique')
+        ) {
             return renderAdditionalOption(otherEnhancement)
         } else if (isCogfort && otherEnhancement.name === 'Ironweld Innovations') {
             return renderAdditionalOption(otherEnhancement)

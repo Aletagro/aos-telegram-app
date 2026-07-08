@@ -113,6 +113,9 @@ const UserLists = () => {
     })
 
     const getTactic = (tacticName) => {
+        if (!includes(Constants.tacticsCards, tacticName)) {
+            return null
+        }
         const tacticCard = find(dataBase.data.rule_container, (card) => getStringAfterDash(card.title) === tacticName)
         return tacticCard ? {...tacticCard, name: tacticName} : null
     }

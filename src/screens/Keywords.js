@@ -1,6 +1,7 @@
 import React from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Row from '../components/Row'
+import {isScourgeOfGhyran} from '../utilities/utils'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -20,7 +21,9 @@ const Keywords = () => {
             const alliganceWarscrollIds = map(filter(dataBase.data.warscroll_faction_keyword, (item) => item.factionKeywordId === alliganceId), item => item.warscrollId)
             warscrollIds = filter(warscrollIds, ({warscrollId}) => includes(alliganceWarscrollIds, warscrollId))
         }
-        const units = filter(map(warscrollIds, ({warscrollId}) => find(dataBase.data.warscroll, ['id', warscrollId])), unit => !unit.isSpearhead && !unit.isLegends)
+        const units = filter(map(warscrollIds, ({warscrollId}) => find(dataBase.data.warscroll, ['id', warscrollId])), unit =>
+            !unit.isSpearhead && !unit.isLegends && !isScourgeOfGhyran(unit.id, true)
+        )
         navigate(`/units`, {state: {units, title: keyword}})
     }
 
