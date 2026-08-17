@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/aos-telegram-app/static/css/main.8c354fdf.css",
-    "main.js": "/aos-telegram-app/static/js/main.5e04c34f.js",
+    "main.js": "/aos-telegram-app/static/js/main.a7464dc8.js",
     "static/media/placeholder.png": "/aos-telegram-app/static/media/placeholder.816f67bc014b91894c3e.png",
     "static/media/malekith.png": "/aos-telegram-app/static/media/malekith.6e0b07f7d78ebe386dc6.png",
     "static/media/MinionPro-Bold.woff": "/aos-telegram-app/static/media/MinionPro-Bold.e73f42dae2e6ae675375.woff",
@@ -28,10 +28,10 @@
     "static/media/plus.svg": "/aos-telegram-app/static/media/plus.1821b69dd59c40f640858714c03302df.svg",
     "static/media/minus.svg": "/aos-telegram-app/static/media/minus.e96d94d06862f0e438941502b49deb0e.svg",
     "main.8c354fdf.css.map": "/aos-telegram-app/static/css/main.8c354fdf.css.map",
-    "main.5e04c34f.js.map": "/aos-telegram-app/static/js/main.5e04c34f.js.map"
+    "main.a7464dc8.js.map": "/aos-telegram-app/static/js/main.a7464dc8.js.map"
   },
   "entrypoints": [
     "static/css/main.8c354fdf.css",
-    "static/js/main.5e04c34f.js"
+    "static/js/main.a7464dc8.js"
   ]
 }
