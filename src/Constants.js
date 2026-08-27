@@ -80,6 +80,7 @@ const Constants = {
             includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Benedictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Proclamations', 'Lore of the Everwinter', "Brodd's Bellows"]
         }
     ],
+    manifestationIncludesTexts: ['Manifestation', 'Invocations', 'Judgements', 'Lore of the Abyss', 'Manifested', 'Infernal Sorceries', 'Horrors of the Necropolis'],
     spearheadArmyEnhancements: [
         {
             ruleName: 'ability',

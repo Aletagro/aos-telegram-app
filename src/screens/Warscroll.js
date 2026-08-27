@@ -22,7 +22,7 @@ const Warscroll = () => {
     window.scrollTo(0, 0)
     const [modalData, setModalData] = useState({visible: false, title: '', text: ''})
     const navigate = useNavigate()
-    const {unit} = useLocation().state
+    const {unit, allegianceId} = useLocation().state
     const weapons = filter(dataBase.data.warscroll_weapon, weapon => weapon.warscrollId === unit.id)
     const meleeWeapons = filter(weapons, weapon => weapon.type === 'melee')
     const rangeWeapons = filter(weapons, weapon => weapon.type === 'ranged')
@@ -31,8 +31,10 @@ const Warscroll = () => {
     const isManifestation = includes(unit.referenceKeywords, 'Manifestation')
     let manifestationInfo = undefined
     if (isManifestation) {
-        const loreAbilityId = find(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])?.loreAbilityId
-        manifestationInfo = find(dataBase.data.lore_ability, ['id', loreAbilityId])
+        const loreId = find(dataBase.data.lore, lore => lore.factionId === allegianceId && find(Constants.manifestationIncludesTexts, text => includes(lore.name, text)))?.id
+        const lores = filter(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])
+        const loresInfo = map(lores, ({loreAbilityId}) => find(dataBase.data.lore_ability, ['id', loreAbilityId]))
+        manifestationInfo = find(loresInfo, ['loreId', loreId])
         // // нужно для того, чтобы правильно показывать абилку у спеллов орков и в аорах
         // const lore = find(dataBase.data.lore , ['id', manifestationInfo?.loreId])
         // if (lore?.factionId) {
