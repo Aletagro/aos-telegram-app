@@ -529,6 +529,9 @@ const Constants = {
     ],
     destructionAoRs: [
         "The Roving Maw",
+        "Meatfist Mawtribe",
+        "Mawseeker Gollop",
+        "Beastclaw Alfrostun",
         "Krazogg’s Grunta Stampede",
         "Zoggrok's Ironmongerz",
         "Murkvast Menagerie",
