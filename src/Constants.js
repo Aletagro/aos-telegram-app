@@ -67,7 +67,7 @@ const Constants = {
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
             includesTexts: ['Lore of', 'Spell Lore', 'Arcane'],
-            excludedTexts: ['Lore of the Abyss', 'Lore of Virulence', 'Lore of the Spirit-Song']
+            excludedTexts: ['Lore of the Abyss', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Lore of the Everwinter', "Brodd's Bellows"]
         },
         {
             title: 'Prayer Lores',
@@ -77,7 +77,7 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Benedictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Proclamations']
+            includesTexts: ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Benedictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Proclamations', 'Lore of the Everwinter', "Brodd's Bellows"]
         }
     ],
     spearheadArmyEnhancements: [
