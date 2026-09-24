@@ -135,7 +135,7 @@ const UnitRow = ({
         }
     </button>
 
-    const renderAdditionalOption = (option) => <button id={Styles.chooseEnhancementButton} onClick={handleChooseAdditionalOption(option)}>
+    const renderAdditionalOption = (option) => <button key={option.option} id={Styles.chooseEnhancementButton} onClick={handleChooseAdditionalOption(option)}>
         {unit[option.name]
             ? `${option.name}: ${unit[option.name]}`
             : `${option.name}`

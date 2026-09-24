@@ -538,6 +538,8 @@ const Constants = {
         "Murkvast Menagerie",
         "Big Waaagh!",
         "King Brodd's Stomp",
+        "Stomper Tribe",
+        "Matriarch's Mob",
         "Trugg's Troggherd",
         "Da King's Gitz",
         "Droggz's Gitmob"
@@ -624,7 +626,7 @@ const Constants = {
         "Ironjawz": ['Maw-krusha', 'Maw‑grunta', 'Brute'],
         "Kruleboyz": [],
         "Ogor Mawtribes": ['Gutbusters', 'Beastclaw Raiders'],
-        "Sons of Behemat": [],
+        "Sons of Behemat": ['Big', 'Little'],
         'Cities of Sigmar': ['Aelf', 'Duardin', 'Sigmarite'],
         'Daughters of Khaine': ['Aelf'],
         'Fyreslayers': ['Magmadroth'],

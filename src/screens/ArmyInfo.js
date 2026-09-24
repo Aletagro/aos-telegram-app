@@ -13,12 +13,11 @@ import Styles from './styles/ArmyInfo.module.css'
 const ArmyInfo = () => {
     const {allegiance, info, isSpearhead} = useLocation().state
     const armyEnhancement = find(Constants.armyEnhancements, enhancement => enhancement.title === info.title)
-
     const renderAbility = (ability) => <Ability
         key={ability.id}
         ability={ability}
-        abilityKeywordsName={armyEnhancement?.abilityKeywordsName}
-        abilityIdName={armyEnhancement?.abilityIdName}
+        abilityKeywordsName={armyEnhancement?.abilityKeywordsName || 'ability_keyword'}
+        abilityIdName={armyEnhancement?.abilityIdName || 'abilityId'}
     />
 
     const renderBlock = (block) => {
