@@ -172158,7 +172158,7 @@
         "rowImage": "https://dhss9aar8ocw.cloudfront.net/ff15af97-1525-4c04-a635-852ad4b95802",
         "modelCount": 1,
         "baseSize": "90 x 52mm",
-        "points": 120,
+        "points": 150,
         "notes": "This unit is legal for Matched Play for battles fought using the *General’s Handbook 2026-27* battlepack.",
         "isSpearhead": false,
         "cannotBeReinforced": true,
@@ -172578,7 +172578,7 @@
         "rowImage": "https://dhss9aar8ocw.cloudfront.net/18d33e9d-ba2c-471e-8d5f-6872af5bea6c",
         "modelCount": 1,
         "baseSize": "130mm",
-        "points": 490,
+        "points": 400,
         "notes": "This **HERO** can join an eligible regiment as an *Eager Lout*. This unit is legal for Matched Play for battles fought using the *General’s Handbook 2026-27* battlepack.",
         "isSpearhead": false,
         "cannotBeReinforced": true,
@@ -305191,10 +305191,6 @@
       },
       {
         "warscrollRegimentOptionId": "d1ebbd69-9264-4384-84e9-49fe0e0c45e2",
-        "keywordId": "fea9a8c1-796a-4fa3-ad16-9b739901e8a5"
-      },
-      {
-        "warscrollRegimentOptionId": "f1f4baf1-f6a6-4d16-941b-fac67322d2bb",
         "keywordId": "fea9a8c1-796a-4fa3-ad16-9b739901e8a5"
       },
       {
