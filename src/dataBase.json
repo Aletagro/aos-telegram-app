@@ -266753,7 +266753,7 @@
         "reaction": false,
         "lore": "A sorcerer can temporarily bestow the gift of foresight upon their allies, helping them ward against enemy blows.",
         "usedBy": null,
-        "declare": "Pick a friendly **WARRIORS OF CHAOS** unit wholly within 12\" of this unit to be the target and roll a dice.",
+        "declare": "Pick a friendly **WARRIORS OF CHAOS** unit wholly within 12\" of this unit to be the target.",
         "effect": "On a 3+, the target has **WARD (5+)** until the start of your next turn.",
         "abilityAndCommandIcon": "defensive",
         "cost": null,
