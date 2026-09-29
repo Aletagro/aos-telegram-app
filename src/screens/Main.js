@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import bridge from '@vkontakte/vk-bridge'
+import bridge from '@vkontakte/vk-bridge'
 import {main} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
@@ -12,13 +13,15 @@ const tg = window.Telegram.WebApp
 
 const Main = () => {
     const user = tg.initDataUnsafe?.user
+    const vkUser = await bridge.send('VKWebAppGetUserInfo')
+    console.log('vkUser', vkUser)
 
     bridge.send('VKWebAppGetLaunchParams')
     .then((data) => { 
-        console.log(data)
+        console.log('VKWebAppGetLaunchParams', data)
     })
     .catch((error) => {
-        console.log(error)
+        console.log('VKWebAppGetLaunchParams', error)
     })
 
     useEffect(() => {
