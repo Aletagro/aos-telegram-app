@@ -1,5 +1,5 @@
-import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import RowImage from '../components/RowImage'
 
 import Styles from './styles/Row.module.css'

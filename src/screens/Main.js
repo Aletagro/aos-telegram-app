@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import bridge from '@vkontakte/vk-bridge'
+import React, {useEffect, useCallback} from 'react'
+import {useNavigate} from 'react-router-dom'
 import {main} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
@@ -8,20 +8,11 @@ import Constants from '../Constants'
 
 import Styles from './styles/Main.module.css'
 
-const tg = window.Telegram.WebApp
+const tg = window.Telegram?.WebApp
 
 const Main = () => {
+    const navigate = useNavigate()
     const user = tg.initDataUnsafe?.user
-    console.log(bridge.send('VKWebAppGetUserInfo'))
-
-    bridge.send('VKWebAppGetUserInfo')
-    .then((data) => { 
-        console.log('VKWebAppGetUserInfo', data)
-    })
-    .catch((error) => {
-        console.log('VKWebAppGetUserInfo', error)
-    })
-
 
     useEffect(() => {
         if (!main.userReq) {
@@ -37,6 +28,22 @@ const Main = () => {
         }
     }, [user?.id])
 
+    const handleSupport = useCallback(() => {
+        console.log('handleSupport')
+        const webDonateUrl = 'https://web.tribute.tg/d/Rhg'
+        if (tg) {
+            console.log(1)
+            tg.openLink(webDonateUrl)
+        } else {
+            console.log(2)
+            window.open(webDonateUrl, '_blank')
+        }
+    }, [])
+
+    const handleNavigateToDeveloper = useCallback(() => {
+        navigate(`/developer`)
+    }, [navigate])
+
     return <>
         <HeaderImage src={malekith} alt='main' />
         <div id='column' className='Chapter'>
@@ -47,9 +54,12 @@ const Main = () => {
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
             {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
-            <p id={Styles.feedbackText}>Card number for support - 5536 9141 9279 5999 (Rukosuev Nikita)</p>
+            {user?.id === Constants.myTgId
+                ? <button id={Styles.suppotButton} onClick={handleSupport}>Support the app!</button>
+                : null
+            }
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
-            <p id={Styles.feedbackText}>The database was last updated on {Constants.lastUpdate}</p>
+            <p id={Styles.feedbackText} onClick={handleNavigateToDeveloper}>The database was last updated on {Constants.lastUpdate}</p>
         </div>
     </>
 }
