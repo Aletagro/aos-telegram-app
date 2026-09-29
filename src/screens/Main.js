@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
 import bridge from '@vkontakte/vk-bridge'
-import bridge from '@vkontakte/vk-bridge'
 import {main} from '../utilities/appState'
 import Row from '../components/Row'
 import HeaderImage from '../components/HeaderImage'
