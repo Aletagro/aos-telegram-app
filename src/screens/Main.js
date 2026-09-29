@@ -40,6 +40,18 @@ const Main = () => {
         }
     }, [])
 
+    const handleSupportTwo = useCallback(() => {
+        console.log('handleSupport-2')
+        const webDonateUrl = 'https://t.me/tribute/app?startapp=dRhg'
+        if (tg) {
+            console.log(1)
+            tg.openLink(webDonateUrl)
+        } else {
+            console.log(2)
+            window.open(webDonateUrl, '_blank')
+        }
+    }, [])
+
     const handleNavigateToDeveloper = useCallback(() => {
         navigate(`/developer`)
     }, [navigate])
@@ -56,6 +68,10 @@ const Main = () => {
             {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
             {user?.id === Constants.myTgId
                 ? <button id={Styles.suppotButton} onClick={handleSupport}>Support the app!</button>
+                : null
+            }
+            {user?.id === Constants.myTgId
+                ? <button id={Styles.suppotButton} onClick={handleSupportTwo}>Support the app 2!</button>
                 : null
             }
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
