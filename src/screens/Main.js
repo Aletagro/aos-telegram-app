@@ -12,16 +12,16 @@ const tg = window.Telegram.WebApp
 
 const Main = () => {
     const user = tg.initDataUnsafe?.user
-    const vkUser = await bridge.send('VKWebAppGetUserInfo')
-    console.log('vkUser', vkUser)
+    console.log(bridge.send('VKWebAppGetUserInfo'))
 
-    bridge.send('VKWebAppGetLaunchParams')
+    bridge.send('VKWebAppGetUserInfo')
     .then((data) => { 
-        console.log('VKWebAppGetLaunchParams', data)
+        console.log('VKWebAppGetUserInfo', data)
     })
     .catch((error) => {
-        console.log('VKWebAppGetLaunchParams', error)
+        console.log('VKWebAppGetUserInfo', error)
     })
+
 
     useEffect(() => {
         if (!main.userReq) {
