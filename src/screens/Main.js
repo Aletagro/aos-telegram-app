@@ -29,26 +29,10 @@ const Main = () => {
     }, [user?.id])
 
     const handleSupport = useCallback(() => {
-        console.log('handleSupport')
-        const webDonateUrl = 'https://web.tribute.tg/d/Rhg'
         if (tg) {
-            console.log(1)
-            tg.openLink(webDonateUrl)
+            tg.openLink('https://t.me/tribute/app?startapp=dRhg')
         } else {
-            console.log(2)
-            window.open(webDonateUrl, '_blank')
-        }
-    }, [])
-
-    const handleSupportTwo = useCallback(() => {
-        console.log('handleSupport-2')
-        const webDonateUrl = 'https://t.me/tribute/app?startapp=dRhg'
-        if (tg) {
-            console.log(1)
-            tg.openLink(webDonateUrl)
-        } else {
-            console.log(2)
-            window.open(webDonateUrl, '_blank')
+            window.open('https://web.tribute.tg/d/Rhg', '_blank')
         }
     }, [])
 
@@ -66,14 +50,7 @@ const Main = () => {
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
             {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
-            {user?.id === Constants.myTgId
-                ? <button id={Styles.suppotButton} onClick={handleSupport}>Support the app!</button>
-                : null
-            }
-            {user?.id === Constants.myTgId
-                ? <button id={Styles.suppotButton} onClick={handleSupportTwo}>Support the app 2!</button>
-                : null
-            }
+            <button id={Styles.suppotButton} onClick={handleSupport}>Support the app!</button>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
             <p id={Styles.feedbackText} onClick={handleNavigateToDeveloper}>The database was last updated on {Constants.lastUpdate}</p>
         </div>
