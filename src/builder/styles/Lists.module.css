@@ -55,3 +55,6 @@
     font-family: 'Minion Pro Bold';
     font-size: 20px;
 }
+#modalContainer {
+    padding-top: 16px;
+}

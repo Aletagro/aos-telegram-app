@@ -223,7 +223,7 @@ const Lists = () => {
             const battleFormations = filter(dataBase.data.battle_formation, ['factionId', allegianceId])
             items = map(battleFormations, 'name')
         }
-        return <>
+        return <div id={Styles.modalContainer}>
             {map(items, renderModalFilter(_filter.id))}
             {size(secondBlockItems) > 0
                 ? <>
@@ -232,7 +232,7 @@ const Lists = () => {
                 </>
                 : null
             }
-        </>
+        </div>
     }
 
     const renderFilter = (item) => {
