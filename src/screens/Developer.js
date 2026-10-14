@@ -4,6 +4,7 @@ import bridge from '@vkontakte/vk-bridge'
 const tg = window.Telegram.WebApp
 
 const Developer = () => {
+    console.log(window)
     let vkUser = {}
     let vkError = {}
     bridge.send('VKWebAppGetLaunchParams')
@@ -15,7 +16,7 @@ const Developer = () => {
     })
 
     return <div>
-        <p>test</p>
+        <p>test-2</p>
         <p>initData: {tg.initData}</p>
         <p>initDataUnsafe: {JSON.stringify(tg.initDataUnsafe)}</p>
         <p>platform: {tg.platform}</p>
