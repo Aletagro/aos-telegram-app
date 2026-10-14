@@ -16,7 +16,7 @@ const Developer = () => {
     })
 
     return <div>
-        <p>test-2</p>
+        <p>test-3</p>
         <p>initData: {tg.initData}</p>
         <p>initDataUnsafe: {JSON.stringify(tg.initDataUnsafe)}</p>
         <p>platform: {tg.platform}</p>
