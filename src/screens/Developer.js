@@ -9,20 +9,24 @@ const Developer = () => {
     let vkError = {}
     bridge.send('VKWebAppGetLaunchParams')
     .then((data) => { 
+        console.log('then', data)
         vkUser = data
     })
     .catch((error) => {
-        vkError=(error)
+        console.log('catch', error)
+        vkError= error
     })
 
     return <div>
-        <p>test-3</p>
+        <p>test-4</p>
         <p>initData: {tg.initData}</p>
         <p>initDataUnsafe: {JSON.stringify(tg.initDataUnsafe)}</p>
         <p>platform: {tg.platform}</p>
         <p>version: {tg.version}</p>
         <p>viewportHeight: {tg.viewportHeight}</p>
-        <p>vkUser: {JSON.stringify(window?.location)}</p>
+        <p>vkUser: {JSON.stringify(vkUser)}</p>
+        <p>location: {JSON.stringify(window?.location)}</p>
+        <p>vkHref: {JSON.stringify(window?.location?.href)}</p>
         <p>vkError: {JSON.stringify(vkError)}</p>
     </div>
 }
