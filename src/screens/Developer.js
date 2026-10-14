@@ -22,7 +22,7 @@ const Developer = () => {
         <p>platform: {tg.platform}</p>
         <p>version: {tg.version}</p>
         <p>viewportHeight: {tg.viewportHeight}</p>
-        <p>vkUser: {JSON.stringify(window?.location?.href)}</p>
+        <p>vkUser: {JSON.stringify(window?.location)}</p>
         <p>vkError: {JSON.stringify(vkError)}</p>
     </div>
 }
