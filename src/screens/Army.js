@@ -119,6 +119,12 @@ const Army = () => {
         onClick={handleClickLists}
     />
 
+    const renderRoRRow = () => <Row 
+        title='Regiment Of Renown'
+        navigateTo='regimentOfRenownList'
+        state={{alliganceId: _allegiance.id}}
+    />
+
     const renderUnitKeywordsRow = () => <Row
         title='Units Keywords'
         navigateTo='keywords'
@@ -146,6 +152,7 @@ const Army = () => {
             {map(items, renderRow)}
             {renderBuilderRow()}
             {renderListsRow()}
+            {renderRoRRow()}
             {size(Constants.unitKeywords[_allegiance.name])
                 ? renderUnitKeywordsRow()
                 : null
