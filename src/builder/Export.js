@@ -19,8 +19,6 @@ import includes from 'lodash/includes'
 
 import Styles from './styles/Export.module.css'
 
-const tg = window.Telegram.WebApp
-
 const rorKeys =  ['id', 'name', 'regimentOfRenownPointsCost']
 
 const manifistationsKeys =  ['id', 'name']
@@ -39,7 +37,6 @@ const Export = () => {
     const warnings = getWarnings(roster)
     const wounds = getWoundsCount(roster)
     const drops = roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)
-    const user = tg.initDataUnsafe?.user
     const unitsKeys =  ['id', 'name', 'points', 'modelCount', 'isReinforced', 'heroicTrait', 'artefact', 'otherWarscrollOption', 'marksOfChaos', ...roster.otherEnhancements, 'weaponOptions'] 
     const disableButton = Boolean(size(errors))
 
@@ -147,13 +144,13 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
             regiments_of_renown_units: JSON.stringify(getShortUnits(roster.regimentsOfRenownUnits, unitsKeys)),
             spells_lore: roster.spellsLore,
             tactics: JSON.stringify(map(roster.tactics, 'name')),
-            tg_id: user?.id,
+            user_id: main.user?.id,
             is_public: isListPublic,
             note: roster.id && roster.note ? JSON.stringify({...JSON.parse(roster.note), noteText: roster.noteText, wounds, drops}) : JSON.stringify({...roster.note, noteText: roster.noteText, wounds, drops}),
         }
         try {
             if (roster.id && !saveAsNew) {
-                await fetch(`https://aoscom.online/rosters_db/update_roster?roster_id=${roster.id}`, {
+                await fetch(`${Constants.domain}/rosters_db/update_roster?roster_id=${roster.id}`, {
                     method: 'PUT',
                     body: JSON.stringify(data),
                     headers: {
@@ -162,7 +159,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
                     }
                 })
             } else {
-                await fetch('https://aoscom.online/rosters_db/new_roster', {
+                await fetch(`${Constants.domain}/rosters_db/new_roster`, {
                     method: 'POST',
                     body: JSON.stringify(data),
                     headers: {
@@ -188,7 +185,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const handleClickSaveButton = () => {
-        if (!get(main, 'user.tg_id')) {
+        if (!get(main, 'user.id')) {
             navigate('/registration')
         } else {
             setIsModalOpen(true)
@@ -196,7 +193,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const handleDeleteList = (listId) => async () => {
-        await fetch(`https://aoscom.online/rosters_db/delete_roster?roster_id=${listId}&tg_id=${user?.id}`, {
+        await fetch(`${Constants.domain}/rosters_db/delete_roster?roster_id=${listId}&user_id=${main.user?.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -212,14 +209,15 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const handleGetLists = useCallback(async () => {
-        fetch(`https://aoscom.online/rosters_db/rosters_by_user?tg_id=${user?.id}`)
+        const urlQuery = main.tgId ? `tgId=${main.tgId}` : `vkId=${main.vkId}`
+        fetch(`${Constants.domain}/rosters_db/rosters_by_user?${urlQuery}`)
             .then(response => response.json())
             .then(data => {
                 main.rosters = data.rosters
                 forceUpdate()
             })
             .catch(error => console.error(error))
-      }, [user?.id])
+      }, [])
 
 
     const renderList = (list) => <div id={Styles.listDeletedContainer} onClick={handleDeleteList(list.id)}>
@@ -247,7 +245,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     }
 
     const renderModalContent = () => {
-        if (size(main.rosters) >= Constants.listsMax && !roster.id && !includes(Constants.developersIds, user?.id)) {
+        if (size(main.rosters) >= Constants.listsMax && !roster.id && !includes(Constants.developersIds, main.tgId)) {
             return <>
                 <b id={Styles.modalTitle}>You have reached limit of saved lists</b>
                 <p id={Styles.modalText}>You can delete one of your list</p>
@@ -267,7 +265,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
                 <Checkbox onClick={handleChangePublic} checked={isListPublic} />
             </div>
             <p id={Styles.publicNote}>Other users will be able to see this list.</p>
-            {roster.id && (size(main.rosters) < Constants.listsMax || includes(Constants.developersIds, user?.id))
+            {roster.id && (size(main.rosters) < Constants.listsMax || includes(Constants.developersIds, main.tgId))
                 ? <div id={Styles.publicCheckboxContainer} onClick={handleChangeAsNew}>
                     <p id={Styles.potentialLegends}>Save as new List</p>
                     <Checkbox onClick={handleChangeAsNew} checked={saveAsNew} />

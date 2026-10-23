@@ -24,28 +24,26 @@ import Styles from './styles/UserLists.module.css'
 
 const dataBase = require('../dataBase.json')
 
-const tg = window.Telegram.WebApp
-
 const UserLists = () => {
     const navigate = useNavigate()
-    const user = tg.initDataUnsafe?.user
     const [modalData, setModalData] = useState({visible: false, title: '', text: ''})
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     let newPoints = {all: 0}
 
     const handleGetLists = useCallback(async () => {
-        fetch(`https://aoscom.online/rosters_db/rosters_by_user?tg_id=${user?.id}`)
+        const urlQuery = main.tgId ? `tgId=${main.tgId}` : `vkId=${main.vkId}`
+        fetch(`${Constants.domain}/rosters_db/rosters_by_user?${urlQuery}`)
             .then(response => response.json())
             .then(data => {
                 main.rosters = data.rosters
                 forceUpdate()
             })
             .catch(error => console.error(error))
-      }, [user?.id])
+      }, [])
 
     const handleDeleteList = useCallback(async (listId) => {
-        await fetch(`https://aoscom.online/rosters_db/delete_roster?roster_id=${listId}&tg_id=${user?.id}`, {
+        await fetch(`${Constants.domain}/rosters_db/delete_roster?roster_id=${listId}&user_id=${main.user?.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,7 +55,7 @@ const UserLists = () => {
                 toast.success('List deleted', Constants.toastParams)
             })
             .catch(error => console.error(error))
-      }, [handleGetLists, user?.id])
+      }, [handleGetLists])
 
       useEffect(() => {
         handleGetLists()
@@ -206,6 +204,7 @@ const UserLists = () => {
 
     const renderList = (list) => {
         const army = find(dataBase.data.faction_keyword, ['id', list.allegiance_id])
+        console.log({list, army})
         return <div id={Styles.listContainer} key={list.id}>
             <div  id={Styles.closeIcon} onClick={handleClickDelete(list.id)}>
                 <img src={Close} alt='' />
@@ -229,7 +228,7 @@ const UserLists = () => {
             <p>Paste List</p>
             <img src={Add} alt='' />
         </button>
-        {includes(Constants.developersIds, user?.id)
+        {includes(Constants.developersIds, main.tgId)
             ? null
             : <p id={Styles.notice}>You can only save {Constants.listsMax} army lists.</p>
         }

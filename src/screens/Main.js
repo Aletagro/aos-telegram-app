@@ -9,15 +9,20 @@ import Constants from '../Constants'
 import Styles from './styles/Main.module.css'
 
 const tg = window.Telegram?.WebApp
+const href = window.location?.href
+const urlParams = new URLSearchParams(href.split('?')[1])
+main.tgId = tg?.initDataUnsafe?.user
+main.vkId = urlParams.get('vk_user_id')
+// main.tgId = 530569849
+// main.vkId = 45749262
 
 const Main = () => {
     const navigate = useNavigate()
-    const user = tg.initDataUnsafe?.user
-
     useEffect(() => {
         if (!main.userReq) {
             main.userReq = true
-            fetch(`https://aoscom.online/users/user_by_tg_id?tg_id=${user?.id}`)
+            const urlQuery = main.tgId ? `tgId=${main.tgId}` : `vkId=${main.vkId}`
+            fetch(`${Constants.domain}/users/user?${urlQuery}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data?.exists) {
@@ -26,7 +31,7 @@ const Main = () => {
                 })
                 .catch(error => console.error(error))
         }
-    }, [user?.id])
+    }, [])
 
     const handleSupport = useCallback(() => {
         if (tg) {
@@ -49,7 +54,7 @@ const Main = () => {
             <Row title='Spearhead' navigateTo='spearhead'/>
             {/* <Row title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             <Row title='Damage Calculator' navigateTo='calculator' />
-            {user?.id === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
+            {main?.tgId === Constants.myTgId ? <Row title='Developer Menu' navigateTo='developer' /> : null}
             <button id={Styles.suppotButton} onClick={handleSupport}>Support the app!</button>
             <p id={Styles.feedbackText}>For feedback - @RukosuevKrasavchik</p>
             <p id={Styles.feedbackText} onClick={handleNavigateToDeveloper}>The database was last updated on {Constants.lastUpdate}</p>

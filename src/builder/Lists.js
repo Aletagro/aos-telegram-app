@@ -34,7 +34,7 @@ const Lists = () => {
     let newPoints = {all: 0}
 
     const handleGetLists = useCallback(async (page = 1, withReset) => {
-        fetch(`https://aoscom.online/rosters_db/get_some_rosters_per_pages?filters=${JSON.stringify(lists.filters)}&page=${page}`)
+        fetch(`${Constants.domain}/rosters_db/rosters?filters=${JSON.stringify(lists.filters)}&page=${page}`)
             .then(response => response.json())
             .then(data => {
                 lists.data = withReset || page === 1 ? data.rosters : [...lists.data, ...data.rosters]
@@ -172,7 +172,7 @@ const Lists = () => {
 
     const handleClickFilter = (filter) => () => {
         if (filter.id === 'all') {
-            lists.filters = {all: true, points_limit: 2000}
+            lists.filters = {points_limit: 2000}
             handleGetLists(1, true)
         } else {
             setModalData({visible: true, title: filter.label, Content: renderModalFilters(filter)})
@@ -191,7 +191,7 @@ const Lists = () => {
             }
             lists.filters = newFilters
         } else {
-            const newFilters = {...lists.filters, all: false, [key]: value}
+            const newFilters = {...lists.filters, [key]: value}
             if (key === 'grand_alliance') {
                 delete newFilters.allegiance
                 delete newFilters.battle_formation

@@ -3,12 +3,14 @@ import {useNavigate} from 'react-router-dom'
 import Autocomplete from '@mui/joy/Autocomplete'
 import {main} from '../utilities/appState'
 import FloatingLabelInput from '../components/FloatingLabelInput'
+import Constants from '../Constants'
 
 import map from 'lodash/map'
 
 import Styles from './styles/Registration.module.css'
 
 const tg = window.Telegram.WebApp
+const user = tg.initDataUnsafe?.user
 
 const inputStyle = {
     '--Input-minHeight': '48px',
@@ -23,7 +25,6 @@ const Registration = () => {
     const navigate = useNavigate()
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
-    const user = tg.initDataUnsafe?.user
     const [firstname, setFirstName] = useState(user?.first_name || '')
     const [lastname, setLastname] = useState(user?.last_name || '')
     const [country, setCountry] = useState('')
@@ -33,9 +34,9 @@ const Registration = () => {
     const isDisableButton = !firstname || !lastname || !country || !city
 
     const handleRegUser = useCallback(async () => {
-        await fetch('https://aoscom.online/users/reg', {
+        await fetch(`${Constants.domain}/users/reg`, {
             method: 'POST',
-            body: JSON.stringify({tg_id: user?.id, firstname, lastname, country, city}),
+            body: JSON.stringify({tgId: main.tgId, vkId: main.vkId, firstname, lastname, country, city}),
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': "application/json, text/javascript, /; q=0.01"
@@ -48,7 +49,7 @@ const Registration = () => {
                 main.showSaveListModal = true
             })
             .catch(error => console.error(error))
-      }, [navigate, firstname, lastname, country, city, user?.id])
+      }, [navigate, firstname, lastname, country, city])
 
     const getCountriesList = useCallback(async (value) => {
         await fetch(`https://restcountries.com/v3.1/name/${value}?fields=name`)

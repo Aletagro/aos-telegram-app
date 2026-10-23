@@ -5,13 +5,15 @@ export const main = {
     rosters: [],
     lists: [],
     userReq: false,
-    showSaveListModal: false
+    showSaveListModal: false,
+    vkId: undefined,
+    tgId: undefined
 }
 
 export const lists = {
     data: [],
     meta: {},
-    filters: {all: true, points_limit: 2000},
+    filters: {points_limit: 2000},
     isFirstReq: true
 }
 
