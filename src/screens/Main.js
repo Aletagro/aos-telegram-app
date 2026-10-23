@@ -11,14 +11,12 @@ import Styles from './styles/Main.module.css'
 const tg = window.Telegram?.WebApp
 const href = window.location?.href
 const urlParams = new URLSearchParams(href.split('?')[1])
-// main.tgId = tg?.initDataUnsafe?.user
-// main.vkId = urlParams.get('vk_user_id')
+main.tgId = tg?.initDataUnsafe?.user?.id
+main.vkId = urlParams.get('vk_user_id')
 // main.tgId = 530569849
 // main.vkId = 45749262
 
 const Main = () => {
-    main.tgId = tg?.initDataUnsafe?.user
-    main.vkId = urlParams.get('vk_user_id')
     console.log('main', main)
     console.log('tg?.initDataUnsafe', tg?.initDataUnsafe)
     const navigate = useNavigate()

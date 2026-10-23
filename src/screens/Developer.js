@@ -8,7 +8,7 @@ const vkId = urlParams.get('vk_user_id')
 const Developer = () => {
 
     return <div>
-        <p>test-6</p>
+        <p>test-7</p>
         <p>initData: {tg.initData}</p>
         <p>initDataUnsafe: {JSON.stringify(tg.initDataUnsafe)}</p>
         <p>platform: {tg.platform}</p>
