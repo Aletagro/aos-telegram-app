@@ -17,8 +17,6 @@ main.vkId = urlParams.get('vk_user_id')
 // main.vkId = 45749262
 
 const Main = () => {
-    console.log('main', main)
-    console.log('tg?.initDataUnsafe', tg?.initDataUnsafe)
     const navigate = useNavigate()
     useEffect(() => {
         if (!main.userReq) {
