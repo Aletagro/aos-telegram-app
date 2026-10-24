@@ -24,6 +24,7 @@ import LegendUnits from './screens/LegendUnits'
 import Registration from './screens/Registration'
 import Keywords from './screens/Keywords'
 import Header from './components/Header'
+import ScrollToTop from './components/ScrollToTop'
 import Lists from './builder/Lists'
 import UserLists from './builder/UserLists'
 import ChooseGrandAlliance from './builder/ChooseGrandAlliance'
@@ -66,6 +67,7 @@ function App() {
 
   return <div>
     <Header />
+    <ScrollToTop />
     <Routes>
       <Route index element={<Main />} />
       <Route path={'mainRules'} element={<MainRules />} />
