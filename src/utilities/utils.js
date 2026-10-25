@@ -1204,3 +1204,12 @@ export const isScourgeOfGhyran = (id, isWarscroll, isAbility) => {
     const publicationGroupId = find(dataBase.data.publication_publication_group, ['publicationId', publicationId])?.publicationGroupId
     return Constants.sogPublicationId === publicationGroupId
 }
+
+const DIVIDER = '━━━━━━━━━━'
+const EOL = '  \n'
+
+export const toTelegramSafe = (text) => text
+    .replace(/\n{3,}/g, '\n\n')
+    .split('\n')
+    .map((line) => (/^-{3,}$/.test(line.trim()) ? DIVIDER : line))
+    .join(EOL)

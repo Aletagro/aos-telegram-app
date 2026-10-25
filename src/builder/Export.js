@@ -8,7 +8,7 @@ import FloatingLabelInput from '../components/FloatingLabelInput'
 import Checkbox from '../components/Checkbox'
 import Constants from '../Constants'
 import {roster, main} from '../utilities/appState'
-import {getErrors, getWarnings, getWoundsCount} from '../utilities/utils'
+import {getErrors, getWarnings, getWoundsCount, toTelegramSafe} from '../utilities/utils'
 import Close from '../icons/close.svg'
 
 import map from 'lodash/map'
@@ -93,7 +93,7 @@ Wounds: ${wounds}
 ${roster.points.all}/${roster.pointsLimit} Pts
 ${roster.noteText ? `Note: ${roster.noteText}` : ''}
 `
-        navigator.clipboard.writeText(rosterText)
+        navigator.clipboard.writeText(toTelegramSafe(rosterText))
         toast.success('List Copied', Constants.toastParams)
         setIsCopy(true)
     }
