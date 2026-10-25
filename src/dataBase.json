@@ -95591,7 +95591,7 @@
       {
         "id": "b2e61626-7447-481d-83aa-4668b66d676a",
         "name": "Idoneth Deepkin Battle Traits",
-        "restrictionText": null,
+        "restrictionText": "Idoneth Deepkin armies can use the following abilities:",
         "abilityGroupType": "battleTraits",
         "subsectionName": null,
         "subsectionLore": null,
