@@ -1,0 +1,119 @@
+.card {
+    margin-bottom: 14px;
+    overflow: hidden;
+    border: 1.5px solid #c9b36a;
+    border-radius: 16px;
+    background: #fffdf8;
+}
+
+.error {
+    border-color: #8c2a1d;
+    background: #f9e8e4;
+}
+
+.warning {
+    border-color: #c9b36a;
+    background: #fbf3dc;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 11px 14px;
+    border: 0;
+    background: transparent;
+    text-align: start;
+    cursor: pointer;
+}
+
+.head:disabled {
+    cursor: default;
+}
+
+.mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #b0953f;
+    color: #fff;
+}
+
+.error .mark {
+    background: #8c2a1d;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.title {
+    color: #1d1810;
+    font-family: 'Minion Pro Bold';
+    font-size: 16px;
+    line-height: 1.25;
+}
+
+.error .title {
+    color: #8c2a1d;
+}
+
+.subtitle {
+    color: #8a7a4f;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.chevron {
+    display: flex;
+    color: #8a6d1f;
+    transition: transform 0.15s ease;
+}
+
+.error .chevron {
+    color: #8c2a1d;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.list {
+    margin: 0;
+    padding: 0 14px 12px 52px;
+    list-style: none;
+}
+
+.issue {
+    position: relative;
+    padding: 4px 0;
+    color: #2b2416;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.issue::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.issueError::before {
+    background: #8c2a1d;
+}
+
+.issueWarning::before {
+    background: #b0953f;
+}

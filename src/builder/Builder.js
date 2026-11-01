@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer, useState, useEffect} from 'react'
+import React, {useCallback, useReducer, useState, useEffect, useRef} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Modal from '../components/Modal'
 import Button from '../components/Button'
@@ -6,7 +6,10 @@ import {Facts, Fact, Group, SummaryCard, Stat} from '../components/RosterParts'
 import Textarea from '@mui/joy/Textarea'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
-import {getWoundsCount, getInfo, setRosterGrandAlliance, isScourgeOfGhyran} from '../utilities/utils'
+import {getWoundsCount, getInfo, setRosterGrandAlliance, isScourgeOfGhyran, getErrors, getWarnings} from '../utilities/utils'
+import ListStatus, {getStatusText} from './ListStatus'
+import useSaveList from './useSaveList'
+import {ToastContainer} from 'react-toastify'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import Row from '../components/Row'
@@ -20,6 +23,7 @@ import forEach from 'lodash/forEach'
 import isEmpty from 'lodash/isEmpty'
 
 import Styles from './styles/Builder.module.css'
+import SaveStyles from './styles/SaveBar.module.css'
 
 const dataBase = require('../dataBase.json')
 
@@ -38,6 +42,9 @@ const Builder = () => {
     const {allegiance, alliganceId} = useLocation().state
     const [open, setOpen] = useState(false)
     const [pointError, setPointError] = useState(false)
+    const [showIssues, setShowIssues] = useState(false)
+    const statusRef = useRef(null)
+    const {handleClickSaveButton, saveModal} = useSaveList()
     const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
     // eslint-disable-next-line
@@ -350,6 +357,18 @@ const Builder = () => {
     const renderModalContent = () => <>{pointsLimits.map(renderPointsLimitButton)}</>
 
     const tacticsChosen = size(roster.tactics) === 2
+    const errors = getErrors(roster)
+    const warnings = getWarnings(roster)
+    const hasErrors = size(errors) > 0
+
+    const handleToggleIssues = () => {
+        setShowIssues(!showIssues)
+    }
+
+    const handleReview = () => {
+        setShowIssues(true)
+        statusRef.current?.scrollIntoView({behavior: 'smooth', block: 'center'})
+    }
     const manifestationsToShow = getManifestationsToShow()
     const hasLores = spellsLores.length > 0 || preyersLores.length > 0 || manifestationsLores.length > 0 || factionTerrains.length > 0
 
@@ -359,6 +378,7 @@ const Builder = () => {
             <Stat label='Left' value={roster.pointsLimit - roster.points?.all} isOver={pointError} />
             <Stat label='Wounds' value={getWoundsCount(roster)} />
         </SummaryCard>
+        <ListStatus errors={errors} warnings={warnings} expanded={showIssues} onToggle={handleToggleIssues} statusRef={statusRef} />
         <Facts>
             {battleFormations.length
                 ? <Fact
@@ -420,6 +440,17 @@ const Builder = () => {
             : null
         }
         {renderNoteInput()}
+        <div className={SaveStyles.bar}>
+            <div className={SaveStyles.info}>
+                <span className={`${SaveStyles.points} ${pointError ? SaveStyles.pointsOver : ''}`}>{roster.points?.all}/{roster.pointsLimit} pts</span>
+                <span className={SaveStyles.hint}>{hasErrors || size(warnings) ? getStatusText(errors, warnings) : 'Ready to save'}</span>
+            </div>
+            <Button className={SaveStyles.button} type={hasErrors ? 'secondary' : 'primary'} onClick={hasErrors ? handleReview : handleClickSaveButton}>
+                {hasErrors ? 'Review' : 'Save list'}
+            </Button>
+        </div>
+        {saveModal}
+        <ToastContainer />
         <Modal visible={open} title='Points Limit' onClose={handleCloseModal} Content={renderModalContent} />
     </div>
 }
