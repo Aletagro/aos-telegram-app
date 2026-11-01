@@ -20,3 +20,13 @@
     color: #8a7a4f;
     font-family: 'Minion Pro Bold';
 }
+
+.regimentWrap {
+    margin-bottom: 16px;
+    border-radius: 18px;
+}
+
+/* Обёртка нужна только для прокрутки к регименту: отступ между карточками держит она */
+.regimentWrap > * {
+    margin-bottom: 0 !important;
+}

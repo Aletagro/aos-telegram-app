@@ -7,7 +7,7 @@ import Textarea from '@mui/joy/Textarea'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
 import {getWoundsCount, getInfo, setRosterGrandAlliance, isScourgeOfGhyran, getErrors, getWarnings} from '../utilities/utils'
-import ListStatus, {getStatusText} from './ListStatus'
+import ListStatus, {getStatusText, getRegimentIndexFromIssue} from './ListStatus'
 import useSaveList from './useSaveList'
 import {ToastContainer} from 'react-toastify'
 import Regiment from './Regiment'
@@ -20,6 +20,8 @@ import find from 'lodash/find'
 import filter from 'lodash/filter'
 import flatten from 'lodash/flatten'
 import forEach from 'lodash/forEach'
+import includes from 'lodash/includes'
+import startsWith from 'lodash/startsWith'
 import isEmpty from 'lodash/isEmpty'
 
 import Styles from './styles/Builder.module.css'
@@ -44,6 +46,7 @@ const Builder = () => {
     const [pointError, setPointError] = useState(false)
     const [showIssues, setShowIssues] = useState(false)
     const statusRef = useRef(null)
+    const [flashRegiment, setFlashRegiment] = useState(null)
     const {handleClickSaveButton, saveModal} = useSaveList()
     const _alliganceId = alliganceId || allegiance?.id
     const navigate = useNavigate()
@@ -221,16 +224,22 @@ const Builder = () => {
         roster.noteText = e.target.value
     }
 
-    const renderRegiment = (regiment, index) => <Regiment
+    const renderRegiment = (regiment, index) => <div
         key={index}
-        regiment={regiment}
-        alliganceId={_alliganceId}
-        index={index}
-        forceUpdate={forceUpdate}
-        artefacts={artefacts}
-        heroicTraits={heroicTraits}
-        otherEnhancements={otherEnhancements}
-    />
+        id={`regiment-${index}`}
+        className={Styles.regimentWrap}
+    >
+        <Regiment
+            regiment={regiment}
+            alliganceId={_alliganceId}
+            index={index}
+            forceUpdate={forceUpdate}
+            artefacts={artefacts}
+            heroicTraits={heroicTraits}
+            otherEnhancements={otherEnhancements}
+            highlight={flashRegiment === index ? 'flash' : includes(regimentsWithErrors, index) ? 'error' : undefined}
+        />
+    </div>
 
     const renderAuxiliaryUnit = (unit, index) => <UnitRow
         key={index}
@@ -337,7 +346,7 @@ const Builder = () => {
     const renderPointsLimitButton = (limit) => <Button
         key={limit}
         className={Styles.limitButton}
-        type={Number(roster.pointsLimit) === Number(limit) ? 'primary' : 'soft'}
+        type={Number(roster.pointsLimit) === Number(limit) ? 'primary' : 'secondary'}
         onClick={handleClickPointsLimitButton(limit)}
     >
         {limit} Points
@@ -361,6 +370,51 @@ const Builder = () => {
     const warnings = getWarnings(roster)
     const hasErrors = size(errors) > 0
 
+    const regimentsWithErrors = []
+    forEach(errors, text => {
+        const index = getRegimentIndexFromIssue(text)
+        if (index !== null && index !== undefined) {
+            regimentsWithErrors.push(index)
+        }
+    })
+
+    const scrollTo = (element) => {
+        element?.scrollIntoView({behavior: 'smooth', block: 'center'})
+    }
+
+    const handleFocusRegiment = (index) => () => {
+        scrollTo(document.getElementById(`regiment-${index}`))
+        setFlashRegiment(index)
+        setTimeout(() => setFlashRegiment(null), 1800)
+    }
+
+    const getIssueAction = (text) => {
+        const regimentIndex = getRegimentIndexFromIssue(text)
+        if (regimentIndex !== null && regimentIndex !== undefined) {
+            return handleFocusRegiment(regimentIndex)
+        }
+        switch (text) {
+            case 'Choose Battle Formation':
+                return handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)
+            case 'Choose General':
+                return size(roster.regiments) ? handleFocusRegiment(0) : null
+            case 'Choose Manifestations Lore':
+                return handleChooseEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores)
+            case 'Choose Faction Terrain':
+                return handleChooseEnhancement('Faction Terrain', 'factionTerrain', factionTerrains)
+            case 'Choose Spells Lore':
+                return handleChooseEnhancement('Spell Lore', 'spellsLore', spellsLores)
+            default:
+                if (startsWith(text, 'Choose 2 Battle Tactics Cards')) {
+                    return handleChooseTactics
+                }
+                if (startsWith(text, 'You use more than')) {
+                    return () => scrollTo(document.getElementById('summary'))
+                }
+                return null
+        }
+    }
+
     const handleToggleIssues = () => {
         setShowIssues(!showIssues)
     }
@@ -373,12 +427,14 @@ const Builder = () => {
     const hasLores = spellsLores.length > 0 || preyersLores.length > 0 || manifestationsLores.length > 0 || factionTerrains.length > 0
 
     return <div id='column' className='Chapter'>
+        <div id='summary'>
         <SummaryCard alliance={roster.grandAlliance} army={roster.allegiance} onClick={handleClickAllegiance}>
             <Stat label='Points' value={`${roster.points?.all}/${roster.pointsLimit}`} onClick={handleOpenModal} />
             <Stat label='Left' value={roster.pointsLimit - roster.points?.all} isOver={pointError} />
             <Stat label='Wounds' value={getWoundsCount(roster)} />
         </SummaryCard>
-        <ListStatus errors={errors} warnings={warnings} expanded={showIssues} onToggle={handleToggleIssues} statusRef={statusRef} />
+        </div>
+        <ListStatus errors={errors} warnings={warnings} expanded={showIssues} onToggle={handleToggleIssues} statusRef={statusRef} getAction={getIssueAction} />
         <Facts>
             {battleFormations.length
                 ? <Fact

@@ -19,7 +19,7 @@ const emptyRegiment = {
     heroicTrait: ''
 }
 
-const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits, otherEnhancements}) => {
+const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicTraits, otherEnhancements, highlight}) => {
     const navigate = useNavigate()
 
     const handleDeleteRegiment = () => {
@@ -110,7 +110,7 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     />
 
     const title = regiment.heroId ? 'Add Unit' : 'Add Hero'
-    return <div id={Styles.container} key={index}>
+    return <div id={Styles.container} className={highlight ? Styles[highlight] : undefined} key={index}>
         <div id={Styles.title}>
             <div id={Styles.titleSubContainer}>
                 <p id={Styles.text}>Regiment {index + 1}</p>

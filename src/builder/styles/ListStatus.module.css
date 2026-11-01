@@ -117,3 +117,38 @@
 .issueWarning::before {
     background: #b0953f;
 }
+
+.issueButton {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+.issueText {
+    flex: 1;
+    min-width: 0;
+}
+
+.issueFix {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: 2px;
+    color: #8a6d1f;
+    font-family: 'Minion Pro Bold';
+    font-size: 14px;
+}
+
+.issueError .issueFix {
+    color: #8c2a1d;
+}

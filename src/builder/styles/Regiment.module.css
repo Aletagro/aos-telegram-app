@@ -97,3 +97,14 @@
 #addUnitButton:active {
   background: #9c8335;
 }
+
+/* Рамка самой карточки меняет цвет, когда в регименте ошибка или к нему перешли из списка проблем */
+#container.error {
+  border-color: #8c2a1d;
+  box-shadow: 0 0 0 1px #8c2a1d;
+}
+
+#container.flash {
+  border-color: #b0953f;
+  box-shadow: 0 0 0 1px #b0953f, 0 0 14px 2px rgba(176, 149, 63, 0.55);
+}
