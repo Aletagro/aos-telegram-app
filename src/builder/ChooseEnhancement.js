@@ -3,9 +3,11 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import Ability from '../components/Ability'
 import RowImage from '../components/RowImage'
+import Button from '../components/Button'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
+import size from 'lodash/size'
 import filter from 'lodash/filter'
 import includes from 'lodash/includes'
 
@@ -268,19 +270,24 @@ const ChooseEnhancement = () => {
         <b>{manifestation?.name}</b>
     </div>
 
-    const renderBlock = (block) => <button key={block.id} id={Styles.block} onClick={handleClickBlock(block)}>
-        <div id={Styles.blockHeader}>
+    const renderBlock = (block) => <button type='button' key={block.id} id={Styles.block} onClick={handleClickBlock(block)}>
+        <div id={Styles.blockHeader} className={size(block.abilities) ? '' : Styles.blockHeaderAlone}>
             <b id={Styles.title}>{block.name}</b>
-            {block.points ? <p id={Styles.title}>{block.points} pts</p> : null}
+            {block.points ? <p id={Styles.points}>{block.points} pts</p> : null}
         </div>
-        {block.abilities?.map(type === 'manifestationLore' ? renderManifestation : renderEnhancement)}
+        {size(block.abilities)
+            ? <div id={Styles.blockBody}>
+                {block.abilities.map(type === 'manifestationLore' ? renderManifestation : renderEnhancement)}
+            </div>
+            : null
+        }
     </button>
 
     return  <div id='column' className='Chapter'>
         {_data?.map(isRosterInfo ? renderBlock : renderEnhancement)}
         {isInfo
-            ? <button id={Styles.delete} onClick={handleGoBack}>Back</button>
-            : <button id={Styles.delete} onClick={handleDeleteEnhancement}>Delete {title}</button>
+            ? <Button className={Styles.footerButton} type='secondary' onClick={handleGoBack}>Back</Button>
+            : <Button className={Styles.footerButton} type='secondary' onClick={handleDeleteEnhancement}>Delete {title}</Button>
         }
     </div>
 }

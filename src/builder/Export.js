@@ -1,15 +1,14 @@
 import React, {useEffect, useCallback, useState, useReducer} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
-import Modal from '@mui/joy/Modal'
-import ModalDialog from '@mui/joy/ModalDialog'
+import Modal from '../components/Modal'
+import Button from '../components/Button'
+import ToggleRow from '../components/ToggleRow'
 import 'react-toastify/dist/ReactToastify.css'
 import FloatingLabelInput from '../components/FloatingLabelInput'
-import Checkbox from '../components/Checkbox'
 import Constants from '../Constants'
 import {roster, main} from '../utilities/appState'
 import {getErrors, getWarnings, getWoundsCount, toTelegramSafe} from '../utilities/utils'
-import Close from '../icons/close.svg'
 
 import map from 'lodash/map'
 import get from 'lodash/get'
@@ -220,13 +219,13 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
       }, [])
 
 
-    const renderList = (list) => <div id={Styles.listDeletedContainer} onClick={handleDeleteList(list.id)}>
+    const renderList = (list) => <button type='button' key={list.id} className={Styles.listDeleted} onClick={handleDeleteList(list.id)}>
         <div>
-            <p id={Styles.listDeletedTitle}>{list.name}</p>
-            <p id={Styles.listDeletedSubtitle}>{list.allegiance}</p>
+            <p className={Styles.listDeletedTitle}>{list.name}</p>
+            <p className={Styles.listDeletedSubtitle}>{list.allegiance}</p>
         </div>
-        <img id={Styles.allegianceInfoIcon} src={Close} alt="" />
-    </div>
+        <span className={Styles.listDeletedMark} aria-label='Delete'>&times;</span>
+    </button>
 
     const handleBlurName = (e) => {
         setListName(e.target.value)
@@ -244,35 +243,28 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
         navigate('/rosterInfo', {state: {title: 'Roster Info'}})
     }
 
+    const isListsLimit = size(main.rosters) >= Constants.listsMax && !roster.id && !includes(Constants.developersIds, main.tgId)
+
     const renderModalContent = () => {
-        if (size(main.rosters) >= Constants.listsMax && !roster.id && !includes(Constants.developersIds, main.tgId)) {
+        if (isListsLimit) {
             return <>
-                <b id={Styles.modalTitle}>You have reached limit of saved lists</b>
-                <p id={Styles.modalText}>You can delete one of your list</p>
+                <p className={Styles.modalText}>You can delete one of your list</p>
                 {map(main.rosters, renderList)}
             </>
         }
         return <>
-            <b id={Styles.modalTitle}>Save Roster</b>
             <FloatingLabelInput
                 style={inputStyles.listName}
                 onBlur={handleBlurName}
                 label='List Name'
                 defaultValue={listName}
             />
-            <div id={Styles.publicCheckboxContainer} onClick={handleChangePublic}>
-                <p id={Styles.potentialLegends}>Save as public</p>
-                <Checkbox onClick={handleChangePublic} checked={isListPublic} />
-            </div>
-            <p id={Styles.publicNote}>Other users will be able to see this list.</p>
+            <ToggleRow label='Save as public' hint='Other users will be able to see this list.' checked={isListPublic} onChange={handleChangePublic} />
             {roster.id && (size(main.rosters) < Constants.listsMax || includes(Constants.developersIds, main.tgId))
-                ? <div id={Styles.publicCheckboxContainer} onClick={handleChangeAsNew}>
-                    <p id={Styles.potentialLegends}>Save as new List</p>
-                    <Checkbox onClick={handleChangeAsNew} checked={saveAsNew} />
-                </div>
+                ? <ToggleRow label='Save as new List' checked={saveAsNew} onChange={handleChangeAsNew} />
                 : null
             }
-            <button id={listName ? Styles.button : Styles.disabledButton} disabled={!listName || isDisableSaveButton} onClick={handleSaveList}>Save</button>
+            <Button className={Styles.modalSave} disabled={!listName || isDisableSaveButton} onClick={handleSaveList}>Save</Button>
         </>
     }
 
@@ -317,18 +309,18 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
     const renderWarning = (error, index) => <p  id={Styles.warning}>&#8226; {error}</p>
 
     return <div id={Styles.container}>
-         <div id={Styles.buttonContainer}>
-            <button id={disableButton ? Styles.disabledButton : Styles.button} onClick={handleClickSaveButton} disabled={disableButton}>Save List</button>
+        <div id={Styles.buttonContainer}>
+            <Button className={disableButton ? Styles.disableButton : Styles.button} disabled={disableButton} onClick={handleClickSaveButton}>Save List</Button>
         </div>
         {disableButton
             ? <p id={Styles.errorText}>Until all errors are corrected, the list cannot be saved</p>
             : null
         }
         <div id={Styles.buttonContainer}>
-            <button id={Styles.button} onClick={handleExportList}>{isCopy ? 'List Copied' : 'Copy List'}</button>
+            <Button className={Styles.button} type='secondary' onClick={handleExportList}>{isCopy ? 'List Copied' : 'Copy List'}</Button>
         </div>
         <div id={Styles.buttonContainer}>
-            <button id={Styles.button} onClick={handleShowRosterInfo}>Show Roster Info</button>
+            <Button className={Styles.button} type='secondary' onClick={handleShowRosterInfo}>Show Roster Info</Button>
         </div>
         {errors.length > 0
             ? <div id={Styles.errorsContainer}>
@@ -344,6 +336,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
             </div>
             : null
         }
+        <div className={Styles.list}>
         <p>Grand Alliance: {roster.grandAlliance}</p>
         <p>Faction: {roster.allegiance}</p>
         <p>Battle Formation: {roster.battleFormation}{roster.points.battleFormation ? ` (${roster.points.battleFormation}pts)` : ''}</p>
@@ -378,12 +371,9 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
         <p>Wounds: {wounds}</p>
         <p>{roster.points.all}/{roster.pointsLimit} Pts</p>
         {roster.noteText ? <p>Note: {roster.noteText}</p> : null}
+        </div>
         <ToastContainer />
-        <Modal open={isModalOpen} onClose={handleCloseModal}>
-            <ModalDialog layout="center">
-                {renderModalContent()}
-            </ModalDialog>
-        </Modal>
+        <Modal visible={isModalOpen} title={isListsLimit ? 'You have reached limit of saved lists' : 'Save Roster'} onClose={handleCloseModal} Content={renderModalContent} />
     </div>
 }
 
@@ -392,9 +382,11 @@ export default Export
 const inputStyles = {
     listName: {
         '--Input-minHeight': '48px',
-        borderRadius: '4px',
-        'border-color': '#B4B4B4',
-        color: '#000000',
+        '--Input-focusedHighlight': '#b0953f',
+        borderRadius: '14px',
+        'border-color': '#c9b36a',
+        background: '#fff',
+        color: '#1d1810',
         'box-shadow': 'none',
         'font-family': 'Minion Pro Bold'
     }

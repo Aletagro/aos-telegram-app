@@ -6,7 +6,7 @@ import Close from '../icons/close.svg'
 import Plus from '../icons/plus.svg'
 import Minus from '../icons/minus.svg'
 import DarkGeneral from '../icons/darkGeneral.svg'
-import Info from '../icons/info.svg'
+import InfoIcon from '../icons/InfoIcon'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
 import map from 'lodash/map'
@@ -166,11 +166,13 @@ const UnitRow = ({
         <div className={Styles.row}>
             <button id={Styles.addUnitButton} onClick={handleClick}>
                 {rowImage ? <RowImage src={rowImage} alt={unit.name} /> : null}
-                <div id={Styles.addUnitButtonSubContainer}>
-                    {isGeneral ? <img id={Styles.generalIcon} src={DarkGeneral} alt=''/> : null}
-                    <p id={Styles.name}>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>
+                <div className={`${Styles.main} ${Styles.stacked}`}>
+                    <div id={Styles.addUnitButtonSubContainer}>
+                        {isGeneral ? <img id={Styles.generalIcon} src={DarkGeneral} alt=''/> : null}
+                        <p id={Styles.name}>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>
+                    </div>
+                    <p id={Styles.price}>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
                 </div>
-                <p id={Styles.price}>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
             </button>
             {isAddUnit || unit.cannotBeReinforced || unit.abilityGroupType === 'regimentOfRenown'
                 ? null
@@ -183,7 +185,7 @@ const UnitRow = ({
                 : <button id={Styles.button} onClick={handleCopy}><img src={Copy} alt="" /></button>
             }
             {onDelete ? <button id={Styles.button} onClick={handleDelete}><img src={Close} alt="" /></button> : null}
-            {isAddUnit ? <button id={Styles.infoButton} onClick={handleClickInfo}><img src={Info} alt="" /></button> : null}
+            {isAddUnit ? <button id={Styles.infoButton} onClick={handleClickInfo} aria-label='Info'><InfoIcon /></button> : null}
         </div>
         {isShowEnhancements && !isAddUnit && !isCogfort
             ? <div id={Styles.enhancementsContainer}>

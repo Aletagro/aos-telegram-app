@@ -1,7 +1,8 @@
 import React, {useCallback, useReducer, useState, useEffect} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
-import Modal from '@mui/joy/Modal'
-import ModalDialog from '@mui/joy/ModalDialog'
+import Modal from '../components/Modal'
+import Button from '../components/Button'
+import {Facts, Fact, Group, SummaryCard, Stat} from '../components/RosterParts'
 import Textarea from '@mui/joy/Textarea'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
@@ -9,9 +10,6 @@ import {getWoundsCount, getInfo, setRosterGrandAlliance, isScourgeOfGhyran} from
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
 import Row from '../components/Row'
-import Add from '../icons/add.svg'
-import Info from '../icons/info.svg'
-import WhiteInfo from '../icons/whiteInfo.svg'
 
 import map from 'lodash/map'
 import size from 'lodash/size'
@@ -272,6 +270,20 @@ const Builder = () => {
             state={{unit}}
         />
 
+
+    const getManifestationsToShow = () => {
+        const saved = filter(roster.manifestationsList, Boolean)
+        if (size(saved) || !roster.manifestationLore) {
+            return saved
+        }
+        const lore = find(manifestationsLores, ['name', roster.manifestationLore])
+        const abilities = filter(dataBase.data.lore_ability, ['loreId', lore?.id])
+        return filter(map(abilities, ability => {
+            const warscrollId = find(dataBase.data.lore_ability_linked_warscroll, ['loreAbilityId', ability.id])?.warscrollId
+            return find(dataBase.data.warscroll, ['id', warscrollId])
+        }), Boolean)
+    }
+
     const renderManifestation = (manifestation) => manifestation
         ? <Row
             key={manifestation.id}
@@ -297,125 +309,131 @@ const Builder = () => {
         }
     }
 
-    const renderEnhancement = (name, type, data) => data.length === 1 && !data[0].points
-        ? <div id={Styles.secondAddButton}>
-            <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data, true)}>
-                {data[0].name}{renderEnhancementPoints(type)}
-            </button>
-            <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img className={Styles.icon} src={Info} alt="" /></button>
-        </div>
-        : <div id={Styles.addButton}>
-            <button id={Styles.addButtonText} onClick={handleChooseEnhancement(name, type, data)}>
-                {roster[type]
-                    ? `${name} : ${roster[type]}${renderEnhancementPoints(type)}`
-                    : `Choose ${name}`
-                }
-            </button>
-            {type === 'manifestationLore' || !roster[type]
-                ? null
-                : <button id={Styles.infoIcon} onClick={handleChooseEnhancement(name, type, data, true)}><img src={Info} alt="" /></button>
-            }
-        </div>
-        
-    const renderPointsLimitButton = (limit) => <button key={limit} id={Styles.pointsLimitButton} onClick={handleClickPointsLimitButton(limit)}>{limit} Points</button>
+    const renderEnhancement = (name, type, data) => {
+        if (data.length === 1 && !data[0].points) {
+            return <Fact
+                label={name}
+                value={`${data[0].name}${renderEnhancementPoints(type)}`}
+                onClick={handleChooseEnhancement(name, type, data, true)}
+            />
+        }
+        const chosen = roster[type]
+        return <Fact
+            label={name}
+            value={chosen ? `${chosen}${renderEnhancementPoints(type)}` : `Choose ${name}`}
+            isEmpty={!chosen}
+            onClick={handleChooseEnhancement(name, type, data)}
+            onInfo={type !== 'manifestationLore' && chosen ? handleChooseEnhancement(name, type, data, true) : undefined}
+        />
+    }
 
-    const renderNoteInput = () => <div>
-        <p id={Styles.noteTitle}>Note</p>
+    const renderPointsLimitButton = (limit) => <Button
+        key={limit}
+        className={Styles.limitButton}
+        type={Number(roster.pointsLimit) === Number(limit) ? 'primary' : 'soft'}
+        onClick={handleClickPointsLimitButton(limit)}
+    >
+        {limit} Points
+    </Button>
+
+    const renderNoteInput = () => <div className={Styles.note}>
+        <p className={Styles.noteTitle}>Note</p>
         <Textarea
             defaultValue={roster.noteText}
             placeholder='Comment about your list'
             onChange={handleChangeNote}
             minRows={3}
-            sx={{'fontFamily': 'Minion Pro Regular'}}
+            sx={noteSx}
         />
     </div>
 
-    const renderModalContent = () => <>
-        <b id={Styles.pointsLimitTitle}>Points Limit</b>
-        {pointsLimits.map(renderPointsLimitButton)}
-    </>
+    const renderModalContent = () => <>{pointsLimits.map(renderPointsLimitButton)}</>
+
+    const tacticsChosen = size(roster.tactics) === 2
+    const manifestationsToShow = getManifestationsToShow()
+    const hasLores = spellsLores.length > 0 || preyersLores.length > 0 || manifestationsLores.length > 0 || factionTerrains.length > 0
 
     return <div id='column' className='Chapter'>
-        <button id={Styles.mainInfoContainer} onClick={handleClickAllegiance}>
-            <div id={Styles.allegianceContainer}>
-                <p id={Styles.text}>Grand Alliance: <b>{roster.grandAlliance}</b></p>
-                <img id={Styles.allegianceInfoIcon} src={Info} alt="" />
-            </div>
-            <p id={Styles.text}>Allegiance: <b>{roster.allegiance}</b></p>
-            <p>Wounds: {getWoundsCount(roster)}</p>
-        </button>
-        <button onClick={handleOpenModal} id={pointError ? Styles.errorPointsContainer : Styles.pointsContainer}>
-            <p id={Styles.pointsTitle}>Army: {roster.points?.all}/{roster.pointsLimit} Points ({roster.pointsLimit - roster.points?.all})</p>
-            <img id={Styles.pointsTitleInfoIcon} src={WhiteInfo} alt="" />
-        </button>
-        {battleFormations.length
-            ? <button id={roster.battleFormation ? Styles.secondAddButton : Styles.addButton} onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}>
-                {roster.battleFormation
-                    ? `Battle Formation : ${roster.battleFormation}${Boolean(roster.points?.battleFormation) ? ` (${roster.points?.battleFormation}${Constants.noBreakSpace}pts)` : ''}`
-                    : 'Choose Battle Formation'
-                }
-            </button>
-            : null
-        }
-        <button id={size(roster.tactics) === 2 ? Styles.secondAddButton : Styles.addButton} onClick={handleChooseTactics}>
-            {size(roster.tactics) === 2 ? `Your Tactics Cards` : 'Choose Tactics Cards'}
-        </button>
-        {roster.tactics[0]
-            ? <button onClick={handleClickTactics(roster.tactics[0])} id={Styles.secondAddButton}>
-                <p>First Card: {roster.tactics[0].name}</p>
-                <img src={Info} alt="" />
-            </button>
-            : null
-        }
-        {roster.tactics[1]
-            ? <button onClick={handleClickTactics(roster.tactics[1])} id={Styles.secondAddButton}>
-                <p>Second Card: {roster.tactics[1].name}</p>
-                <img src={Info} alt="" />
-            </button>
-            : null
-        }
-        {roster.regiments.length > 0
-            ? roster.regiments.map(renderRegiment)
-            : null
-        }
+        <SummaryCard alliance={roster.grandAlliance} army={roster.allegiance} onClick={handleClickAllegiance}>
+            <Stat label='Points' value={`${roster.points?.all}/${roster.pointsLimit}`} onClick={handleOpenModal} />
+            <Stat label='Left' value={roster.pointsLimit - roster.points?.all} isOver={pointError} />
+            <Stat label='Wounds' value={getWoundsCount(roster)} />
+        </SummaryCard>
+        <Facts>
+            {battleFormations.length
+                ? <Fact
+                    label='Battle Formation'
+                    value={roster.battleFormation
+                        ? `${roster.battleFormation}${roster.points?.battleFormation ? ` (${roster.points?.battleFormation}${Constants.noBreakSpace}pts)` : ''}`
+                        : 'Choose Battle Formation'
+                    }
+                    isEmpty={!roster.battleFormation}
+                    onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}
+                />
+                : null
+            }
+            <Fact
+                label='Tactics Cards'
+                value={tacticsChosen ? 'Your Tactics Cards' : 'Choose Tactics Cards'}
+                isEmpty={!tacticsChosen}
+                onClick={handleChooseTactics}
+            />
+            {roster.tactics[0] ? <Fact label='First Card' value={roster.tactics[0].name} onClick={handleClickTactics(roster.tactics[0])} /> : null}
+            {roster.tactics[1] ? <Fact label='Second Card' value={roster.tactics[1].name} onClick={handleClickTactics(roster.tactics[1])} /> : null}
+        </Facts>
+        {map(roster.regiments, renderRegiment)}
         {canCreateNewRegiment
-            ? <button id={Styles.addButton} onClick={handleAddRegiment}>
-                <p>Add Regiment</p>
-                <img src={Add} alt='' />
-            </button>
+            ? <Button className={Styles.addButton} onClick={handleAddRegiment}>Add Regiment</Button>
             : null
         }
-        <button id={Styles.secondAddButton} onClick={handleAddAuxiliaryUnit}>
-            <p>Add Auxiliary Unit</p>
-            <img src={Add} alt='' />
-        </button>
-        {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
+        {size(roster.auxiliaryUnits)
+            ? <Group title='Auxiliary Units'>
+                {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
+            </Group>
+            : null
+        }
+        <Button className={Styles.addButton} type='secondary' onClick={handleAddAuxiliaryUnit}>Add Auxiliary Unit</Button>
         {roster.regimentOfRenown
-            ? <>
-                <p id={Styles.title}>Regiment Of Renown</p>
+            ? <Group title='Regiment Of Renown'>
                 {renderRegimentOfRenown()}
                 {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
-            </>
+            </Group>
             : canCreateNewRegiment
-                ? <button id={Styles.secondAddButton} onClick={handleAddRegimentsOfRenown}>
-                    <p>Add Regiments Of Renown</p>
-                    <img src={Add} alt='' />
-                </button>
+                ? <Button className={Styles.addButton} type='secondary' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</Button>
                 : null
         }
-        <p id={Styles.title}>Lores</p>
-        {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
-        {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}
-        {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}
-        {roster.manifestationsList?.map(renderManifestation)}
-        {factionTerrains.length > 0 ? renderEnhancement('Faction Terrain', 'factionTerrain', factionTerrains) : null}
+        {hasLores
+            ? <Group title='Lores'>
+                <Facts>
+                    {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
+                    {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}
+                    {manifestationsLores.length > 0 ? renderEnhancement('Manifestation Lore', 'manifestationLore', manifestationsLores) : null}
+                    {factionTerrains.length > 0 ? renderEnhancement('Faction Terrain', 'factionTerrain', factionTerrains) : null}
+                </Facts>
+            </Group>
+            : null
+        }
+        {size(manifestationsToShow)
+            ? <Group title='Manifestations' subtitle={roster.manifestationLore}>
+                {manifestationsToShow.map(renderManifestation)}
+            </Group>
+            : null
+        }
         {renderNoteInput()}
-        <Modal open={open} onClose={handleCloseModal}>
-            <ModalDialog layout="center">
-                {renderModalContent()}
-            </ModalDialog>
-        </Modal>
+        <Modal visible={open} title='Points Limit' onClose={handleCloseModal} Content={renderModalContent} />
     </div>
+}
+
+const noteSx = {
+    '--Textarea-focusedThickness': '2px',
+    '--Textarea-focusedHighlight': '#b0953f',
+    borderRadius: '16px',
+    borderColor: '#c9b36a',
+    background: '#fff',
+    color: '#1d1810',
+    fontFamily: 'Minion Pro Regular',
+    fontSize: '16px',
+    '&:hover': {borderColor: '#b0953f'}
 }
 
 export default Builder
