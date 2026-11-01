@@ -2,59 +2,70 @@
     display: flex;
     overflow-x: auto;
     gap: 8px;
-    padding-top: 16px;
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-bottom: 8px;
+    padding: 14px 12px 8px;
+    scrollbar-width: none;
 }
-#filter {
+#filtersContainer::-webkit-scrollbar {
+    display: none;
+}
+.filter,
+.selectedFilter {
+    flex: 0 0 auto;
     white-space: nowrap;
-    background: rgb(201, 200, 199);
-    color: black;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 16px;
+    margin: 0;
+    padding: 7px 16px;
+    border: 1.5px solid #c9b36a;
+    border-radius: 999px;
+    background: #fffdf8;
+    color: #5c4a14;
+    font-family: 'Minion Pro Regular';
+    font-size: 15px;
+    cursor: pointer;
 }
-#selectedFilter {
-    white-space: nowrap;
-    background: rgb(46, 46, 49);
-    color: white;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 25px;
+.selectedFilter {
+    border-color: #b0953f;
+    background: linear-gradient(135deg, #14100a, #2a2210);
+    color: #f0d98a;
+    font-family: 'Minion Pro Bold';
 }
-#nextPage {
-    text-align: center;
-    background: rgb(46, 46, 49);
-    color: white;
-    padding: 8px;
-    border-radius: 4px;
-    margin-top: 12px;
+.nextPage {
+    width: 100%;
+    margin-top: 4px;
 }
 #emptyTitle {
+    padding: 60px 24px;
     text-align: center;
-    font-size: 24px;
-    padding: 60px 20px;
+    color: #8a7a4f;
+    font-size: 20px;
+    line-height: 1.35;
 }
-#modalFilter {
-    background: rgb(201, 200, 199);
-    color: black;
-    padding: 8px;
-    border-radius: 4px;
-    margin-bottom: 4px;
+.modalFilter,
+.selectedModalFilter {
+    margin: 0 0 6px;
+    padding: 11px 14px;
+    border: 1.5px solid #d8c88a;
+    border-radius: 14px;
+    background: #fff;
+    color: #1d1810;
+    font-size: 16px;
+    cursor: pointer;
 }
-#selectedModalFilter {
-    background: rgb(46, 46, 49);
-    color: white;
-    padding: 8px;
-    border-radius: 4px;
-    margin-bottom: 4px;
+.selectedModalFilter {
+    border-color: #b0953f;
+    background: linear-gradient(135deg, #14100a, #2a2210);
+    color: #f0d98a;
+    font-family: 'Minion Pro Bold';
 }
 #secondBlockTitle {
-    padding-top: 12px;
+    margin: 0;
+    padding: 14px 0 8px;
+    color: #8a6d1f;
     font-family: 'Minion Pro Bold';
-    font-size: 20px;
+    font-size: 15px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
 }
 #modalContainer {
-    padding-top: 16px;
+    padding-top: 4px;
 }

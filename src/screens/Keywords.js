@@ -28,6 +28,7 @@ const Keywords = () => {
     }
 
     const renderKeyword = (keyword) => <Row
+        key={keyword}
         title={keyword}
         onClick={handleClick(keyword)}
     />

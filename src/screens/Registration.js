@@ -2,10 +2,10 @@ import React, {useReducer, useState, useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Autocomplete from '@mui/joy/Autocomplete'
 import {main} from '../utilities/appState'
-import FloatingLabelInput from '../components/FloatingLabelInput'
+import FloatingLabelInput, {fieldSx} from '../components/FloatingLabelInput'
+import Button from '../components/Button'
 import Constants from '../Constants'
-
-import map from 'lodash/map'
+import countries from '../utilities/countries'
 
 import Styles from './styles/Registration.module.css'
 
@@ -13,12 +13,30 @@ const tg = window.Telegram.WebApp
 const user = tg.initDataUnsafe?.user
 
 const inputStyle = {
-    '--Input-minHeight': '48px',
-    'borderRadius': '4px',
-    'marginBottom': '16px',
-    'borderColor': '#B4B4B4',
-    'boxShadow': 'none',
-    'fontFamily': 'Minion Pro Regular'
+    'marginBottom': '16px'
+}
+
+// Выпадающий список стран в стиле приложения
+const listboxSx = {
+    mt: '4px',
+    p: '6px',
+    border: '1.5px solid #d8c88a',
+    borderRadius: '16px',
+    background: '#fffdf8',
+    boxShadow: '0 8px 24px rgba(20, 16, 10, 0.18)',
+    fontFamily: 'Minion Pro Regular',
+    '--ListItem-radius': '10px',
+    '& .MuiAutocomplete-option': {
+        color: '#1d1810',
+        fontSize: '16px',
+    },
+    '& .MuiAutocomplete-option[aria-selected="true"]': {
+        background: '#fbf3dc',
+        fontFamily: 'Minion Pro Bold',
+    },
+    '& .MuiAutocomplete-option:hover, & .MuiAutocomplete-option.Mui-focused': {
+        background: '#f3e9c4',
+    },
 }
 
 const Registration = () => {
@@ -29,7 +47,6 @@ const Registration = () => {
     const [lastname, setLastname] = useState(user?.last_name || '')
     const [country, setCountry] = useState('')
     const [city, setCity] = useState('')
-    const [countriesList, setCountriesList] = useState([])
 
     const isDisableButton = !firstname || !lastname || !country || !city
 
@@ -51,22 +68,6 @@ const Registration = () => {
             .catch(error => console.error(error))
       }, [navigate, firstname, lastname, country, city])
 
-    const getCountriesList = useCallback(async (value) => {
-        await fetch(`https://restcountries.com/v3.1/name/${value}?fields=name`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    setCountriesList([])
-                } else {
-                    setCountriesList(map(data, 'name.common'))
-                }
-            })
-            .catch(error => {
-                setCountriesList([])
-                console.error(error)
-            })
-      }, [])
-
     const handleChangeFirstName = (e) => {
         setFirstName(e.target.value)
     }
@@ -77,7 +78,6 @@ const Registration = () => {
 
     const handleChangeCountry = (e, value) => {
         setCountry(value || e.target.value)
-        getCountriesList(value || e.target.value)
     }
 
     const handleChangeCity = (e, value) => {
@@ -85,7 +85,7 @@ const Registration = () => {
     }
 
     return <div id='column' className='Chapter'>
-        <p id={Styles.title}>To save the list, please register</p>
+        <h2 id={Styles.title}>To save the list, please register</h2>
         <FloatingLabelInput
             style={inputStyle}
             onChange={handleChangeFirstName}
@@ -101,8 +101,9 @@ const Registration = () => {
         <Autocomplete
             placeholder='Country'
             onInputChange={handleChangeCountry}
-            options={countriesList}
-            sx={inputStyle}
+            options={countries}
+            sx={[fieldSx, inputStyle]}
+            slotProps={{listbox: {sx: listboxSx}}}
             value={country}
             autoComplete={true}
             autoSelect={true}
@@ -114,13 +115,9 @@ const Registration = () => {
             label='City'
             value={city}
         />
-        <button
-            id={isDisableButton ? Styles.disableRegButton : Styles.regButton}
-            onClick={handleRegUser}
-            disabled={isDisableButton}
-        >
+        <Button className={Styles.regButton} onClick={handleRegUser} disabled={isDisableButton}>
             Sign up
-        </button>
+        </Button>
     </div>
 }
 

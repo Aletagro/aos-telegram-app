@@ -1,21 +1,138 @@
-#feedbackText {
-  margin: 0px;
-  padding-bottom: 8px;
-  font-weight: bold;
+/* Главное меню: тёмная шапка, золото и тонкие линии, как на экранах лидеров и карточки игрока */
+
+/* ---------- Шапка ---------- */
+.hero {
+    position: relative;
+    overflow: hidden;
+    margin: 8px 8px 0;
+    border: 2px solid #b0953f;
+    border-radius: 20px;
+    background: #000;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-#testButton {
-  border-width: 0px;
-  background: transparent;
-  color: white;
+.heroImage {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
-#suppotButton {
-  background: #0088CC;
-  color: white;
-  border-width: 0px;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 16px;
-  margin-bottom: 12px;
+.heroShade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.9) 100%);
+}
+
+/* ---------- Список ---------- */
+.menu {
+    padding: 8px 12px 32px;
+}
+
+.section {
+    margin-top: 10px;
+}
+
+/* Заголовок группы: разрядка и золотые линии по бокам */
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 6px;
+    font-family: 'Minion Pro Regular';
+    font-size: 13px;
+    font-weight: normal;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #8a6d1f;
+}
+
+.sectionTitle::before,
+.sectionTitle::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(176, 149, 63, 0), rgba(176, 149, 63, 0.75));
+}
+
+.sectionTitle::after {
+    background: linear-gradient(to left, rgba(176, 149, 63, 0), rgba(176, 149, 63, 0.75));
+}
+
+/* Пункт: строка без карточки, разделена тонкой линией */
+.row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 4px 14px 2px;
+    border: 0;
+    border-bottom: 1px solid #e6dcc0;
+    background: none;
+    box-sizing: border-box;
+    text-align: start;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s ease, padding-left 0.15s ease;
+}
+
+.section .row:last-child {
+    border-bottom: 0;
+}
+
+.row:active {
+    padding-left: 8px;
+    background: linear-gradient(to right, rgba(176, 149, 63, 0.14), rgba(176, 149, 63, 0));
+}
+
+.body {
+    flex: 1;
+    min-width: 0;
+}
+
+.title {
+    display: block;
+    font-family: 'Minion Pro Bold';
+    font-size: 18px;
+    line-height: 1.2;
+    color: #1d1810;
+}
+
+.hint {
+    display: block;
+    margin-top: 3px;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: #8a7a4a;
+}
+
+/* Стрелка из линий, без символов и эмодзи */
+.chevron {
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    margin-right: 6px;
+    border-top: 2px solid #b0953f;
+    border-right: 2px solid #b0953f;
+    transform: rotate(45deg);
+}
+
+
+/* ---------- Нижний блок ---------- */
+.support {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.footer {
+    margin: 14px 0 0;
+    color: #8a7a4f;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.footer b {
+    color: #6b5212;
 }

@@ -6,8 +6,9 @@ import {navigationState, roster, main} from '../utilities/appState'
 import {getStringAfterDash, checkForOnlyOneInRegiment, cleanBuilder} from '../utilities/utils'
 import Modal from '../components/Modal'
 import Constants from '../Constants'
-import Add from '../icons/add.svg'
-import Close from '../icons/whiteClose.svg'
+import Button from '../components/Button'
+import InfoNote from '../components/InfoNote'
+import {ModalActions, ModalButton} from '../components/ModalActions'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -197,40 +198,33 @@ const UserLists = () => {
         handleCloseModal()
     }
 
-    const renderDeleteModalContent = (listId) => () => <div id={Styles.modalButtonContainer}>
-        <button id={Styles.modalButton} onClick={handleDelete(listId)}>Yes</button>
-        <button id={Styles.modalButton} onClick={handleCloseModal}>No</button>
-    </div>
+    const renderDeleteModalContent = (listId) => () => <ModalActions>
+        <ModalButton onClick={handleCloseModal}>No</ModalButton>
+        <ModalButton type='danger' onClick={handleDelete(listId)}>Yes</ModalButton>
+    </ModalActions>
 
     const renderList = (list) => {
         const army = find(dataBase.data.faction_keyword, ['id', list.allegiance_id])
-        console.log({list, army})
         return <div id={Styles.listContainer} key={list.id}>
-            <div  id={Styles.closeIcon} onClick={handleClickDelete(list.id)}>
-                <img src={Close} alt='' />
-            </div>
+            <button type='button' className={Styles.closeIcon} onClick={handleClickDelete(list.id)} aria-label='Delete list'>
+                <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' aria-hidden='true'><path d='M6 6l12 12M18 6L6 18' /></svg>
+            </button>
             <button id={Styles.button} onClick={handleNavigateToRoster(list)} key={list.id}>
                 <img src={army?.moreInfoImage} alt={army?.name} id={Styles.image} />
                 <div id={Styles.textContainer}>
                     <p id={Styles.text}>{list.name}</p>
-                    <p id={Styles.text}>{army?.name}</p>
+                    <p id={Styles.armyText}>{army?.name}</p>
                 </div>
             </button>
         </div>
     }
 
     return  <div id='column' className='Chapter'>
-        <button id={Styles.newRosterButton} onClick={handleAddNewRoster}>
-            <p>New List</p>
-            <img src={Add} alt='' />
-        </button>
-        <button id={Styles.newRosterButton} onClick={handlePasteList}>
-            <p>Paste List</p>
-            <img src={Add} alt='' />
-        </button>
+        <Button className={Styles.newRosterButton} onClick={handleAddNewRoster}>New List</Button>
+        <Button className={Styles.newRosterButton} type='secondary' onClick={handlePasteList}>Paste List</Button>
         {includes(Constants.developersIds, main.tgId)
             ? null
-            : <p id={Styles.notice}>You can only save {Constants.listsMax} army lists.</p>
+            : <InfoNote>You can only save {Constants.listsMax} army lists.</InfoNote>
         }
         <div id={Styles.buttonContainer}>
             {map(main.rosters, renderList)}

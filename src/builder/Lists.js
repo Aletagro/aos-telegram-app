@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import {navigationState, roster, lists} from '../utilities/appState'
 import {getStringAfterDash, checkForOnlyOneInRegiment} from '../utilities/utils'
 import RosterEasy from '../components/RosterEasy'
+import Button from '../components/Button'
 import Modal from '../components/Modal'
 import Constants from '../Constants'
 
@@ -206,7 +207,7 @@ const Lists = () => {
 
     const renderModalFilter = (key) => (value, index) => <p
         key={index}
-        id={lists.filters[key] === value ? Styles.selectedModalFilter : Styles.modalFilter}
+        className={lists.filters[key] === value ? Styles.selectedModalFilter : Styles.modalFilter}
         onClick={handleClickModalFilter(key, value)}
     >
         {value}
@@ -239,16 +240,11 @@ const Lists = () => {
         if (item.id === 'battle_formation' && !lists.filters.allegiance) {
             return null
         }
-        return <p id={lists.filters[item.id] ? Styles.selectedFilter : Styles.filter} key={item.id} onClick={handleClickFilter(item)}>{item.label}</p>
+        return <button type='button' className={lists.filters[item.id] ? Styles.selectedFilter : Styles.filter} key={item.id} onClick={handleClickFilter(item)}>{item.label}</button>
     }
 
     const renderFilters = () => <div id={Styles.filters}>
         <div id={Styles.filtersContainer}>
-            <style jsx>{`
-            div::-webkit-scrollbar {
-                display: none; /* Скрываем скроллбар в WebKit-браузерах */
-            }
-            `}</style>
             {map(filtersData, renderFilter)}
         </div>
     </div>
@@ -265,7 +261,7 @@ const Lists = () => {
                     {map(lists.data, renderList)}
                     {lists.meta?.total_pages === lists.meta?.page
                         ? null
-                        : <p id={Styles.nextPage} onClick={handleClickNextPage}>Show Next Page</p>
+                        : <Button className={Styles.nextPage} type='secondary' onClick={handleClickNextPage}>Show Next Page</Button>
                     }
                 </>
                 : <p id={Styles.emptyTitle}>Nobody plays this army yet, you can be the first!</p>
