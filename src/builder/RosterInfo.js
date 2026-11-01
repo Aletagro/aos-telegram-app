@@ -13,7 +13,7 @@ const ChooseWeapon = () => {
     // eslint-disable-next-line
     const [_, forceUpdate] = useReducer((x) => x + 1, 0)
     const {
-        warscrolls, enchancements, factionTerrain, battleTraits, battleFormation,
+        warscrolls, enhancements, factionTerrain, battleTraits, battleFormation,
         spells, prayers,battleTactics, universalCommands, universalAbilities
     } = useMemo(getRosterInfo, [])
 
@@ -70,7 +70,7 @@ const ChooseWeapon = () => {
         {size(warscrolls) ? renderWarscrollsAccordion('Warscrolls', warscrolls) : null}
         {size(roster.manifestationsList) ? renderWarscrollsAccordion('Manifestations', roster.manifestationsList) : null}
         {factionTerrain ? renderWarscrollsAccordion('Faction Terrain', [factionTerrain]) : null}
-        {size(enchancements) ? renderAbilitiesAccordion('Enchancements', enchancements) : null}
+        {size(enhancements) ? renderAbilitiesAccordion('Enhancements', enhancements) : null}
         {size(battleTraits) ? renderAbilitiesAccordion('Battle Traits', battleTraits) : null}
         {size(battleFormation) ? renderAbilitiesAccordion('Battle Formation', battleFormation) : null}
         {size(spells) ? renderAbilitiesAccordion('Spells Lore', spells) : null}

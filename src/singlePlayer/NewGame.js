@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import {singlePlayer} from '../utilities/appState'
 import {getNewRound} from '../utilities/utils'
 import NewGamePlayer from './NewGamePlayer'
+import Button from '../components/Button'
 
 import Styles from './styles/NewGame.module.css'
 
@@ -25,10 +26,10 @@ const NewGame = ({onUpdate}) => {
     }
 
     return <div id='column' className='Chapter'>
-        <button id={singlePlayer.battleplan.name ? Styles.choosedBattleplan : Styles.battleplan} onClick={handleChooseBattleplan}>{singlePlayer.battleplan.name ? `Battleplan: ${singlePlayer.battleplan.name}` : 'Choose Battleplan'}</button>
+        <Button className={Styles.battleplan} type={singlePlayer.battleplan.name ? 'secondary' : 'primary'} onClick={handleChooseBattleplan}>{singlePlayer.battleplan.name ? `Battleplan: ${singlePlayer.battleplan.name}` : 'Choose Battleplan'}</Button>
         <NewGamePlayer player='firstPlayer' onUpdate={onUpdate} />
         <NewGamePlayer player='secondPlayer' onUpdate={onUpdate} />
-        <button id={disabledStartButton ? Styles.disabledStart : Styles.start} onClick={handleClickStart} disabled={disabledStartButton}>Start Game</button>
+        <Button className={Styles.start} onClick={handleClickStart} disabled={disabledStartButton}>Start Game</Button>
     </div>
 }
 

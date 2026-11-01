@@ -23,9 +23,8 @@ const ChooseTactics = () => {
     }
 
     const renderTactic = (tactic) => {
-        const color = 'black'
-        return <button key={tactic.id} id={Styles.container} style={{border: `1px solid ${color}`}} onClick={handleChooseTactics(tactic)}>
-            <b id={Styles.title} style={{background: color}}>{tactic.title}</b>
+        return <button key={tactic.id} id={Styles.container} onClick={handleChooseTactics(tactic)}>
+            <b id={Styles.title}>{tactic.title}</b>
             <p id={Styles.text}>{replaceAsterisks(tactic.textContent)}</p>
         </button>
     }

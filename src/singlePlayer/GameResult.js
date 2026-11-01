@@ -3,6 +3,7 @@ import Constants from '../Constants'
 import {singlePlayer} from '../utilities/appState'
 import GameResultPlayer from './GameResultPlayer'
 import GameResultStatistic from './GameResultStatistic'
+import Button from '../components/Button'
 
 import Styles from './styles/GameResult.module.css'
 
@@ -48,7 +49,7 @@ const GameResult = ({onUpdate}) => {
             <GameResultStatistic player='firstPlayer' />
             <GameResultStatistic player='secondPlayer' />
         </div>
-        <button id={Styles.bottomButton} onClick={handleClickNewGame}>Start New Game</button>
+        <Button className={Styles.bottomButton} onClick={handleClickNewGame}>Start New Game</Button>
     </div>
 }
 

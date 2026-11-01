@@ -1114,34 +1114,34 @@ export const parseListForListbot = (input) => {
 
 export const getRosterInfo = () => {
     const regimentsUnits = []
-    const enchancementsNames = []
+    const enhancementsNames = []
 
-    const setEnchancementName = (unit) => {
+    const setEnhancementName = (unit) => {
         if (unit.heroicTrait) {
-            enchancementsNames.push(unit.heroicTrait)
+            enhancementsNames.push(unit.heroicTrait)
         }
         if (unit.artefact) {
-            enchancementsNames.push(unit.artefact)
+            enhancementsNames.push(unit.artefact)
         }
         forEach(roster.otherEnhancements, otherEnhancement => {
             if (unit[otherEnhancement]) {
-                enchancementsNames.push(unit[otherEnhancement])
+                enhancementsNames.push(unit[otherEnhancement])
             }
         })
     }
 
     forEach(roster.regiments, regiment => forEach(regiment.units, unit => {
         regimentsUnits.push(unit)
-        setEnchancementName(unit)
+        setEnhancementName(unit)
     }))
     forEach(roster.auxiliaryUnits, unit => {
-        setEnchancementName(unit)
+        setEnhancementName(unit)
     })
     forEach(roster.regimentsOfRenownUnits, unit => {
-        setEnchancementName(unit)
+        setEnhancementName(unit)
     })
     const warscrolls = uniq([...regimentsUnits, ...roster.auxiliaryUnits, ...roster.regimentsOfRenownUnits])
-    const enchancements = map(uniq(enchancementsNames), name => find(dataBase.data.ability, ['name', name]))
+    const enhancements = map(uniq(enhancementsNames), name => find(dataBase.data.ability, ['name', name]))
     const factionTerrain = roster.factionTerrain ? find(dataBase.data.warscroll, ['name', roster.factionTerrain]) : undefined
     const battleTraitsGroups = getInfo(Constants.armyEnhancements[0], {id: roster.allegianceId, name: roster.allegiance})?.abilities
     const battleTraits = []
@@ -1159,7 +1159,7 @@ export const getRosterInfo = () => {
     })
     const universalCommands = map(Constants.universalCommands, item => find(dataBase.data.ability, ['id', item.id]))
     const universalAbilities = map(Constants.universalAbilities, item => find(dataBase.data.ability, ['id', item.id]))
-    return {warscrolls, enchancements, factionTerrain, battleTraits, battleFormation, spells, prayers, battleTactics, universalCommands, universalAbilities}
+    return {warscrolls, enhancements, factionTerrain, battleTraits, battleFormation, spells, prayers, battleTactics, universalCommands, universalAbilities}
 }
 
 export const getUnitsRowRightText = (unit) => {

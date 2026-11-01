@@ -5,7 +5,7 @@ import Turns from './Turns'
 import NewGame from './NewGame'
 import PlayerInfo from './PlayerInfo'
 import GameResult from './GameResult'
-import Info from '../icons/info.svg'
+import InfoIcon from '../icons/InfoIcon'
 
 import Styles from './styles/SinglePlayer.module.css'
 
@@ -27,7 +27,7 @@ const SinglePlayer = () => {
             ? <div id='column' className='Chapter'>
                 <button id={Styles.battleplan} onClick={handleClickBattleplan}>
                     <p>Battleplan: <b>{singlePlayer.battleplan.name}</b></p>
-                    <img src={Info} alt="" />
+                    <InfoIcon />
                 </button>
                 <div id={Styles.infoContainer}>
                     <PlayerInfo player='firstPlayer' onUpdate={handleUpdate} />

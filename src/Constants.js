@@ -466,7 +466,7 @@ const Constants = {
         'Warscrolls': false,
         'Manifestations': false,
         'Faction Terrain': false,
-        'Enchancements': false,
+        'Enhancements': false,
         'Battle Traits': true,
         'Battle Formations': false,
         'Spells Lore': true,

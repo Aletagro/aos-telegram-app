@@ -1,5 +1,6 @@
 import React from 'react'
 import PlayerTurn from './PlayerTurn'
+import Button from '../components/Button'
 import {singlePlayer} from '../utilities/appState'
 import {getNewRound} from '../utilities/utils'
 
@@ -29,7 +30,7 @@ const Turn = ({round, onUpdate}) => {
             <PlayerTurn player='secondPlayer' round={round} onUpdate={onUpdate} />
         </div>
         {singlePlayer.currentRound === round
-            ? <button id={Styles.bottomButton} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</button>
+            ? <Button className={Styles.bottomButton} onClick={handleClickNextRound}>{singlePlayer.currentRound === 5 ? 'Finish game' : 'Start Next Round'}</Button>
             : null
         }
     </div>

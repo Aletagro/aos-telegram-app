@@ -3,7 +3,8 @@ import {useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
 import {singlePlayer} from '../utilities/appState'
 import {randomFromInterval} from '../utilities/utils'
-import Info from '../icons/info.svg'
+import InfoIcon from '../icons/InfoIcon'
+import Button from '../components/Button'
 
 import filter from 'lodash/filter'
 
@@ -38,10 +39,10 @@ const ChooseBattleplan = () => {
 
     const renderBattleplan = (battleplan, index) => <div id={Styles.container} key={index}>
         <button key={battleplan.id} id={Styles.battleplan} onClick={handleChooseBattleplan(battleplan)}>{battleplan.name}</button>
-        <button id={Styles.icon} onClick={handleChooseBattleplanInfo(battleplan)}><img src={Info} alt="" /></button>
+        <button id={Styles.icon} onClick={handleChooseBattleplanInfo(battleplan)} aria-label='Info'><InfoIcon /></button>
     </div>
     
-    const renderRandomButton = () => <button id={Styles.randomButton} onClick={handleClickRandom}>Random Battleplan</button>
+    const renderRandomButton = () => <Button className={Styles.randomButton} type='secondary' onClick={handleClickRandom}>Random Battleplan</Button>
 
     return <div id='column' className='Chapter'>
         {battleplans && battleplans.map(renderBattleplan)}

@@ -1,22 +1,28 @@
 #container {
-    background: white;
     display: block;
-    margin-bottom: 16px;
-    padding: 0px;
-    border-radius: 8px;
-    text-align: start;
-    font-size: 1em;
     width: 100%;
+    margin-bottom: 14px;
+    padding: 0;
+    overflow: hidden;
+    border: 1.5px solid #c9b36a;
+    border-radius: 18px;
+    background: #fbf6e6;
+    text-align: start;
 }
 #title {
-    color: white;
     display: flex;
-    margin: 0;
-    padding: 8px 16px;
-    border-radius: 6px 6px 0px 0px;
+    margin: 0 0 8px;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, #14100a, #2a2210);
+    color: #f0d98a;
+    font-size: 18px;
+    line-height: 24px;
 }
 #text {
+    margin: 0;
+    padding: 4px 16px 14px;
     white-space: pre-line;
+    color: #2b2416;
     font-size: 16px;
-    padding: 12px;
+    line-height: 1.45;
 }

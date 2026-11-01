@@ -40,7 +40,7 @@ const SpearheadArmy = () => {
     const renderUnitsInfo = (info) => info.contentType === 'loreAccordion'
         ? null
         : info.contentType === 'textBold' || info.contentType === 'header'
-            ? <b id={Styles.infoText} key={info.id}>{removeAsterisks(info.textContent)}</b>
+            ? <b className={Styles.infoTitle} key={info.id}>{removeAsterisks(info.textContent)}</b>
             : <p id={Styles.infoText} key={info.id}>{replaceAsterisks(info.textContent)}</p>
 
     return <>

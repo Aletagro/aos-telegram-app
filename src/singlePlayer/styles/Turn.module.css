@@ -1,98 +1,81 @@
 #title {
-    border-radius: 4px;
-    font-size: 20px;
-    line-height: 24px;
+    margin: 4px 0 12px;
+    color: #1d1810;
     font-family: 'Minion Pro Bold';
-    margin-bottom: 16px;
+    font-size: 22px;
+    line-height: 26px;
 }
 #scoreParamContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
     margin-bottom: 12px;
+    color: #2b2416;
+}
+#scoreParamContainer p {
+    margin: 0;
 }
 #roundContainer {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 #currentRoundSubContainer {
     flex: 1;
-    border: 1px solid rgb(46, 46, 49);
+    min-width: 0;
     margin-bottom: 16px;
-    border-radius: 8px;
-}
-#currentRoundTitle {
-    background: rgb(46, 46, 49);
-    border-radius: 4px 4px 0px 0px;
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-#tacticsButton {
-    background: rgb(245, 201, 80);
-    border-width: 0px;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-family: 'Minion Pro Bold';
-    width: 100%;
-    text-align: start;
-}
-#tacticsDisabledButton {
-    background: rgb(236, 236, 236);
-    border-width: 0px;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-family: 'Minion Pro Bold';
-    width: 100%;
-    text-align: start;
+    overflow: hidden;
+    border: 1.5px solid #c9b36a;
+    border-radius: 18px;
+    background: #fbf6e6;
 }
 #name {
-    background: rgb(46, 46, 49);
-    color: white;
+    margin: 0;
     padding: 12px 16px;
-    border-radius: 4px 4px 0px 0px;
+    background: linear-gradient(135deg, #14100a, #2a2210);
+    color: #f0d98a;
+    font-family: 'Minion Pro Bold';
+    font-size: 18px;
+}
+#tacticsContainer {
+    padding: 10px 12px 0;
+}
+.tacticsButton {
+    width: 100%;
 }
 #subContainer {
-    padding: 0px 16px;
-    padding-top: 12px;
+    padding: 14px 16px 2px;
 }
 #scoreParamTitle {
-    color: rgb(46, 46, 49);
+    padding-right: 4px;
+    color: #2b2416;
     font-size: 16px;
     line-height: 20px;
-    padding-right: 4px;
+}
+.check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 2px solid #c9b36a;
+    border-radius: 8px;
+    background: #fff;
+    color: #fff;
+    cursor: pointer;
+}
+.checkOn {
+    border-color: #b0953f;
+    background: #b0953f;
 }
 #separator {
     height: 1px;
-    flex: 1;
-    margin: 12px 0px;
-    margin-top: 0px;
-    background: #ECECEC;
+    margin: 0 0 12px;
+    background: linear-gradient(to right, #b0953f, rgba(176, 149, 63, 0.15));
 }
-#bottomButton {
-    background-color: #ECECEC;
-    border-radius: 24px;
-    padding: 12px 16px;
-    font-size: 16px;
-    margin-bottom: 20px;
-    border-width: 0px;
-    font-size: 18px;
-    line-height: 24px;
-    font-family: 'Minion Pro Bold';
+.bottomButton {
     width: 100%;
-}
-#disabledBottomButton {
-    background-color: #ECECEC;
-    color: #B4B4B4;
-    border-radius: 24px;
-    padding: 12px 16px;
-    font-size: 16px;
     margin-bottom: 20px;
-    border-width: 0px;
-    font-size: 18px;
-    line-height: 24px;
-    font-family: 'Minion Pro Bold';
-    width: 100%;
 }

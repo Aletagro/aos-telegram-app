@@ -5,9 +5,9 @@ import Styles from './styles/GameResult.module.css'
 
 const GameResultStatistic = ({player}) => {
 
-    const renderRound = (round, index) => <div id={Styles.statisticRound}>
+    const renderRound = (round, index) => <div key={index} id={Styles.statisticRound}>
         <p id={Styles.statisticText}>{index + 1} turn</p>
-        <b id={Styles.tatisticText}>{round[player].vp}</b>
+        <b id={Styles.statisticText}>{round[player].vp}</b>
     </div>
 
     return <div id={Styles.content}>

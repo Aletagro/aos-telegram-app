@@ -2,7 +2,6 @@ import React from 'react';
 import Constants from '../Constants';
 import {singlePlayer} from '../utilities/appState';
 import {sortByName} from '../utilities/utils'
-import Checkbox from '../components/Checkbox'
 
 import Styles from './styles/NewGame.module.css'
 
@@ -53,7 +52,7 @@ const NewGamePlayer = ({onUpdate, player}) => {
     const renderGrandAlliance = (alliance) => <button
         key={alliance.id}
         onClick={handleClickGrandAlliance(alliance, player)}
-        id={singlePlayer[player].alliance.id === alliance.id ? Styles.checkedButton : Styles.button}
+        className={singlePlayer[player].alliance.id === alliance.id ? Styles.checkedButton : Styles.button}
     >
         {alliance.shortName || alliance.name}
     </button>
@@ -61,7 +60,7 @@ const NewGamePlayer = ({onUpdate, player}) => {
     const renderAllegiances = (allegiance) => <button
         key={allegiance.id}
         onClick={handleClickAllegiance(allegiance, player)}
-        id={singlePlayer[player].allegiance.id === allegiance.id ? Styles.checkedButton : Styles.button}
+        className={singlePlayer[player].allegiance.id === allegiance.id ? Styles.checkedButton : Styles.button}
     >
         {allegiance.name}
     </button>
@@ -71,7 +70,18 @@ const NewGamePlayer = ({onUpdate, player}) => {
             <p id={Styles.title}>{player === 'firstPlayer' ? '1st' : '2nd'} Player's Army</p>
         <div id={Styles.addCpContainer}>
             <p id={Styles.title}>+1 CP</p>
-            <Checkbox onClick={handleAddCP} checked={singlePlayer[player].cp === 5} isGold />
+            <button
+            type='button'
+            className={`${Styles.check} ${singlePlayer[player].cp === 5 ? Styles.checkOn : ''}`}
+            role='checkbox'
+            aria-checked={Boolean(singlePlayer[player].cp === 5)}
+            onClick={handleAddCP}
+        >
+            {singlePlayer[player].cp === 5
+                ? <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'><path d='M5 12.5l4.5 4.5L19 7.5' /></svg>
+                : null
+            }
+        </button>
         </div>
         </div>
         <div id={Styles.alliancesButtons}>

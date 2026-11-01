@@ -1,7 +1,7 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import {singlePlayer} from '../utilities/appState'
-import Checkbox from '../components/Checkbox'
+import Button from '../components/Button'
 
 import Styles from './styles/Turn.module.css'
 
@@ -44,14 +44,27 @@ const PlayerTurn = ({player, round, onUpdate}) => {
 
     const renderScoreParam = (param, index) => <div key={param.id} id={Styles.scoreParamContainer}>
         <p id={Styles.scoreParamTitle}>{param.title}</p>
-        <Checkbox onClick={handleChangeParam(param, index)} checked={param.completed} />
+        <button
+            type='button'
+            className={`${Styles.check} ${param.completed ? Styles.checkOn : ''}`}
+            role='checkbox'
+            aria-checked={Boolean(param.completed)}
+            onClick={handleChangeParam(param, index)}
+        >
+            {param.completed
+                ? <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'><path d='M5 12.5l4.5 4.5L19 7.5' /></svg>
+                : null
+            }
+        </button>
     </div>
 
     return <div id={Styles.currentRoundSubContainer}>
         <p id={Styles.name}>{player === 'firstPlayer' ? '1st' : '2nd'} Player</p>
-        <button id={disabledButton ? Styles.tacticsDisabledButton : Styles.tacticsButton} disabled={disabledButton} onClick={handleChooseTactics(player)}>
-            {singlePlayer.rounds[roundNumber][player].tactics?.name || 'Choose Tactics'}
-        </button>
+        <div id={Styles.tacticsContainer}>
+            <Button className={Styles.tacticsButton} size='sm' type={singlePlayer.rounds[roundNumber][player].tactics?.name ? 'secondary' : 'primary'} disabled={disabledButton} onClick={handleChooseTactics(player)}>
+                {singlePlayer.rounds[roundNumber][player].tactics?.name || 'Choose Tactics'}
+            </Button>
+        </div>
         <div id={Styles.subContainer}>
             {singlePlayer.rounds[roundNumber][player].score.map(renderScoreParam)}
             <div id={Styles.separator} />
