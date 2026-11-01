@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Delete from '../icons/delete.svg'
 import WhiteCopy from '../icons/whiteCopy.svg'
 import Accordion from '@mui/joy/Accordion'
@@ -9,20 +9,35 @@ import {calc} from '../utilities/appState'
 import {getCalcWeapon, getCalcUnit} from '../utilities/utils'
 import Weapon from './Weapon'
 import FloatingLabelInput from '../components/FloatingLabelInput'
+import Button from '../components/Button'
 
 import Styles from './styles/CalcUnit.module.css'
 
 const inputStyle = {
-    '--Input-minHeight': '48px',
-    'borderRadius': '4px',
     'margin': '16px',
-    'border-color': '#B4B4B4',
-    'box-shadow': 'none',
-    'font-family': 'Minion Pro Regular'
 }
 
 const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
     const [name, setName] = useState(unit.name || '')
+    const [headerHeight, setHeaderHeight] = useState(0)
+    const headerRef = useRef(null)
+
+    useEffect(() => {
+        const node = headerRef.current
+        if (!node) {
+            return undefined
+        }
+        const update = () => setHeaderHeight(node.offsetHeight)
+        update()
+        if (typeof ResizeObserver === 'undefined') {
+            return undefined
+        }
+        const observer = new ResizeObserver(update)
+        observer.observe(node)
+        return () => observer.disconnect()
+    }, [])
+
+    const iconStyle = headerHeight ? {top: headerHeight / 2} : undefined
 
     useEffect(() => {
         setName(unit.name)
@@ -89,10 +104,10 @@ const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
     />
 
     return  <div id={Styles.container}>
-        <button id={Styles.headerCopyIcon} onClick={handleCopy}><img src={WhiteCopy} alt="" /></button>
-        <button id={Styles.headerDeleteIcon} onClick={handleDelete}><img src={Delete} alt="" /></button>
+        <button id={Styles.headerCopyIcon} style={iconStyle} onClick={handleCopy}><img src={WhiteCopy} alt="" /></button>
+        <button id={Styles.headerDeleteIcon} style={iconStyle} onClick={handleDelete}><img src={Delete} alt="" /></button>
         <Accordion defaultExpanded={true}>
-            <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
+            <AccordionSummary ref={headerRef} id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
                 <b id={Styles.header}>{unit.name || `Unit ${index + 1}`}</b>
             </AccordionSummary>
             <AccordionDetails>
@@ -105,7 +120,7 @@ const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
                 />
                 {unit.weapons.map(renderWeapon)}
                 <div id={Styles.separator} />
-                <button id={Styles.addWeaponButton} onClick={handleAddWeapon}>Add Weapon</button>
+                <Button type='secondary' className={Styles.addWeaponButton} onClick={handleAddWeapon}>Add Weapon</Button>
             </AccordionDetails>
         </Accordion>
     </div>
