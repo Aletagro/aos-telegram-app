@@ -8,6 +8,9 @@ import Row from '../components/Row'
 
 import map from 'lodash/map'
 import size from 'lodash/size'
+import find from 'lodash/find'
+
+const dataBase = require('../dataBase.json')
 
 const ChooseWeapon = () => {
     // eslint-disable-next-line
@@ -22,13 +25,15 @@ const ChooseWeapon = () => {
         forceUpdate()
     }, [])
 
+    const loreId = find(dataBase.data.lore, lore => lore.name === roster.manifestationLore && (!lore.factionId || lore.factionId === roster.allegianceId))?.id
+
     const renderWarscroll = (unit) => <Row
         key={unit?.id}
         title={unit?.name}
-        rightText={getUnitsRowRightText(unit)}
+        rightText={getUnitsRowRightText(unit, {allegianceId: roster.allegianceId, loreId})}
         image={unit?.rowImage}
         navigateTo='warscroll'
-        state={{unit, allegianceId: roster.allegianceId}}
+        state={{unit, allegianceId: roster.allegianceId, loreId}}
     />
 
     const renderWarscrollsAccordion = (title, data) => <Accordion

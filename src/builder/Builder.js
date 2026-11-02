@@ -6,7 +6,7 @@ import {Facts, Fact, Group, SummaryCard, Stat} from '../components/RosterParts'
 import Textarea from '@mui/joy/Textarea'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
-import {getWoundsCount, getInfo, setRosterGrandAlliance, isScourgeOfGhyran, getErrors, getWarnings} from '../utilities/utils'
+import {getWoundsCount, getInfo, setRosterGrandAlliance, isScourgeOfGhyran, getErrors, getWarnings, getUnitsRowRightText, getDropsCount} from '../utilities/utils'
 import ListStatus, {getStatusText, getRegimentIndexFromIssue} from './ListStatus'
 import useSaveList from './useSaveList'
 import {ToastContainer} from 'react-toastify'
@@ -305,8 +305,9 @@ const Builder = () => {
             key={manifestation.id}
             title={manifestation.name}
             image={manifestation.rowImage}
+            rightText={getUnitsRowRightText(manifestation, {allegianceId: _alliganceId, loreId: find(manifestationsLores, ['name', roster.manifestationLore])?.id})}
             navigateTo='warscroll'
-            state={{unit: manifestation, allegianceId: _alliganceId}}
+            state={{unit: manifestation, allegianceId: _alliganceId, loreId: find(manifestationsLores, ['name', roster.manifestationLore])?.id}}
         />
         : null
 
@@ -430,7 +431,7 @@ const Builder = () => {
         <div id='summary'>
         <SummaryCard alliance={roster.grandAlliance} army={roster.allegiance} onClick={handleClickAllegiance}>
             <Stat label='Points' value={`${roster.points?.all}/${roster.pointsLimit}`} onClick={handleOpenModal} />
-            <Stat label='Left' value={roster.pointsLimit - roster.points?.all} isOver={pointError} />
+            <Stat label='Drops' value={getDropsCount(roster)} />
             <Stat label='Wounds' value={getWoundsCount(roster)} />
         </SummaryCard>
         </div>
@@ -459,7 +460,7 @@ const Builder = () => {
         </Facts>
         {map(roster.regiments, renderRegiment)}
         {canCreateNewRegiment
-            ? <Button className={Styles.addButton} onClick={handleAddRegiment}>Add Regiment</Button>
+            ? <Button className={Styles.addButton} onClick={handleAddRegiment} type='secondary'>Add Regiment</Button>
             : null
         }
         {size(roster.auxiliaryUnits)

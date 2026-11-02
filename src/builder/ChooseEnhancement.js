@@ -3,6 +3,8 @@ import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
 import Ability from '../components/Ability'
 import RowImage from '../components/RowImage'
+import {renderRightText} from '../components/Row'
+import {getUnitsRowRightText} from '../utilities/utils'
 import Button from '../components/Button'
 
 import map from 'lodash/map'
@@ -265,10 +267,14 @@ const ChooseEnhancement = () => {
         {...info}
     />
 
-    const renderManifestation = (manifestation) => <div key={manifestation?.id} id={Styles.manifestation}>
-        <RowImage src={manifestation?.rowImage} alt={manifestation?.name} />
-        <b>{manifestation?.name}</b>
-    </div>
+    const renderManifestation = (loreId) => (manifestation) => {
+        const rightText = getUnitsRowRightText(manifestation, {allegianceId: alliganceId, loreId})
+        return <div key={manifestation?.id} id={Styles.manifestation}>
+            <RowImage src={manifestation?.rowImage} alt={manifestation?.name} />
+            <b className={Styles.manifestationName}>{manifestation?.name}</b>
+            {rightText ? renderRightText(rightText) : null}
+        </div>
+    }
 
     const renderBlock = (block) => <button type='button' key={block.id} id={Styles.block} onClick={handleClickBlock(block)}>
         <div id={Styles.blockHeader} className={size(block.abilities) ? '' : Styles.blockHeaderAlone}>
@@ -277,7 +283,7 @@ const ChooseEnhancement = () => {
         </div>
         {size(block.abilities)
             ? <div id={Styles.blockBody}>
-                {block.abilities.map(type === 'manifestationLore' ? renderManifestation : renderEnhancement)}
+                {block.abilities.map(type === 'manifestationLore' ? renderManifestation(block.id) : renderEnhancement)}
             </div>
             : null
         }

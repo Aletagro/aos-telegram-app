@@ -56,3 +56,9 @@
 #blockHeader.blockHeaderAlone {
   margin-bottom: 0;
 }
+
+.manifestationName {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: 8px;
+}

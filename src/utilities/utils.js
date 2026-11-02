@@ -398,6 +398,8 @@ export const camelCaseToWords = (text) => {
     return text
 }
 
+export const getDropsCount = (roster) => roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)
+
 export const getWoundsCount = (roster) => {
     let woundsCount = 0
     forEach(roster.regiments, regiment => {
@@ -1162,16 +1164,35 @@ export const getRosterInfo = () => {
     return {warscrolls, enhancements, factionTerrain, battleTraits, battleFormation, spells, prayers, battleTactics, universalCommands, universalAbilities}
 }
 
-export const getUnitsRowRightText = (unit) => {
-    const isManifestation = includes(unit?.referenceKeywords, 'Manifestation')
-    if (isManifestation) {
-        const loreAbilityId = find(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])?.loreAbilityId
-        const manifestationInfo = find(dataBase.data.lore_ability, ['id', loreAbilityId])
-        if (manifestationInfo) {
-            return `${manifestationInfo.castingValue}+/${unit.control}`
+// Заклинание, которым призывается манифестация. Одна манифестация может быть в нескольких лорах с разным значением Cast,
+// поэтому выбираем по контексту: сначала по конкретному лору (loreId), затем по лору манифестаций армии (allegianceId), иначе первое
+export const getManifestationInfo = (unit, {allegianceId, loreId} = {}) => {
+    if (!includes(unit?.referenceKeywords, 'Manifestation')) {
+        return undefined
+    }
+    const links = filter(dataBase.data.lore_ability_linked_warscroll, ['warscrollId', unit.id])
+    const spells = filter(map(links, ({loreAbilityId}) => find(dataBase.data.lore_ability, ['id', loreAbilityId])), Boolean)
+    const byLore = loreId ? find(spells, ['loreId', loreId]) : undefined
+    if (byLore) {
+        return byLore
+    }
+    if (allegianceId) {
+        const armyLoreId = find(dataBase.data.lore, lore => lore.factionId === allegianceId && find(Constants.manifestationIncludesTexts, text => includes(lore.name, text)))?.id
+        const byArmy = armyLoreId ? find(spells, ['loreId', armyLoreId]) : undefined
+        if (byArmy) {
+            return byArmy
         }
     }
-    return unit?.points ? `${unit?.points} pts` : undefined
+    return spells[0]
+}
+
+// Данные для правой части строки юнита: {cast, banish} у манифестаций, иначе {points}. Row сам решает, как их нарисовать
+export const getUnitsRowRightText = (unit, context) => {
+    const manifestationInfo = getManifestationInfo(unit, context)
+    if (manifestationInfo) {
+        return {cast: `${manifestationInfo.castingValue}+`, banish: unit.control}
+    }
+    return unit?.points ? {points: unit.points} : undefined
 }
 
 export const checkForOnlyOneUnit = (options, unit) => {

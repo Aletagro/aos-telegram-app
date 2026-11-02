@@ -8,7 +8,7 @@ import ToggleRow from '../components/ToggleRow'
 import FloatingLabelInput from '../components/FloatingLabelInput'
 import Constants from '../Constants'
 import {roster, main} from '../utilities/appState'
-import {getWoundsCount} from '../utilities/utils'
+import {getWoundsCount, getDropsCount} from '../utilities/utils'
 
 import map from 'lodash/map'
 import get from 'lodash/get'
@@ -72,7 +72,7 @@ const useSaveList = () => {
     const handleSaveList = async () => {
         setIsDisableSaveButton(true)
         const wounds = getWoundsCount(roster)
-        const drops = roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)
+        const drops = getDropsCount(roster)
         const data = {
             name: listName,
             allegiance: roster.allegiance,

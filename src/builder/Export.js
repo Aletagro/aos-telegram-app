@@ -5,7 +5,7 @@ import Button from '../components/Button'
 import 'react-toastify/dist/ReactToastify.css'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
-import {getErrors, getWarnings, getWoundsCount, toTelegramSafe} from '../utilities/utils'
+import {getErrors, getWarnings, getWoundsCount, toTelegramSafe, getDropsCount} from '../utilities/utils'
 
 import map from 'lodash/map'
 import get from 'lodash/get'
@@ -24,7 +24,7 @@ const Export = () => {
     const errors = getErrors(roster)
     const warnings = getWarnings(roster)
     const wounds = getWoundsCount(roster)
-    const drops = roster.regiments.length + roster.auxiliaryUnits.length + (roster.regimentOfRenown ? 1 : 0)
+    const drops = getDropsCount(roster)
     const disableButton = Boolean(size(errors))
 
     const getErrorText = (error) => `- ${error}`
