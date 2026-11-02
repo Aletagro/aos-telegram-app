@@ -8,6 +8,7 @@ import Modal from '../components/Modal'
 import Constants from '../Constants'
 import Button from '../components/Button'
 import InfoNote from '../components/InfoNote'
+import {isSupporter, getSupportUntil, formatSupportDate, openSupportPage} from '../utilities/support'
 import {ModalActions, ModalButton} from '../components/ModalActions'
 
 import map from 'lodash/map'
@@ -219,13 +220,23 @@ const UserLists = () => {
         </div>
     }
 
+    const renderLimitNote = () => {
+        if (includes(Constants.developersIds, main.tgId)) {
+            return null
+        }
+        if (isSupporter(main.user)) {
+            return <InfoNote title='Thank you for your support!'>No limit on saved lists until {formatSupportDate(getSupportUntil(main.user))}.</InfoNote>
+        }
+        return <InfoNote title={`You can save up to ${Constants.listsMax} army lists`}>
+            {/* <p className={Styles.limitText}>Support the app with any donation from 1 EUR and the limit is removed for a month.</p> */}
+            <Button className={Styles.limitButton} size='sm' onClick={openSupportPage}>Support the app</Button>
+        </InfoNote>
+    }
+
     return  <div id='column' className='Chapter'>
         <Button className={Styles.newRosterButton} onClick={handleAddNewRoster}>New List</Button>
         <Button className={Styles.newRosterButton} type='secondary' onClick={handlePasteList}>Paste List</Button>
-        {includes(Constants.developersIds, main.tgId)
-            ? null
-            : <InfoNote>You can only save {Constants.listsMax} army lists.</InfoNote>
-        }
+        {renderLimitNote()}
         <div id={Styles.buttonContainer}>
             {map(main.rosters, renderList)}
         </div>

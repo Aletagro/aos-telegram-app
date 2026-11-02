@@ -1,0 +1,28 @@
+.card {
+  margin-top: 24px;
+  padding: 18px 16px 16px;
+  border: 1.5px solid #b0953f;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #14100a, #2a2210);
+  text-align: center;
+}
+.title {
+  margin: 0 0 6px;
+  color: #f0d98a;
+  font-family: 'Minion Pro Bold';
+  font-size: 22px;
+  line-height: 1.2;
+}
+.text {
+  margin: 0 0 14px;
+  color: #d8c88a;
+  font-size: 16px;
+  line-height: 1.4;
+}
+.button {
+  width: 100%;
+}
+/* Для подписчика карточка спокойнее */
+.thanks .title {
+  font-size: 20px;
+}

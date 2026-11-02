@@ -9,12 +9,12 @@ import FloatingLabelInput from '../components/FloatingLabelInput'
 import Constants from '../Constants'
 import {roster, main} from '../utilities/appState'
 import {getWoundsCount, getDropsCount} from '../utilities/utils'
+import {hasListsLimit, openSupportPage} from '../utilities/support'
 
 import map from 'lodash/map'
 import get from 'lodash/get'
 import size from 'lodash/size'
 import filter from 'lodash/filter'
-import includes from 'lodash/includes'
 
 import Styles from './styles/Export.module.css'
 
@@ -188,12 +188,14 @@ const useSaveList = () => {
         setSaveAsNew(!saveAsNew)
     }
 
-    const isListsLimit = size(main.rosters) >= Constants.listsMax && !roster.id && !includes(Constants.developersIds, main.tgId)
+    const isListsLimit = size(main.rosters) >= Constants.listsMax && !roster.id && hasListsLimit(main.user, main.tgId)
 
     const renderModalContent = () => {
         if (isListsLimit) {
             return <>
-                <p className={Styles.modalText}>You can delete one of your list</p>
+                <p className={Styles.modalText}>You can delete one of your lists.</p>
+                {/* <p className={Styles.modalText}>You can delete one of your lists or support the app from 1 EUR to remove the limit for a month.</p> */}
+                <Button className={Styles.modalSave} onClick={openSupportPage}>Support the app</Button>
                 {map(main.rosters, renderList)}
             </>
         }
@@ -205,7 +207,7 @@ const useSaveList = () => {
                 defaultValue={listName}
             />
             <ToggleRow label='Save as public' hint='Other users will be able to see this list.' checked={isListPublic} onChange={handleChangePublic} />
-            {roster.id && (size(main.rosters) < Constants.listsMax || includes(Constants.developersIds, main.tgId))
+            {roster.id && (size(main.rosters) < Constants.listsMax || !hasListsLimit(main.user, main.tgId))
                 ? <ToggleRow label='Save as new List' checked={saveAsNew} onChange={handleChangeAsNew} />
                 : null
             }

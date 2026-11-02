@@ -74,3 +74,10 @@
     color: #f0d98a;
     cursor: pointer;
 }
+
+.limitText {
+  margin: 0 0 10px;
+}
+.limitButton {
+  width: 100%;
+}
