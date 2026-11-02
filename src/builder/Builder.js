@@ -12,6 +12,7 @@ import useSaveList from './useSaveList'
 import {ToastContainer} from 'react-toastify'
 import Regiment from './Regiment'
 import UnitRow from './UnitRow'
+import UnitStats from '../components/UnitStats'
 import Row from '../components/Row'
 
 import map from 'lodash/map'
@@ -282,6 +283,7 @@ const Builder = () => {
             key={`${unit.id}-${index}`}
             title={`${unit.modelCount} ${unit.name}`}
             image={unit?.rowImage}
+            extra={<UnitStats unit={unit} />}
             navigateTo='warscroll'
             state={{unit}}
         />

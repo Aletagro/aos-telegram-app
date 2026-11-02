@@ -2,6 +2,7 @@ import React, {useEffect, useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {main} from '../utilities/appState'
 import Button from '../components/Button'
+import Tile from '../components/Tile'
 import HeaderImage from '../components/HeaderImage'
 import malekith from '../images/malekith.png'
 import Constants from '../Constants'
@@ -18,21 +19,6 @@ main.vkId = urlParams.get('vk_user_id')
 if (process.env.NODE_ENV === 'development') {
     if (process.env.REACT_APP_DEV_TG_ID) main.tgId = Number(process.env.REACT_APP_DEV_TG_ID)
     if (process.env.REACT_APP_DEV_VK_ID) main.vkId = process.env.REACT_APP_DEV_VK_ID
-}
-
-const MenuRow = ({title, navigateTo}) => {
-    const navigate = useNavigate()
-
-    const handleClick = () => {
-        navigate(`/${navigateTo}`, {state: {title}})
-    }
-
-    return <button type='button' className={Styles.row} onClick={handleClick}>
-        <span className={Styles.body}>
-            <span className={Styles.title}>{title}</span>
-        </span>
-        <span className={Styles.chevron} aria-hidden='true' />
-    </button>
 }
 
 const Main = () => {
@@ -64,30 +50,21 @@ const Main = () => {
         navigate(`/developer`)
     }, [navigate])
 
-    const renderSection = (title, items) => <section className={Styles.section}>
-        <h4 className={Styles.sectionTitle}><span>{title}</span></h4>
-        {items}
-    </section>
-
     return <>
         <div className={Styles.hero}>
             <HeaderImage src={malekith} alt='main' />
             <div className={Styles.heroShade} />
         </div>
         <div className={Styles.menu}>
-            {renderSection('Reference', <>
-                <MenuRow title='Rules' navigateTo='mainRules' />
-                <MenuRow title='Spearhead' navigateTo='spearhead' />
-            </>)}
-            {renderSection('Army', <>
-                <MenuRow title='Builder' navigateTo='userLists' />
-                <MenuRow title='Community Lists' navigateTo='lists' />
-            </>)}
-            {renderSection('Tools', <>
-                <MenuRow title='Damage Calculator' navigateTo='calculator' />
-                {/* <MenuRow title='Battle Dashboard' navigateTo='singlePlayer' /> */}
-                {main?.tgId === Constants.myTgId ? <MenuRow title='Developer Menu' navigateTo='developer' /> : null}
-            </>)}
+            <Tile featured title='Builder' text='Build and save your army lists' navigateTo='userLists' />
+            <div className={Styles.grid}>
+                <Tile compact title='Rules' text='Armies, warscrolls, core rules' navigateTo='mainRules' />
+                <Tile compact title='Community Lists' text='Lists from other players' navigateTo='lists' />
+                <Tile compact title='Damage Calculator' text='Averages for any attack' navigateTo='calculator' />
+                <Tile compact title='Spearhead' text='Quick-play armies' navigateTo='spearhead' />
+            </div>
+            {/* <Tile compact title='Battle Dashboard' navigateTo='singlePlayer' /> */}
+            {main?.tgId === Constants.myTgId ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
             <Button className={Styles.support} onClick={handleSupport}>Support the app!</Button>
             <p className={Styles.footer}>For feedback - <b>@RukosuevKrasavchik</b></p>
             <p className={Styles.footer} onClick={handleNavigateToDeveloper}>The database was last updated on {Constants.lastUpdate}</p>

@@ -12,7 +12,7 @@
 }
 #abilities {
     border: 1.5px solid #d8c88a;
-    background: #fffdf8;
+    background: #fff;
     color: #1d1810;
 }
 #checkedAbilities {
@@ -41,5 +41,5 @@
     padding: 14px 16px;
     border: 1.5px solid #c9b36a;
     border-radius: 20px;
-    background: #fbf6e6;
+    background: #fff;
 }

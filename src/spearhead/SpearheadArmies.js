@@ -1,8 +1,6 @@
 import React from 'react'
-import Constants from '../Constants'
 import {sortByName} from '../utilities/utils'
-import HeaderImage from '../components/HeaderImage'
-import Row from '../components/Row'
+import {ListCard, ListItem} from '../components/ListCard'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -21,19 +19,18 @@ const SpearheadArmies = () => {
         return {...army, name}
     }))
 
-    const renderRow = (army) => <Row
+    const renderRow = (army) => <ListItem
         key={army.id}
         title={replace(army.name, 'Spearhead Battlepack: ', '')}
         navigateTo='spearheadArmy'
         state={{army}}
     />
 
-    return <>
-        <HeaderImage src={Constants.rulesImage} alt='Spearhead Armies' />
-        <div id='column' className='Chapter'>
+    return <div id='column' className='Chapter'>
+        <ListCard>
             {map(armies, renderRow)}
-        </div>
-    </>
+        </ListCard>
+    </div>
 }
 
 export default SpearheadArmies

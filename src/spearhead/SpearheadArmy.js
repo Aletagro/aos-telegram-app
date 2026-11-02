@@ -2,8 +2,7 @@ import React from 'react'
 import {useLocation} from 'react-router-dom'
 import Constants from '../Constants'
 import {sortByName, getSpearheadInfo, removeAsterisks, replaceAsterisks} from '../utilities/utils'
-import HeaderImage from '../components/HeaderImage'
-import Row from '../components/Row'
+import {ListCard, ListItem} from '../components/ListCard'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -30,7 +29,7 @@ const SpearheadArmy = () => {
         }
     })
 
-    const renderRow = (item) => <Row
+    const renderRow = (item) => <ListItem
         key={item.name}
         title={item.title}
         navigateTo='armyInfo'
@@ -44,14 +43,15 @@ const SpearheadArmy = () => {
             : <p id={Styles.infoText} key={info.id}>{replaceAsterisks(info.textContent)}</p>
 
     return <>
-        <HeaderImage src={army.backgroundImage} alt='Spearhead Army' />
         <div id='column' className='Chapter'>
-            <Row
-                title='Warscrolls'
-                navigateTo='units'
-                state={{units}}
-            />
-            {map(items, renderRow)}
+            <ListCard>
+                <ListItem
+                    title='Warscrolls'
+                    navigateTo='units'
+                    state={{units}}
+                />
+                {map(items, renderRow)}
+            </ListCard>
             {map(unitsInfo, renderUnitsInfo)}
         </div>
     </>

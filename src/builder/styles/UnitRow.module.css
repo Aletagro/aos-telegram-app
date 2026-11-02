@@ -3,14 +3,14 @@
   overflow: hidden;
   border: 1px solid #d8c88a;
   border-radius: 14px;
-  background-color: #fff;
+  background-color: white;
 }
 #rorContainer {
   margin-bottom: 8px;
   overflow: hidden;
   border: 1px solid #d8c88a;
   border-radius: 14px;
-  background-color: #fff;
+  background-color: white;
 }
 .row {
   display: flex;
@@ -99,7 +99,7 @@
   padding: 5px 12px;
   border: 1px solid #c9b36a;
   border-radius: 999px;
-  background-color: #fff;
+  background-color: white;
   color: #5c4a14;
   font-size: 14px;
   line-height: 1.25;
@@ -155,4 +155,9 @@
   width: 15px;
   height: 15px;
   object-fit: contain;
+}
+
+.statsFooter {
+  padding: 6px 10px;
+  border-top: 1px solid #efe5c2;
 }

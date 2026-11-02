@@ -54,7 +54,7 @@
 }
 #abilities {
     border: 1.5px solid #d8c88a;
-    background: #fffdf8;
+    background: #fff;
     color: #1d1810;
 }
 #checkedAbilities {
@@ -83,7 +83,7 @@
 }
 #characteristic {
     border: 1.5px solid #d8c88a;
-    background: #fffdf8;
+    background: #fff;
     color: #1d1810;
 }
 #checkedCharacteristic {

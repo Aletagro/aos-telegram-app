@@ -1,7 +1,6 @@
 import React from 'react'
 import Constants from '../Constants'
-import HeaderImage from '../components/HeaderImage'
-import Row from '../components/Row'
+import {ListCard, ListItem, SectionTitle} from '../components/ListCard'
 
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -16,20 +15,23 @@ const Spearhead = () => {
     const groups = filter(dataBase.data.publication_publication_group, ['publicationGroupId', publication.id])
     const battlepacks = map(groups, group => find(dataBase.data.publication, ['id', group.publicationId]))
 
-    const renderRow = (battlepack) => <Row
+    const renderRow = (battlepack) => <ListItem
         key={battlepack.id}
         title={replace(battlepack.name, 'Spearhead Battlepack: ', '')}
         navigateTo='spearheadCatalog'
         state={{battlepack}}
     />
 
-    return <>
-        <HeaderImage src={publication?.backgroundImage} alt='Core Documents' />
-        <div id='column' className='Chapter'>
+    return <div id='column' className='Chapter'>
+        <SectionTitle>Battlepacks</SectionTitle>
+        <ListCard>
             {map(battlepacks, renderRow)}
-            <Row title={'Armies'} navigateTo='spearheadArmies' />
-        </div>
-    </>
+        </ListCard>
+        <SectionTitle>Armies</SectionTitle>
+        <ListCard>
+            <ListItem title='Spearhead Armies' navigateTo='spearheadArmies' />
+        </ListCard>
+    </div>
 }
 
 export default Spearhead

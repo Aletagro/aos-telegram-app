@@ -3,7 +3,6 @@ import {useLocation} from 'react-router-dom'
 import {roster, navigationState} from '../utilities/appState'
 import {sortByName, cleanBuilder} from '../utilities/utils'
 import BuilderRow from './BuilderRow'
-import HeaderImage from '../components/HeaderImage'
 import Constants from '../Constants'
 
 import map from 'lodash/map'
@@ -39,7 +38,9 @@ const ChooseFaction = () => {
         const isLegendaryArmies = includes(Constants.legendaryArmies, allegiance.id)
         return <BuilderRow
             key={allegiance.id}
-            title={`${allegiance.name}${isLegendaryArmies ? ' (Legend)' : ''}`}
+            title={allegiance.name}
+            image={allegiance.selectFactionImage || null}
+            badge={isLegendaryArmies ? 'Legend' : undefined}
             navigateTo='builder'
             state={{allegiance}}
             onClick={handleClick}
@@ -48,20 +49,17 @@ const ChooseFaction = () => {
 
     const renderArmyOfRenown = (army) => map(army, renderRow)
 
-    return <>
-        <HeaderImage src={grandAlliance.image} alt={grandAlliance.name} isWide />
-        <div id='column' className='Chapter'>
-            <h4 id={Styles.title}>Choose your Faction</h4>
-            {allegiances && map(allegiances, renderRow)}
-            {armiesOfRenown.length > 0
-                ? <>
-                    <h4 id={Styles.title}>Armies Of Renown</h4>
-                    {map(armiesOfRenown, renderArmyOfRenown)}
-                </>
-                : null
-            }
-        </div>
-    </>
+    return <div id='column' className='Chapter'>
+        <h4 id={Styles.title}>Choose your Faction</h4>
+        {allegiances && map(allegiances, renderRow)}
+        {armiesOfRenown.length > 0
+            ? <>
+                <h4 id={Styles.title}>Armies Of Renown</h4>
+                {map(armiesOfRenown, renderArmyOfRenown)}
+            </>
+            : null
+        }
+    </div>
 }
 
 export default ChooseFaction

@@ -7,6 +7,7 @@ import Plus from '../icons/plus.svg'
 import Minus from '../icons/minus.svg'
 import DarkGeneral from '../icons/darkGeneral.svg'
 import InfoIcon from '../icons/InfoIcon'
+import UnitStats from '../components/UnitStats'
 import {capitalizeFirstLetter, camelCaseToWords} from '../utilities/utils'
 
 import map from 'lodash/map'
@@ -162,6 +163,8 @@ const UnitRow = ({
         Weapon Options
     </button>
 
+    const showStats = !isAddUnit && !isRegimentsOfRenown
+
     return <div id={withoutMargin ? Styles.rorContainer : Styles.container}>
         <div className={Styles.row}>
             <button id={Styles.addUnitButton} onClick={handleClick}>
@@ -208,6 +211,7 @@ const UnitRow = ({
             </div>
             : null
         }
+        {showStats ? <div className={Styles.statsFooter}><UnitStats unit={unit} /></div> : null}
     </div>
 }
 

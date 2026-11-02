@@ -5,7 +5,7 @@
     overflow: hidden;
     border: 1.5px solid #d8c88a;
     border-radius: 20px;
-    background: #fffdf8;
+    background: #fff;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 }
@@ -30,7 +30,7 @@
     text-align: end;
 }
 .odd {
-    background: #fbf6e6;
+    background: rgba(176, 149, 63, 0.08);
 }
 /* Отступ первой колонки: селектор с #text, иначе его перебивает padding из #text */
 #text.first {

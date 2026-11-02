@@ -1,6 +1,6 @@
 import React from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
-import Row from '../components/Row'
+import {ListCard, ListItem} from '../components/ListCard'
 import {isScourgeOfGhyran} from '../utilities/utils'
 
 import map from 'lodash/map'
@@ -27,14 +27,16 @@ const Keywords = () => {
         navigate(`/units`, {state: {units, title: keyword}})
     }
 
-    const renderKeyword = (keyword) => <Row
+    const renderKeyword = (keyword) => <ListItem
         key={keyword}
         title={keyword}
         onClick={handleClick(keyword)}
     />
 
     return <div id='column' className='Chapter'>
-        {map(keywords, renderKeyword)}
+        <ListCard>
+            {map(keywords, renderKeyword)}
+        </ListCard>
     </div>
 }
 
