@@ -19,8 +19,7 @@ const SupportCard = () => {
 
     return <div className={Styles.card}>
         <p className={Styles.title}>Support the project</p>
-        <p className={Styles.text}>The app is free and runs on donations.</p>
-        {/* <p className={Styles.text}>The app is free and runs on donations. Any donation from 1 EUR removes the limit on saved lists for a month.</p> */}
+        <p className={Styles.text}>The app is free and runs on donations. Any donation from 1 EUR removes the limit on saved lists for a month.</p>
         <Button className={Styles.button} onClick={openSupportPage}>Support the app</Button>
     </div>
 }

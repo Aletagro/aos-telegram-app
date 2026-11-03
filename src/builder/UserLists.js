@@ -228,7 +228,7 @@ const UserLists = () => {
             return <InfoNote title='Thank you for your support!'>No limit on saved lists until {formatSupportDate(getSupportUntil(main.user))}.</InfoNote>
         }
         return <InfoNote title={`You can save up to ${Constants.listsMax} army lists`}>
-            {/* <p className={Styles.limitText}>Support the app with any donation from 1 EUR and the limit is removed for a month.</p> */}
+            <p className={Styles.limitText}>Support the app with any donation from 1 EUR and the limit is removed for a month.</p>
             <Button className={Styles.limitButton} size='sm' onClick={openSupportPage}>Support the app</Button>
         </InfoNote>
     }

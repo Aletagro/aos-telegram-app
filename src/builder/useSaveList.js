@@ -193,8 +193,7 @@ const useSaveList = () => {
     const renderModalContent = () => {
         if (isListsLimit) {
             return <>
-                <p className={Styles.modalText}>You can delete one of your lists.</p>
-                {/* <p className={Styles.modalText}>You can delete one of your lists or support the app from 1 EUR to remove the limit for a month.</p> */}
+                <p className={Styles.modalText}>You can delete one of your lists or support the app from 1 EUR to remove the limit for a month.</p>
                 <Button className={Styles.modalSave} onClick={openSupportPage}>Support the app</Button>
                 {map(main.rosters, renderList)}
             </>
