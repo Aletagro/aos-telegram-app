@@ -6,7 +6,7 @@ import Tile from '../components/Tile'
 import HeaderImage from '../components/HeaderImage'
 import malekith from '../images/malekith.png'
 import Constants from '../Constants'
-// import {canLinkAccounts} from '../utilities/linkAccounts'
+import {canLinkAccounts} from '../utilities/linkAccounts'
 
 import Styles from './styles/Main.module.css'
 
@@ -83,7 +83,7 @@ const Main = () => {
             </div>
             {/* <Tile compact title='Battle Dashboard' navigateTo='singlePlayer' /> */}
             {(main?.tgId === Constants.myTgId) || (Number(main?.vkId) === Constants.myVkId) ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
-            {/* {canLinkAccounts() ? <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null} */}
+            {canLinkAccounts() ? <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null}
             <SupportCard />
             <p className={Styles.footer}>For feedback - <b>@RukosuevKrasavchik</b></p>
             <p className={Styles.footer}>The database was last updated on {Constants.lastUpdate}</p>
