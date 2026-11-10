@@ -2,6 +2,7 @@ import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances, lists} from '../utilities/appState'
 import Constants from '../Constants'
+import {isVkMobile} from '../utilities/platform'
 import Search from '../icons/search.svg'
 import ArrowBack from '../icons/arrowBack.svg'
 import Export from '../icons/export.svg'
@@ -74,7 +75,7 @@ const Header = () => {
         }
     }
 
-    return <div id={Styles.header}>
+    return <div id={Styles.header} className={isVkMobile ? Styles.vkMobile : undefined}>
         {pathname === '/'
             ? null
             : <button id={Styles.leftButton} onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>

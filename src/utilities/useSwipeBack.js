@@ -1,5 +1,6 @@
 import {useEffect, useRef} from 'react'
 import {useNavigate, useLocation} from 'react-router-dom'
+import {isVk} from './platform'
 
 const useSwipeBack = () => {
     const navigate = useNavigate()
@@ -8,7 +9,7 @@ const useSwipeBack = () => {
     const threshold = 100; // минимальное расстояние свайпа
     
     useEffect(() => {
-        if (pathname !== '/') {
+        if (pathname !== '/' && !isVk) {
         const handleTouchStart = (e) => {
             // Начинаем отслеживать только от левого края экрана
             if (e.touches[0].clientX < 50) {
