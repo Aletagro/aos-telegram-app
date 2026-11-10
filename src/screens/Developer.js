@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Button from '../components/Button'
 import Modal from '../components/Modal'
 import {ModalActions, ModalButton} from '../components/ModalActions'
+import Tile from '../components/Tile'
 import Constants from '../Constants'
 
 import size from 'lodash/size'
@@ -90,6 +91,7 @@ const Developer = () => {
             <p>vkHref: {JSON.stringify(window?.location?.href)}</p>
             <p>vkId: {vkId}</p>
         </details>
+        <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div>
         <Modal
             visible={isConfirmVisible}
             title='Send to all users?'

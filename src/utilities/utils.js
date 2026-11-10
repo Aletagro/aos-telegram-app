@@ -1114,6 +1114,19 @@ export const parseListForListbot = (input) => {
     return {generalIndex, regiments, meta, factionTerrain}
 }
 
+// Энхансы с одинаковым названием есть и в обычном AoS, и в Spearhead (и у разных фракций).
+// Ищем по имени, но игнорируем группы Spearhead и предпочитаем группу фракции ростера
+export const findEnhancementByName = (name, allegianceId) => {
+    const abilities = filter(dataBase.data.ability, ['name', name])
+    if (size(abilities) <= 1) {
+        return abilities[0]
+    }
+    const getGroup = (ability) => find(dataBase.data.ability_group, ['id', ability.abilityGroupId])
+    const regular = filter(abilities, ability => getGroup(ability)?.abilityGroupType !== 'spearheadEnhancements')
+    const candidates = size(regular) ? regular : abilities
+    return find(candidates, ability => getGroup(ability)?.factionId === allegianceId) || candidates[0]
+}
+
 export const getRosterInfo = () => {
     const regimentsUnits = []
     const enhancementsNames = []
@@ -1143,7 +1156,7 @@ export const getRosterInfo = () => {
         setEnhancementName(unit)
     })
     const warscrolls = uniq([...regimentsUnits, ...roster.auxiliaryUnits, ...roster.regimentsOfRenownUnits])
-    const enhancements = map(uniq(enhancementsNames), name => find(dataBase.data.ability, ['name', name]))
+    const enhancements = map(uniq(enhancementsNames), name => findEnhancementByName(name, roster.allegianceId))
     const factionTerrain = roster.factionTerrain ? find(dataBase.data.warscroll, ['name', roster.factionTerrain]) : undefined
     const battleTraitsGroups = getInfo(Constants.armyEnhancements[0], {id: roster.allegianceId, name: roster.allegiance})?.abilities
     const battleTraits = []

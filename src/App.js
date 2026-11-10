@@ -22,6 +22,7 @@ import Tactic from './screens/Tactic'
 import Legends from './screens/Legends'
 import LegendUnits from './screens/LegendUnits'
 import Registration from './screens/Registration'
+import LinkAccounts from './screens/LinkAccounts'
 import Keywords from './screens/Keywords'
 import Header from './components/Header'
 import ScrollToTop from './components/ScrollToTop'
@@ -103,6 +104,7 @@ function App() {
       <Route path={'chooseFaction'} element={<ChooseFaction />} />
       <Route path={'export'} element={<Export />} />
       <Route path={'registration'} element={<Registration />} />
+      <Route path={'linkAccounts'} element={<LinkAccounts />} />
       <Route path={'keywords'} element={<Keywords />} />
       <Route path={'rosterInfo'} element={<RosterInfo />} />
       <Route path={'pasteList'} element={<PasteList />} />
