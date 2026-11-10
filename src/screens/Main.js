@@ -72,7 +72,7 @@ const Main = () => {
                 <Tile compact title='Spearhead' text='Quick-play armies' navigateTo='spearhead' />
             </div>
             {/* <Tile compact title='Battle Dashboard' navigateTo='singlePlayer' /> */}
-            {main?.tgId === Constants.myTgId ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
+            {(main?.tgId === Constants.myTgId) || (main?.vkId === Constants.myVkId) ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
             {/* {canLinkAccounts() ? <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null} */}
             <SupportCard />
             <p className={Styles.footer}>For feedback - <b>@RukosuevKrasavchik</b></p>
