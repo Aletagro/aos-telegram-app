@@ -7,8 +7,7 @@ import App from './App'
 bridge.send('VKWebAppInit')
   .then((data) => {
     if (data.result) {
-      console.log('VK Bridge успешно инициализирован');
-      bridge.send('VKWebAppSetSwipeSettings', {history: true}).catch(() => {})
+      console.log('VK Bridge успешно инициализирован')
     }
   })
   .catch((error) => console.error('Ошибка инициализации VK:', error))

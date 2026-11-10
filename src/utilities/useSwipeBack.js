@@ -9,16 +9,19 @@ const useSwipeBack = () => {
     const threshold = 100; // минимальное расстояние свайпа
     
     useEffect(() => {
-        if (pathname !== '/' && !isVk) {
+        if (pathname !== '/') {
         const handleTouchStart = (e) => {
             // Начинаем отслеживать только от левого края экрана
             if (e.touches[0].clientX < 50) {
             touchStart.current = e.touches[0].clientX
+            // В VK жест от левого края по умолчанию закрывает приложение: пробуем перехватить его, чтобы сработал наш возврат
+            if (isVk && e.cancelable) e.preventDefault()
             }
         }
     
         const handleTouchMove = (e) => {
             if (touchStart.current === null) return
+            if (isVk && e.cancelable) e.preventDefault()
             const currentX = e.touches[0].clientX
             const deltaX = currentX - touchStart.current
             // Свайп справа налево (положительное значение)
@@ -32,8 +35,8 @@ const useSwipeBack = () => {
             touchStart.current = null
         }
     
-        document.addEventListener('touchstart', handleTouchStart)
-        document.addEventListener('touchmove', handleTouchMove)
+        document.addEventListener('touchstart', handleTouchStart, {passive: false})
+        document.addEventListener('touchmove', handleTouchMove, {passive: false})
         document.addEventListener('touchend', handleTouchEnd)
     
         return () => {
