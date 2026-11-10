@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Button from '../components/Button'
 import Modal from '../components/Modal'
 import {ModalActions, ModalButton} from '../components/ModalActions'
+import {main} from '../utilities/appState'
 import Tile from '../components/Tile'
 import Constants from '../Constants'
 
@@ -21,6 +22,7 @@ const DEFAULT_USER_ID = '5'
 const MESSAGE_LIMIT = 4096
 
 const Developer = () => {
+    const isOwner = main.tgId === Constants.myTgId || Number(main.vkId) === Constants.myVkId
     const [userId, setUserId] = useState(DEFAULT_USER_ID)
     const [message, setMessage] = useState('')
     const [isSending, setIsSending] = useState(false)
@@ -66,6 +68,7 @@ const Developer = () => {
     </>
 
     return <div id='column' className='Chapter'>
+        {isOwner ? <>
         <h4 className={Styles.title}>Messages</h4>
         <label className={Styles.label}>
             User id (from our database)
@@ -80,7 +83,8 @@ const Developer = () => {
             <Button className={Styles.action} disabled={isEmpty || isTooLong || !userId || isSending} onClick={handleSendPersonal}>Send to user</Button>
             <Button className={Styles.action} type='danger' disabled={isEmpty || isTooLong || isSending} onClick={handleOpenConfirm}>Send to everyone</Button>
         </div>
-        <details className={Styles.debug}>
+        </> : null}
+        <details className={Styles.debug} open={!isOwner}>
             <summary>Debug info</summary>
             <p>initData: {tg?.initData}</p>
             <p>initDataUnsafe: {JSON.stringify(tg?.initDataUnsafe)}</p>
@@ -90,8 +94,9 @@ const Developer = () => {
             <p>location: {JSON.stringify(window?.location)}</p>
             <p>vkHref: {JSON.stringify(window?.location?.href)}</p>
             <p>vkId: {vkId}</p>
+            <p>main vkId: {main.vkId}</p>
         </details>
-        <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div>
+        {isOwner ? <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null}
         <Modal
             visible={isConfirmVisible}
             title='Send to all users?'

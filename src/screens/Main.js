@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useReducer} from 'react'
+import React, {useEffect, useCallback, useReducer, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {main} from '../utilities/appState'
 import SupportCard from '../components/SupportCard'
@@ -22,8 +22,12 @@ if (process.env.NODE_ENV === 'development') {
     if (process.env.REACT_APP_DEV_VK_ID) main.vkId = process.env.REACT_APP_DEV_VK_ID
 }
 
+const SECRET_TAPS = 7
+const SECRET_TAP_GAP_MS = 1500
+
 const Main = () => {
     const navigate = useNavigate()
+    const taps = useRef({count: 0, last: 0})
     const [, forceUpdate] = useReducer((x) => x + 1, 0)
 
     const fetchUser = useCallback(() => {
@@ -54,12 +58,18 @@ const Main = () => {
         return () => document.removeEventListener('visibilitychange', handleVisibility)
     }, [fetchUser])
 
-    const handleNavigateToDeveloper = useCallback(() => {
-        navigate(`/developer`)
+    const handleBannerTap = useCallback(() => {
+        const now = Date.now()
+        taps.current.count = now - taps.current.last > SECRET_TAP_GAP_MS ? 1 : taps.current.count + 1
+        taps.current.last = now
+        if (taps.current.count >= SECRET_TAPS) {
+            taps.current.count = 0
+            navigate('/developer')
+        }
     }, [navigate])
 
     return <>
-        <div className={Styles.hero}>
+        <div className={Styles.hero} onClick={handleBannerTap}>
             <HeaderImage src={malekith} alt='main' />
             <div className={Styles.heroShade} />
         </div>
@@ -72,11 +82,11 @@ const Main = () => {
                 <Tile compact title='Spearhead' text='Quick-play armies' navigateTo='spearhead' />
             </div>
             {/* <Tile compact title='Battle Dashboard' navigateTo='singlePlayer' /> */}
-            {(main?.tgId === Constants.myTgId) || (main?.vkId === Constants.myVkId) ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
+            {(main?.tgId === Constants.myTgId) || (Number(main?.vkId) === Constants.myVkId) ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
             {/* {canLinkAccounts() ? <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null} */}
             <SupportCard />
             <p className={Styles.footer}>For feedback - <b>@RukosuevKrasavchik</b></p>
-            <p className={Styles.footer} onClick={handleNavigateToDeveloper}>The database was last updated on {Constants.lastUpdate}</p>
+            <p className={Styles.footer}>The database was last updated on {Constants.lastUpdate}</p>
         </div>
     </>
 }
