@@ -17,6 +17,11 @@ import useSaveList from './useSaveList'
 
 import Styles from './styles/Export.module.css'
 
+const dataBase = require('../utilities/db')
+
+// Приписка в конце скопированного текста: откуда взят список
+const getFooter = () => `Exported with Age of Sigmar Community App (Data Version: v${dataBase.metadata?.data_version})`
+
 const Export = () => {
     const navigate = useNavigate()
     // eslint-disable-next-line
@@ -72,6 +77,8 @@ ${roster.regimentOfRenown ? `Regiment Of Renown\n${getUnitForExport(roster.regim
 Wounds: ${wounds}
 ${roster.points.all}/${roster.pointsLimit} Pts
 ${roster.noteText ? `Note: ${roster.noteText}` : ''}
+
+${getFooter()}
 `
         navigator.clipboard.writeText(toTelegramSafe(rosterText))
         toast.success(t('List Copied'), Constants.toastParams)
@@ -194,6 +201,7 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
         <p>{t('Wounds:')} {wounds}</p>
         <p>{roster.points.all}/{roster.pointsLimit} {t('Pts')}</p>
         {roster.noteText ? <p>{t('Note:')} {roster.noteText}</p> : null}
+        <p className={Styles.exportFooter}>{getFooter()}</p>
         </div>
         <ToastContainer />
         {saveModal}

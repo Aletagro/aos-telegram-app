@@ -106,7 +106,7 @@
 }
 
 #calculator:active {
-  background: #f6ecc9;
+  background: rgba(176, 149, 63, 0.12);
 }
 
 #calculator img {
@@ -188,7 +188,7 @@
 }
 
 #weaponAbilities:active {
-  background: #f6ecc9;
+  background: rgba(176, 149, 63, 0.12);
 }
 
 /* ---------- Детали юнита ---------- */
@@ -247,7 +247,7 @@
 }
 
 #regimentOption:active {
-  background: #f6ecc9;
+  background: rgba(176, 149, 63, 0.12);
 }
 
 #keywords {

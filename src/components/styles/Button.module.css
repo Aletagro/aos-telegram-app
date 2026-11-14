@@ -37,17 +37,17 @@
 }
 
 .secondary:active:not(:disabled) {
-    background: #fbf3dc;
+    background: rgba(176, 149, 63, 0.12);
 }
 
 .soft {
     border: 1.5px solid #c9b36a;
-    background: #fbf6e6;
+    background: #fff;
     color: #5c4a14;
 }
 
 .soft:active:not(:disabled) {
-    background: #fbf3dc;
+    background: rgba(176, 149, 63, 0.12);
 }
 
 .danger {

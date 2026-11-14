@@ -3,7 +3,7 @@
   padding: 12px 14px;
   border: 1px solid #d8c88a;
   border-radius: 14px;
-  background: linear-gradient(180deg, #fffdf8, #fbf6e6);
+  background: #fff;
 }
 
 #question {
@@ -49,7 +49,7 @@
 }
 
 .markAnswer {
-  background: #fbf3dc;
+  background: #fff;
   border: 1.5px solid #b0953f;
   color: #6b5212;
 }

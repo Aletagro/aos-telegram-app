@@ -75,6 +75,11 @@
     cursor: pointer;
 }
 
+.copyIcon {
+    right: auto;
+    left: 8px;
+}
+
 .limitText {
   margin: 0 0 10px;
 }

@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import {navigationState, main} from '../utilities/appState'
 import {cleanBuilder} from '../utilities/utils'
 import {loadListToRoster} from '../utilities/loadList'
+import {encodeRosterCode, copyText} from '../utilities/rosterCode'
 import Modal from '../components/Modal'
 import Constants from '../Constants'
 import Button from '../components/Button'
@@ -76,6 +77,12 @@ const UserLists = () => {
         setModalData({visible: false, title: '', text: ''})
     }
 
+    const handleCopyCode = (listId) => async () => {
+        const ok = await copyText(encodeRosterCode(listId))
+        if (ok) toast.success(t('Roster code copied'), Constants.toastParams)
+        else toast.error(t('Could not copy the code'), Constants.toastParams)
+    }
+
     const handleClickDelete = (listId) => () => {
         setModalData({visible: true, title: 'Delete roster?', Content: renderDeleteModalContent(listId)})
     }
@@ -93,6 +100,9 @@ const UserLists = () => {
     const renderList = (list) => {
         const army = find(dataBase.data.faction_keyword, ['id', list.allegiance_id])
         return <div id={Styles.listContainer} key={list.id}>
+            <button type='button' className={`${Styles.closeIcon} ${Styles.copyIcon}`} onClick={handleCopyCode(list.id)} aria-label={t('Copy roster code')}>
+                <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round' aria-hidden='true'><path d='M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1' /><path d='M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1' /></svg>
+            </button>
             <button type='button' className={Styles.closeIcon} onClick={handleClickDelete(list.id)} aria-label={t('Delete list')}>
                 <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' aria-hidden='true'><path d='M6 6l12 12M18 6L6 18' /></svg>
             </button>

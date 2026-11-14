@@ -23,7 +23,7 @@ const listboxSx = {
     p: '6px',
     border: '1.5px solid #d8c88a',
     borderRadius: '16px',
-    background: '#fffdf8',
+    background: '#fff',
     boxShadow: '0 8px 24px rgba(20, 16, 10, 0.18)',
     fontFamily: 'Minion Pro Regular',
     '--ListItem-radius': '10px',
@@ -32,7 +32,7 @@ const listboxSx = {
         fontSize: '16px',
     },
     '& .MuiAutocomplete-option[aria-selected="true"]': {
-        background: '#fbf3dc',
+        background: 'rgba(176, 149, 63, 0.12)',
         fontFamily: 'Minion Pro Bold',
     },
     '& .MuiAutocomplete-option:hover, & .MuiAutocomplete-option.Mui-focused': {

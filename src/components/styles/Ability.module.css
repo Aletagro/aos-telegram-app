@@ -66,7 +66,7 @@
   height: 30px;
   padding: 0;
   border-radius: 50%;
-  background: #fbf3dc;
+  background: #fff;
   box-shadow: 0 1px 3px rgba(20, 16, 10, 0.4);
 }
 
@@ -132,5 +132,5 @@
 }
 
 #usedKeyword:active {
-  background: #f6ecc9;
+  background: rgba(176, 149, 63, 0.12);
 }
