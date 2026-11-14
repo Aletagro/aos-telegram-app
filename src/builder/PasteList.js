@@ -27,7 +27,7 @@ const sources = [
     {key: 'Listbot', title: 'Listbot'}
 ]
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const spellIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
 const manifestationsIncludesTexts = ['Lore of the Abyss']

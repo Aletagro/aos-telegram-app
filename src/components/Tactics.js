@@ -5,7 +5,7 @@ import {sortByName, getStringAfterDash} from '../utilities/utils'
 import map from 'lodash/map'
 import filter from 'lodash/filter'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Tactics = ({id}) => {
     const tactics = filter(dataBase.data.rule_container, (group) => group.ruleSectionId === id)

@@ -17,7 +17,7 @@ import upperFirst from 'lodash/upperFirst'
 
 import Styles from './styles/Warscroll.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Warscroll = () => {
     window.scrollTo(0, 0)

@@ -7,7 +7,7 @@ import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
 import includes from 'lodash/includes'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Legends = () => {
     const units = filter(dataBase.data.warscroll, 'isLegends')

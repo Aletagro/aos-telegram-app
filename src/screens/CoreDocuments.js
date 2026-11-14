@@ -8,7 +8,7 @@ import find from 'lodash/find'
 import filter from 'lodash/filter'
 import includes from 'lodash/includes'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const CoreDocuments = () => {
     const documentsIds = filter(dataBase.data.publication_publication_group, publication => includes([Constants.coreDocumentsId, Constants.ghbId], publication.publicationGroupId) && publication.publicationId !== Constants.manifestationsPublicationId)

@@ -10,7 +10,7 @@ import map from 'lodash/map'
 import size from 'lodash/size'
 import find from 'lodash/find'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseWeapon = () => {
     // eslint-disable-next-line

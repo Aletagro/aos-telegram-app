@@ -11,7 +11,7 @@ import forEach from 'lodash/forEach'
 
 import Styles from './styles/SpearheadArmy.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const SpearheadArmy = () => {
     const {army} = useLocation().state

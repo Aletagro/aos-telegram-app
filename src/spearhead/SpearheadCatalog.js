@@ -10,7 +10,7 @@ import isEmpty from 'lodash/isEmpty'
 import includes from 'lodash/includes'
 
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const SpearheadCatalog = () => {
     const {battlepack} = useLocation().state

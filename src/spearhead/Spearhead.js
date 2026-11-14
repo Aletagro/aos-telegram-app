@@ -8,7 +8,7 @@ import filter from 'lodash/filter'
 import replace from 'lodash/replace'
 
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Spearhead = () => {
     const publication = find(dataBase.data.publication_group, ['id', Constants.spearheadBattlepacksId])

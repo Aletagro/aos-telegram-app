@@ -8,7 +8,7 @@ import Rules from './Rules'
 import map from 'lodash/map'
 import filter from 'lodash/filter'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const RuleChapters = () => {
     const {chapter} = useLocation().state

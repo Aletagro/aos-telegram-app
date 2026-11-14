@@ -6,7 +6,7 @@ import Rule from '../components/Rule'
 import map from 'lodash/map'
 import filter from 'lodash/filter'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Battleplan = () => {
     const {battleplan} = useLocation().state

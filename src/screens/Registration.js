@@ -9,8 +9,8 @@ import countries from '../utilities/countries'
 
 import Styles from './styles/Registration.module.css'
 
-const tg = window.Telegram.WebApp
-const user = tg.initDataUnsafe?.user
+const tg = window.Telegram?.WebApp
+const user = tg?.initDataUnsafe?.user
 
 const inputStyle = {
     'marginBottom': '16px'

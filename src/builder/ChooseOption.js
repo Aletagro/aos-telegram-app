@@ -7,7 +7,7 @@ import Button from '../components/Button'
 
 import Styles from './styles/ChooseOption.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseOption = () => {
     const {optionGroup, unitIndex, regimentIndex, isAuxiliary, isRoRUnitWithKeyword} = useLocation().state

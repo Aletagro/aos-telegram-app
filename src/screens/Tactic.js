@@ -9,7 +9,7 @@ import filter from 'lodash/filter'
 
 import Styles from './styles/Tactic.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Tactic = () => {
     const {tactic} = useLocation().state

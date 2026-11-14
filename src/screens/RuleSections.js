@@ -5,7 +5,7 @@ import {ListCard, ListItem} from '../components/ListCard'
 import map from 'lodash/map'
 import filter from 'lodash/filter'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const RuleSections = () => {
     const {document} = useLocation().state

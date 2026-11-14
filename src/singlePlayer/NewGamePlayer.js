@@ -5,7 +5,7 @@ import {sortByName} from '../utilities/utils'
 
 import Styles from './styles/NewGame.module.css'
 
-const dataBase = require('../dataBase.json');
+const dataBase = require('../utilities/db');
 
 const NewGamePlayer = ({onUpdate, player}) => {   
     const getAllegiances = (grandAlliance) => {

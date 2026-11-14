@@ -11,7 +11,7 @@ import filter from 'lodash/filter'
 
 import Styles from './styles/RegimentOfRenown.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const RegimentOfRenown = () => {
     window.scrollTo(0, 0)

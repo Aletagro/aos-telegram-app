@@ -6,7 +6,7 @@ import {replaceAsterisks} from '../utilities/utils'
 
 import Styles from './styles/ChooseTactics.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseTactics = () => {
     const navigate = useNavigate()

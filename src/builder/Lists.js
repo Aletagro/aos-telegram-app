@@ -22,7 +22,7 @@ import lowerCase from 'lodash/lowerCase'
 
 import Styles from './styles/Lists.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const tg = window.Telegram.WebApp
 

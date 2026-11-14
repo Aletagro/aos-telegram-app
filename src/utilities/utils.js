@@ -23,7 +23,7 @@ import lowerCase from 'lodash/lowerCase'
 import capitalize from 'lodash/capitalize'
 import startsWith from 'lodash/startsWith'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('./db')
 
 export const sortByName = (array, param) => param
     ? array.sort((a,b) => (a[param] > b[param]) ? 1 : ((b[param] > a[param]) ? -1 : 0))

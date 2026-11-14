@@ -15,7 +15,7 @@ import includes from 'lodash/includes'
 
 import Styles from './styles/ChooseEnhancement.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseEnhancement = () => {
     const {

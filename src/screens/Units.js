@@ -16,7 +16,7 @@ import forEach from 'lodash/forEach'
 import includes from 'lodash/includes'
 import startCase from 'lodash/startCase'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Units = () => {
     const {allegiance, units, isArmyOfRenown, includedKeywords, excludedKeywords} = useLocation().state

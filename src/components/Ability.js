@@ -14,7 +14,7 @@ import filter from 'lodash/filter'
 
 import Styles from './styles/Ability.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Ability = ({ability, abilityKeywordsName, abilityIdName, isRegimentOfRenown, onClick}) => {
     const navigate = useNavigate()

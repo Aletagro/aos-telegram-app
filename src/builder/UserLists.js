@@ -24,7 +24,7 @@ import findIndex from 'lodash/findIndex'
 
 import Styles from './styles/UserLists.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const UserLists = () => {
     const navigate = useNavigate()

@@ -9,7 +9,7 @@ import Button from '../components/Button'
 
 import Styles from './styles/ChooseWeapon.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseWeapon = () => {
     const {selectedWeaponOptions, weaponOptions, unitIndex, regimentIndex, isAuxiliary, isReinforced} = useLocation().state

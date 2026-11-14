@@ -17,7 +17,7 @@ import includes from 'lodash/includes'
 import lowerCase from 'lodash/lowerCase'
 
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Search = () => {
     const [value, setValue] = useState(search.value)

@@ -10,7 +10,7 @@ import filter from 'lodash/filter'
 
 import Styles from './styles/ChooseBattleplan.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseBattleplan = () => {
     const navigate = useNavigate()

@@ -4,7 +4,7 @@ import {ListCard, ListItem} from './ListCard'
 import map from 'lodash/map'
 import filter from 'lodash/filter'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Battleplans = ({id}) => {
     const battleplans = filter(dataBase.data.rule_container, (group) => group.ruleSectionId === id)

@@ -14,7 +14,7 @@ import includes from 'lodash/includes'
 
 import Styles from './styles/AddUnit.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const AddUnit = () => {
     window.scrollTo(0, 0)

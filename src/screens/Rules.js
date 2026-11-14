@@ -7,7 +7,7 @@ import filter from 'lodash/filter'
 
 import Styles from './styles/Rules.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const Rules = ({info}) => {
     const {paragraph, rules} = useLocation().state

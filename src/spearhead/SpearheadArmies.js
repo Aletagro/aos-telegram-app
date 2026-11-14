@@ -9,7 +9,7 @@ import replace from 'lodash/replace'
 import includes from 'lodash/includes'
 
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const SpearheadArmies = () => {
     const _armies = filter(dataBase.data.publication, publication => includes(publication.name, 'Spearhead: '))

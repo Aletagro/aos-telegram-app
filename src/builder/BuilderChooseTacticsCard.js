@@ -13,7 +13,7 @@ import includes from 'lodash/includes'
 
 import Styles from './styles/BuilderChooseTacticsCard.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const BuilderChooseTacticsCard = () => {
     // eslint-disable-next-line

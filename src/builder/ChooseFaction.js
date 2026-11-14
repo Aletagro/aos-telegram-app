@@ -10,7 +10,7 @@ import includes from 'lodash/includes'
 
 import Styles from './styles/ChooseFaction.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const ChooseFaction = () => {
     const {grandAlliance} = useLocation().state

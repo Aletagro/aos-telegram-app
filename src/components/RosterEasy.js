@@ -8,7 +8,7 @@ import forEach from 'lodash/forEach'
 
 import Styles from './styles/RosterEasy.module.css'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const RosterEasy = ({roster, onClick}) => {
     const tactics = JSON.parse(roster.tactics)

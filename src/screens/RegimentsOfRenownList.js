@@ -11,7 +11,7 @@ import map from 'lodash/map'
 import find from 'lodash/find'
 import filter from 'lodash/filter'
 
-const dataBase = require('../dataBase.json')
+const dataBase = require('../utilities/db')
 
 const RegimentsOfRenownList = () => {
     const {alliganceId} = useLocation().state
