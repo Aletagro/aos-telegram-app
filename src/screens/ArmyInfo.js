@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import Constants from '../Constants'
@@ -23,7 +24,7 @@ const ArmyInfo = () => {
 
     const renderBlock = (block) => {
         const abilities = sortByName(block.abilities, 'displayOrder')
-        return <Group key={block.id} title={block.name} subtitle={block.points ? `${block.points} pts` : undefined}>
+        return <Group key={block.id} title={block.name} subtitle={block.points ? `${block.points} ${t('pts')}` : undefined}>
             {map(abilities, renderAbility)}
         </Group>
     }

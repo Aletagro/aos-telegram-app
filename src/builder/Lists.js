@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useCallback, useEffect, useReducer, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {navigationState, roster, lists} from '../utilities/appState'
@@ -261,10 +262,10 @@ const Lists = () => {
                     {map(lists.data, renderList)}
                     {lists.meta?.total_pages === lists.meta?.page
                         ? null
-                        : <Button className={Styles.nextPage} type='secondary' onClick={handleClickNextPage}>Show Next Page</Button>
+                        : <Button className={Styles.nextPage} type='secondary' onClick={handleClickNextPage}>{t('Show Next Page')}</Button>
                     }
                 </>
-                : <p id={Styles.emptyTitle}>Nobody plays this army yet, you can be the first!</p>
+                : <p id={Styles.emptyTitle}>{t('Nobody plays this army yet, you can be the first!')}</p>
             }
         </div>
         <Modal {...modalData} onClose={handleCloseModal} />
@@ -274,9 +275,9 @@ const Lists = () => {
 export default Lists
 
 const filtersData = [
-    {id: 'all', label: 'All'},
-    {id: 'grand_alliance', label: 'Grand Alliance', items: ['Chaos', 'Death', 'Destruction', 'Order']},
-    {id: 'allegiance', label: 'Allegiance', items: [...Constants.chaosFaction, ...Constants.deathFaction, ...Constants.destructionFaction, ...Constants.orderFaction].sort(), secondBlockTitle: 'Armies of Renown', secondBlockItems: [...Constants.chaosAoRs, ...Constants.deathAoRs, ...Constants.destructionAoRs, ...Constants.orderAoRs].sort()},
-    {id: 'battle_formation', label: 'Battle Formation'},
-    {id: 'points_limit', label: 'Points Limit', items: ['1000', '1500', '2000', '2500', '3000']}
+    {id: 'all', label: t('All')},
+    {id: 'grand_alliance', label: t('Grand Alliance'), items: ['Chaos', 'Death', 'Destruction', 'Order']},
+    {id: 'allegiance', label: t('Allegiance'), items: [...Constants.chaosFaction, ...Constants.deathFaction, ...Constants.destructionFaction, ...Constants.orderFaction].sort(), secondBlockTitle: 'Armies of Renown', secondBlockItems: [...Constants.chaosAoRs, ...Constants.deathAoRs, ...Constants.destructionAoRs, ...Constants.orderAoRs].sort()},
+    {id: 'battle_formation', label: t('Battle Formation')},
+    {id: 'points_limit', label: t('Points Limit'), items: ['1000', '1500', '2000', '2500', '3000']}
   ]

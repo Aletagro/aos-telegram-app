@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 
 import Styles from './styles/Target.module.css'
@@ -23,11 +24,11 @@ const Target = ({target, onChange}) => {
     </button>
 
     return  <div id={Styles.container}>
-        <b id={Styles.title}>Target Ward</b>
+        <b id={Styles.title}>{t('Target Ward')}</b>
         <div id={Styles.characteristicsContainer}>
             {wards.map(renderButton)}
             <button onClick={handleClickIsEthereal} id={target.isEthereal ? Styles.checkedAbilities : Styles.abilities} style={{flex: 2}}>
-                is Ethereal
+                {t('is Ethereal')}
             </button>
         </div>
     </div>

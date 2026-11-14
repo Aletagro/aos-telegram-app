@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState, useEffect, useRef} from 'react'
 import Delete from '../icons/delete.svg'
 import WhiteCopy from '../icons/whiteCopy.svg'
@@ -115,12 +116,12 @@ const CalcUnit = ({index, unit, onDelete, onUpdate}) => {
                     style={inputStyle}
                     onBlur={handleBlurName}
                     onChange={handleChangeName}
-                    label='Unit Name'
+                    label={t('Unit Name')}
                     value={name}
                 />
                 {unit.weapons.map(renderWeapon)}
                 <div id={Styles.separator} />
-                <Button type='secondary' className={Styles.addWeaponButton} onClick={handleAddWeapon}>Add Weapon</Button>
+                <Button type='secondary' className={Styles.addWeaponButton} onClick={handleAddWeapon}>{t('Add Weapon')}</Button>
             </AccordionDetails>
         </Accordion>
     </div>

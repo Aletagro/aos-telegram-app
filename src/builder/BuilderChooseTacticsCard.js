@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useReducer} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
@@ -49,7 +50,7 @@ const BuilderChooseTacticsCard = () => {
                 className={`${Styles.check} ${isChecked ? Styles.checkOn : ''}`}
                 role='checkbox'
                 aria-checked={isChecked}
-                aria-label='Choose card'
+                aria-label={t('Choose card')}
                 onClick={handleClickCheckbox(card, isChecked)}
             >
                 {isChecked
@@ -62,7 +63,7 @@ const BuilderChooseTacticsCard = () => {
 
     return  <div id='column' className='Chapter'>
         {map(tacticsCard, renderTacticsCard)}
-        <Button className={Styles.backButton} type='secondary' onClick={handleGoBack}>Back</Button>
+        <Button className={Styles.backButton} type='secondary' onClick={handleGoBack}>{t('Back')}</Button>
     </div>
 }
 

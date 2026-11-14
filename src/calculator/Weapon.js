@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState, useEffect} from 'react';
 import WhiteClose from '../icons/whiteClose.svg'
 import {getValue} from '../utilities/utils'
@@ -125,7 +126,7 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
                     style={inputStyles.custom}
                     onBlur={handleBlurCharacteristic(characteristic.type)}
                     onChange={handleChangeCharacteristic(characteristic.type)}
-                    label='Custom'
+                    label={t('Custom')}
                     placeholder='d3+3'
                     value={inputsValues[characteristic.type]}
                 />
@@ -136,14 +137,14 @@ const Weapon = ({index, weapon, onChange, onChangeAbilitiy, onDelete}) => {
 
     return  <div id={Styles.container}>
         <div id={Styles.nameContainer}>
-            <b id={Styles.name}>Weapon {index + 1}</b>
+            <b id={Styles.name}>{t('Weapon')} {index + 1}</b>
             <button id={Styles.deleteButton} onClick={handleDelete}><img src={WhiteClose} alt="" /></button>
         </div>
         <FloatingLabelInput
             style={inputStyles.name}
             onBlur={handleBlurName}
             onChange={handleChangeName}
-            label='Weapon Name'
+            label={t('Weapon Name')}
             value={weaponName}
         />
         <div id={Styles.inputsContainer}>

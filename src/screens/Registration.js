@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useReducer, useState, useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Autocomplete from '@mui/joy/Autocomplete'
@@ -85,21 +86,21 @@ const Registration = () => {
     }
 
     return <div id='column' className='Chapter'>
-        <h2 id={Styles.title}>To save the list, please register</h2>
+        <h2 id={Styles.title}>{t('To save the list, please register')}</h2>
         <FloatingLabelInput
             style={inputStyle}
             onChange={handleChangeFirstName}
-            label='Name'
+            label={t('Name')}
             value={firstname}
         />
         <FloatingLabelInput
             style={inputStyle}
             onChange={handleChangeLastname}
-            label='Surname'
+            label={t('Surname')}
             value={lastname}
         />
         <Autocomplete
-            placeholder='Country'
+            placeholder={t('Country')}
             onInputChange={handleChangeCountry}
             options={countries}
             sx={[fieldSx, inputStyle]}
@@ -112,11 +113,11 @@ const Registration = () => {
         <FloatingLabelInput
             style={inputStyle}
             onChange={handleChangeCity}
-            label='City'
+            label={t('City')}
             value={city}
         />
         <Button className={Styles.regButton} onClick={handleRegUser} disabled={isDisableButton}>
-            Sign up
+            {t('Sign up')}
         </Button>
     </div>
 }

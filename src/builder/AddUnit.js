@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster, builderFilters} from '../utilities/appState'
@@ -257,10 +258,10 @@ const AddUnit = () => {
     return <div id='column' className='Chapter'>
         <div className={Styles.filters}>
             {hasPotentialLegends
-                ? <ToggleRow label='Hide Potential Legends' checked={hidePotentialLegends} onChange={handleChangeHidePotentialLegends} />
+                ? <ToggleRow label={t('Hide Potential Legends')} checked={hidePotentialLegends} onChange={handleChangeHidePotentialLegends} />
                 : null
             }
-            <ToggleRow label='Show Legends' checked={showLegends} onChange={handleChangeShowLegends} />
+            <ToggleRow label={t('Show Legends')} checked={showLegends} onChange={handleChangeShowLegends} />
         </div>
         {heroId || isAuxiliary
             ? units.map(renderUnitsType)

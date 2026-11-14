@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
@@ -13,8 +14,8 @@ const MenuRow = ({title, text, icon, navigateTo, state}) => {
 
     return <button type='button' className={Styles.row} onClick={handleClick}>
         <span className={Styles.body}>
-            <span className={Styles.title}>{title}</span>
-            {text ? <span className={Styles.text}>{text}</span> : null}
+            <span className={Styles.title}>{t(title)}</span>
+            {text ? <span className={Styles.text}>{t(text)}</span> : null}
         </span>
         <span className={Styles.chevron} aria-hidden='true' />
     </button>

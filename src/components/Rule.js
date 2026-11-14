@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -17,7 +18,7 @@ const Rule = ({rule}) => {
     const handleClickRule = () => {
         if (rule.textContent) {
             navigator.clipboard.writeText(removeAsterisks(rule.textContent))
-            toast.success('Rule Copied', Constants.toastParams)
+            toast.success(t('Rule Copied'), Constants.toastParams)
         }
     }
 

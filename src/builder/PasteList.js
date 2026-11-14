@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Textarea from '@mui/joy/Textarea'
@@ -497,21 +498,21 @@ const PasteList = () => {
     }
 
     return <div id='column' className='Chapter'>
-        <InfoNote title='Paste your army list'>
-            <p>Copy a list from the official Warhammer Age of Sigmar app, Listbot or from this app (Export → Copy List) and paste it below. You can also paste a roster code (Export → Copy roster code). The format is detected automatically.</p>
+        <InfoNote title={t('Paste your army list')}>
+            <p>{t('Copy a list from the official Warhammer Age of Sigmar app, Listbot or from this app (Export → Copy List) and paste it below. You can also paste a roster code (Export → Copy roster code). The format is detected automatically.')}</p>
         </InfoNote>
-        <Textarea sx={inputStyles.listName} minRows={6} value={rawList} onChange={handleChangeList} placeholder='Paste List' />
+        <Textarea sx={inputStyles.listName} minRows={6} value={rawList} onChange={handleChangeList} placeholder={t('Paste List')} />
         {error ? <p className={Styles.error}>{error}</p> : null}
         {warnings
             ? <div className={Styles.warnings}>
-                <b>List imported with {size(warnings.notFound)} {size(warnings.notFound) === 1 ? 'note' : 'notes'}</b>
-                <ul>{map(warnings.notFound, name => <li key={name}>Unit not found and skipped: {name}</li>)}</ul>
+                <b>{t('List imported with')} {size(warnings.notFound)} {size(warnings.notFound) === 1 ? 'note' : 'notes'}</b>
+                <ul>{map(warnings.notFound, name => <li key={name}>{t('Unit not found and skipped:')} {name}</li>)}</ul>
             </div>
             : null
         }
         {warnings
-            ? <Button className={Styles.goButton} onClick={() => openBuilder(warnings.result)}>Open list</Button>
-            : <Button className={Styles.goButton} disabled={!trim(rawList) || loading} onClick={handleImport}>{loading ? 'Loading...' : 'Import list'}</Button>
+            ? <Button className={Styles.goButton} onClick={() => openBuilder(warnings.result)}>{t('Open list')}</Button>
+            : <Button className={Styles.goButton} disabled={!trim(rawList) || loading} onClick={handleImport}>{loading ? t('Loading...') : t('Import list')}</Button>
         }
     </div>
 }

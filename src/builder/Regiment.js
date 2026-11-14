@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
@@ -113,8 +114,8 @@ const Regiment = ({regiment, index, alliganceId, forceUpdate, artefacts, heroicT
     return <div id={Styles.container} className={highlight ? Styles[highlight] : undefined} key={index}>
         <div id={Styles.title}>
             <div id={Styles.titleSubContainer}>
-                <p id={Styles.text}>Regiment {index + 1}</p>
-                <p id={Styles.points}>{regiment.points} Points</p>
+                <p id={Styles.text}>{t('Regiment')} {index + 1}</p>
+                <p id={Styles.points}>{regiment.points} {t('Points')}</p>
             </div>
             <div id={Styles.rightBlock}>
                 <button id={Styles.deleteButton} onClick={handleChooseGeneral}><img src={General} alt="" /></button>

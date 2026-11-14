@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import ImageCard from '../components/ImageCard'
@@ -138,7 +139,7 @@ const Army = () => {
         <div id='column' className='Chapter'>
             <Tile
                 featured
-                title='Warscrolls'
+                title={t('Warscrolls')}
                 text='All units of the army'
                 navigateTo='units'
                 state={{allegiance: _allegiance, info: warscrolls, isArmyOfRenown}}
@@ -148,25 +149,25 @@ const Army = () => {
                 : null
             }
             <ListCard>
-                <ListItem title='Builder' onClick={handleOpenBuilder} />
-                <ListItem title='Community Lists' onClick={handleOpenLists} />
-                <ListItem title='Regiments of Renown' navigateTo='regimentOfRenownList' state={{alliganceId: _allegiance.id}} />
+                <ListItem title={t('Builder')} onClick={handleOpenBuilder} />
+                <ListItem title={t('Community Lists')} onClick={handleOpenLists} />
+                <ListItem title={t('Regiments of Renown')} navigateTo='regimentOfRenownList' state={{alliganceId: _allegiance.id}} />
                 {size(Constants.unitKeywords[_allegiance.name])
-                    ? <ListItem title='Units Keywords' navigateTo='keywords' state={{keywords: Constants.unitKeywords[_allegiance.name]?.sort(), alliganceId: _allegiance.id}} />
+                    ? <ListItem title={t('Units Keywords')} navigateTo='keywords' state={{keywords: Constants.unitKeywords[_allegiance.name]?.sort(), alliganceId: _allegiance.id}} />
                     : null
                 }
                 {addendas ? <ListItem title={addendas.name} navigateTo='ruleChapters' state={{chapter: addendas}} /> : null}
             </ListCard>
             {armyOfRenown.length > 0
                 ? <>
-                    <SectionTitle>Armies of Renown</SectionTitle>
+                    <SectionTitle>{t('Armies of Renown')}</SectionTitle>
                     {map(armyOfRenown, renderArmyOfRenown)}
                 </>
                 : null
             }
             {isArmyOfRenown
                 ? <>
-                    <SectionTitle>Roster Options</SectionTitle>
+                    <SectionTitle>{t('Roster Options')}</SectionTitle>
                     <div className={Styles.options}>{map(rosterOptions, renderRosterOptions)}</div>
                 </>
                 : null

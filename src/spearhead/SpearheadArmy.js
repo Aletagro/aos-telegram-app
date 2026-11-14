@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useLocation} from 'react-router-dom'
 import Constants from '../Constants'
@@ -46,7 +47,7 @@ const SpearheadArmy = () => {
         <div id='column' className='Chapter'>
             <ListCard>
                 <ListItem
-                    title='Warscrolls'
+                    title={t('Warscrolls')}
                     navigateTo='units'
                     state={{units}}
                 />

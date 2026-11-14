@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useCallback, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
@@ -31,12 +32,12 @@ const LinkAccounts = () => {
         try {
             const response = await generateLinkCode(main.user.id)
             if (response.ok) {
-                toast.success('Code sent to you by the bot', Constants.toastParams)
+                toast.success(t('Code sent to you by the bot'), Constants.toastParams)
             } else {
-                toast.error('Could not get a code, try again later', Constants.toastParams)
+                toast.error(t('Could not get a code, try again later'), Constants.toastParams)
             }
         } catch (error) {
-            toast.error('Could not get a code, try again later', Constants.toastParams)
+            toast.error(t('Could not get a code, try again later'), Constants.toastParams)
         }
         setIsSending(false)
     }, [])
@@ -49,13 +50,13 @@ const LinkAccounts = () => {
             const response = await linkAccounts(code)
             if (response.ok) {
                 await fetchCurrentUser()
-                toast.success('Accounts linked', Constants.toastParams)
+                toast.success(t('Accounts linked'), Constants.toastParams)
                 navigate('/')
             } else {
-                toast.error('Invalid code', Constants.toastParams)
+                toast.error(t('Invalid code'), Constants.toastParams)
             }
         } catch (error) {
-            toast.error('Could not link accounts, try again later', Constants.toastParams)
+            toast.error(t('Could not link accounts, try again later'), Constants.toastParams)
         }
         setIsSending(false)
     }, [code, navigate])
@@ -63,23 +64,23 @@ const LinkAccounts = () => {
     return <div id='column' className='Chapter'>
         {hasAccount
             ? <>
-                <InfoNote title='Link accounts'>
-                    <p>Use your lists in both Telegram and VK.</p>
-                    <p>Tap "Get code": the bot will send you a short code in a private message. Then open the app in {otherApp}, choose to link an existing account and enter the code there.</p>
+                <InfoNote title={t('Link accounts')}>
+                    <p>{t('Use your lists in both Telegram and VK.')}</p>
+                    <p>{t('Tap "Get code": the bot will send you a short code in a private message. Then open the app in {{app}}, choose to link an existing account and enter the code there.', {app: otherApp})}</p>
                 </InfoNote>
-                <Button className={Styles.button} disabled={isSending} onClick={handleGetCode}>Get code</Button>
+                <Button className={Styles.button} disabled={isSending} onClick={handleGetCode}>{t('Get code')}</Button>
             </>
             : <>
-                <InfoNote title='Link accounts'>
-                    <p>Already have an account in {otherApp}? Open the app there, go to "Link accounts" and tap "Get code". Then enter the code from the bot here, and this {thisApp} account will be linked to it.</p>
+                <InfoNote title={t('Link accounts')}>
+                    <p>{t('Already have an account in {{app}}? Open the app there, go to "Link accounts" and tap "Get code". Then enter the code from the bot here, and this {{thisApp}} account will be linked to it.', {app: otherApp, thisApp})}</p>
                 </InfoNote>
                 <FloatingLabelInput
                     style={inputStyle}
                     onChange={handleChangeCode}
-                    label='Code'
+                    label={t('Code')}
                     value={code}
                 />
-                <Button className={Styles.button} disabled={!code || isSending} onClick={handleSendCode}>Link account</Button>
+                <Button className={Styles.button} disabled={!code || isSending} onClick={handleSendCode}>{t('Link account')}</Button>
             </>
         }
         <ToastContainer />

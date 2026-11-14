@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
@@ -163,7 +164,7 @@ const Warscroll = () => {
             {rangeWeapons.length > 0
                 ? <>
                     <div id={Styles.weaponTitleContainer}>
-                        <h3 id={Styles.warscrollChapterTitle}>Range Weapons</h3>
+                        <h3 id={Styles.warscrollChapterTitle}>{t('Range Weapons')}</h3>
                         <button id={Styles.calculator} onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
                     </div>
                     {map(rangeWeapons, renderRangeWeapon)}
@@ -173,7 +174,7 @@ const Warscroll = () => {
             {meleeWeapons.length > 0
                 ? <>
                     <div id={Styles.weaponTitleContainer}>
-                        <h3 id={Styles.warscrollChapterTitle}>Melee Weapons</h3>
+                        <h3 id={Styles.warscrollChapterTitle}>{t('Melee Weapons')}</h3>
                         <button id={Styles.calculator} onClick={handleNavigateToCalculator}><img src={Calculator} alt="" /></button>
                     </div>
                     {map(meleeWeapons, renderMeleeWeapon)}
@@ -182,34 +183,34 @@ const Warscroll = () => {
             }
             {abilities.length > 0
                 ? <>
-                    <h3 id={Styles.warscrollChapterTitle}>Abilities</h3>
+                    <h3 id={Styles.warscrollChapterTitle}>{t('Abilities')}</h3>
                     {map(abilities, renderAbility)}
                 </>
                 : null
             }
             <div id={Styles.unitDetailsContainer}>
-                <p id={Styles.unitDetailsTitle}>Unit Details</p>
+                <p id={Styles.unitDetailsTitle}>{t('Unit Details')}</p>
                 <div id={Styles.unitDetailsSubContainer}>
-                    <p id={Styles.unitDetailsText}>{unit.modelCount * (unit.isReinforced ? 2 : 1)} model</p>
+                    <p id={Styles.unitDetailsText}>{t('{{count}} model|{{count}} models', {count: unit.modelCount * (unit.isReinforced ? 2 : 1)})}</p>
                     {unit.wargearOptionsText ? <p id={Styles.wargearOptions}>{replaceAsterisks(unit.wargearOptionsText)}</p> : null}
-                    {unit.points ? <p id={Styles.unitDetailsText}>{unit.points} points</p> : null}
-                    {unit.baseSize ? <p id={Styles.unitDetailsText}><b>Base size:</b> {unit.baseSize}</p> : null}
+                    {unit.points ? <p id={Styles.unitDetailsText}>{t('{{count}} points', {count: unit.points})}</p> : null}
+                    {unit.baseSize ? <p id={Styles.unitDetailsText}><b>{t('Base size:')}</b> {unit.baseSize}</p> : null}
                     {regimentOptions.length > 0
                         ? <>
-                            <b className={Styles.subTitle}>Regiment Options</b>
+                            <b className={Styles.subTitle}>{t('Regiment Options')}</b>
                             <div id={Styles.regimentOptionContainer}>
                                 {map(regimentOptions, renderRegimentOption)}
                             </div>
                         </>
                         : null
                     }
-                    {unit.notes ? <p id={Styles.unitDetailsText}>Notes: {replaceAsterisks(unit.notes)}</p> : null}
-                    {unit.isLegends ? <b id={Styles.unitDetailsText}> This unit is in Legend</b> : null}
+                    {unit.notes ? <p id={Styles.unitDetailsText}>{t('Notes:')} {replaceAsterisks(unit.notes)}</p> : null}
+                    {unit.isLegends ? <b id={Styles.unitDetailsText}> {t('This unit is in Legend')}</b> : null}
                 </div>
             </div>
             {unit.referenceKeywords
                 ? <>
-                    <p id={Styles.keywords}>Keywords: <b>{unit.referenceKeywords}</b></p>
+                    <p id={Styles.keywords}>{t('Keywords:')} <b>{unit.referenceKeywords}</b></p>
                 </>
                 : null
             }

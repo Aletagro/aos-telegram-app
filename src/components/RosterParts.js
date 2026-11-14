@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 
 import InfoIcon from '../icons/InfoIcon'
@@ -25,7 +26,7 @@ export const Fact = ({label, value, onClick, onInfo, isEmpty}) => <div className
         {isEmpty ? <PlusIcon /> : onInfo ? null : <Chevron />}
     </button>
     {onInfo
-        ? <button type='button' className={Styles.infoButton} onClick={onInfo} aria-label='Описание'><InfoIcon /></button>
+        ? <button type='button' className={Styles.infoButton} onClick={onInfo} aria-label={t('Description')}><InfoIcon /></button>
         : null
     }
 </div>

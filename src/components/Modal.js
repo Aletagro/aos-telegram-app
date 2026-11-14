@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState, useEffect} from 'react'
 import Modal from '@mui/joy/Modal'
 import ModalClose from '@mui/joy/ModalClose'
@@ -86,7 +87,7 @@ const CustomModal = ({title, text, visible, ability, onClose, Content}) => {
                     <Ability ability={ability} />
                 </div>
                 : <div id={Styles.abilityContainer}>
-                    {title ? <DialogTitle sx={titleSx}>{title}</DialogTitle> : null}
+                    {title ? <DialogTitle sx={titleSx}>{t(title)}</DialogTitle> : null}
                     <DialogContent sx={contentSx}>
                         {Content
                             ? renderContent()

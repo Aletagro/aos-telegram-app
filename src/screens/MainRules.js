@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import Constants from '../Constants'
 import ImageCard from '../components/ImageCard'
@@ -17,13 +18,13 @@ const MainRules = () => {
     />
 
     return <div id='column' className='Chapter'>
-        <SectionTitle>Armies</SectionTitle>
+        <SectionTitle>{t('Armies')}</SectionTitle>
         {map(Constants.grandAlliances, renderRow)}
-        <SectionTitle>Library</SectionTitle>
-        <MenuRow title='Core Documents' text="Core rules, General's Handbook, battlepacks" navigateTo='coreDocuments' />
-        <MenuRow title='Regiments of Renown' text='Mercenary regiments for any army' navigateTo='regimentOfRenownList' />
-        <MenuRow title='Manifestations' text='Endless spells and their lores' navigateTo='manifestations' />
-        <MenuRow title='Legends' text='Warscrolls no longer in the core range' navigateTo='legends' />
+        <SectionTitle>{t('Library')}</SectionTitle>
+        <MenuRow title={t('Core Documents')} text="Core rules, General's Handbook, battlepacks" navigateTo='coreDocuments' />
+        <MenuRow title={t('Regiments of Renown')} text='Mercenary regiments for any army' navigateTo='regimentOfRenownList' />
+        <MenuRow title={t('Manifestations')} text='Endless spells and their lores' navigateTo='manifestations' />
+        <MenuRow title={t('Legends')} text='Warscrolls no longer in the core range' navigateTo='legends' />
     </div>
 }
 

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import RowImage from '../components/RowImage'
@@ -13,18 +14,18 @@ export const renderRightText = (data) => {
     if (data.points !== undefined) {
         return <div className={Styles.chip}>
             <span className={Styles.chipValue}>{data.points}</span>
-            <span className={Styles.chipLabel}>pts</span>
+            <span className={Styles.chipLabel}>{t('pts')}</span>
         </div>
     }
     return <div className={Styles.chip}>
         <div className={Styles.chipPair}>
             <span className={Styles.chipCell}>
                 <span className={Styles.chipValue}>{data.cast}</span>
-                <span className={Styles.chipLabel}>Cast</span>
+                <span className={Styles.chipLabel}>{t('Cast')}</span>
             </span>
             <span className={Styles.chipCell}>
                 <span className={Styles.chipValue}>{data.banish}</span>
-                <span className={Styles.chipLabel}>Banish</span>
+                <span className={Styles.chipLabel}>{t('Banish')}</span>
             </span>
         </div>
     </div>

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
@@ -22,7 +23,7 @@ const ChooseGrandAlliance = () => {
     />
 
     return  <div id='column' className='Chapter'>
-        <h4 id={Styles.title}>Choose your Grand Alliance</h4>
+        <h4 id={Styles.title}>{t('Choose your Grand Alliance')}</h4>
         {Constants.grandAlliances.map(renderRow)}
     </div>
 }

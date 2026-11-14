@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import InfoIcon from '../icons/InfoIcon'
@@ -12,7 +13,7 @@ import Styles from './styles/GameScreen.module.css'
 
 const dataBase = require('../utilities/db')
 
-const STAGE_LABEL = {affray: 'Affray', strike: 'Strike', domination: 'Domination'}
+const STAGE_LABEL = {affray: t('Affray'), strike: t('Strike'), domination: t('Domination')}
 
 // Карточка тактики игрока: три стадии по порядку. Отметка справа у стадии: можно отметить только следующую, снять только последнюю.
 // Нажатие на название стадии раскрывает её правила, «i» в заголовке открывает карточку целиком
@@ -51,7 +52,7 @@ const GameTactic = ({game, index, cardId, apply}) => {
                     <span className={Styles.stageTitle}>{stage.name}<span className={`${Styles.stageChevron} ${expanded ? Styles.stageChevronOpen : ''}`} aria-hidden='true' /></span>
                 </button>
                 <button type='button' className={`${Styles.stageCheck} ${stage.done ? Styles.stageCheckOn : ''}`} disabled={!enabled} style={{color}}
-                    aria-label={stage.done ? `Undo ${stage.name}` : `Score ${stage.name}`} onClick={() => handleCheck(stage)}>{stage.done ? '✓' : ''}</button>
+                    aria-label={stage.done ? t('Undo {{name}}', {name: stage.name}) : t('Score {{name}}', {name: stage.name})} onClick={() => handleCheck(stage)}>{stage.done ? '✓' : ''}</button>
             </div>
             {expanded && rules ? <p className={Styles.stageRules}>{replaceAsterisks(rules)}</p> : null}
         </div>
@@ -63,11 +64,11 @@ const GameTactic = ({game, index, cardId, apply}) => {
                 <h4 className={Styles.cardTitle}>{progress.card.name}</h4>
                 <InfoIcon size={24} className={Styles.infoIcon} />
             </button>
-            <span className={Styles.stageMark}>{progress.total} / 15 VP</span>
+            <span className={Styles.stageMark}>{progress.total} {t('/ 15 VP')}</span>
         </div>
         <div className={Styles.tacticBody}>
             {map(progress.stages, renderStage)}
-            {scoredThisTurn ? <p className={Styles.cardSub}>A stage of this card is already scored this turn.</p> : null}
+            {scoredThisTurn ? <p className={Styles.cardSub}>{t('A stage of this card is already scored this turn.')}</p> : null}
         </div>
     </div>
 }

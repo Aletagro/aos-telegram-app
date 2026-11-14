@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
@@ -76,7 +77,7 @@ const ChooseWeapon = () => {
 
     return  <div id='column' className='Chapter'>
         {weaponOptions.map(renderWeaponOption)}
-        <Button className={Styles.applyButton} onClick={handleApply}>Apply</Button>
+        <Button className={Styles.applyButton} onClick={handleApply}>{t('Apply')}</Button>
     </div>
 }
 

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useCallback, useEffect, useReducer, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
@@ -47,7 +48,7 @@ const UserLists = () => {
         })
             .then(() => {
                 handleGetLists()
-                toast.success('List deleted', Constants.toastParams)
+                toast.success(t('List deleted'), Constants.toastParams)
             })
             .catch(error => console.error(error))
       }, [handleGetLists])
@@ -85,14 +86,14 @@ const UserLists = () => {
     }
 
     const renderDeleteModalContent = (listId) => () => <ModalActions>
-        <ModalButton onClick={handleCloseModal}>No</ModalButton>
-        <ModalButton type='danger' onClick={handleDelete(listId)}>Yes</ModalButton>
+        <ModalButton onClick={handleCloseModal}>{t('No')}</ModalButton>
+        <ModalButton type='danger' onClick={handleDelete(listId)}>{t('Yes')}</ModalButton>
     </ModalActions>
 
     const renderList = (list) => {
         const army = find(dataBase.data.faction_keyword, ['id', list.allegiance_id])
         return <div id={Styles.listContainer} key={list.id}>
-            <button type='button' className={Styles.closeIcon} onClick={handleClickDelete(list.id)} aria-label='Delete list'>
+            <button type='button' className={Styles.closeIcon} onClick={handleClickDelete(list.id)} aria-label={t('Delete list')}>
                 <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' aria-hidden='true'><path d='M6 6l12 12M18 6L6 18' /></svg>
             </button>
             <button id={Styles.button} onClick={handleNavigateToRoster(list)} key={list.id}>
@@ -110,17 +111,17 @@ const UserLists = () => {
             return null
         }
         if (isSupporter(main.user)) {
-            return <InfoNote title='Thank you for your support!'>No limit on saved lists until {formatSupportDate(getSupportUntil(main.user))}.</InfoNote>
+            return <InfoNote title={t('Thank you for your support!')}>{t('No limit on saved lists until')} {formatSupportDate(getSupportUntil(main.user))}.</InfoNote>
         }
         return <InfoNote title={`You can save up to ${Constants.listsMax} army lists`}>
-            <p className={Styles.limitText}>Support the app with any donation from 1 EUR and the limit is removed for a month.</p>
-            <Button className={Styles.limitButton} size='sm' onClick={openSupportPage}>Support the app</Button>
+            <p className={Styles.limitText}>{t('Support the app with any donation from 1 EUR and the limit is removed for a month.')}</p>
+            <Button className={Styles.limitButton} size='sm' onClick={openSupportPage}>{t('Support the app')}</Button>
         </InfoNote>
     }
 
     return  <div id='column' className='Chapter'>
-        <Button className={Styles.newRosterButton} onClick={handleAddNewRoster}>New List</Button>
-        <Button className={Styles.newRosterButton} type='secondary' onClick={handlePasteList}>Paste List</Button>
+        <Button className={Styles.newRosterButton} onClick={handleAddNewRoster}>{t('New List')}</Button>
+        <Button className={Styles.newRosterButton} type='secondary' onClick={handlePasteList}>{t('Paste List')}</Button>
         {renderLimitNote()}
         <div id={Styles.buttonContainer}>
             {map(main.rosters, renderList)}

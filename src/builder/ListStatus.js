@@ -1,3 +1,4 @@
+import {t, tr} from '../utilities/i18n'
 import React from 'react'
 
 import {roster} from '../utilities/appState'
@@ -21,10 +22,10 @@ export const getRegimentIndexFromIssue = (text, generalRegimentIndex = roster.ge
 export const getStatusText = (errors, warnings) => {
     const parts = []
     if (size(errors)) {
-        parts.push(`${size(errors)} ${size(errors) === 1 ? 'error' : 'errors'}`)
+        parts.push(t('{{count}} error|{{count}} errors', {count: size(errors)}))
     }
     if (size(warnings)) {
-        parts.push(`${size(warnings)} ${size(warnings) === 1 ? 'warning' : 'warnings'}`)
+        parts.push(t('{{count}} warning|{{count}} warnings', {count: size(warnings)}))
     }
     return parts.join(' · ')
 }
@@ -41,10 +42,10 @@ const ListStatus = ({errors, warnings, expanded, onToggle, statusRef, getAction}
         return <li key={`${type}-${index}`} className={`${Styles.issue} ${type === 'error' ? Styles.issueError : Styles.issueWarning}`}>
             {action
                 ? <button type='button' className={Styles.issueButton} onClick={action}>
-                    <span className={Styles.issueText}>{text}</span>
-                    <span className={Styles.issueFix}>Fix<Svg><path d='M9 5l7 7-7 7' /></Svg></span>
+                    <span className={Styles.issueText}>{tr(text)}</span>
+                    <span className={Styles.issueFix}>{t('Fix')}<Svg><path d='M9 5l7 7-7 7' /></Svg></span>
                 </button>
-                : text
+                : tr(text)
             }
         </li>
     }
@@ -61,8 +62,8 @@ const ListStatus = ({errors, warnings, expanded, onToggle, statusRef, getAction}
                 <Svg>{hasErrors || hasWarnings ? <path d='M12 7v6M12 17h.01' /> : <path d='M5 12.5l4.5 4.5L19 7.5' />}</Svg>
             </span>
             <span className={Styles.text}>
-                <span className={Styles.title}>{hasErrors ? 'List needs fixes' : hasWarnings ? 'List is valid, check hints' : 'List is ready'}</span>
-                <span className={Styles.subtitle}>{hasErrors || hasWarnings ? getStatusText(errors, warnings) : 'No errors found'}</span>
+                <span className={Styles.title}>{hasErrors ? t('List needs fixes') : hasWarnings ? t('List is valid, check hints') : t('List is ready')}</span>
+                <span className={Styles.subtitle}>{hasErrors || hasWarnings ? getStatusText(errors, warnings) : t('No errors found')}</span>
             </span>
             {hasErrors || hasWarnings ? <span className={`${Styles.chevron} ${expanded ? Styles.chevronOpen : ''}`}><Svg><path d='M6 9l6 6 6-6' /></Svg></span> : null}
         </button>

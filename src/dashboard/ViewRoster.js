@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useLocation} from 'react-router-dom'
 import RosterEasy from '../components/RosterEasy'
@@ -10,7 +11,7 @@ const ViewRoster = () => {
     const {gameId, playerIndex} = useLocation().state || {}
     const snapshot = getGame(gameId)?.players[playerIndex]?.army?.snapshot
     return <div id='column' className='Chapter'>
-        {snapshot ? <RosterEasy roster={snapshot} /> : <p className={Styles.muted}>The list is not available</p>}
+        {snapshot ? <RosterEasy roster={snapshot} /> : <p className={Styles.muted}>{t('The list is not available')}</p>}
     </div>
 }
 

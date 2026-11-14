@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
@@ -20,7 +21,7 @@ export const ListItem = ({title, navigateTo, state, onClick}) => {
     }
 
     return <button type='button' className={Styles.item} onClick={handleClick}>
-        <span className={Styles.title}>{title}</span>
+        <span className={Styles.title}>{t(title)}</span>
         <span className={Styles.chevron} aria-hidden='true' />
     </button>
 }

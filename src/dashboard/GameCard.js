@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import {getTurnInfo, getResult, STATUS_FINISHED, MAX_ROUNDS} from './gameModel'
@@ -18,12 +19,12 @@ const GameCard = ({game, onDelete}) => {
     const result = getResult(game)
     let progress
     if (game.status === STATUS_FINISHED) {
-        progress = result.winner === null ? 'Draw' : `${game.players[result.winner].name} wins`
+        progress = result.winner === null ? t('Draw') : t('{{name}} wins', {name: game.players[result.winner].name})
     } else {
-        progress = `Round ${getTurnInfo(game).round} of ${MAX_ROUNDS}`
+        progress = t('Round {{round}} of {{total}}', {round: getTurnInfo(game).round, total: MAX_ROUNDS})
     }
     return <div className={Styles.gameCard}>
-        <button type='button' className={Styles.gameButton} onClick={() => navigate('/game', {state: {title: 'Battle', gameId: game.id}})}>
+        <button type='button' className={Styles.gameButton} onClick={() => navigate('/game', {state: {title: t('Battle'), gameId: game.id}})}>
             <span className={Styles.gameImages}>
                 {map(game.players, (player, index) => <span className={Styles.gameHalf} key={index}>
                     {getImage(player) ? <img className={Styles.gameImage} src={getImage(player)} alt='' loading='lazy' /> : null}
@@ -38,7 +39,7 @@ const GameCard = ({game, onDelete}) => {
                 <span>{new Date(game.updatedAt).toLocaleDateString()}</span>
             </span>
         </button>
-        <button type='button' className={Styles.gameDelete} onClick={() => onDelete(game)} aria-label='Delete battle'>×</button>
+        <button type='button' className={Styles.gameDelete} onClick={() => onDelete(game)} aria-label={t('Delete battle')}>×</button>
     </div>
 }
 

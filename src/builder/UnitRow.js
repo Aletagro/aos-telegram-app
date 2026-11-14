@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import RowImage from '../components/RowImage'
@@ -160,7 +161,7 @@ const UnitRow = ({
     }
 
     const renderChooseWeapon = () => <button id={Styles.chooseEnhancementButton} onClick={handleWeaponOption}>
-        Weapon Options
+        {t('Weapon Options')}
     </button>
 
     const showStats = !isAddUnit && !isRegimentsOfRenown
@@ -174,7 +175,7 @@ const UnitRow = ({
                         {isGeneral ? <img id={Styles.generalIcon} src={DarkGeneral} alt=''/> : null}
                         <p id={Styles.name}>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} ` : ''}{unit.name}</p>
                     </div>
-                    <p id={Styles.price}>{unit.points || unit.regimentOfRenownPointsCost || 0} pts</p>
+                    <p id={Styles.price}>{unit.points || unit.regimentOfRenownPointsCost || 0} {t('pts')}</p>
                 </div>
             </button>
             {isAddUnit || unit.cannotBeReinforced || unit.abilityGroupType === 'regimentOfRenown'
@@ -188,7 +189,7 @@ const UnitRow = ({
                 : <button id={Styles.button} onClick={handleCopy}><img src={Copy} alt="" /></button>
             }
             {onDelete ? <button id={Styles.button} onClick={handleDelete}><img src={Close} alt="" /></button> : null}
-            {isAddUnit ? <button id={Styles.infoButton} onClick={handleClickInfo} aria-label='Info'><InfoIcon /></button> : null}
+            {isAddUnit ? <button id={Styles.infoButton} onClick={handleClickInfo} aria-label={t('Info')}><InfoIcon /></button> : null}
         </div>
         {isShowEnhancements && !isAddUnit && !isCogfort
             ? <div id={Styles.enhancementsContainer}>

@@ -74,6 +74,42 @@ const loadDatabase = async (onProgress = () => {}) => {
   setDatabase(core)
 }
 
+// ---------- Язык интерфейса ----------
+// Выбранный язык хранится на устройстве. По умолчанию английский, без автоопределения
+const LANGUAGE_KEY = 'language'
+const DEFAULT_LANGUAGE = 'en'
+
+const LANGUAGES = [
+  {id: 'en', name: 'English'},
+  {id: 'de', name: 'Deutsch'},
+  {id: 'es', name: 'Español'},
+  {id: 'fr', name: 'Français'},
+  {id: 'it', name: 'Italiano'},
+  {id: 'ja', name: '日本語'},
+  {id: 'ko', name: '한국어'},
+  {id: 'zh', name: '中文'},
+  {id: 'ru', name: 'Русский'}
+]
+
+const getLanguage = () => {
+  try {
+    const saved = localStorage.getItem(LANGUAGE_KEY)
+    if (saved && LANGUAGES.some(({id}) => id === saved)) return saved
+  } catch (e) {}
+  return DEFAULT_LANGUAGE
+}
+
+const setLanguage = (language) => {
+  try {
+    localStorage.setItem(LANGUAGE_KEY, language)
+  } catch (e) {}
+  // интерфейс читает язык один раз при загрузке, поэтому перезагружаем приложение
+  window.location.reload()
+}
+
 module.exports = raw
 module.exports.loadDatabase = loadDatabase
 module.exports.setDatabase = setDatabase
+module.exports.LANGUAGES = LANGUAGES
+module.exports.getLanguage = getLanguage
+module.exports.setLanguage = setLanguage

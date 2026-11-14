@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useCallback, useReducer, useState, useEffect, useRef} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Modal from '../components/Modal'
@@ -316,13 +317,13 @@ const Builder = () => {
     const renderEnhancementPoints = (type) => {
         switch (type) {
             case 'manifestationLore':
-                return roster.points?.manifestations ? ` (${roster.points?.manifestations}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.manifestations ? ` (${roster.points?.manifestations}${Constants.noBreakSpace}${t('pts')})` : ''
             case 'factionTerrain':
-                return roster.points?.terrain ? ` (${roster.points?.terrain}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.terrain ? ` (${roster.points?.terrain}${Constants.noBreakSpace}${t('pts')})` : ''
             case 'spellsLore':
-                return roster.points?.spellsLore ? ` (${roster.points?.spellsLore}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.spellsLore ? ` (${roster.points?.spellsLore}${Constants.noBreakSpace}${t('pts')})` : ''
             case 'prayersLore':
-                return roster.points?.prayersLore ? ` (${roster.points?.prayersLore}${Constants.noBreakSpace}pts)` : ''
+                return roster.points?.prayersLore ? ` (${roster.points?.prayersLore}${Constants.noBreakSpace}${t('pts')})` : ''
             default:
                 return ''
         }
@@ -352,14 +353,14 @@ const Builder = () => {
         type={Number(roster.pointsLimit) === Number(limit) ? 'primary' : 'secondary'}
         onClick={handleClickPointsLimitButton(limit)}
     >
-        {limit} Points
+        {limit} {t('Points')}
     </Button>
 
     const renderNoteInput = () => <div className={Styles.note}>
-        <p className={Styles.noteTitle}>Note</p>
+        <p className={Styles.noteTitle}>{t('Note')}</p>
         <Textarea
             defaultValue={roster.noteText}
-            placeholder='Comment about your list'
+            placeholder={t('Comment about your list')}
             onChange={handleChangeNote}
             minRows={3}
             sx={noteSx}
@@ -432,19 +433,19 @@ const Builder = () => {
     return <div id='column' className='Chapter'>
         <div id='summary'>
         <SummaryCard alliance={roster.grandAlliance} army={roster.allegiance} onClick={handleClickAllegiance}>
-            <Stat label='Points' value={`${roster.points?.all}/${roster.pointsLimit}`} onClick={handleOpenModal} />
-            <Stat label='Drops' value={getDropsCount(roster)} />
-            <Stat label='Wounds' value={getWoundsCount(roster)} />
+            <Stat label={t('Points')} value={`${roster.points?.all}/${roster.pointsLimit}`} onClick={handleOpenModal} />
+            <Stat label={t('Drops')} value={getDropsCount(roster)} />
+            <Stat label={t('Wounds')} value={getWoundsCount(roster)} />
         </SummaryCard>
         </div>
         <ListStatus errors={errors} warnings={warnings} expanded={showIssues} onToggle={handleToggleIssues} statusRef={statusRef} getAction={getIssueAction} />
         <Facts>
             {battleFormations.length
                 ? <Fact
-                    label='Battle Formation'
+                    label={t('Battle Formation')}
                     value={roster.battleFormation
-                        ? `${roster.battleFormation}${roster.points?.battleFormation ? ` (${roster.points?.battleFormation}${Constants.noBreakSpace}pts)` : ''}`
-                        : 'Choose Battle Formation'
+                        ? `${roster.battleFormation}${roster.points?.battleFormation ? ` (${roster.points?.battleFormation}${Constants.noBreakSpace}${t('pts')})` : ''}`
+                        : t('Choose Battle Formation')
                     }
                     isEmpty={!roster.battleFormation}
                     onClick={handleChooseEnhancement('Battle Formation', 'battleFormation', battleFormations)}
@@ -452,37 +453,37 @@ const Builder = () => {
                 : null
             }
             <Fact
-                label='Tactics Cards'
-                value={tacticsChosen ? 'Your Tactics Cards' : 'Choose Tactics Cards'}
+                label={t('Tactics Cards')}
+                value={tacticsChosen ? t('Your Tactics Cards') : t('Choose Tactics Cards')}
                 isEmpty={!tacticsChosen}
                 onClick={handleChooseTactics}
             />
-            {roster.tactics[0] ? <Fact label='First Card' value={roster.tactics[0].name} onClick={handleClickTactics(roster.tactics[0])} /> : null}
-            {roster.tactics[1] ? <Fact label='Second Card' value={roster.tactics[1].name} onClick={handleClickTactics(roster.tactics[1])} /> : null}
+            {roster.tactics[0] ? <Fact label={t('First Card')} value={roster.tactics[0].name} onClick={handleClickTactics(roster.tactics[0])} /> : null}
+            {roster.tactics[1] ? <Fact label={t('Second Card')} value={roster.tactics[1].name} onClick={handleClickTactics(roster.tactics[1])} /> : null}
         </Facts>
         {map(roster.regiments, renderRegiment)}
         {canCreateNewRegiment
-            ? <Button className={Styles.addButton} onClick={handleAddRegiment} type='secondary'>Add Regiment</Button>
+            ? <Button className={Styles.addButton} onClick={handleAddRegiment} type='secondary'>{t('Add Regiment')}</Button>
             : null
         }
         {size(roster.auxiliaryUnits)
-            ? <Group title='Auxiliary Units'>
+            ? <Group title={t('Auxiliary Units')}>
                 {roster.auxiliaryUnits.map(renderAuxiliaryUnit)}
             </Group>
             : null
         }
-        <Button className={Styles.addButton} type='secondary' onClick={handleAddAuxiliaryUnit}>Add Auxiliary Unit</Button>
+        <Button className={Styles.addButton} type='secondary' onClick={handleAddAuxiliaryUnit}>{t('Add Auxiliary Unit')}</Button>
         {roster.regimentOfRenown
-            ? <Group title='Regiment Of Renown'>
+            ? <Group title={t('Regiment Of Renown')}>
                 {renderRegimentOfRenown()}
                 {roster.regimentsOfRenownUnits?.map(renderRegimentOfRenownUnit)}
             </Group>
             : canCreateNewRegiment
-                ? <Button className={Styles.addButton} type='secondary' onClick={handleAddRegimentsOfRenown}>Add Regiments Of Renown</Button>
+                ? <Button className={Styles.addButton} type='secondary' onClick={handleAddRegimentsOfRenown}>{t('Add Regiments Of Renown')}</Button>
                 : null
         }
         {hasLores
-            ? <Group title='Lores'>
+            ? <Group title={t('Lores')}>
                 <Facts>
                     {spellsLores.length > 0 ? renderEnhancement('Spell Lore', 'spellsLore', spellsLores) : null}
                     {preyersLores.length > 0 ? renderEnhancement('Prayer Lore', 'prayersLore', preyersLores) : null}
@@ -493,7 +494,7 @@ const Builder = () => {
             : null
         }
         {size(manifestationsToShow)
-            ? <Group title='Manifestations' subtitle={roster.manifestationLore}>
+            ? <Group title={t('Manifestations')} subtitle={roster.manifestationLore}>
                 {manifestationsToShow.map(renderManifestation)}
             </Group>
             : null
@@ -501,16 +502,16 @@ const Builder = () => {
         {renderNoteInput()}
         <div className={SaveStyles.bar}>
             <div className={SaveStyles.info}>
-                <span className={`${SaveStyles.points} ${pointError ? SaveStyles.pointsOver : ''}`}>{roster.points?.all}/{roster.pointsLimit} pts</span>
-                <span className={SaveStyles.hint}>{hasErrors || size(warnings) ? getStatusText(errors, warnings) : 'Ready to save'}</span>
+                <span className={`${SaveStyles.points} ${pointError ? SaveStyles.pointsOver : ''}`}>{roster.points?.all}/{roster.pointsLimit} {t('pts')}</span>
+                <span className={SaveStyles.hint}>{hasErrors || size(warnings) ? getStatusText(errors, warnings) : t('Ready to save')}</span>
             </div>
             <Button className={SaveStyles.button} type={hasErrors ? 'secondary' : 'primary'} onClick={hasErrors ? handleReview : handleClickSaveButton}>
-                {hasErrors ? 'Review' : 'Save list'}
+                {hasErrors ? t('Review') : t('Save list')}
             </Button>
         </div>
         {saveModal}
         <ToastContainer />
-        <Modal visible={open} title='Points Limit' onClose={handleCloseModal} Content={renderModalContent} />
+        <Modal visible={open} title={t('Points Limit')} onClose={handleCloseModal} Content={renderModalContent} />
     </div>
 }
 

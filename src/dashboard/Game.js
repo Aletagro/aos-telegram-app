@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useEffect, useRef, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Button from '../components/Button'
@@ -47,7 +48,7 @@ const Game = () => {
         wasFinished.current = isFinished
     }, [isFinished])
 
-    if (!game) return <div className={Styles.body}><p className={Styles.muted}>Battle not found</p></div>
+    if (!game) return <div className={Styles.body}><p className={Styles.muted}>{t('Battle not found')}</p></div>
 
     const turn = getTurnInfo(game)
     const finished = game.status === STATUS_FINISHED
@@ -65,13 +66,13 @@ const Game = () => {
 
     const handleCp = (index, delta) => apply(current => delta < 0 ? spendCp(current, index, 1, 'manual') : adjustCp(current, index, 1))
     const totals = [getPlayerTotals(game, 0), getPlayerTotals(game, 1)]
-    const nextLabel = turn.turn === MAX_ROUNDS * 2 - 1 ? 'Finish battle' : 'Next turn'
+    const nextLabel = turn.turn === MAX_ROUNDS * 2 - 1 ? t('Finish battle') : t('Next turn')
 
     const renderRosters = () => {
         const items = filter2(game.players)
         if (!items.length) return null
         return <div className={Styles.rosters}>
-            <h4 className={Styles.cardTitle}>Army lists</h4>
+            <h4 className={Styles.cardTitle}>{t('Army lists')}</h4>
             {map(items, ({player, index}) => <ImageCard key={index} title={player.army.name}
                 image={find(dataBase.data.faction_keyword, ['id', player.army.allegianceId])?.selectFactionImage}
                 onClick={() => navigate('/viewRoster', {state: {title: player.army.name, gameId: game.id, playerIndex: index}})} />)}
@@ -84,35 +85,35 @@ const Game = () => {
             <button type='button' className={Styles.missionLink} onClick={() => navigate('/battleplan', {state: {title: mission.name, battleplan: {id: game.missionId, name: mission.name}}})}>
                 <span><b>{mission.name}</b></span><InfoIcon size={24} className={Styles.infoIcon} />
             </button>
-            {turn.needsFirst ? <p className={Styles.cardSub} style={{textAlign: 'center'}}>Choose who goes first this round</p>
-                : <p className={Styles.turnLine}>Turn of <b>{game.players[turn.playerIndex].name}</b></p>}
+            {turn.needsFirst ? <p className={Styles.cardSub} style={{textAlign: 'center'}}>{t('Choose who goes first this round')}</p>
+                : <p className={Styles.turnLine}>{t('Turn of')} <b>{game.players[turn.playerIndex].name}</b></p>}
             {map(game.players, (player, index) => <GamePlayer key={index} game={game} index={index} apply={apply} />)}
             <div className={Styles.card}>
-                <h4 className={Styles.cardTitle}>Score</h4>
+                <h4 className={Styles.cardTitle}>{t('Score')}</h4>
                 <table className={Styles.table}>
                     <thead><tr><th /><th>{game.players[0].name}</th><th>{game.players[1].name}</th></tr></thead>
                     <tbody>
-                        {map([1, 2, 3, 4, 5].slice(0, turn.round), r => <tr key={r}><td>Round {r}</td><td>{totals[0].rounds[r - 1]}</td><td>{totals[1].rounds[r - 1]}</td></tr>)}
-                        <tr className={Styles.total}><td>Total</td><td>{totals[0].total}</td><td>{totals[1].total}</td></tr>
+                        {map([1, 2, 3, 4, 5].slice(0, turn.round), r => <tr key={r}><td>{t('Round')} {r}</td><td>{totals[0].rounds[r - 1]}</td><td>{totals[1].rounds[r - 1]}</td></tr>)}
+                        <tr className={Styles.total}><td>{t('Total')}</td><td>{totals[0].total}</td><td>{totals[1].total}</td></tr>
                     </tbody>
                 </table>
             </div>
             {renderRosters()}
         </div>}
-        <Modal visible={!finished && turn.needsFirst} title={`Round ${turn.round}: who goes first?`}
+        <Modal visible={!finished && turn.needsFirst} title={t('Round {{round}}: who goes first?', {round: turn.round})}
             onClose={() => apply(current => setRoundFirst(current, getTurnInfo(current).round, 0))}
             Content={() => <div className={Styles.body} style={{padding: 0}}>
-                <p className={Styles.cardSub}>Roll off. The winner chooses who takes the first turn.{underdog !== null ? ` ${game.players[underdog].name} is the underdog (5 CP).` : ''}</p>
+                <p className={Styles.cardSub}>{t('Roll off. The winner chooses who takes the first turn.')}{underdog !== null ? ` ${t('{{name}} is the underdog (5 CP).', {name: game.players[underdog].name})}` : ''}</p>
                 <div className={Styles.firstButtons}>
                     {map(game.players, (player, index) => <Button key={index} onClick={() => apply(current => setRoundFirst(current, getTurnInfo(current).round, index))}>{player.name}</Button>)}
                 </div>
-                <p className={Styles.cardSub}>If you close this window, {game.players[0].name} goes first.</p>
+                <p className={Styles.cardSub}>{t('If you close this window, {{name}} goes first.', {name: game.players[0].name})}</p>
             </div>} />
         <div className={Styles.bottomBar}>
-            <Button type='secondary' disabled={!canUndo(game)} onClick={() => apply(undo)}>{finished ? 'Reopen battle' : 'Undo'}</Button>
+            <Button type='secondary' disabled={!canUndo(game)} onClick={() => apply(undo)}>{finished ? t('Reopen battle') : t('Undo')}</Button>
             <div className={Styles.grow}>
                 {finished
-                    ? <Button onClick={() => navigate('/dashboard', {replace: true, state: {title: 'Battle Dashboard'}})}>Close</Button>
+                    ? <Button onClick={() => navigate('/dashboard', {replace: true, state: {title: 'Battle Dashboard'}})}>{t('Close')}</Button>
                     : <Button disabled={turn.needsFirst} onClick={() => apply(current => advanceTurn(current))}>{nextLabel}</Button>}
             </div>
         </div>

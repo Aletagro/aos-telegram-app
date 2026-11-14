@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {search, navigationState, isCollapseUnitsTypes, isCollapseRegimentAlliances, lists} from '../utilities/appState'
@@ -80,7 +81,7 @@ const Header = () => {
             ? null
             : <button id={Styles.leftButton} onClick={handleGoBack}><img src={ArrowBack} alt='' /></button>
         }
-        <p id={Styles.title}>{state?.title || 'Age of Sigmar'}</p>
+        <p id={Styles.title}>{t(state?.title || 'Age of Sigmar')}</p>
         {renderRightButton()}
     </div>
 }

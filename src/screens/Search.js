@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState, useReducer} from 'react'
 import useDebounce from '../utilities/useDebounce'
 import {sortByName, getUnitsRowRightText} from '../utilities/utils'
@@ -122,7 +123,7 @@ const Search = () => {
     />
 
     return <>
-        <SearchBar onChange={handleChange} autoFocus placeholder='Start Typing' />
+        <SearchBar onChange={handleChange} autoFocus placeholder={t('Start Typing')} />
         <div id='column' className='Chapter'>
             {size(search.Warscrolls) ? renderAccordion('Warscrolls', renderWarscroll) : null}
             {size(search.Rules) ? renderAccordion('Rules', renderRule) : null}

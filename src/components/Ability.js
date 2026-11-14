@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState, useMemo} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
@@ -38,7 +39,7 @@ Phase: ${ability.phaseDetails}${ability.cpCost && !isRegimentOfRenown ? `\nCP Co
 ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), ', ')}` : ''}
 `
             navigator.clipboard.writeText(toTelegramSafe(abilityText))
-            toast.success('Ability Copied', Constants.toastParams)
+            toast.success(t('Ability Copied'), Constants.toastParams)
         }
     }
 
@@ -76,32 +77,32 @@ ${keywords.length ? `Keywords: ${join(map(keywords, (keyword) => keyword.name), 
             <div id={Styles.header} style={{backgroundColor: borderColor}}>
                 <b id={Styles.headerText}>{removeAsterisks(ability.phaseDetails)}</b>
                 <div>
-                    {ability.cpCost && !isRegimentOfRenown ? <b id={Styles.cpCost}>{ability.cpCost}&nbsp;CP</b> : null}
+                    {ability.cpCost && !isRegimentOfRenown ? <b id={Styles.cpCost}>{ability.cpCost} {t('CP')}</b> : null}
                     {castingValue
                         ? <div id={Styles.castingValueContainer}>
                             <p id={Styles.castingValue}>{isRegimentOfRenown ? ability.cpCost : (ability.castingValue || ability.cost)}</p>
                         </div>
                         : null
                     }
-                    {ability.points ? <b id={Styles.points}>{ability.points}{Constants.noBreakSpace}pts</b> : null}
+                    {ability.points ? <b id={Styles.points}>{ability.points}{Constants.noBreakSpace}{t('pts')}</b> : null}
                 </div>
             </div>
             <div id={Styles.container}>
                 <h4 id={Styles.name}>{ability.name}</h4>
-                {ability.declare ? <p id={Styles.text}><b>Declare:</b> {replaceAsterisks(ability.declare)}</p> : null}
-                {ability.usedBy ? <p id={Styles.text}><b>Used By:</b> {replaceAsterisks(ability.usedBy)}</p> : null}
-                <p id={Styles.text}><b>Effect:</b> {replaceAsterisks(ability.effect)}</p>
+                {ability.declare ? <p id={Styles.text}><b>{t('Declare:')}</b> {replaceAsterisks(ability.declare)}</p> : null}
+                {ability.usedBy ? <p id={Styles.text}><b>{t('Used By:')}</b> {replaceAsterisks(ability.usedBy)}</p> : null}
+                <p id={Styles.text}><b>{t('Effect:')}</b> {replaceAsterisks(ability.effect)}</p>
                 {ability.altText ? <p id={Styles.text}>{replaceAsterisks(ability.altText)}</p> : null}
                 {keywordsLength
                     ? <div id={Styles.keywordsContainer}>
-                        <b id={Styles.keyword}>Keywords:&nbsp;</b>
+                        <b id={Styles.keyword}>{t('Keywords:')} </b>
                         {map(keywords, renderKeyword)}
                     </div>
                     : null
                 }
                 {size(usedKeywords)
                     ? <>
-                        <b id={Styles.keyword}>Keywords Used:</b>
+                        <b id={Styles.keyword}>{t('Keywords Used:')}</b>
                         <div id={Styles.usedKeywords}>
                             {map(usedKeywords, renderUsedKeyword)}
                         </div>

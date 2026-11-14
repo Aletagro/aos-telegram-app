@@ -1,3 +1,4 @@
+import {tEn} from './i18n'
 import parse from 'html-react-parser';
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
@@ -62,16 +63,16 @@ export const getErrors = (roster) => {
         return errors
     }
     if (roster.points.all > roster.pointsLimit) {
-        errors.push(`You use more than ${roster.pointsLimit} points`)
+        errors.push(tEn('You use more than {{pointsLimit}} points', {pointsLimit: roster.pointsLimit}))
     }
     if (!roster.battleFormation  && !roster.withoutBattleFormation) {
-        errors.push('Choose Battle Formation')
+        errors.push(tEn('Choose Battle Formation'))
     }
     if (roster.generalRegimentIndex === null) {
-        errors.push('Choose General')
+        errors.push(tEn('Choose General'))
     }
     if (size(roster.tactics) !== 2) {
-        errors.push(`Choose 2 Battle Tactics Cards (now selected ${size(roster.tactics)})`)
+        errors.push(tEn('Choose 2 Battle Tactics Cards (now selected {{tactics}})', {tactics: size(roster.tactics)}))
     }
     const uniqueUnits = []
     let heroicTraitsCount = 0
@@ -98,9 +99,9 @@ export const getErrors = (roster) => {
             regimentSize = size(filter(regiment.units, unit => !includes(['50e64cc9-99c4-4380-b9ef-60a948f9fae9', '5aa56cc8-cac2-4a90-8d11-6cb759a07fd8'], unit.id)))
         }
         if (index === roster.generalRegimentIndex && regimentSize > 5) {
-            errors.push("In General's Regiment you have more than 4 units")
+            errors.push(tEn('In General\'s Regiment you have more than 4 units'))
         } else if (index !== roster.generalRegimentIndex && regimentSize > 4){
-            errors.push(`In Regiment ${index + 1} you have more than 3 units`)
+            errors.push(tEn('In Regiment {{index}} you have more than 3 units', {index: index + 1}))
         }
         regiment.units.forEach(unit => {
             if (!includes(unitsNames, unit.name)) {
@@ -121,7 +122,7 @@ export const getErrors = (roster) => {
                 }
             })
             if (unit.points * 2 > roster.pointsLimit) {
-                errors.push(`${unit.name} cost more than half the army`)
+                errors.push(tEn('{{name}} cost more than half the army', {name: unit.name}))
             }
             if (includes(unit.referenceKeywords, 'Warmaster')) {
                 hasWarmasterInRegiments.push(index)
@@ -178,14 +179,14 @@ export const getErrors = (roster) => {
         })
     }
     if (heroicTraitsCount > 1) {
-        errors.push(`You have ${heroicTraitsCount} Heroic Traits`)
+        errors.push(tEn('You have {{heroicTraitsCount}} Heroic Traits', {heroicTraitsCount}))
     }
     if (atrefactsCount > 1) {
-        errors.push(`You have ${atrefactsCount} Atrefacts`)
+        errors.push(tEn('You have {{atrefactsCount}} Atrefacts', {atrefactsCount}))
     }
     forEach(roster.otherEnhancements, (otherEnhancement, index) => {
         if (otherEnhancementCounts[index] > (otherEnhancement === 'First Circle Titles' ? 3 : 1)) {
-            errors.push(`You have ${otherEnhancementCounts[index]} ${otherEnhancement}`)
+            errors.push(tEn('You have {{index}} {{otherEnhancement}}', {index: otherEnhancementCounts[index], otherEnhancement}))
         }
     })
     forEach(roster.auxiliaryUnits, unit => {
@@ -217,22 +218,22 @@ export const getErrors = (roster) => {
     if (hasWarmasterInRegiments.length && !includes(hasWarmasterInRegiments, roster.generalRegimentIndex) && !roster.requiredGeneral) {
         if (roster.allegianceId === 'af3cbad6-5f9e-49e9-95ff-6d07a587f229') {
         } else {
-            errors.push("You have a Warmaster hero, but he isn't your general")
+            errors.push(tEn('You have a Warmaster hero, but he isn\'t your general'))
         }
     }
     if (roster.requiredGeneral) {
         if (!hasRequiredGeneral) {
-            errors.push(`You must be included ${roster.requiredGeneral.name} in your roster`)
+            errors.push(tEn('You must be included {{name}} in your roster', {name: roster.requiredGeneral.name}))
         }
         if (!isRequiredGeneralIsGeneral) {
-            errors.push(`${roster.requiredGeneral.name} must be your general`)
+            errors.push(tEn('{{name}} must be your general', {name: roster.requiredGeneral.name}))
         }
     }
     forEach(unitsNames, unitsName => {
         if (startsWith(unitsName, 'Scourge of Aqshy: ')) {
             const nameWithoutPrefix = unitsName.slice('Scourge of Aqshy: '.length)
             if (includes(unitsNames, nameWithoutPrefix)) {
-                errors.push(`You can't have ${nameWithoutPrefix} and ${unitsName} in your army at the same time`)
+                errors.push(tEn('You can\'t have {{nameWithoutPrefix}} and {{unitsName}} in your army at the same time', {nameWithoutPrefix, unitsName}))
             }
         }
     })
@@ -240,28 +241,28 @@ export const getErrors = (roster) => {
         return indexOf(units, unit) !== index;
     })
     forEach(duplicateUniqueUnits, unit => {
-        errors.push(`You have more then one ${unit}`)
+        errors.push(tEn('You have more then one {{unit}}', {unit}))
     })
     if (jawsCount !== krulsCount) {
-        errors.push('For every regiment led by a Kruleboyz Hero you must also include regiment led by a Ironjawz Hero')
+        errors.push(tEn('For every regiment led by a Kruleboyz Hero you must also include regiment led by a Ironjawz Hero'))
     }
     // Gorechosen Champions могут иметь только одного майти лорда
     if (mightyLordCount && roster.allegianceId === 'a5b5e8cd-458f-47bc-b6ea-15c71311ecd5') {
         if (mightyLordCount > 1) {
-            errors.push('Gorechosen Champions can only have one Mighty Lord of Khorne')
+            errors.push(tEn('Gorechosen Champions can only have one Mighty Lord of Khorne'))
         }
         if (!isMightyLordGeneral) {
-            errors.push('Mighty Lord of Khorne must be your general')
+            errors.push(tEn('Mighty Lord of Khorne must be your general'))
         }
     }
     if (size(roster.requiredUnitsIds)) {
         requiredUnitsIds = uniq(requiredUnitsIds)
         if (roster.allegianceId === 'af3cbad6-5f9e-49e9-95ff-6d07a587f229') {
             if (size(requiredUnitsIds) === 0) {
-                errors.push('You must be included Iridan the Witness in your roster')
+                errors.push(tEn('You must be included Iridan the Witness in your roster'))
             }
             if (!includes(requiredUnitsIds, roster.regiments[roster.generalRegimentIndex]?.heroId)) {
-                errors.push("Iridan the Witness must be your general")
+                errors.push(tEn('Iridan the Witness must be your general'))
             }
         } else {
             const filteredRequiredUnitsIds = filter(roster.requiredUnitsIds, requiredUnitsId => !includes(requiredUnitsIds, requiredUnitsId))
@@ -272,7 +273,7 @@ export const getErrors = (roster) => {
                 forEach(filteredRequiredUnitsIds, requiredUnitsId => {
                     const unitName = find(dataBase.data.warscroll, ['id', requiredUnitsId])?.name
                     if (unitName) {
-                        errors.push(`You must be included ${unitName} in your roster`)
+                        errors.push(tEn('You must be included {{unitName}} in your roster', {unitName}))
                     }
                 })
             }
@@ -281,19 +282,19 @@ export const getErrors = (roster) => {
     // В АоРе The Magnate's Crew нельзя иметь Брокка и геройский Айронклад одновременно. И всего один геройскйи Айронклад
     if (roster.allegianceId === '09e28194-8a37-4c3b-aaa5-8aa38bcfd9ac') {
         if (heroIroncladsCount > 1) {
-            errors.push('You can only have 1 Arkanaut Ironclad (Hero) in your army')
+            errors.push(tEn('You can only have 1 Arkanaut Ironclad (Hero) in your army'))
         }
         if (heroIroncladsCount && hasBrokkGrungsson) {
-            errors.push('You cannot include Brokk Grungsson and Arkanaut Ironclad (Hero) in the same army')
+            errors.push(tEn('You cannot include Brokk Grungsson and Arkanaut Ironclad (Hero) in the same army'))
         }
     }
     // В АоРе The Clattering Procession можно иметь только одну геройскую Black Coach
     if (roster.allegianceId === '6f6c097c-91af-4684-a487-2e7402fdb990') {
         if (heroBlackCoach > 1) {
-            errors.push('You can only have 1 Black Coach (Hero) in your army')
+            errors.push(tEn('You can only have 1 Black Coach (Hero) in your army'))
         }
         if (heroSoGBlackCoach > 1) {
-            errors.push('You can only have 1 Scourge of Ghyran Black Coach (Hero) in your army')
+            errors.push(tEn('You can only have 1 Scourge of Ghyran Black Coach (Hero) in your army'))
         }
     }
     // В АоРе The Swords of Chaos нельзе дублировать титулы варангардов
@@ -302,7 +303,7 @@ export const getErrors = (roster) => {
             return indexOf(titles, title) !== index;
         }))
         forEach(duplicateSwordsOfChaosTitles, title => {
-            errors.push(`You have more then one ${title}. You can only select each option from First Circles Titles once in your army`)
+            errors.push(tEn('You have more then one {{title}}. You can only select each option from First Circles Titles once in your army', {title}))
         })
     }
     return errors
@@ -331,14 +332,14 @@ export const getWarnings = (roster) => {
             hasWizard = true
         }
         if (hasWizard) {
-            warnings.push('Choose Manifestations Lore')
+            warnings.push(tEn('Choose Manifestations Lore'))
         }
     }
     if (roster.allegiance === 'Ogor Mawtribes' && !roster.factionTerrain) {
-        warnings.push('Choose Faction Terrain')
+        warnings.push(tEn('Choose Faction Terrain'))
     }
     if (roster.allegiance === 'Disciples of Tzeentch' && !roster.spellsLore) {
-        warnings.push('Choose Spells Lore')
+        warnings.push(tEn('Choose Spells Lore'))
     }
     let hasLegends = false
     forEach(roster.regiments, (regiment) => {
@@ -349,7 +350,7 @@ export const getWarnings = (roster) => {
         })
     })
     if (hasLegends) {
-        warnings.push('You have Legends Unit in your Army')
+        warnings.push(tEn('You have Legends Unit in your Army'))
     }
     return warnings
 }
@@ -580,33 +581,6 @@ export const setKeywordInfo = (keyword) => {
 
 export const randomFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-export const getScoreParams = (battleplan) => {
-    const data = find(Constants.battleplans, _battleplan => _battleplan.id === battleplan.id)
-    if (data.maxForObjectives) {
-        return {score: [...data.scoreParams], maxForObjectives: data.maxForObjectives}
-    } else {
-        return {score: data.scoreParams}
-    }
-}
-
-export const getNewRound = (battleplan) => {
-    const newRound = {
-        firstPlayer: {
-            tactics: {name: '', id: ''},
-            vp: 0,
-            objectiveVp: 0,
-            ...getScoreParams(battleplan)
-        },
-        secondPlayer: {
-            tactics: {name: '', id: ''},
-            vp: 0,
-            objectiveVp: 0,
-            ...getScoreParams(battleplan)
-        }
-    }
-    return newRound
 }
 
 export const getInfo = (screen, allegiance) => {

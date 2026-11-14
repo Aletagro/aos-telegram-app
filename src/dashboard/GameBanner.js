@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {getTurnInfo, getCp, getPlayerTotals, getUnderdog, STATUS_FINISHED, MAX_ROUNDS} from './gameModel'
 
@@ -25,22 +26,22 @@ const GameBanner = ({game, winner = null, onSpendCp, onGainCp}) => {
                 <span className={Styles.sideName}>{player.name}</span>
                 <span className={Styles.sideArmy}>{player.army?.allegiance}</span>
                 <span className={Styles.sideVp}>{getPlayerTotals(game, index).total}</span>
-                <span className={Styles.sideVpLabel}>VP</span>
-                {!finished && underdog === index ? <span className={Styles.badge}>Underdog</span> : null}
+                <span className={Styles.sideVpLabel}>{t('VP')}</span>
+                {!finished && underdog === index ? <span className={Styles.badge}>{t('Underdog')}</span> : null}
                 <div className={Styles.cpRow}>
-                    {finished ? null : <button type='button' className={Styles.cpButton} onClick={() => onSpendCp(index, -1)} aria-label='Spend 1 CP'>−</button>}
-                    <span className={Styles.cpValue}>{getCp(game, index)} CP</span>
-                    {finished ? null : <button type='button' className={Styles.cpButton} onClick={() => onSpendCp(index, 1)} aria-label='Gain 1 CP'>+</button>}
+                    {finished ? null : <button type='button' className={Styles.cpButton} onClick={() => onSpendCp(index, -1)} aria-label={t('Spend 1 CP')}>−</button>}
+                    <span className={Styles.cpValue}>{getCp(game, index)} {t('CP')}</span>
+                    {finished ? null : <button type='button' className={Styles.cpButton} onClick={() => onSpendCp(index, 1)} aria-label={t('Gain 1 CP')}>+</button>}
                 </div>
             </div>
         </div>
     }
 
     return <div className={Styles.banner}>
-        <div className={Styles.status}>{finished ? 'Battle finished' : `Round ${turn.round} of ${MAX_ROUNDS}`}</div>
+        <div className={Styles.status}>{finished ? t('Battle finished') : t('Round {{round}} of {{total}}', {round: turn.round, total: MAX_ROUNDS})}</div>
         <div className={Styles.sides}>
             {map(game.players, renderSide)}
-            <span className={Styles.vs}>vs</span>
+            <span className={Styles.vs}>{t('vs')}</span>
         </div>
     </div>
 }

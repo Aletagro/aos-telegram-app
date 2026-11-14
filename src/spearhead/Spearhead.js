@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import Constants from '../Constants'
 import {ListCard, ListItem, SectionTitle} from '../components/ListCard'
@@ -23,13 +24,13 @@ const Spearhead = () => {
     />
 
     return <div id='column' className='Chapter'>
-        <SectionTitle>Battlepacks</SectionTitle>
+        <SectionTitle>{t('Battlepacks')}</SectionTitle>
         <ListCard>
             {map(battlepacks, renderRow)}
         </ListCard>
-        <SectionTitle>Armies</SectionTitle>
+        <SectionTitle>{t('Armies')}</SectionTitle>
         <ListCard>
-            <ListItem title='Spearhead Armies' navigateTo='spearheadArmies' />
+            <ListItem title={t('Spearhead Armies')} navigateTo='spearheadArmies' />
         </ListCard>
     </div>
 }

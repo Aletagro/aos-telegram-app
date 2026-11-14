@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import Constants from '../Constants'
 
@@ -42,11 +43,11 @@ const RosterEasy = ({roster, onClick}) => {
     const renderWeaponOptions = (weaponOptions) => map(Object.entries(weaponOptions), renderWeaponOption)
 
     const renderUnit = (unit, index) => <div key={`${unit.id}-${index}`}>
-        <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost || 0} points)</p>
+        <p><b>{unit.modelCount ? `${unit.modelCount * (unit.isReinforced ? 2 : 1)} x` : ''} {unit.name}</b> ({unit.points || unit.regimentOfRenownPointsCost || 0} {t('points')})</p>
         {unit.artefact ? <p>&#8226; {unit.artefact}</p> : null}
         {unit.heroicTrait ? <p>&#8226; {unit.heroicTrait}</p> : null}
         {unit.weaponOptions ? renderWeaponOptions(unit.weaponOptions) : null}
-        {unit.marksOfChaos ? <p>&#8226; Mark Of Chaos: {unit.marksOfChaos}</p> : null}
+        {unit.marksOfChaos ? <p>{t('• Mark Of Chaos:')} {unit.marksOfChaos}</p> : null}
         {map(otherEnhancements, (otherEnhancement) =>
             unit[otherEnhancement?.name] ? <p key={otherEnhancement.id}>&#8226; {otherEnhancement?.name}: {unit[otherEnhancement?.name]}</p> : null
         )}
@@ -61,32 +62,32 @@ const RosterEasy = ({roster, onClick}) => {
     </div>
 
     const renderRegiment = (regiment, index) => <div key={index}>
-            <p>Regiment {index + 1}</p>
-            {roster.generalRegimentIndex === index ? <p>General's regiment</p> : null}
+            <p>{t('Regiment')} {index + 1}</p>
+            {roster.generalRegimentIndex === index ? <p>{t('General\'s regiment')}</p> : null}
             {map(JSON.parse(regiment)?.units, renderUnit)}
             <br/>
         </div>
 
     return <div id={Styles.container} onClick={handleClick}>
-        <p>Player: {roster.lastname} {roster.firstname}</p> 
-        <p>List Name: {roster.name}</p> 
-        <p>Grand Alliance: {roster.grand_alliance}</p>
-        <p>Faction: {roster.allegiance}</p>
-        <p>Battle Formation: {roster.battle_formation}{points.battleFormation ? ` (${points.battleFormation} points)` : null}</p>
-        <p>Battle Tactics Cards: {tactics[0]}{size(tactics) === 2 ? ` and ${tactics[1]}` : ''}</p>
-        <p>Drops: {note?.drops}</p>
-        {size(auxiliaryUnits) ? <p>Auxiliaries: {size(auxiliaryUnits)}</p> : null}
+        <p>{t('Player:')} {roster.lastname} {roster.firstname}</p> 
+        <p>{t('List Name:')} {roster.name}</p> 
+        <p>{t('Grand Alliance:')} {roster.grand_alliance}</p>
+        <p>{t('Faction:')} {roster.allegiance}</p>
+        <p>{t('Battle Formation:')} {roster.battle_formation}{points.battleFormation ? ` (${points.battleFormation} ${t('points')})` : null}</p>
+        <p>{t('Battle Tactics Cards:')} {tactics[0]}{size(tactics) === 2 ? ` and ${tactics[1]}` : ''}</p>
+        <p>{t('Drops:')} {note?.drops}</p>
+        {size(auxiliaryUnits) ? <p>{t('Auxiliaries:')} {size(auxiliaryUnits)}</p> : null}
         <br/>
-        {roster.spells_lore ? <p>Spell Lore: {roster.spells_lore}{points.spellsLore ? ` (${points.spellsLore} points)` : null}</p> : null}
-        {roster.prayers_lore ? <p>Prayer Lore: {roster.prayers_lore}{points.prayersLore ? ` (${points.prayersLore} points)` : null}</p> : null}
-        {roster.manifestation_lore ? <p>Manifestation Lore: {roster.manifestation_lore}{points.manifestations ? ` (${points.manifestations} points)` : null}</p> : null}
-        {roster.faction_terrain ? <p>Faction Terrain: {roster.faction_terrain}{points.terrain ? ` (${points.terrain} points)` : null}</p> : null}
+        {roster.spells_lore ? <p>{t('Spell Lore:')} {roster.spells_lore}{points.spellsLore ? ` (${points.spellsLore} ${t('points')})` : null}</p> : null}
+        {roster.prayers_lore ? <p>{t('Prayer Lore:')} {roster.prayers_lore}{points.prayersLore ? ` (${points.prayersLore} ${t('points')})` : null}</p> : null}
+        {roster.manifestation_lore ? <p>{t('Manifestation Lore:')} {roster.manifestation_lore}{points.manifestations ? ` (${points.manifestations} ${t('points')})` : null}</p> : null}
+        {roster.faction_terrain ? <p>{t('Faction Terrain:')} {roster.faction_terrain}{points.terrain ? ` (${points.terrain} ${t('points')})` : null}</p> : null}
         <hr/>
         {map(regiments, renderRegiment)}
         <hr/>
         {size(auxiliaryUnits)
             ? <div>
-                <p>Auxiliary Units</p>
+                <p>{t('Auxiliary Units')}</p>
                 {map(auxiliaryUnits, renderUnit)}
                 <hr/>
             </div>
@@ -94,17 +95,17 @@ const RosterEasy = ({roster, onClick}) => {
         }
         {roster.regiment_of_renown
             ? <div>
-                <p>Regiment Of Renown</p>
+                <p>{t('Regiment Of Renown')}</p>
                 {renderUnit(JSON.parse(roster.regiment_of_renown))}
                 {map(JSON.parse(roster.regiments_of_renown_units), renderRegimentsOfRenownUnit)}
                 <hr/>
             </div>
             : null
         }
-        <p>Wounds: {note?.wounds}</p>
-        <p>{points?.all}/{roster.points_limit} Pts</p>
-        {note.noteText ? <p>Note: {note?.noteText}</p> : null}
-        {(roster.last_changes < Constants.fullDatelastUpdate) ? <p id={Styles.warning}>Warning: List created before last update!</p> : null}
+        <p>{t('Wounds:')} {note?.wounds}</p>
+        <p>{points?.all}/{roster.points_limit} {t('Pts')}</p>
+        {note.noteText ? <p>{t('Note:')} {note?.noteText}</p> : null}
+        {(roster.last_changes < Constants.fullDatelastUpdate) ? <p id={Styles.warning}>{t('Warning: List created before last update!')}</p> : null}
     </div>
 }
 

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
@@ -49,7 +50,7 @@ const ChooseOption = () => {
     return  <div id='column' className='Chapter'>
         <p id={Styles.name}>{optionGroup.name}</p>
         {options.map(renderOption)}
-        <Button className={Styles.option} type='soft' onClick={handleDeleteOption}>Delete</Button>
+        <Button className={Styles.option} type='soft' onClick={handleDeleteOption}>{t('Delete')}</Button>
     </div>
 }
 

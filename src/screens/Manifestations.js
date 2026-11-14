@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import Constants from '../Constants'
 import {sortByName, getUnitsRowRightText} from '../utilities/utils'
@@ -32,7 +33,7 @@ const Manifestations = () => {
         })
         return <Accordion
             title={lore?.name}
-            subtitle={lore.points ? `${lore.points} pts` : undefined}
+            subtitle={lore.points ? `${lore.points} ${t('pts')}` : undefined}
             data={units}
             renderItem={renderUnit(lore.id)}
         />

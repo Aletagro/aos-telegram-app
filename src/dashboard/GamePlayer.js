@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {
     getMissionItems, isMissionItemScored, isMissionItemBlocked, toggleMissionItem, addManualVp, getTurnInfo, getTurnPlayer
@@ -21,8 +22,8 @@ const GamePlayer = ({game, index, apply}) => {
     const renderItem = (item) => {
         const checked = active && isMissionItemScored(game, index, item.id)
         return <div className={Styles.row} key={item.id}>
-            <p className={Styles.rowText}><b>{item.vp} VP</b> · {item.label}</p>
-            <button type='button' className={`${Styles.check} ${checked ? Styles.checkOn : ''}`} disabled={!active || (!checked && isMissionItemBlocked(game, index, item.id))} aria-label='Scored'
+            <p className={Styles.rowText}><b>{item.vp} {t('VP')}</b> · {item.label}</p>
+            <button type='button' className={`${Styles.check} ${checked ? Styles.checkOn : ''}`} disabled={!active || (!checked && isMissionItemBlocked(game, index, item.id))} aria-label={t('Scored')}
                 onClick={() => apply(current => toggleMissionItem(current, index, item.id))}>{checked ? '✓' : ''}</button>
         </div>
     }
@@ -31,20 +32,20 @@ const GamePlayer = ({game, index, apply}) => {
         <div className={`${Styles.card} ${active ? Styles.cardActive : ''}`}>
             <div className={Styles.row}>
                 <h4 className={Styles.cardTitle}>{player.name}</h4>
-                <span className={Styles.cardSub}>{active ? 'Scoring this turn' : getTurnPlayer(game, game.turn) === null ? '' : 'Waiting'}</span>
+                <span className={Styles.cardSub}>{active ? t('Scoring this turn') : getTurnPlayer(game, game.turn) === null ? '' : t('Waiting')}</span>
             </div>
             {active ? <>
                 {map(items, renderItem)}
                 <div className={Styles.divider} />
                 <div className={Styles.row}>
-                    <p className={Styles.rowText}>Other VP (manual)</p>
+                    <p className={Styles.rowText}>{t('Other VP (manual)')}</p>
                     <div className={Styles.stepper}>
                         <button type='button' className={Styles.stepButton} onClick={() => apply(current => addManualVp(current, index, -1))}>−</button>
                         <span className={Styles.stepValue}>{manual}</span>
                         <button type='button' className={Styles.stepButton} onClick={() => apply(current => addManualVp(current, index, 1))}>+</button>
                     </div>
                 </div>
-            </> : <p className={Styles.cardSub}>Controls are available on this player's turn.</p>}
+            </> : <p className={Styles.cardSub}>{t('Controls are available on this player\'s turn.')}</p>}
         </div>
         {map(player.tactics, cardId => <GameTactic key={cardId} game={game} index={index} cardId={cardId} apply={apply} />)}
     </div>

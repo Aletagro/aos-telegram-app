@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 
@@ -22,7 +23,7 @@ const Tile = ({title, text, navigateTo, state, onClick, featured, compact, wide}
     return <button type='button' className={classes} onClick={handleClick}>
         <span className={Styles.tileBody}>
             <span className={Styles.tileTitle}>{title}</span>
-            {text ? <span className={Styles.tileText}>{text}</span> : null}
+            {text ? <span className={Styles.tileText}>{t(text)}</span> : null}
         </span>
         <span className={Styles.chevron} aria-hidden='true' />
     </button>

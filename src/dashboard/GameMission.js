@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import Button from '../components/Button'
@@ -18,7 +19,7 @@ const GameMission = () => {
     const handleStart = () => {
         if (getDraftIssues().length) return
         const game = startGame()
-        navigate('/game', {replace: true, state: {title: 'Battle', gameId: game.id}})
+        navigate('/game', {replace: true, state: {title: t('Battle'), gameId: game.id}})
     }
 
     return <div className={Styles.page}>
@@ -30,13 +31,13 @@ const GameMission = () => {
                         <span className={Styles.missionName}>{name}</span>
                         <span className={Styles.missionTable}>{subtitle}</span>
                     </button>
-                    <button type='button' className={Styles.missionInfo} aria-label='Battleplan rules'
+                    <button type='button' className={Styles.missionInfo} aria-label={t('Battleplan rules')}
                         onClick={() => navigate('/battleplan', {state: {title: name, battleplan: {id: mission.id, name}}})}><InfoIcon size={22} /></button>
                 </div>
             })}
         </div>
-        <Button type='secondary' onClick={() => { gameDraft.missionId = pickRandomMission(); forceUpdate() }}>Random battleplan</Button>
-        <div className={Styles.bottomBar}><Button disabled={!gameDraft.missionId} onClick={handleStart}>Start battle</Button></div>
+        <Button type='secondary' onClick={() => { gameDraft.missionId = pickRandomMission(); forceUpdate() }}>{t('Random battleplan')}</Button>
+        <div className={Styles.bottomBar}><Button disabled={!gameDraft.missionId} onClick={handleStart}>{t('Start battle')}</Button></div>
     </div>
 }
 

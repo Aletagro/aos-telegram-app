@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState} from 'react'
 import {getCalcUnit} from '../utilities/utils'
 import {calc} from '../utilities/appState'
@@ -52,7 +53,7 @@ const Calculator = () => {
         <DamageTable units={calc.units} target={target} />
         <Target target={target} onChange={handleChangeTarget} />
         {calc.units.map(renderUnit)}
-        <Button className={Styles.addUnit} onClick={handleAddUnit}>Add Unit</Button>
+        <Button className={Styles.addUnit} onClick={handleAddUnit}>{t('Add Unit')}</Button>
     </div>
 }
 

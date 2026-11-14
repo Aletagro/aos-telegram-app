@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useCallback} from 'react'
 import Accordion from '@mui/joy/Accordion'
 import AccordionDetails from '@mui/joy/AccordionDetails'
@@ -20,7 +21,7 @@ const CustomAccordion = ({expanded, title, subtitle, data, renderItem, onChangeE
         <Accordion expanded={expanded} defaultExpanded={true} onChange={handleChangeExpand}>
             <AccordionSummary id={Styles.headerContainer} sx={(theme) => (Constants.accordionStyle)}>
                 <div>
-                    <h4 id={Styles.header}>{title}</h4>
+                    <h4 id={Styles.header}>{t(title)}</h4>
                     {subtitle ? <p id={Styles.subtitle}>{subtitle}</p> : null}
                 </div>
             </AccordionSummary>

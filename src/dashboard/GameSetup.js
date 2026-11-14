@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useReducer} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Button from '../components/Button'
@@ -33,7 +34,7 @@ const GameSetup = () => {
             {image ? <img className={Styles.armyImage} src={image} alt='' /> : null}
             {image ? <span className={Styles.armyShade} /> : null}
             <div className={Styles.armyContent}>
-                <input className={Styles.input} value={player.name} placeholder={`Player ${index + 1}`} maxLength={30}
+                <input className={Styles.input} value={player.name} placeholder={t('Player {{number}}', {number: index + 1})} maxLength={30}
                     onChange={event => { player.name = event.target.value; forceUpdate() }} />
                 {army ? <>
                     <p className={Styles.armyNameBig}>{army.name}</p>
@@ -42,7 +43,7 @@ const GameSetup = () => {
                         <span>{getTacticCard(id)?.name}</span><InfoIcon size={22} />
                     </button>)}
                 </> : null}
-                <Button type='secondary' onClick={() => navigate('/gameChooseArmy', {state: {title: 'Army', index}})}>{army ? 'Change army' : 'Choose army'}</Button>
+                <Button type='secondary' onClick={() => navigate('/gameChooseArmy', {state: {title: t('Army'), index}})}>{army ? t('Change army') : t('Choose army')}</Button>
             </div>
         </div>
     }
@@ -50,7 +51,7 @@ const GameSetup = () => {
     return <div className={Styles.page}>
         {map(gameDraft.players, renderPlayer)}
         <div className={Styles.bottomBar}>
-            <Button disabled={!ready} onClick={() => navigate('/gameMission', {state: {title: 'Battleplan'}})}>Next</Button>
+            <Button disabled={!ready} onClick={() => navigate('/gameMission', {state: {title: 'Battleplan'}})}>{t('Next')}</Button>
         </div>
     </div>
 }

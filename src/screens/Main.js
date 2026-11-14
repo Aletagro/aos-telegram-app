@@ -1,7 +1,9 @@
+import {t} from '../utilities/i18n'
 import React, {useEffect, useCallback, useReducer, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {main} from '../utilities/appState'
 import SupportCard from '../components/SupportCard'
+import LanguageSelect from '../components/LanguageSelect'
 import Tile from '../components/Tile'
 import HeaderImage from '../components/HeaderImage'
 import malekith from '../images/malekith.png'
@@ -74,19 +76,20 @@ const Main = () => {
             <div className={Styles.heroShade} />
         </div>
         <div className={Styles.menu}>
-            <Tile featured title='Builder' text='Build and save your army lists' navigateTo='userLists' />
-            <div className={Styles.dev}><Tile featured title='Battle Dashboard' text='Track a live game: VP, CP, tactics' navigateTo='dashboard' /></div>
+            <Tile featured title={t('Builder')} text='Build and save your army lists' navigateTo='userLists' />
+            <div className={Styles.dev}><Tile featured title={t('Battle Dashboard')} text='Track a live game: VP, CP, tactics' navigateTo='dashboard' /></div>
             <div className={Styles.grid}>
-                <Tile compact title='Rules' text='Armies, warscrolls, core rules' navigateTo='mainRules' />
-                <Tile compact title='Community Lists' text='Lists from other players' navigateTo='lists' />
-                <Tile compact title='Damage Calculator' text='Averages for any attack' navigateTo='calculator' />
-                <Tile compact title='Spearhead' text='Quick-play armies' navigateTo='spearhead' />
+                <Tile compact title={t('Rules')} text='Armies, warscrolls, core rules' navigateTo='mainRules' />
+                <Tile compact title={t('Community Lists')} text='Lists from other players' navigateTo='lists' />
+                <Tile compact title={t('Damage Calculator')} text='Averages for any attack' navigateTo='calculator' />
+                <Tile compact title={t('Spearhead')} text='Quick-play armies' navigateTo='spearhead' />
             </div>
-            {(main?.tgId === Constants.myTgId) || (Number(main?.vkId) === Constants.myVkId) ? <div className={Styles.dev}><Tile compact title='Developer Menu' navigateTo='developer' /></div> : null}
-            {canLinkAccounts() ? <div className={Styles.dev}><Tile compact title='Link Accounts' text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null}
+            {(main?.tgId === Constants.myTgId) || (Number(main?.vkId) === Constants.myVkId) ? <div className={Styles.dev}><Tile compact title={t('Developer Menu')} navigateTo='developer' /></div> : null}
+            {canLinkAccounts() ? <div className={Styles.dev}><Tile compact title={t('Link Accounts')} text='Telegram and VK in one account' navigateTo='linkAccounts' /></div> : null}
+            <LanguageSelect />
             <SupportCard />
-            <p className={Styles.footer}>For feedback - <b>@RukosuevKrasavchik</b></p>
-            <p className={Styles.footer}>The database was last updated on {Constants.lastUpdate}</p>
+            <p className={Styles.footer}>{t('For feedback -')} <b>{t('@RukosuevKrasavchik')}</b></p>
+            <p className={Styles.footer}>{t('The database was last updated on')} {Constants.lastUpdate}</p>
         </div>
     </>
 }

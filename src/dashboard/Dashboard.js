@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Button from '../components/Button'
@@ -22,7 +23,7 @@ const Dashboard = () => {
 
     const handleNew = () => {
         resetGameDraft()
-        navigate('/gameSetup', {state: {title: 'New battle'}})
+        navigate('/gameSetup', {state: {title: t('New battle')}})
     }
 
     const handleDelete = () => {
@@ -32,20 +33,20 @@ const Dashboard = () => {
     }
 
     return <div className={Styles.page}>
-        <Button onClick={handleNew}>New battle</Button>
-        <button type='button' className={Styles.historyLink} onClick={() => navigate('/gameHistory', {state: {title: 'History and statistics'}})}>
-            <b>History and statistics</b>
-            <span className={Styles.historyCount}>{finishedCount ? `${finishedCount} ${finishedCount === 1 ? 'battle' : 'battles'}` : ''}</span>
+        <Button onClick={handleNew}>{t('New battle')}</Button>
+        <button type='button' className={Styles.historyLink} onClick={() => navigate('/gameHistory', {state: {title: t('History and statistics')}})}>
+            <b>{t('History and statistics')}</b>
+            <span className={Styles.historyCount}>{finishedCount ? t('{{count}} battle|{{count}} battles', {count: finishedCount}) : ''}</span>
         </button>
         {games.length ? <>
-            <p className={Styles.sectionTitle}>Unfinished battles</p>
+            <p className={Styles.sectionTitle}>{t('Unfinished battles')}</p>
             <div className={Styles.gap}>{map(games, game => <GameCard key={game.id} game={game} onDelete={setToDelete} />)}</div>
-            {games.length >= MAX_PLAYING ? <p className={Styles.muted}>Up to {MAX_PLAYING} unfinished battles are kept. Starting a new one removes the oldest.</p> : null}
-        </> : <p className={Styles.muted}>Track victory points, tactic cards and command points of a battle. Unfinished battles stay here.</p>}
-        <Modal visible={Boolean(toDelete)} title='Delete battle?' onClose={() => setToDelete(null)}
+            {games.length >= MAX_PLAYING ? <p className={Styles.muted}>{t('Up to {{count}} unfinished battles are kept. Starting a new one removes the oldest.', {count: MAX_PLAYING})}</p> : null}
+        </> : <p className={Styles.muted}>{t('Track victory points, tactic cards and command points of a battle. Unfinished battles stay here.')}</p>}
+        <Modal visible={Boolean(toDelete)} title={t('Delete battle?')} onClose={() => setToDelete(null)}
             Content={() => <ModalActions>
-                <ModalButton onClick={() => setToDelete(null)}>No</ModalButton>
-                <ModalButton type='danger' onClick={handleDelete}>Yes</ModalButton>
+                <ModalButton onClick={() => setToDelete(null)}>{t('No')}</ModalButton>
+                <ModalButton type='danger' onClick={handleDelete}>{t('Yes')}</ModalButton>
             </ModalActions>} />
     </div>
 }

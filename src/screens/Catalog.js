@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {sortByName} from '../utilities/utils'
@@ -29,7 +30,7 @@ const Catalog = () => {
             key={allegiance.id}
             title={allegiance.name}
             image={allegiance.selectFactionImage}
-            badge={isLegendaryArmies ? 'Legend' : undefined}
+            badge={isLegendaryArmies ? t('Legend') : undefined}
             navigateTo='army'
             state={{allegiance, grandAlliance: grandAlliance.name}}
         />

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -103,7 +104,7 @@ const DamageTable = ({units, target}) => {
             ` ${String(cell).padEnd(columnWidths[j] + 2)} `).join('|') + '\n'
         }
         navigator.clipboard.writeText(textToCopy)
-        toast.success('Data Copied', Constants.toastParams)
+        toast.success(t('Data Copied'), Constants.toastParams)
     }
 
     const renderCell = (text, index) => {
@@ -123,7 +124,7 @@ const DamageTable = ({units, target}) => {
         <div className={Styles.table} onClick={handleCopy} style={{display: 'grid', 'grid-template-columns': `minmax(0, 0.55fr) repeat(${results.length}, minmax(0, 1fr))`}}>
             {data.map(renderCell)}
         </div>
-        <p className={Styles.hint}>Tap the table to copy</p>
+        <p className={Styles.hint}>{t('Tap the table to copy')}</p>
         <ToastContainer />
     </div>
 }

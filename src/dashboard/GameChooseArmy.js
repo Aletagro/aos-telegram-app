@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useEffect, useState} from 'react'
 import {useLocation, useNavigate} from 'react-router-dom'
 import Constants from '../Constants'
@@ -87,7 +88,7 @@ const GameChooseArmy = () => {
     const handleFind = async () => {
         const id = decodeRosterCode(code)
         if (!id) {
-            setCodeError('Invalid roster code')
+            setCodeError(t('Invalid roster code'))
             return
         }
         setLoading(true)
@@ -95,7 +96,7 @@ const GameChooseArmy = () => {
         const list = await fetchRoster(id)
         setLoading(false)
         if (!list) {
-            setCodeError('List not found. Check the code')
+            setCodeError(t('List not found. Check the code'))
             return
         }
         choose(listToArmy(list, SOURCE_CODE), getListTacticIds(list))
@@ -116,17 +117,17 @@ const GameChooseArmy = () => {
 
     const renderMine = () => lists.length
         ? <div id={ListStyles.buttonContainer}>{map(lists, renderList)}</div>
-        : <p className={Styles.muted}>You have no saved lists yet. Build one in the Builder or choose an army manually.</p>
+        : <p className={Styles.muted}>{t('You have no saved lists yet. Build one in the Builder or choose an army manually.')}</p>
 
     const renderCode = () => <div className={Styles.gap}>
         <div className={Styles.card}>
-            <h3 className={Styles.cardTitle}>How to share a list</h3>
-            <p className={Styles.muted}>Your opponent opens a saved list and taps «Copy roster code» in the export screen. Paste the code here.</p>
-            <p className={Styles.muted}>The list is only read: it is not added to your saved lists.</p>
+            <h3 className={Styles.cardTitle}>{t('How to share a list')}</h3>
+            <p className={Styles.muted}>{t('Your opponent opens a saved list and taps «Copy roster code» in the export screen. Paste the code here.')}</p>
+            <p className={Styles.muted}>{t('The list is only read: it is not added to your saved lists.')}</p>
         </div>
-        <input className={Styles.input} value={code} placeholder='Roster code' onChange={event => setCode(event.target.value)} />
+        <input className={Styles.input} value={code} placeholder={t('Roster code')} onChange={event => setCode(event.target.value)} />
         {codeError ? <p className={Styles.errorText}>{codeError}</p> : null}
-        <Button disabled={!code.trim() || loading} onClick={handleFind}>{loading ? 'Loading...' : 'Find list'}</Button>
+        <Button disabled={!code.trim() || loading} onClick={handleFind}>{loading ? t('Loading...') : t('Find list')}</Button>
     </div>
 
     const renderManual = () => <div className={Styles.gap}>
@@ -142,7 +143,7 @@ const GameChooseArmy = () => {
 
     return <div className={Styles.page}>
         <div className={Styles.tabs}>
-            {map([[TAB_MINE, 'My lists'], [TAB_CODE, 'By code'], [TAB_MANUAL, 'Manually']], ([id, label]) =>
+            {map([[TAB_MINE, t('My lists')], [TAB_CODE, t('By code')], [TAB_MANUAL, t('Manually')]], ([id, label]) =>
                 <button type='button' key={id} className={`${Styles.tab} ${tab === id ? Styles.tabActive : ''}`} onClick={() => setTab(id)}>{label}</button>)}
         </div>
         {tab === TAB_MINE ? renderMine() : tab === TAB_CODE ? renderCode() : renderManual()}

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React, {useCallback, useEffect, useReducer, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
@@ -125,7 +126,7 @@ const useSaveList = () => {
             console.error(err.message)
         }
         handleCloseModal()
-        toast.success('List Saved', Constants.toastParams)
+        toast.success(t('List Saved'), Constants.toastParams)
     }
 
     const handleCloseModal = () => {
@@ -150,7 +151,7 @@ const useSaveList = () => {
         })
             .then(() => {
                 main.rosters = filter(main.rosters, roster => roster.id !== listId)
-                toast.success('List deleted', Constants.toastParams)
+                toast.success(t('List deleted'), Constants.toastParams)
                 forceUpdate()
             })
             .catch(error => console.error(error))
@@ -173,7 +174,7 @@ const useSaveList = () => {
             <p className={Styles.listDeletedTitle}>{list.name}</p>
             <p className={Styles.listDeletedSubtitle}>{list.allegiance}</p>
         </div>
-        <span className={Styles.listDeletedMark} aria-label='Delete'>&times;</span>
+        <span className={Styles.listDeletedMark} aria-label={t('Delete')}>&times;</span>
     </button>
 
     const handleBlurName = (e) => {
@@ -193,8 +194,8 @@ const useSaveList = () => {
     const renderModalContent = () => {
         if (isListsLimit) {
             return <>
-                <p className={Styles.modalText}>You can delete one of your lists or support the app from 1 EUR to remove the limit for a month.</p>
-                <Button className={Styles.modalSave} onClick={openSupportPage}>Support the app</Button>
+                <p className={Styles.modalText}>{t('You can delete one of your lists or support the app from 1 EUR to remove the limit for a month.')}</p>
+                <Button className={Styles.modalSave} onClick={openSupportPage}>{t('Support the app')}</Button>
                 {map(main.rosters, renderList)}
             </>
         }
@@ -202,21 +203,21 @@ const useSaveList = () => {
             <FloatingLabelInput
                 style={inputStyles.listName}
                 onBlur={handleBlurName}
-                label='List Name'
+                label={t('List Name')}
                 defaultValue={listName}
             />
-            <ToggleRow label='Save as public' hint='Other users will be able to see this list.' checked={isListPublic} onChange={handleChangePublic} />
+            <ToggleRow label={t('Save as public')} hint='Other users will be able to see this list.' checked={isListPublic} onChange={handleChangePublic} />
             {roster.id && (size(main.rosters) < Constants.listsMax || !hasListsLimit(main.user, main.tgId))
-                ? <ToggleRow label='Save as new List' checked={saveAsNew} onChange={handleChangeAsNew} />
+                ? <ToggleRow label={t('Save as new List')} checked={saveAsNew} onChange={handleChangeAsNew} />
                 : null
             }
-            <Button className={Styles.modalSave} disabled={!listName || isDisableSaveButton} onClick={handleSaveList}>Save</Button>
+            <Button className={Styles.modalSave} disabled={!listName || isDisableSaveButton} onClick={handleSaveList}>{t('Save')}</Button>
         </>
     }
 
     const saveModal = <Modal
         visible={isModalOpen}
-        title={isListsLimit ? 'You have reached limit of saved lists' : 'Save Roster'}
+        title={isListsLimit ? t('You have reached limit of saved lists') : t('Save Roster')}
         onClose={handleCloseModal}
         Content={renderModalContent}
     />

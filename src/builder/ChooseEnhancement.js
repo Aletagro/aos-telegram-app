@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom'
 import {roster} from '../utilities/appState'
@@ -279,7 +280,7 @@ const ChooseEnhancement = () => {
     const renderBlock = (block) => <button type='button' key={block.id} id={Styles.block} onClick={handleClickBlock(block)}>
         <div id={Styles.blockHeader} className={size(block.abilities) ? '' : Styles.blockHeaderAlone}>
             <b id={Styles.title}>{block.name}</b>
-            {block.points ? <p id={Styles.points}>{block.points} pts</p> : null}
+            {block.points ? <p id={Styles.points}>{block.points} {t('pts')}</p> : null}
         </div>
         {size(block.abilities)
             ? <div id={Styles.blockBody}>
@@ -292,8 +293,8 @@ const ChooseEnhancement = () => {
     return  <div id='column' className='Chapter'>
         {_data?.map(isRosterInfo ? renderBlock : renderEnhancement)}
         {isInfo
-            ? <Button className={Styles.footerButton} type='secondary' onClick={handleGoBack}>Back</Button>
-            : <Button className={Styles.footerButton} type='secondary' onClick={handleDeleteEnhancement}>Delete {title}</Button>
+            ? <Button className={Styles.footerButton} type='secondary' onClick={handleGoBack}>{t('Back')}</Button>
+            : <Button className={Styles.footerButton} type='secondary' onClick={handleDeleteEnhancement}>{t('Delete')} {title}</Button>
         }
     </div>
 }

@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {sortByName, replaceAsterisks, getUnitsRowRightText} from '../utilities/utils'
@@ -41,9 +42,9 @@ const RegimentOfRenown = () => {
         <HeaderImage src={regiment.image} alt='Regiment Of Renown' />
         <div id='column' className='Chapter'>
             <p id={Styles.text}>{replaceAsterisks(regiment.subsectionRulesText)}</p>
-            <h4 id={Styles.title}>{regiment.regimentOfRenownPointsCost} points</h4>
+            <h4 id={Styles.title}>{t('{{count}} points', {count: regiment.regimentOfRenownPointsCost})}</h4>
             {regimentAbilities && map(regimentAbilities, renderAbility)}
-            <h4 id={Styles.title}>Warscrolls</h4>
+            <h4 id={Styles.title}>{t('Warscrolls')}</h4>
             {warscrolls && map(warscrolls, renderWarscroll)}
         </div>
     </>

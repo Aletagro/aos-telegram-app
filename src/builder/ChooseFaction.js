@@ -1,3 +1,4 @@
+import {t} from '../utilities/i18n'
 import React from 'react';
 import {useLocation} from 'react-router-dom'
 import {roster, navigationState} from '../utilities/appState'
@@ -40,7 +41,7 @@ const ChooseFaction = () => {
             key={allegiance.id}
             title={allegiance.name}
             image={allegiance.selectFactionImage || null}
-            badge={isLegendaryArmies ? 'Legend' : undefined}
+            badge={isLegendaryArmies ? t('Legend') : undefined}
             navigateTo='builder'
             state={{allegiance}}
             onClick={handleClick}
@@ -50,11 +51,11 @@ const ChooseFaction = () => {
     const renderArmyOfRenown = (army) => map(army, renderRow)
 
     return <div id='column' className='Chapter'>
-        <h4 id={Styles.title}>Choose your Faction</h4>
+        <h4 id={Styles.title}>{t('Choose your Faction')}</h4>
         {allegiances && map(allegiances, renderRow)}
         {armiesOfRenown.length > 0
             ? <>
-                <h4 id={Styles.title}>Armies Of Renown</h4>
+                <h4 id={Styles.title}>{t('Armies Of Renown')}</h4>
                 {map(armiesOfRenown, renderArmyOfRenown)}
             </>
             : null
