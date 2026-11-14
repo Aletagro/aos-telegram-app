@@ -7,6 +7,7 @@ import get from 'lodash/get'
 import size from 'lodash/size'
 import keys from 'lodash/keys'
 import find from 'lodash/find'
+import findIndex from 'lodash/findIndex'
 import last from 'lodash/last'
 import uniq from 'lodash/uniq'
 import split from 'lodash/split'
@@ -872,7 +873,8 @@ export const parseRegiments = (input) => {
     let isAuxiliaryUnits = false
     let isRegimentOfRenown = false
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
+        // Telegram и другие мессенджеры дописывают запятые и пробелы в конец строк
+        const line = lines[i].trim().replace(/[\s,]+$/, '')
         // Начало РоРа
         if (line.startsWith('Regiment Of Renown')) {
             isRegimentOfRenown = true
@@ -885,8 +887,8 @@ export const parseRegiments = (input) => {
                 const index = parseInt(match[1], 10) - 1; // отсчёт с 0
                 currentRegiment = [];
                 regiments[index] = currentRegiment; // сохраняем по индексу
-                // Проверяем, есть ли "General's regiment" в следующей строке
-                if (i + 1 < lines.length && lines[i + 1].trim() === "General's regiment") {
+                // "General's regiment" бывает в той же строке ("Regiment 1 — General's regiment") или в следующей
+                if (/general's regiment/i.test(line) || (i + 1 < lines.length && lines[i + 1].trim().replace(/[\s,]+$/, '').toLowerCase() === "general's regiment")) {
                     generalIndex = index;
                 }
             }
@@ -898,7 +900,7 @@ export const parseRegiments = (input) => {
         }
         // Юнит: начинается с числа и "x"
         else if (/^\d+ x/.test(line)) {
-            const unit = {weapons: []};
+            const unit = {weapons: [], enhancements: []};
             const modelCountMatch = line.match(/^(\d+) x/);
             const nameMatch = line.match(/\d+\sx\s(.+?)(?:\s*\(\d+\s*points?\))?$/);
             const pointsMatch = line.match(/\((\d+)\s*points?\)/);
@@ -917,7 +919,7 @@ export const parseRegiments = (input) => {
         // Улучшения: [Type]: Value
         else if (line.startsWith('[')) {
             const propMatch = line.match(/^\[(.+?)\]:\s*(.+)$/);
-            if (propMatch && currentRegiment && currentRegiment.length > 0) {
+            if (propMatch && (isRegimentOfRenown || isAuxiliaryUnits || size(currentRegiment) > 0)) {
             const lastUnit = isRegimentOfRenown
                 ? regimentOfRenown.units[regimentOfRenown.units.length - 1]
                 : isAuxiliaryUnits
@@ -928,14 +930,24 @@ export const parseRegiments = (input) => {
             lastUnit[key] = value;
             }
         }
-        // Выбранное оружие юнита
+        // Строка с точкой: выбранное оружие ("• 2 x Gore-choppa"), улучшение с типом ("• Scars of War: Veterans of Amberstone Watch") или просто название улучшения
         else if (line.startsWith('• ')) {
             const lastUnit = isRegimentOfRenown
                 ? regimentOfRenown.units[regimentOfRenown.units.length - 1]
                 : isAuxiliaryUnits
                     ? auxiliaryUnits[auxiliaryUnits.length - 1]
-                    : currentRegiment[currentRegiment.length - 1];
-            lastUnit.weapons.push(line.replace('• ', ''))
+                    : currentRegiment?.[currentRegiment.length - 1]
+            const value = line.replace('• ', '').trim()
+            if (lastUnit) {
+                const propMatch = value.match(/^([^:]+):\s*(.+)$/)
+                if (/^\d+\s*x\s/i.test(value)) {
+                    lastUnit.weapons.push(value)
+                } else if (propMatch) {
+                    lastUnit[propMatch[1].trim()] = propMatch[2].trim()
+                } else if (!includes(['Reinforced', 'General'], value)) {
+                    lastUnit.enhancements.push(value)
+                }
+            }
         }
     }
     return {generalIndex, regiments, auxiliaryUnits, regimentOfRenown}
@@ -975,8 +987,8 @@ export const parseRegimentsForWHAoS = (input) => {
             isAuxiliaryUnits = true
             isRegimentOfRenown = false
         }
-        // Юнит: строка содержит цену в скобках
-        else if (/\(\d+\)$/.test(line)) {
+        // Юнит: строка содержит цену в скобках (строки с точкой - это улучшения, у оружия тоже бывает цена)
+        else if (/\(\d+\)$/.test(line) && !line.startsWith('• ')) {
             const unit = {enhancements: [], weapons: []};
             const nameMatch = line.match(/^(.+?)\s*\(\d+\)$/);
             const pointsMatch = line.match(/\((\d+)\)$/);
@@ -1013,11 +1025,21 @@ export const parseRegimentsForWHAoS = (input) => {
 }
 
 export const getFactionForWHAoS = (text) => {
-    // Регулярное выражение для поиска шаблона "часть1 | часть2 | часть3"
     const lines = text.split('\n')
+    // Новый формат: армия и построение идут отдельными строками в начале списка, без разделителей
+    const getFromLines = () => {
+        const head = lines.slice(0, 8).map(line => line.trim())
+        const factionIndex = findIndex(head, line => line && find(dataBase.data.faction_keyword, ['name', line]))
+        if (factionIndex === -1) {
+            return null
+        }
+        const formation = find(head.slice(factionIndex + 1), line => find(dataBase.data.battle_formation, ['name', split(line, ' (')[0].trim()]))
+        return ['', head[factionIndex], formation || '', true]
+    }
     // на ios и андроиде сохраняется по-разному, четвертым элементом передаём, что это ios
     if (lines[1]) {
         for (const line of lines) {
+            // Регулярное выражение для поиска шаблона "часть1 | часть2 | часть3"
             const regex = /^([^|\n]+)\s*\|\s*([^|\n]+)\s*\|\s*([^|\n]+)$/m
             const match = line.trim().match(regex)
             if (match) {
@@ -1025,14 +1047,14 @@ export const getFactionForWHAoS = (text) => {
                 return [match[1].trim(), match[2].trim(), match[3].trim(), true]
             }
         }
+        return getFromLines()
     } else {
         if (includes(lines[2], 'Orruk Warclans')) {
             return ['Orruk Warclans', split(lines[2], '| ')[1], lines[3], false]
         } else {
-            return ['', lines[2], lines[3], false]
+            return getFromLines() || ['', lines[2], lines[3], false]
         }
     }
-    return null // Если ничего не найдено
 }
 
 export const findCommonOptionId = (arrays) => {

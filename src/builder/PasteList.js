@@ -1,13 +1,15 @@
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import Textarea from '@mui/joy/Textarea'
 import Button from '../components/Button'
+import InfoNote from '../components/InfoNote'
 import {getTextAfter, parseRegiments, getStringAfterDash, getFactionForWHAoS, parseRegimentsForWHAoS, findCommonOptionId, setRosterGrandAlliance, parseListForListbot, cleanBuilder} from '../utilities/utils'
 import {roster, navigationState} from '../utilities/appState'
 import Constants from '../Constants'
 
 import map from 'lodash/map'
 import trim from 'lodash/trim'
+import replace from 'lodash/replace'
 import find from 'lodash/find'
 import last from 'lodash/last'
 import size from 'lodash/size'
@@ -17,15 +19,10 @@ import filter from 'lodash/filter'
 import forEach from 'lodash/forEach'
 import compact from 'lodash/compact'
 import includes from 'lodash/includes'
+import uniq from 'lodash/uniq'
 import lowerCase from 'lodash/lowerCase'
 
 import Styles from './styles/PasteList.module.css'
-
-const sources = [
-    {key: 'OurApp', title: 'This App'},
-    {key: 'WHAoS', title: 'WH AoS App'},
-    {key: 'Listbot', title: 'Listbot'}
-]
 
 const dataBase = require('../utilities/db')
 
@@ -34,32 +31,15 @@ const manifestationsIncludesTexts = ['Lore of the Abyss']
 
 const PasteList = () => {
     const navigate = useNavigate()
-    const [list, setList] = useState('')
-    const [source, setSource] = useState('OurApp')
-    
-    const getWHAoSEnhancements = (enhancements) => {
-        const data = {}
-        forEach(enhancements, enhancement => {
-            const abilities = filter(dataBase.data.ability, ['name', enhancement])
-            const abilityGroups = map(abilities, ability => find(dataBase.data.ability_group, ['id', ability.abilityGroupId]))
-            const keyType = find(abilityGroups, group => group.abilityGroupType !== 'spearheadEnhancements')
-            if (keyType) {
-                let key = ''
-                if (keyType.abilityGroupType === 'artefactsOfPower') {
-                    key = 'artefact'
-                } else if (keyType.abilityGroupType === 'heroicTraits') {
-                    key = 'heroicTrait'
-                } else {
-                    key = keyType.name
-                }
-                if (key) {
-                    data[key] = enhancement
-                }
-            }
-        })
-        return data
-    }
-    
+    const [rawList, setList] = useState('')
+    // Мессенджеры меняют переводы строк и пробелы, поэтому разбираем нормализованный текст
+    const list = rawList.replace(/\r/g, '').replace(/\u00a0/g, ' ')
+    const [error, setError] = useState('')
+    const [warnings, setWarnings] = useState(null)
+    // Формат списка определяется автоматически, поэтому источник и нераспознанные юниты хранятся в ref на время разбора
+    const sourceRef = useRef('OurApp')
+    const unmatchedRef = useRef([])
+
     const getListbotEnhancements = (enhancements, unitId) => {
         const data = {weaponOptions: {}}
         forEach(enhancements, enhancement => {
@@ -124,16 +104,24 @@ const PasteList = () => {
         return data
     }
 
+    const normalizeName = (name) => trim(replace(name || '', /\s+/g, ' '))
+
     const getUnit = (unit) => {
-        const _unit = find(dataBase.data.warscroll, warscroll => warscroll.name === unit.name && !warscroll.isSpearhead)
+        // В названиях из базы бывают неразрывные пробелы, а в тексте списка (после копирования) обычные
+        const _unit = find(dataBase.data.warscroll, warscroll => normalizeName(warscroll.name) === normalizeName(unit.name) && !warscroll.isSpearhead)
+        if (!_unit) {
+            unmatchedRef.current.push(unit.name)
+            return null
+        }
         let enhancements = {}
         let weaponOptions = {}
-        if (source === 'WHAoS') {
-            enhancements = getWHAoSEnhancements(unit.enhancements)
-        } else if (source === 'Listbot') {
-            enhancements = getListbotEnhancements(unit.enhancements, _unit.id)
+        // Улучшения без типа ("• Silver Wand") и оружие-улучшения определяются по названию; цена в скобках в конце не нужна
+        if (size(unit.enhancements)) {
+            enhancements = getListbotEnhancements(map(unit.enhancements, name => trim(name.replace(/\s*\(\d+\s*(?:points?|pts)?\)$/, ''))), _unit.id)
         }
-        weaponOptions = getWeapons(unit.weapons, _unit.id)
+        // Оружие из строк "• 2 x Gore-choppa" и оружие-улучшения из списка улучшений складываются вместе
+        const {weaponOptions: enhancementWeapons, ...otherEnhancements} = enhancements
+        weaponOptions = {...getWeapons(unit.weapons, _unit.id), ...enhancementWeapons}
         return {
             ..._unit,
             ...unit,
@@ -142,14 +130,15 @@ const PasteList = () => {
             artefact: unit.Artefact,
             heroicTrait: unit['Heroic Trait'],
             weaponOptions,
-            ...enhancements
-
+            ...otherEnhancements
         }
     }
 
+    const getUnits = (units) => compact(map(units, getUnit))
+
     const setRegiment = (regiment) => {
         const points = sumBy(regiment, 'points')
-        const units = map(regiment, getUnit) 
+        const units = getUnits(regiment)
         return {units, points, heroId: units[0]?.id || ''}
     }
 
@@ -263,8 +252,30 @@ const PasteList = () => {
         return {regiments, auxiliaryUnits, regimentOfRenown}
     }
 
+    // Фракция по названию боевого построения, если в списке нет строки Faction (например, список скопирован без шапки)
+    const getAllegianceFromFormation = (formationLine) => {
+        const name = trim(split(formationLine || '', ' (')[0])
+        if (!name) {
+            return null
+        }
+        const formation = find(dataBase.data.battle_formation, ['name', name])
+        return find(dataBase.data.faction_keyword, ['id', formation?.factionId])?.name || null
+    }
+
+    // Название боевого построения без цены в скобках ("Coven of Blood (20 pts)") и его цена из базы
+    const getFormation = (text, allegianceId) => {
+        const name = trim(split(text || '', ' (')[0])
+        const formation = find(dataBase.data.battle_formation, item => item.name === name && item.factionId === allegianceId) || find(dataBase.data.battle_formation, ['name', name])
+        return {name, points: formation?.points || 0}
+    }
+
+    const getGrandAlliance = (allegiance) => {
+        setRosterGrandAlliance(allegiance)
+        return roster.grandAlliance
+    }
+
     const handleNavigateUseOurApp = () => {
-        const allegiance = getTextAfter(list, 'Faction:')
+        const allegiance = getTextAfter(list, 'Faction:') || getAllegianceFromFormation(getTextAfter(list, 'Battle Formation:'))
         const allegianceId = find(dataBase.data.faction_keyword, ['name', allegiance])?.id
         if (allegianceId) {
             const manifestationLore = split(getTextAfter(list, 'Manifestation Lore:'), ' (')[0]
@@ -274,8 +285,10 @@ const PasteList = () => {
             const splitPoints = split(getTextAfter(list, 'Pts', true), '/')
             const parsedRegiments = parseRegiments(list)
             const regiments = map(parsedRegiments.regiments, setRegiment)
-            const tacticsString = setTactic(getTextAfter(list, 'Battle Tactics Cards:'))
-            const tactics = compact(map(tacticsString, getTactic))
+            // В списке без заголовка названия карт могут идти отдельными строками
+            const tacticsString = setTactic(getTextAfter(list, 'Battle Tactics Cards:')) || []
+            const tacticsFromLines = size(tacticsString) ? tacticsString : compact(map(list.split('\n'), line => find(Constants.tacticsCards, card => card === trim(line))))
+            const tactics = compact(map(tacticsFromLines, getTactic))
             const factionTerrain = split(getTextAfter(list, 'Faction Terrain:'), ' (')[0]
             const prayersLore = split(getTextAfter(list, 'Prayer Lore:'), ' (')[0]
             const spellsLore = split(getTextAfter(list, 'Spell Lore:'), ' (')[0]
@@ -283,31 +296,32 @@ const PasteList = () => {
 
             roster.allegiance = allegiance
             roster.allegianceId = allegianceId
-            roster.auxiliaryUnits = map(parsedRegiments.auxiliaryUnits, getUnit)
-            roster.battleFormation = getTextAfter(list, 'Battle Formation:')
+            roster.auxiliaryUnits = getUnits(parsedRegiments.auxiliaryUnits)
+            const formation = getFormation(getTextAfter(list, 'Battle Formation:'), allegianceId)
+            if (formation.points) points.battleFormation = formation.points
+            roster.battleFormation = formation.name
             roster.factionTerrain = factionTerrain
             roster.generalRegimentIndex = parsedRegiments.generalIndex
-            roster.grandAlliance = getTextAfter(list, 'Grand Alliance:')
+            roster.grandAlliance = getTextAfter(list, 'Grand Alliance:') || getGrandAlliance(allegiance)
             roster.manifestationLore = manifestationLore
             roster.manifestationsList = manifestationsList
             roster.points = points
-            roster.pointsLimit = splitPoints[1]
+            roster.pointsLimit = splitPoints[1] || 2000
             roster.prayersLore = prayersLore
             roster.regimentOfRenown = getRegimentOfRenown(parsedRegiments.regimentOfRenown.name)
             roster.regiments = regiments
-            roster.regimentsOfRenownUnits = map(parsedRegiments.regimentOfRenown.units, getUnit)
+            roster.regimentsOfRenownUnits = getUnits(parsedRegiments.regimentOfRenown.units)
             roster.tactics = tactics
             roster.spellsLore = spellsLore
-            navigationState.isBuilder = true
-            navigate('/builder', {state: {title: allegiance, alliganceId: allegianceId}})
+            return {title: allegiance, alliganceId: allegianceId}
         }
+        return null
     }
 
     const handleNavigateUseWHAoS = () => {
         const listInfo = getFactionForWHAoS(list)
         const allegianceId = find(dataBase.data.faction_keyword, ['name', listInfo[1]])?.id
         if (allegianceId) {
-            const isIOS = listInfo[3]
             const factionTerrain = split(getTextAfter(list, 'Faction Terrain', false, true), ' (')[0]
             const manifestationLore = split(getTextAfter(list, 'Manifestation Lore -'), ' (')[0]
             const manifestationLoreId = find(dataBase.data.lore, ['name', manifestationLore])?.id
@@ -315,10 +329,11 @@ const PasteList = () => {
             const manifestationsList = map(manifestationSpells, spell => find(dataBase.data.warscroll, ['id', spell.linkedWarscrollId]))
             const prayersLore = split(getTextAfter(list, 'Prayer Lore -'), ' (')[0]
             const spellsLore = split(getTextAfter(list, 'Spell Lore -'), ' (')[0]
-            const tacticsString = isIOS ? setTactic(getTextAfter(list, 'Battle Tactics Cards:')) : setTactic(getTextAfter(list, 'Battle Tactic Cards:'), true)
+            // "Battle Tactics Cards: A and B" (iOS) или "Battle Tactic Cards: A, B" (Android и новый формат)
+            const tacticsString = includes(list, 'Battle Tactics Cards:') ? setTactic(getTextAfter(list, 'Battle Tactics Cards:')) : setTactic(getTextAfter(list, 'Battle Tactic Cards:'), true)
             const tactics = compact(map(tacticsString, getTactic))
-            const splitPointsLine = split(getTextAfter(list, 'pts', true), ' ')
-            const splitPoints = split(last(splitPointsLine), '/')
+            const pointsMatch = list.match(/(\d+)\s*\/\s*(\d+)\s*pts/i)
+            const splitPoints = pointsMatch ? [pointsMatch[1], pointsMatch[2]] : []
             const points = getPoints(splitPoints[0], factionTerrain, prayersLore, spellsLore, manifestationLore)
             const parsedRegiments = parseRegimentsForWHAoS(list)
             const regiments = map(parsedRegiments.regiments, setRegiment)
@@ -326,24 +341,26 @@ const PasteList = () => {
 
             roster.allegiance = listInfo[1]
             roster.allegianceId = allegianceId
-            roster.auxiliaryUnits = map(parsedRegiments.auxiliaryUnits, getUnit)
-            roster.battleFormation = listInfo[2]
+            roster.auxiliaryUnits = getUnits(parsedRegiments.auxiliaryUnits)
+            const formation = getFormation(listInfo[2], allegianceId)
+            if (formation.points) points.battleFormation = formation.points
+            roster.battleFormation = formation.name
             roster.factionTerrain = factionTerrain
             roster.generalRegimentIndex = parsedRegiments.generalIndex
-            roster.grandAlliance = listInfo[0] === 'Orruk Warclans' ? 'Destruction' : getTextAfter(listInfo[0], 'Grand Alliance')
+            roster.grandAlliance = listInfo[0] === 'Orruk Warclans' ? 'Destruction' : (getTextAfter(listInfo[0], 'Grand Alliance') || getGrandAlliance(listInfo[1]))
             roster.manifestationLore = manifestationLore
             roster.manifestationsList = manifestationsList
             roster.points = points
-            roster.pointsLimit = splitPoints[1]
+            roster.pointsLimit = splitPoints[1] || 2000
             roster.prayersLore = prayersLore
             roster.regimentOfRenown = regimentOfRenown
             roster.regiments = regiments
             roster.regimentsOfRenownUnits = getRegimentOfRenownUnits(regimentOfRenown?.id)
             roster.tactics = tactics
             roster.spellsLore = spellsLore
-            navigationState.isBuilder = true
-            navigate('/builder', {state: {title: listInfo[1], alliganceId: allegianceId}})
+            return {title: listInfo[1], alliganceId: allegianceId}
         }
+        return null
     }
 
     const handleNavigateUseListbot = () => {
@@ -363,65 +380,115 @@ const PasteList = () => {
 
             roster.allegiance = allegiance
             roster.allegianceId = allegianceId
-            roster.auxiliaryUnits = map(auxiliaryUnits, getUnit)
-            roster.battleFormation = list.split('\n')[1]
+            roster.auxiliaryUnits = getUnits(auxiliaryUnits)
+            const formation = getFormation(list.split('\n')[1], allegianceId)
+            if (formation.points) points.battleFormation = formation.points
+            roster.battleFormation = formation.name
             roster.factionTerrain = parsedList.factionTerrain
             roster.generalRegimentIndex = parsedList.generalIndex
             roster.manifestationLore = meta.manifestationLore
             roster.manifestationsList = manifestationsList
             roster.points = points
-            roster.pointsLimit = splitPoints[1]
+            roster.pointsLimit = splitPoints[1] || 2000
             roster.prayersLore = meta.prayersLore
             roster.regimentOfRenown = regimentOfRenown
             roster.regiments = map(regiments, setRegiment)
             roster.regimentsOfRenownUnits = getRegimentOfRenownUnits(regimentOfRenown?.id)
             roster.tactics = tactics
             roster.spellsLore = meta.spellsLore
-            navigationState.isBuilder = true
-            navigate('/builder', {state: {title: allegiance, alliganceId: allegianceId}})
+            return {title: allegiance, alliganceId: allegianceId}
         }
+        return null
     }
 
-    const handleNavigateToRoster = () => {
+    const parsers = {
+        OurApp: handleNavigateUseOurApp,
+        WHAoS: handleNavigateUseWHAoS,
+        Listbot: handleNavigateUseListbot
+    }
+
+    // Порядок, в котором пробуются форматы: сначала самый вероятный по признакам текста, остальные - на случай ошибки определения
+    const getSourcesOrder = () => {
+        if (includes(list, 'Battle Formation:') && includes(list, 'Faction:')) {
+            return ['OurApp', 'WHAoS', 'Listbot']
+        }
+        if (/^[^|\n]+\s*\|\s*[^|\n]+\s*\|\s*[^|\n]+$/m.test(list) || /(Prayer|Spell|Manifestation) Lore -/.test(list) || includes(list, 'Battle Tactic')) {
+            return ['WHAoS', 'Listbot', 'OurApp']
+        }
+        return ['Listbot', 'WHAoS', 'OurApp']
+    }
+
+    // Разбор считается удачным, если нашлась армия и хотя бы один юнит из базы
+    const isParsed = (result) => Boolean(result) && (sumBy(roster.regiments, regiment => size(regiment.units)) + size(roster.auxiliaryUnits)) > 0
+
+    const parseList = () => {
+        for (const key of getSourcesOrder()) {
+            cleanBuilder()
+            sourceRef.current = key
+            unmatchedRef.current = []
+            let result = null
+            try {
+                result = parsers[key]()
+            } catch (e) {
+                result = null
+            }
+            if (isParsed(result)) {
+                // Если в списке нет строки с общей суммой очков, считаем её сами
+                if (!roster.points.all) {
+                    const {terrain, prayersLore, spellsLore, manifestations, battleFormation} = roster.points
+                    roster.points.all = sumBy(roster.regiments, 'points') + sumBy(roster.auxiliaryUnits, 'points') + sumBy([terrain, prayersLore, spellsLore, manifestations, battleFormation], value => value || 0)
+                }
+                return result
+            }
+        }
         cleanBuilder()
-        switch (source) {
-            case 'OurApp':
-                handleNavigateUseOurApp()
-                break
-            case 'WHAoS':
-                handleNavigateUseWHAoS()
-                break
-            case 'Listbot':
-                handleNavigateUseListbot()
-                break
-            default:
-                return null
+        return null
+    }
+
+    const openBuilder = (result) => {
+        navigationState.isBuilder = true
+        navigate('/builder', {state: result})
+    }
+
+    const handleImport = () => {
+        const result = parseList()
+        if (!result) {
+            setError('Could not recognize the list. Paste it as it was copied from the app, including the army name and the units.')
+            setWarnings(null)
+            return
+        }
+        setError('')
+        const notFound = uniq(unmatchedRef.current)
+        if (size(notFound)) {
+            setWarnings({result, notFound})
+        } else {
+            openBuilder(result)
         }
     }
 
-    const handleBlurName = (e) => {
+    const handleChangeList = (e) => {
         setList(e.target.value)
+        setError('')
+        setWarnings(null)
     }
-
-    const renderSource = (item) => <button
-        key={item.key}
-        type='button'
-        role='radio'
-        aria-checked={source === item.key}
-        className={`${Styles.source} ${source === item.key ? Styles.sourceActive : ''}`}
-        onClick={() => setSource(item.key)}
-    >
-        <span className={Styles.radio} />
-        <span className={Styles.sourceTitle}>{item.title}</span>
-    </button>
 
     return <div id='column' className='Chapter'>
-        <Textarea sx={inputStyles.listName} minRows={6} onBlur={handleBlurName} placeholder='Paste List' />
-        <p id={Styles.notice}>List created in:</p>
-        <div className={Styles.sources} role='radiogroup'>
-            {map(sources, renderSource)}
-        </div>
-        <Button className={Styles.goButton} onClick={handleNavigateToRoster}>Go To Builder</Button>
+        <InfoNote title='Paste your army list'>
+            <p>Copy a list from the official Warhammer Age of Sigmar app, Listbot or from this app (Export → Copy List) and paste it below. The format is detected automatically.</p>
+        </InfoNote>
+        <Textarea sx={inputStyles.listName} minRows={6} value={rawList} onChange={handleChangeList} placeholder='Paste List' />
+        {error ? <p className={Styles.error}>{error}</p> : null}
+        {warnings
+            ? <div className={Styles.warnings}>
+                <b>List imported with {size(warnings.notFound)} {size(warnings.notFound) === 1 ? 'note' : 'notes'}</b>
+                <ul>{map(warnings.notFound, name => <li key={name}>Unit not found and skipped: {name}</li>)}</ul>
+            </div>
+            : null
+        }
+        {warnings
+            ? <Button className={Styles.goButton} onClick={() => openBuilder(warnings.result)}>Open list</Button>
+            : <Button className={Styles.goButton} disabled={!trim(rawList)} onClick={handleImport}>Import list</Button>
+        }
     </div>
 }
 
