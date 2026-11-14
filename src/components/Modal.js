@@ -18,7 +18,7 @@ const getDialogSx = (isCard) => ({
     padding: isCard ? '34px 10px 10px' : '22px 18px 18px',
     border: '2px solid #b0953f',
     borderRadius: '20px',
-    backgroundColor: '#fffdf8',
+    backgroundColor: '#fff',
     boxShadow: '0 12px 40px rgba(0, 0, 0, 0.45)',
 })
 

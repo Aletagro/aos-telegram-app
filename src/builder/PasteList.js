@@ -6,6 +6,9 @@ import InfoNote from '../components/InfoNote'
 import {getTextAfter, parseRegiments, getStringAfterDash, getFactionForWHAoS, parseRegimentsForWHAoS, findCommonOptionId, setRosterGrandAlliance, parseListForListbot, cleanBuilder} from '../utilities/utils'
 import {roster, navigationState} from '../utilities/appState'
 import Constants from '../Constants'
+import {looksLikeRosterCode, decodeRosterCode} from '../utilities/rosterCode'
+import {loadListToRoster} from '../utilities/loadList'
+import {fetchRoster} from '../dashboard/api'
 
 import map from 'lodash/map'
 import trim from 'lodash/trim'
@@ -36,6 +39,7 @@ const PasteList = () => {
     const list = rawList.replace(/\r/g, '').replace(/\u00a0/g, ' ')
     const [error, setError] = useState('')
     const [warnings, setWarnings] = useState(null)
+    const [loading, setLoading] = useState(false)
     // Формат списка определяется автоматически, поэтому источник и нераспознанные юниты хранятся в ref на время разбора
     const sourceRef = useRef('OurApp')
     const unmatchedRef = useRef([])
@@ -450,7 +454,27 @@ const PasteList = () => {
         navigate('/builder', {state: result})
     }
 
+    const handleImportByCode = async () => {
+        setLoading(true)
+        setError('')
+        const list = await fetchRoster(decodeRosterCode(trim(rawList)))
+        setLoading(false)
+        if (!list) {
+            setError('List not found. Check the code')
+            return
+        }
+        // Список открывается как копия: его можно изменить и сохранить как свой
+        cleanBuilder()
+        loadListToRoster(list, true)
+        navigationState.isBuilder = true
+        navigate('/builder', {state: {title: list.allegiance, alliganceId: list.allegiance_id}})
+    }
+
     const handleImport = () => {
+        if (looksLikeRosterCode(trim(rawList))) {
+            handleImportByCode()
+            return
+        }
         const result = parseList()
         if (!result) {
             setError('Could not recognize the list. Paste it as it was copied from the app, including the army name and the units.')
@@ -474,7 +498,7 @@ const PasteList = () => {
 
     return <div id='column' className='Chapter'>
         <InfoNote title='Paste your army list'>
-            <p>Copy a list from the official Warhammer Age of Sigmar app, Listbot or from this app (Export → Copy List) and paste it below. The format is detected automatically.</p>
+            <p>Copy a list from the official Warhammer Age of Sigmar app, Listbot or from this app (Export → Copy List) and paste it below. You can also paste a roster code (Export → Copy roster code). The format is detected automatically.</p>
         </InfoNote>
         <Textarea sx={inputStyles.listName} minRows={6} value={rawList} onChange={handleChangeList} placeholder='Paste List' />
         {error ? <p className={Styles.error}>{error}</p> : null}
@@ -487,7 +511,7 @@ const PasteList = () => {
         }
         {warnings
             ? <Button className={Styles.goButton} onClick={() => openBuilder(warnings.result)}>Open list</Button>
-            : <Button className={Styles.goButton} disabled={!trim(rawList)} onClick={handleImport}>Import list</Button>
+            : <Button className={Styles.goButton} disabled={!trim(rawList) || loading} onClick={handleImport}>{loading ? 'Loading...' : 'Import list'}</Button>
         }
     </div>
 }

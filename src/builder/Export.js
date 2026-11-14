@@ -5,6 +5,7 @@ import Button from '../components/Button'
 import 'react-toastify/dist/ReactToastify.css'
 import Constants from '../Constants'
 import {roster} from '../utilities/appState'
+import {encodeRosterCode, copyText} from '../utilities/rosterCode'
 import {getErrors, getWarnings, getWoundsCount, toTelegramSafe, getDropsCount} from '../utilities/utils'
 
 import map from 'lodash/map'
@@ -76,6 +77,12 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
         setIsCopy(true)
     }
 
+    const handleCopyCode = async () => {
+        const ok = await copyText(encodeRosterCode(roster.id))
+        if (ok) toast.success('Roster code copied', Constants.toastParams)
+        else toast.error('Could not copy the code', Constants.toastParams)
+    }
+
     const handleShowRosterInfo = () => {
         navigate('/rosterInfo', {state: {title: 'Roster Info'}})
     }
@@ -131,6 +138,9 @@ ${roster.noteText ? `Note: ${roster.noteText}` : ''}
         <div id={Styles.buttonContainer}>
             <Button className={Styles.button} type='secondary' onClick={handleExportList}>{isCopy ? 'List Copied' : 'Copy List'}</Button>
         </div>
+        {roster.id ? <div id={Styles.buttonContainer}>
+            <Button className={Styles.button} type='secondary' onClick={handleCopyCode}>Copy roster code</Button>
+        </div> : null}
         <div id={Styles.buttonContainer}>
             <Button className={Styles.button} type='secondary' onClick={handleShowRosterInfo}>Show Roster Info</Button>
         </div>

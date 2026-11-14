@@ -40,9 +40,13 @@ import Export from './builder/Export'
 import RosterInfo from './builder/RosterInfo'
 import PasteList from './builder/PasteList'
 import Calculator from './calculator/Calculator'
-import SinglePlayer from './singlePlayer/SinglePlayer'
-import ChooseBattleplan from './singlePlayer/ChooseBattleplan'
-import ChooseTactics from './singlePlayer/ChooseTactics'
+import Dashboard from './dashboard/Dashboard'
+import GameSetup from './dashboard/GameSetup'
+import GameChooseArmy from './dashboard/GameChooseArmy'
+import GameMission from './dashboard/GameMission'
+import GameHistory from './dashboard/GameHistory'
+import Game from './dashboard/Game'
+import ViewRoster from './dashboard/ViewRoster'
 import Developer from './screens/Developer'
 import Spearhead from './spearhead/Spearhead'
 import SpearheadCatalog from './spearhead/SpearheadCatalog'
@@ -108,9 +112,13 @@ function App() {
       <Route path={'keywords'} element={<Keywords />} />
       <Route path={'rosterInfo'} element={<RosterInfo />} />
       <Route path={'pasteList'} element={<PasteList />} />
-      <Route path={'singlePlayer'} element={<SinglePlayer />} />
-      <Route path={'chooseTactics'} element={<ChooseTactics />} />
-      <Route path={'chooseBattleplan'} element={<ChooseBattleplan />} />
+      <Route path={'dashboard'} element={<Dashboard />} />
+      <Route path={'gameSetup'} element={<GameSetup />} />
+      <Route path={'gameChooseArmy'} element={<GameChooseArmy />} />
+      <Route path={'gameMission'} element={<GameMission />} />
+      <Route path={'gameHistory'} element={<GameHistory />} />
+      <Route path={'game'} element={<Game />} />
+      <Route path={'viewRoster'} element={<ViewRoster />} />
       <Route path={'developer'} element={<Developer />} />
       <Route path={'spearhead'} element={<Spearhead />} />
       <Route path={'spearheadCatalog'} element={<SpearheadCatalog />} />
