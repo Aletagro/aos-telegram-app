@@ -41,7 +41,11 @@ test('партия проходит от выбора первого игрок�
         const info = getGame('g1')
         if (info.status === 'finished') break
         const needsFirst = screen.queryByText(/Round \d: who goes first/)
-        if (needsFirst) fireEvent.click(screen.getAllByRole('button', {name: 'Anna'})[0])
+        if (needsFirst) {
+            // со второго раунда сначала выбирается победитель ролл-офф, потом тот, кто ходит первым
+            fireEvent.click(screen.getAllByRole('button', {name: 'Anna'})[0])
+            fireEvent.click(screen.getAllByRole('button', {name: 'Anna'})[0])
+        }
         fireEvent.click(screen.getByText(/Next turn|Finish battle/))
     }
     expect(getGame('g1').status).toBe('finished')

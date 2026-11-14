@@ -57,6 +57,7 @@ export const createGame = ({id, setup = {}, players, now = Date.now()}) => {
         createdAt: now,
         updatedAt: now,
         missionId: setup.missionId || null,
+        rollWinner: [null], // кто выиграл ролл-офф в каждом раунде (нужно, чтобы отличить захват инициативы от отданного первого хода)
         roundFirst: [setup.firstPlayer === 0 || setup.firstPlayer === 1 ? setup.firstPlayer : null], // кто ходит первым в каждом раунде (null - ещё не выбран: игроки бросают ролл-офф в начале раунда)
         turn: 0, // номер хода внутри партии: 0..9
         players: players.map(newPlayer),
@@ -84,31 +85,63 @@ export const getTurnPlayer = (game, turn) => {
     return first === null ? null : turn % 2 === 0 ? first : 1 - first
 }
 
-// Underdog: игрок с меньшим количеством VP на начало раунда. При равенстве (и в первом раунде) его нет
+const SEIZE_VP_GAP = 11
+
+const getVpBefore = (game, beforeTurn) => [0, 1].map(index => sumBy(filter(game.scores, s => s.player === index && s.turn < beforeTurn), 'vp'))
+
+// Кто выиграл ролл-офф в раунде (null - не указано)
+export const getRollWinner = (game, round) => game.rollWinner?.[round - 1] ?? null
+
+// Захват инициативы (seizing the initiative): победитель ролл-офф ходил вторым в прошлом раунде и выбрал ходить первым
+// (двойной ход), причём соперник не лидирует на 11 VP и больше. Возвращает его индекс или null.
+// Если первый ход ему просто отдали (победитель ролл-офф - другой игрок), это не захват
+export const getSeizer = (game, round) => {
+    if (round < 2) return null
+    const first = game.roundFirst[round - 1] ?? null
+    const previousFirst = game.roundFirst[round - 2] ?? null
+    if (first === null || previousFirst === null || first === previousFirst || getRollWinner(game, round) !== first) return null
+    const totals = getVpBefore(game, (round - 1) * 2)
+    return totals[1 - first] - totals[first] >= SEIZE_VP_GAP ? null : first
+}
+
+// Underdog: соперник того, кто последним захватил инициативу, - пока тот сам не захватит её.
+// Если захватов ещё не было, игрок с меньшим количеством VP на начало раунда. При равенстве (и в первом раунде) его нет
 export const getUnderdog = (game, beforeTurn = game.turn) => {
-    const totals = [0, 1].map(index => sumBy(filter(game.scores, s => s.player === index && s.turn < beforeTurn), 'vp'))
-    if (beforeTurn === 0 || totals[0] === totals[1]) return null
+    if (beforeTurn === 0) return null
+    for (let round = Math.floor(beforeTurn / 2) + 1; round >= 2; round--) {
+        const seizer = getSeizer(game, round)
+        if (seizer !== null) return 1 - seizer
+    }
+    const totals = getVpBefore(game, beforeTurn)
+    if (totals[0] === totals[1]) return null
     return totals[0] < totals[1] ? 0 : 1
 }
+
+// Игрок, захвативший инициативу, не может выполнять тактики в этом ходу
+export const isTacticsBlocked = (game, playerIndex, turn = game.turn) => turn % 2 === 0 && getSeizer(game, Math.floor(turn / 2) + 1) === playerIndex
 
 // В начале раунда оба игрока получают по 4 CP, underdog - 5. CP между раундами сгорают (см. getCp)
 const grantRoundCp = (game) => {
     const {round} = getTurnInfo(game)
-    const underdog = round === 1 ? null : getUnderdog(game)
+    const underdog = round === 1 ? null : getUnderdog(game, (round - 1) * 2)
     return {...game, players: game.players.map((player, index) => ({
         ...player,
-        cp: [...player.cp, {round, type: 'round', amount: underdog === index ? UNDERDOG_CP : BASE_CP}]
+        cp: [...filter(player.cp, entry => !(entry.type === 'round' && entry.round === round)), {round, type: 'round', amount: underdog === index ? UNDERDOG_CP : BASE_CP}]
     }))}
 }
 
-// Кто ходит первым в раунде: выбирает победитель ролл-офф. Менять можно, пока в раунде ещё нет очков
-export const setRoundFirst = (game, round, playerIndex, now) => {
+// Кто ходит первым в раунде: победитель ролл-офф (winner) выбирает, кто ходит первым. Менять можно, пока в раунде ещё нет очков
+export const setRoundFirst = (game, round, playerIndex, winner = null, now) => {
     const info = getTurnInfo(game)
-    if (game.status === STATUS_FINISHED || round !== info.round || info.inRound !== 0 || info.first === playerIndex) return game
+    if (game.status === STATUS_FINISHED || round !== info.round || info.inRound !== 0) return game
+    if (info.first === playerIndex && getRollWinner(game, round) === winner) return game
     if (find(game.scores, s => s.turn >= info.turn)) return game
     const roundFirst = [...game.roundFirst]
     roundFirst[round - 1] = playerIndex
-    return commit(game, {...game, roundFirst}, now)
+    const rollWinner = [...(game.rollWinner || [])]
+    rollWinner[round - 1] = winner
+    // от выбора зависит захват инициативы, а значит и underdog: пересчитываем CP раунда
+    return commit(game, grantRoundCp({...game, roundFirst, rollWinner}), now)
 }
 
 // Следующий ход. После последнего хода пятого раунда партия завершается
@@ -118,7 +151,7 @@ export const advanceTurn = (game, now) => {
     let next = {...game, turn: game.turn + 1}
     if (next.turn % 2 === 0) {
                 // Кто ходит первым, определит ролл-офф: выбор делается через setRoundFirst
-        next = {...next, roundFirst: [...next.roundFirst, null]}
+        next = {...next, roundFirst: [...next.roundFirst, null], rollWinner: [...(next.rollWinner || []), null]}
         next = grantRoundCp(next)
     }
     return commit(game, next, now)
@@ -190,7 +223,7 @@ export const getTacticProgress = (game, playerIndex, cardId) => {
 // Следующую стадию можно отметить, если карточка у игрока, стадий ещё не все, и в этот ход по этой карточке стадия ещё не была выполнена
 export const canScoreTactic = (game, playerIndex, cardId, turn = game.turn) => {
     if (game.status === STATUS_FINISHED || getTurnPlayer(game, turn) !== playerIndex || turn > game.turn) return false
-    if (!game.players[playerIndex].tactics.includes(cardId)) return false
+    if (!game.players[playerIndex].tactics.includes(cardId) || isTacticsBlocked(game, playerIndex, turn)) return false
     const progress = getTacticProgress(game, playerIndex, cardId)
     if (!progress.next) return false
     return !find(game.scores, s => s.player === playerIndex && s.kind === 'tactic' && s.card === cardId && s.turn === turn)

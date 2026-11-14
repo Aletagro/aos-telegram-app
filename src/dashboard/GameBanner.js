@@ -41,7 +41,7 @@ const GameBanner = ({game, winner = null, onSpendCp, onGainCp}) => {
         <div className={Styles.status}>{finished ? t('Battle finished') : t('Round {{round}} of {{total}}', {round: turn.round, total: MAX_ROUNDS})}</div>
         <div className={Styles.sides}>
             {map(game.players, renderSide)}
-            <span className={Styles.vs}>{t('vs')}</span>
+            <span className={Styles.vs}>vs</span>
         </div>
     </div>
 }

@@ -98,9 +98,6 @@ const dictionary = {
     "Round": "ラウンド",
     "Total": "合計",
     "Round {{round}}: who goes first?": "ラウンド{{round}}：先手は？",
-    "Roll off. The winner chooses who takes the first turn.": "ダイスを振ってください。勝者が先手を決めます。",
-    "{{name}} is the underdog (5 CP).": "{{name}}はUnderdogです（5 CP）。",
-    "If you close this window, {{name}} goes first.": "このウィンドウを閉じると、{{name}}が先手になります。",
     "Reopen battle": "バトルを再開",
     "Undo": "元に戻す",
     "Close": "閉じる",
@@ -108,7 +105,6 @@ const dictionary = {
     "Gain 1 CP": "1 CPを得る",
     "Battle finished": "バトル終了",
     "Round {{round}} of {{total}}": "ラウンド {{round}}/{{total}}",
-    "vs": "vs",
     "Draw": "引き分け",
     "{{name}} wins": "{{name}}の勝利",
     "Battle": "バトル",
@@ -236,7 +232,10 @@ const dictionary = {
     "You have Legends Unit in your Army": "軍勢にレジェンドのユニットが含まれています",
     "Roster Info": "リスト情報",
     "Delete roster?": "リストを削除しますか？",
-    "Export List": "リストをエクスポート"
+    "Export List": "リストをエクスポート",
+    "Seized the initiative: tactics cannot be scored on this turn.": "イニシアチブを奪取（Seizing the Initiative）：このターンは戦術を得点できません。",
+    "Who won the roll-off?": "ダイスの勝者は？",
+    "{{name}} won the roll-off. Who goes first?": "{{name}}がダイスに勝ちました。先手は？"
 }
 
 export default dictionary

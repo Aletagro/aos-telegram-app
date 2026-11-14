@@ -2,7 +2,7 @@ import {t} from '../utilities/i18n'
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import InfoIcon from '../icons/InfoIcon'
-import {getTacticProgress, canScoreTactic, scoreTactic, unscoreTactic, getTurnInfo} from './gameModel'
+import {getTacticProgress, canScoreTactic, isTacticsBlocked, scoreTactic, unscoreTactic, getTurnInfo} from './gameModel'
 import Constants from '../Constants'
 import {getStringAfterDash, replaceAsterisks} from '../utilities/utils'
 
@@ -68,6 +68,7 @@ const GameTactic = ({game, index, cardId, apply}) => {
         </div>
         <div className={Styles.tacticBody}>
             {map(progress.stages, renderStage)}
+            {active && isTacticsBlocked(game, index) ? <p className={Styles.cardSub}>{t('Seized the initiative: tactics cannot be scored on this turn.')}</p> : null}
             {scoredThisTurn ? <p className={Styles.cardSub}>{t('A stage of this card is already scored this turn.')}</p> : null}
         </div>
     </div>

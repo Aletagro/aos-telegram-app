@@ -98,9 +98,6 @@ const dictionary = {
     "Round": "回合",
     "Total": "总计",
     "Round {{round}}: who goes first?": "第 {{round}} 回合：谁先手？",
-    "Roll off. The winner chooses who takes the first turn.": "掷骰决定。胜者选择谁先手。",
-    "{{name}} is the underdog (5 CP).": "{{name}} 是 Underdog（5 CP）。",
-    "If you close this window, {{name}} goes first.": "关闭此窗口后，由 {{name}} 先手。",
     "Reopen battle": "重新打开对战",
     "Undo": "撤销",
     "Close": "关闭",
@@ -108,7 +105,6 @@ const dictionary = {
     "Gain 1 CP": "获得 1 CP",
     "Battle finished": "对战已结束",
     "Round {{round}} of {{total}}": "第 {{round}} / {{total}} 回合",
-    "vs": "对",
     "Draw": "平局",
     "{{name}} wins": "{{name}} 获胜",
     "Battle": "对战",
@@ -236,7 +232,10 @@ const dictionary = {
     "You have Legends Unit in your Army": "你的军队中有 Legends 单位",
     "Roster Info": "列表信息",
     "Delete roster?": "删除列表？",
-    "Export List": "导出列表"
+    "Export List": "导出列表",
+    "Seized the initiative: tactics cannot be scored on this turn.": "夺取先手（Seizing the Initiative）：本回合不能为战术得分。",
+    "Who won the roll-off?": "谁赢得了掷骰？",
+    "{{name}} won the roll-off. Who goes first?": "{{name}} 赢得了掷骰。谁先手？"
 }
 
 export default dictionary

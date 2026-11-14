@@ -98,9 +98,6 @@ const dictionary = {
     "Round": "라운드",
     "Total": "합계",
     "Round {{round}}: who goes first?": "라운드 {{round}}: 누가 먼저 시작하나요?",
-    "Roll off. The winner chooses who takes the first turn.": "주사위를 굴리세요. 승자가 선공을 정합니다.",
-    "{{name}} is the underdog (5 CP).": "{{name}}은(는) Underdog입니다 (5 CP).",
-    "If you close this window, {{name}} goes first.": "이 창을 닫으면 {{name}}이(가) 선공합니다.",
     "Reopen battle": "전투 다시 열기",
     "Undo": "실행 취소",
     "Close": "닫기",
@@ -108,7 +105,6 @@ const dictionary = {
     "Gain 1 CP": "1 CP 획득",
     "Battle finished": "전투 종료됨",
     "Round {{round}} of {{total}}": "라운드 {{round}}/{{total}}",
-    "vs": "vs",
     "Draw": "무승부",
     "{{name}} wins": "{{name}} 승리",
     "Battle": "전투",
@@ -236,7 +232,10 @@ const dictionary = {
     "You have Legends Unit in your Army": "군대에 레전드 유닛이 포함되어 있습니다",
     "Roster Info": "리스트 정보",
     "Delete roster?": "리스트를 삭제할까요?",
-    "Export List": "리스트 내보내기"
+    "Export List": "리스트 내보내기",
+    "Seized the initiative: tactics cannot be scored on this turn.": "주도권 장악(Seizing the Initiative): 이번 턴에는 전술을 득점할 수 없습니다.",
+    "Who won the roll-off?": "주사위 대결에서 누가 이겼나요?",
+    "{{name}} won the roll-off. Who goes first?": "{{name}}이(가) 주사위 대결에서 이겼습니다. 누가 먼저 시작하나요?"
 }
 
 export default dictionary

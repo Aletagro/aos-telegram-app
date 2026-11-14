@@ -98,9 +98,6 @@ const dictionary = {
     "Round": "Runde",
     "Total": "Gesamt",
     "Round {{round}}: who goes first?": "Runde {{round}}: Wer beginnt?",
-    "Roll off. The winner chooses who takes the first turn.": "Auswürfeln. Der Gewinner entscheidet, wer den ersten Zug hat.",
-    "{{name}} is the underdog (5 CP).": "{{name}} ist Underdog (5 CP).",
-    "If you close this window, {{name}} goes first.": "Wenn du dieses Fenster schließt, beginnt {{name}}.",
     "Reopen battle": "Schlacht wieder öffnen",
     "Undo": "Rückgängig",
     "Close": "Schließen",
@@ -108,7 +105,6 @@ const dictionary = {
     "Gain 1 CP": "1 CP erhalten",
     "Battle finished": "Schlacht beendet",
     "Round {{round}} of {{total}}": "Runde {{round}} von {{total}}",
-    "vs": "gegen",
     "Draw": "Unentschieden",
     "{{name}} wins": "{{name}} gewinnt",
     "Battle": "Schlacht",
@@ -236,7 +232,10 @@ const dictionary = {
     "You have Legends Unit in your Army": "Du hast eine Legends-Einheit in deiner Armee",
     "Roster Info": "Listeninfo",
     "Delete roster?": "Liste löschen?",
-    "Export List": "Liste exportieren"
+    "Export List": "Liste exportieren",
+    "Seized the initiative: tactics cannot be scored on this turn.": "Initiative ergriffen (Seizing the Initiative): In diesem Zug können keine Taktiken gewertet werden.",
+    "Who won the roll-off?": "Wer hat das Auswürfeln gewonnen?",
+    "{{name}} won the roll-off. Who goes first?": "{{name}} hat das Auswürfeln gewonnen. Wer beginnt?"
 }
 
 export default dictionary

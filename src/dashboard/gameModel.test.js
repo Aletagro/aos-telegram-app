@@ -1,6 +1,6 @@
 import {
     createGame, getTurnInfo, advanceTurn, getUnderdog, getCp, toggleMissionItem, getMissionItems, scoreTactic, canScoreTactic, unscoreTactic,
-    getTacticProgress, getPlayerTotals, getResult, spendCp, adjustCp, undo, canUndo, setRoundFirst, setTactics, addManualVp, STATUS_FINISHED
+    getTacticProgress, getPlayerTotals, getResult, spendCp, adjustCp, undo, canUndo, setRoundFirst, setTactics, addManualVp, getSeizer, isTacticsBlocked, STATUS_FINISHED
 } from './gameModel'
 import {MISSIONS, TACTIC_CARDS} from './missionData'
 import {isMissionItemBlocked} from './gameModel'
@@ -185,5 +185,51 @@ describe('Avalanche of Ash: очки сгорают', () => {
         let game = toggleMissionItem(avalanche(), 0, 'noObjectives')
         game = toggleMissionItem(game, 0, 'noObjectives')
         expect(isMissionItemBlocked(game, 0, 'obj1')).toBe(false)
+    })
+})
+
+describe('захват инициативы', () => {
+    const setup = () => advanceTurn(advanceTurn(newGame(0))) // раунд 2, первый игрок ещё не выбран
+
+    test('победитель ролл-офф, ходивший вторым и взявший первый ход, делает соперника underdog и не может выполнять тактики', () => {
+        let game = setRoundFirst(setup(), 2, 1, 1)
+        expect(getSeizer(game, 2)).toBe(1)
+        expect(getUnderdog(game, 2)).toBe(0)
+        expect(game.players[0].cp.filter(c => c.type === 'round' && c.round === 2).map(c => c.amount)).toEqual([5])
+        expect(game.players[1].cp.filter(c => c.type === 'round' && c.round === 2).map(c => c.amount)).toEqual([4])
+        expect(isTacticsBlocked(game, 1)).toBe(true)
+    })
+
+    test('если первый ход отдали (победитель ролл-офф другой), захвата нет', () => {
+        const game = setRoundFirst(setup(), 2, 1, 0)
+        expect(getSeizer(game, 2)).toBe(null)
+        expect(isTacticsBlocked(game, 1)).toBe(false)
+    })
+
+    test('обычный выбор первого игрока не даёт захвата', () => {
+        const game = setRoundFirst(setup(), 2, 0, 0)
+        expect(getSeizer(game, 2)).toBe(null)
+        expect(isTacticsBlocked(game, 0)).toBe(false)
+    })
+
+    test('если соперник лидирует на 11 VP и больше, захвата нет', () => {
+        let game = addManualVp(newGame(0), 0, 11)
+        game = setRoundFirst(advanceTurn(advanceTurn(game)), 2, 1, 1)
+        expect(getSeizer(game, 2)).toBe(null)
+        expect(getUnderdog(game, 2)).toBe(1) // обычное правило: меньше VP
+        expect(isTacticsBlocked(game, 1)).toBe(false)
+    })
+
+    test('underdog остаётся им, пока соперник сам не захватит инициативу', () => {
+        let game = setRoundFirst(setup(), 2, 1, 1) // игрок 1 захватил в раунде 2, игрок 0 - underdog
+        game = addManualVp(game, 0, 3)
+        game = advanceTurn(advanceTurn(game)) // раунд 3
+        game = setRoundFirst(game, 3, 1, 1) // игрок 1 ходит первым снова, захвата нет (он и так ходил первым)
+        expect(getSeizer(game, 3)).toBe(null)
+        expect(getUnderdog(game, 4)).toBe(0)
+        game = advanceTurn(advanceTurn(game)) // раунд 4
+        game = setRoundFirst(game, 4, 0, 0) // игрок 0 ходил вторым и захватывает
+        expect(getSeizer(game, 4)).toBe(0)
+        expect(getUnderdog(game, 6)).toBe(1)
     })
 })

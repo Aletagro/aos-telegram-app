@@ -9,7 +9,7 @@ import GameBanner from './GameBanner'
 import GamePlayer from './GamePlayer'
 import GameResult from './GameResult'
 import {getGame, saveGame} from './gameStorage'
-import {advanceTurn, undo, canUndo, spendCp, adjustCp, setRoundFirst, getTurnInfo, getResult, getPlayerTotals, getUnderdog, STATUS_FINISHED, MAX_ROUNDS} from './gameModel'
+import {advanceTurn, undo, canUndo, spendCp, adjustCp, setRoundFirst, getTurnInfo, getResult, getPlayerTotals, STATUS_FINISHED, MAX_ROUNDS} from './gameModel'
 import {getMissionTitle} from './missionInfo'
 
 import map from 'lodash/map'
@@ -24,6 +24,8 @@ const Game = () => {
     const navigate = useNavigate()
     const gameId = useLocation().state?.gameId
     const [game, setGame] = useState(() => getGame(gameId))
+    // Победитель ролл-офф в окне выбора первого игрока (со второго раунда выбор идёт в два шага)
+    const [rollWinner, setRollWinner] = useState(null)
 
     // При смене хода экран прокручивается к блоку игрока, чей ход (блоки игроков не меняются местами)
     const turnKey = game ? `${game.turn}:${getTurnInfo(game).playerIndex}` : ''
@@ -52,7 +54,8 @@ const Game = () => {
 
     const turn = getTurnInfo(game)
     const finished = game.status === STATUS_FINISHED
-    const underdog = getUnderdog(game, (turn.round - 1) * 2)
+    // Со второго раунда сначала спрашиваем, кто выиграл ролл-офф: от этого зависит, захват это инициативы или отданный первый ход
+    const askWinner = turn.round > 1 && rollWinner === null
     const mission = getMissionTitle(game.missionId)
 
     // Применяет изменение к партии и сразу сохраняет её на устройстве
@@ -103,11 +106,24 @@ const Game = () => {
         <Modal visible={!finished && turn.needsFirst} title={t('Round {{round}}: who goes first?', {round: turn.round})}
             onClose={() => apply(current => setRoundFirst(current, getTurnInfo(current).round, 0))}
             Content={() => <div className={Styles.body} style={{padding: 0}}>
-                <p className={Styles.cardSub}>{t('Roll off. The winner chooses who takes the first turn.')}{underdog !== null ? ` ${t('{{name}} is the underdog (5 CP).', {name: game.players[underdog].name})}` : ''}</p>
-                <div className={Styles.firstButtons}>
-                    {map(game.players, (player, index) => <Button key={index} onClick={() => apply(current => setRoundFirst(current, getTurnInfo(current).round, index))}>{player.name}</Button>)}
-                </div>
-                <p className={Styles.cardSub}>{t('If you close this window, {{name}} goes first.', {name: game.players[0].name})}</p>
+                {askWinner
+                    ? <>
+                        <p className={Styles.cardSub}><b>{t('Who won the roll-off?')}</b></p>
+                        <div className={Styles.firstButtons}>
+                            {map(game.players, (player, index) => <Button key={index} onClick={() => setRollWinner(index)}>{player.name}</Button>)}
+                        </div>
+                    </>
+                    : <>
+                        {turn.round > 1 ? <p className={Styles.cardSub}><b>{t('{{name}} won the roll-off. Who goes first?', {name: game.players[rollWinner].name})}</b></p> : null}
+                        <div className={Styles.firstButtons}>
+                            {map(game.players, (player, index) => <Button key={index} onClick={() => {
+                                apply(current => setRoundFirst(current, getTurnInfo(current).round, index, rollWinner))
+                                setRollWinner(null)
+                            }}>{player.name}</Button>)}
+                        </div>
+                        {turn.round > 1 ? <Button type='secondary' onClick={() => setRollWinner(null)}>{t('Back')}</Button> : null}
+                    </>
+                }
             </div>} />
         <div className={Styles.bottomBar}>
             <Button type='secondary' disabled={!canUndo(game)} onClick={() => apply(undo)}>{finished ? t('Reopen battle') : t('Undo')}</Button>
