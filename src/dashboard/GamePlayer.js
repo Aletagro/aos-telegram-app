@@ -1,13 +1,11 @@
 import {t} from '../utilities/i18n'
 import React from 'react'
 import {
-    getMissionItems, isMissionItemScored, isMissionItemBlocked, toggleMissionItem, addManualVp, getTurnInfo, getTurnPlayer
+    getMissionItems, isMissionItemScored, isMissionItemBlocked, toggleMissionItem, getTurnInfo, getTurnPlayer
 } from './gameModel'
 import GameTactic from './GameTactic'
 
 import map from 'lodash/map'
-import sumBy from 'lodash/sumBy'
-import filter from 'lodash/filter'
 
 import Styles from './styles/GameScreen.module.css'
 
@@ -17,7 +15,6 @@ const GamePlayer = ({game, index, apply}) => {
     const player = game.players[index]
     const active = turn.playerIndex === index
     const items = getMissionItems(game, turn.round)
-    const manual = sumBy(filter(game.scores, s => s.player === index && s.turn === game.turn && s.kind === 'manual'), 'vp')
 
     const renderItem = (item) => {
         const checked = active && isMissionItemScored(game, index, item.id)
@@ -36,15 +33,6 @@ const GamePlayer = ({game, index, apply}) => {
             </div>
             {active ? <>
                 {map(items, renderItem)}
-                <div className={Styles.divider} />
-                <div className={Styles.row}>
-                    <p className={Styles.rowText}>{t('Other VP (manual)')}</p>
-                    <div className={Styles.stepper}>
-                        <button type='button' className={Styles.stepButton} onClick={() => apply(current => addManualVp(current, index, -1))}>−</button>
-                        <span className={Styles.stepValue}>{manual}</span>
-                        <button type='button' className={Styles.stepButton} onClick={() => apply(current => addManualVp(current, index, 1))}>+</button>
-                    </div>
-                </div>
             </> : <p className={Styles.cardSub}>{t('Controls are available on this player\'s turn.')}</p>}
         </div>
         {map(player.tactics, cardId => <GameTactic key={cardId} game={game} index={index} cardId={cardId} apply={apply} />)}
