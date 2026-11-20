@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/aos-telegram-app/static/css/main.65116815.css",
-    "main.js": "/aos-telegram-app/static/js/main.bc1b66f6.js",
+    "main.js": "/aos-telegram-app/static/js/main.bf4e6594.js",
     "static/css/253.59c69f6f.chunk.css": "/aos-telegram-app/static/css/253.59c69f6f.chunk.css",
-    "static/js/253.29d6f554.chunk.js": "/aos-telegram-app/static/js/253.29d6f554.chunk.js",
+    "static/js/253.b7ce4d3b.chunk.js": "/aos-telegram-app/static/js/253.b7ce4d3b.chunk.js",
     "static/js/886.367ad839.chunk.js": "/aos-telegram-app/static/js/886.367ad839.chunk.js",
     "static/media/placeholder.png": "/aos-telegram-app/static/media/placeholder.816f67bc014b91894c3e.png",
     "static/media/malekith.png": "/aos-telegram-app/static/media/malekith.6e0b07f7d78ebe386dc6.png",
@@ -25,13 +25,13 @@
     "static/media/plus.svg": "/aos-telegram-app/static/media/plus.1821b69dd59c40f640858714c03302df.svg",
     "static/media/minus.svg": "/aos-telegram-app/static/media/minus.e96d94d06862f0e438941502b49deb0e.svg",
     "main.65116815.css.map": "/aos-telegram-app/static/css/main.65116815.css.map",
-    "main.bc1b66f6.js.map": "/aos-telegram-app/static/js/main.bc1b66f6.js.map",
+    "main.bf4e6594.js.map": "/aos-telegram-app/static/js/main.bf4e6594.js.map",
     "253.59c69f6f.chunk.css.map": "/aos-telegram-app/static/css/253.59c69f6f.chunk.css.map",
-    "253.29d6f554.chunk.js.map": "/aos-telegram-app/static/js/253.29d6f554.chunk.js.map",
+    "253.b7ce4d3b.chunk.js.map": "/aos-telegram-app/static/js/253.b7ce4d3b.chunk.js.map",
     "886.367ad839.chunk.js.map": "/aos-telegram-app/static/js/886.367ad839.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.65116815.css",
-    "static/js/main.bc1b66f6.js"
+    "static/js/main.bf4e6594.js"
   ]
 }
