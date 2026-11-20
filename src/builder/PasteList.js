@@ -30,7 +30,7 @@ import Styles from './styles/PasteList.module.css'
 
 const dataBase = require('../utilities/db')
 
-const spellIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
+const spellIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane', 'Of The Runes']
 const manifestationsIncludesTexts = ['Lore of the Abyss']
 
 const PasteList = () => {

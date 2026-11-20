@@ -67,7 +67,7 @@ const Constants = {
             abilityGroupType: undefined,
             abilityKeywordsName: 'lore_ability_keyword',
             abilityIdName: 'loreAbilityId',
-            includesTexts: ['Lore of', 'Spell Lore', 'Arcane'],
+            includesTexts: ['Lore of', 'Spell Lore', 'Arcane', 'Of The Runes'],
             excludedTexts: ['Lore of the Abyss', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Lore of the Everwinter', "Brodd's Bellows"]
         },
         {
@@ -403,6 +403,7 @@ const Constants = {
         'Daughters of Khaine',
         'Fyreslayers',
         'Idoneth Deepkin',
+        'Khazalite Holds',
         'Kharadron Overlords',
         'Lumineth Realm-lords',
         'Seraphon',
@@ -414,6 +415,9 @@ const Constants = {
         'Zainthar Kai',
         'Champions of the Arena',
         'Lofnir Drothkeepers',
+        'Throngankor Alliance',
+        "Valankrom's War Throng",
+        'Fyrd of Fyrepeak',
         'Wardens of the Chorrileum',
         'The First Phalanx of Ionrach',
         'Grundstok Expeditionary Force',
@@ -485,6 +489,7 @@ const Constants = {
         'Daughters of Khaine': ['Aelf'],
         'Fyreslayers': ['Magmadroth'],
         'Idoneth Deepkin': ['Akhelian', 'Eidolon', 'Isharann', 'Namarti'],
+        'Khazalite Holds': ['Kromdron', 'Grimmdron', 'Gholem'],
         'Kharadron Overlords': ['Skyfarer', 'Skyvessel', 'Auto-Endrin'],
         'Lumineth Realm-lords': ['Alarith', 'Vanari', 'Scinari', 'Hurakan', 'Ydrilan'],
         'Seraphon': ['Slann', 'Skink', 'Saurus', 'Kroxigor'],
@@ -513,7 +518,7 @@ const Constants = {
         589760439, // Коля
         431627556 // Матвейка
     ],
-    lastUpdate: '02.11.2026',
+    lastUpdate: '20.11.2026',
     fullDatelastUpdate: '2026-09-24T22:00:00.0000',
     spearheadBattlepacksId: '97942bd2-6e43-4a5d-8561-300ca6a8b956'
 }

@@ -192,6 +192,17 @@ const AddUnit = () => {
                 units.push(heroSoGBlackCoach)
             }
         }
+        // У АоРов гигантов манкрашеры могут быть героями
+        if (alliganceId === '7bed1f9b-81ee-4357-92be-e7589105aa5f' || alliganceId === '5509fecf-2893-42a6-88cc-a99f260e6a14') {
+            const heroMancrusher = find(dataBase.data.warscroll, ['id', 'aa8102b6-3a99-454f-8d32-24d5dcd207e2'])
+            if (heroMancrusher) {
+                units.push(heroMancrusher)
+            }
+            const heroAoGMancrusher = find(dataBase.data.warscroll, ['id', '62ae4aa1-88e6-4caf-8d95-0a869f06dbb9'])
+            if (heroAoGMancrusher) {
+                units.push(heroAoGMancrusher)
+            }
+        }
         hasPotentialLegends = setHasPonentialLegends(units)
         if (hasPotentialLegends && hidePotentialLegends) {
             units = filterPonentialLegends(units)

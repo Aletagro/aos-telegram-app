@@ -31,7 +31,7 @@ import SaveStyles from './styles/SaveBar.module.css'
 
 const dataBase = require('../utilities/db')
 
-const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane']
+const spellsIncludesTexts = ['Lore of', 'Spell Lore', 'Arcane', 'Of The Runes']
 const spellsExcludedTexts = ['Lore of the Abyss', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Lore of the Everwinter', "Brodd's Bellows"]
 const preyersIncludesTexts = ['Prayer', 'Bless', 'Rites', 'Warbeats', 'Scriptures', 'Benedictions', 'Gifts', 'Lore of Virulence', 'Lore of the Spirit-Song', 'Proclamations', 'Lore of the Everwinter', "Brodd's Bellows"]
 const pointsLimits = ['1000', '1500', '2000', '2500', '3000']

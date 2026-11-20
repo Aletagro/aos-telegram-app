@@ -17,7 +17,6 @@ const SpearheadCatalog = () => {
     const _sections = sortByName(filter(dataBase.data.rule_section, ['publicationId', battlepack.id]), 'displayOrder')
     const errata = find(_sections, ['name', 'Errata']) || []
     const faq = find(_sections, ['name', 'Frequently Asked Questions']) || []
-    console.log({battlepack, _sections, errata, faq})
     const sections = (!isEmpty(faq) || !isEmpty(errata))
         ? [...filter(_sections, section => includes(section.name, '.')), errata, faq]
         : _sections
